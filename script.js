@@ -1,3 +1,10 @@
+$(document).ready(function () {
+  // Initialize AOS
+  AOS.init({
+    offset: 120,
+    duration: 1000,
+    easing: "ease-out-cubic",
+  });
 document.addEventListener("DOMContentLoaded", function () {
   // Smooth scrolling
   const navLinks = document.querySelectorAll(".nav-link");
