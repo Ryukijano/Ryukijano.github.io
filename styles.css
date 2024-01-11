@@ -4,6 +4,35 @@
   box-sizing: border-box;
 }
 
+/* Navbar Styles */
+#navbar {
+  background: #333;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+#navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#navbar ul {
+  list-style: none;
+  display: flex;
+}
+#navbar ul li a {
+  color: #fff;
+  padding: 15px;
+  display: block;
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out;
+}
+#navbar ul li a:hover {
+  background-color: #555;
+}
+
 body {
   font-family: 'Roboto Mono', monospace;
   position: relative;
