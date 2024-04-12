@@ -34,21 +34,42 @@
 }
 
 body {
-  font-family: 'Roboto Mono', monospace;
-  position: relative;
-  z-index: 1;
-  color: #ecf0f1;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-image: url("Offrenda_Final_2000x1200__1_.jpg");
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
+  background-image: url("https://giphy.com/clips/illustration-2danimation-gora-f7XBzimzgWOWV6ugM2"); /* Example retro background */
+  background-size: cover; 
+  font-family: 'Roboto Mono', monospace; /* Retro-tech font */
+  color: #f0f8ff;  /* Bright, off-white color */
 }
+
+header, nav ul {
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+}
+
+nav ul li a {
+    color: #ff0080; /* Neon pink color */
+    text-decoration: none;
+}
+
+h1, h2 {
+    text-shadow: 0 0 5px #00ff80; /* Neon green glow */
+}
+
+section {
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 0 10px rgba(255,0,128, 0.5); /* Pinkish glow effect */
+}
+
+.project img {
+  filter: saturate(200%); /* Make images extra vibrant */
+  border: 3px solid #00ff80; /*  Neon green border */
+}
+
+/* Add some hover effects! */
+nav ul li a:hover {
+    text-decoration: underline;
+    text-shadow: 0 0 10px #ff0080; 
+}
+
 
 .container {
   max-width: 1200px;
