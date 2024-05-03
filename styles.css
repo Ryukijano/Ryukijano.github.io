@@ -58,7 +58,7 @@ h1, h2, h3 {
 
 /* Home section styles */
 #home {
-  background-image: url('hero-background.jpg');
+  background-image: url('images/backgrounds/hero-background.jpg');
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -151,5 +151,3 @@ footer {
   padding: 1rem;
   text-align: center;
 }
-
-
