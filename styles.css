@@ -58,7 +58,7 @@ h1, h2, h3 {
 
 /* Home section styles */
 #home {
-  background-image: url('images/backgrounds/hero-background.jpg');
+  background-image: url('images/nightcity.jpg');
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -74,6 +74,10 @@ h1, h2, h3 {
   padding: 2rem;
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 4px;
+}
+
+.hero-content img {
+  display: none; /* Hide the image in the hero section */
 }
 
 /* About section styles */
@@ -150,4 +154,10 @@ footer {
   color: #fff;
   padding: 1rem;
   text-align: center;
+}
+
+/* Background image styles for other pages */
+.background img {
+  width: 100%;
+  height: auto;
 }
