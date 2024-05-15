@@ -58,7 +58,7 @@ h1, h2, h3 {
 
 /* Home section styles */
 #home {
-  background-image: url('images/nightcity.jpg');
+  background-image: url('nightcity.jpg');
   background-size: cover;
   background-position: center;
   height: 100vh;
