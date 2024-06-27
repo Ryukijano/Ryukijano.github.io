@@ -81,7 +81,7 @@ h1, h2, h3 {
   margin-bottom: 1rem;
 }
 
-/* Home section styles 
+/* Home section styles*/
 #home {
   background-image: url('nightcity.jpg');
   background-size: cover;
@@ -93,7 +93,7 @@ h1, h2, h3 {
   text-align: center;
   color: #fff;
 }
-*/
+
 
 .hero-content {
   max-width: 800px;
