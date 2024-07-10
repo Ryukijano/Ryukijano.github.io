@@ -1,10 +1,11 @@
 /* Reset default browser styles */
-
 body, html {
     margin: 0;
     padding: 0;
     height: 100%;
     overflow-x: hidden;
+    background-color: #121212;
+    color: #e0e0e0;
 }
 
 body {
@@ -18,172 +19,175 @@ header, main, footer {
 
 /* Add semi-transparent background to sections for better readability */
 section {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(30, 30, 30, 0.8);
     padding: 20px;
     margin: 20px 0;
     border-radius: 10px;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /* Global styles */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
-  color: #333;
-  background-color: #f4f4f4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
 }
 
 a {
-  color: #333;
-  text-decoration: none;
+    color: #bb86fc;
+    text-decoration: none;
 }
 
 ul {
-  list-style: none;
+    list-style: none;
 }
 
 /* Header styles */
 header {
-  background-color: #fff;
-  padding: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+    background-color: #1e1e1e;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 nav ul {
-  display: flex;
-  justify-content: space-around;
+    display: flex;
+    justify-content: space-around;
 }
 
 nav ul li {
-  margin-right: 1rem;
+    margin-right: 1rem;
+}
+
+nav ul li a {
+    color: #e0e0e0;
 }
 
 /* Main styles */
 main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
 }
 
 section {
-  margin-bottom: 4rem;
+    margin-bottom: 4rem;
 }
 
 h1, h2, h3 {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
+    color: #bb86fc;
 }
 
-/* Home section styles*/
+/* Home section styles */
 #home {
-  background-image: url('nightcity.jpg');
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: #fff;
+    background-image: url('nightcity.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #e0e0e0;
 }
-
 
 .hero-content {
-  max-width: 800px;
-  padding: 2rem;
-  background-color: rgba(0, 0, 0, 0.7);
-  border-radius: 4px;
+    max-width: 800px;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 4px;
 }
 
 .hero-content img {
-  display: none; /* Hide the image in the hero section */
+    display: none; /* Hide the image in the hero section */
 }
 
 /* About section styles */
 .about-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .about-image {
-  width: 40%;
-  border-radius: 4px;
+    width: 40%;
+    border-radius: 4px;
 }
 
 /* Project and research grid styles */
 .project-grid,
 .research-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 2rem;
 }
 
 .project,
 .research-item {
-  background-color: #fff;
-  padding: 1rem;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #2e2e2e;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .project img,
 .research-item img {
-  width: 100%;
-  height: auto;
-  border-radius: 4px;
-  margin-bottom: 1rem;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 1rem;
 }
 
 .project-info,
 .research-info {
-  text-align: center;
+    text-align: center;
 }
 
 .project-info a,
 .research-info a {
-  display: inline-block;
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: #333;
-  color: #fff;
-  border-radius: 4px;
-  transition: background-color 0.3s;
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #bb86fc;
+    color: #121212;
+    border-radius: 4px;
+    transition: background-color 0.3s;
 }
 
 .project-info a:hover,
 .research-info a:hover {
-  background-color: #555;
+    background-color: #3700b3;
+    color: #e0e0e0;
 }
 
 /* Contact section styles */
 .contact-links {
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
 }
 
 .contact-links li {
-  margin-right: 1rem;
+    margin-right: 1rem;
 }
 
 /* Footer styles */
 footer {
-  background-color: #333;
-  color: #fff;
-  padding: 1rem;
-  text-align: center;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    padding: 1rem;
+    text-align: center;
 }
 
 /* Background image styles for other pages */
 .background img {
-  width: 100%;
-  height: auto;
+    width: 100%;
+    height: auto;
 }
