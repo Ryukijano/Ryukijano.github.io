@@ -65,7 +65,7 @@
         const spaceshipLoader = new THREE.GLTFLoader();
         const spaceships = [];
         for (let i = 0; i < 10; i++) {
-            spaceshipLoader.load('https://threejs.org/examples/models/gltf/DamagedHelmet/glTF/DamagedHelmet.gltf', (gltf) => {
+            spaceshipLoader.load('https://threejs.org/examples/models/gltf/DamagedHelmet/DamagedHelmet.gltf', (gltf) => {
                 const spaceship = gltf.scene;
                 spaceship.position.set(
                     (Math.random() - 0.5) * 2000,
