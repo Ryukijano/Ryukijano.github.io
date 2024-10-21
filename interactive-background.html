@@ -10,25 +10,37 @@
 </head>
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/webgl-utils.js"></script>
     <script>
         // Scene setup
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
         const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         document.body.appendChild(renderer.domElement);
 
+        // Controls for user interactivity
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.1;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.5;
+
         // Particle system for the base background (stars or particles)
-        const pointCloudCount = 10000;
+        const pointCloudCount = 20000;
         const pointGeometry = new THREE.BufferGeometry();
         const pointPositions = new Float32Array(pointCloudCount * 3);
         const pointColors = new Float32Array(pointCloudCount * 3);
 
         for (let i = 0; i < pointCloudCount; i++) {
             const i3 = i * 3;
-            pointPositions[i3] = (Math.random() - 0.5) * 2000;
-            pointPositions[i3 + 1] = (Math.random() - 0.5) * 2000;
-            pointPositions[i3 + 2] = (Math.random() - 0.5) * 2000;
+            pointPositions[i3] = (Math.random() - 0.5) * 4000;
+            pointPositions[i3 + 1] = (Math.random() - 0.5) * 4000;
+            pointPositions[i3 + 2] = (Math.random() - 0.5) * 4000;
 
             const colorValue = Math.random();
             pointColors[i3] = colorValue;
@@ -40,7 +52,7 @@
         pointGeometry.setAttribute('color', new THREE.BufferAttribute(pointColors, 3));
 
         const pointMaterial = new THREE.PointsMaterial({
-            size: 1.5,
+            size: 2.5,
             vertexColors: true,
             blending: THREE.AdditiveBlending,
             transparent: true
@@ -49,91 +61,153 @@
         const pointCloud = new THREE.Points(pointGeometry, pointMaterial);
         scene.add(pointCloud);
 
-        // Spaceships - add multiple small ships moving around
-        const spaceshipGeometry = new THREE.ConeGeometry(5, 20, 32);
-        const spaceshipMaterial = new THREE.MeshStandardMaterial({
-            color: 0xffa500,
-            emissive: 0xff4500,
-            metalness: 0.9,
-            roughness: 0.3
-        });
+        // Spaceships with detailed and realistic geometry and materials
+        const spaceshipLoader = new THREE.GLTFLoader();
         const spaceships = [];
         for (let i = 0; i < 10; i++) {
-            const spaceship = new THREE.Mesh(spaceshipGeometry, spaceshipMaterial);
-            spaceship.position.set(
-                (Math.random() - 0.5) * 1000,
-                (Math.random() - 0.5) * 500,
-                (Math.random() - 0.5) * 1000
-            );
-            spaceship.rotation.z = Math.PI / 2;
-            spaceship.scale.set(0.5, 0.5, 0.5);
-            spaceships.push(spaceship);
-            scene.add(spaceship);
+            spaceshipLoader.load('https://threejs.org/examples/models/gltf/DamagedHelmet/glTF/DamagedHelmet.gltf', (gltf) => {
+                const spaceship = gltf.scene;
+                spaceship.position.set(
+                    (Math.random() - 0.5) * 2000,
+                    (Math.random() - 0.5) * 1000,
+                    (Math.random() - 0.5) * 2000
+                );
+                spaceship.scale.set(30, 30, 30);
+                spaceship.traverse(function (child) {
+                    if (child.isMesh) {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                    }
+                });
+                spaceships.push(spaceship);
+                scene.add(spaceship);
+            });
         }
 
-        // Exhaust Flames for Spaceships
-        const flameGeometry = new THREE.ConeGeometry(2, 10, 16);
-        const flameMaterial = new THREE.MeshBasicMaterial({ color: 0xff4500 });
+        // Exhaust Flames for Spaceships using Particle Systems
+        const flameParticleMaterial = new THREE.PointsMaterial({
+            color: 0xff5500,
+            size: 5,
+            blending: THREE.AdditiveBlending,
+            transparent: true,
+            opacity: 0.7
+        });
         const flames = [];
         spaceships.forEach(spaceship => {
-            const flame = new THREE.Mesh(flameGeometry, flameMaterial);
-            flame.position.set(-10, 0, 0);
+            const flameGeometry = new THREE.BufferGeometry();
+            const flamePositions = new Float32Array(300 * 3);
+            for (let i = 0; i < 300; i++) {
+                const i3 = i * 3;
+                flamePositions[i3] = (Math.random() - 0.5) * 10;
+                flamePositions[i3 + 1] = (Math.random() - 0.5) * 10;
+                flamePositions[i3 + 2] = (Math.random() - 0.5) * 10;
+            }
+            flameGeometry.setAttribute('position', new THREE.BufferAttribute(flamePositions, 3));
+            const flame = new THREE.Points(flameGeometry, flameParticleMaterial);
+            flame.position.set(-20, 0, 0);
             spaceship.add(flame);
             flames.push(flame);
         });
 
-        // Planets and Satellites
-        const planetGeometry = new THREE.SphereGeometry(50, 64, 64);
-        const planetMaterial = new THREE.MeshStandardMaterial({
-            color: 0x87ceeb,
-            metalness: 0.2,
-            roughness: 0.8
-        });
+        // Realistic Planets with textures, bump maps, and lighting
+        const planetTextures = [
+            {
+                map: new THREE.TextureLoader().load('https://threejs.org/examples/textures/earth_atmos_2048.jpg'),
+                bumpMap: new THREE.TextureLoader().load('https://threejs.org/examples/textures/earth_specular_2048.jpg'),
+                bumpScale: 0.05
+            },
+            {
+                map: new THREE.TextureLoader().load('https://threejs.org/examples/textures/moon_1024.jpg'),
+                bumpMap: new THREE.TextureLoader().load('https://threejs.org/examples/textures/moon_bump_1024.jpg'),
+                bumpScale: 0.1
+            },
+            {
+                map: new THREE.TextureLoader().load('https://threejs.org/examples/textures/mars_1k_color.jpg'),
+                bumpMap: new THREE.TextureLoader().load('https://threejs.org/examples/textures/mars_1k_normal.jpg'),
+                bumpScale: 0.08
+            }
+        ];
+        const planetGeometry = new THREE.SphereGeometry(150, 128, 128);
         const planets = [];
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < planetTextures.length; i++) {
+            const planetMaterial = new THREE.MeshStandardMaterial({
+                map: planetTextures[i].map,
+                bumpMap: planetTextures[i].bumpMap,
+                bumpScale: planetTextures[i].bumpScale,
+                metalness: 0.5,
+                roughness: 0.8
+            });
             const planet = new THREE.Mesh(planetGeometry, planetMaterial);
             planet.position.set(
+                (Math.random() - 0.5) * 3000,
                 (Math.random() - 0.5) * 1500,
-                (Math.random() - 0.5) * 800,
-                (Math.random() - 0.5) * 1500
+                (Math.random() - 0.5) * 3000
             );
+            planet.castShadow = true;
+            planet.receiveShadow = true;
             planets.push(planet);
             scene.add(planet);
         }
 
-        // Lighting Setup - adjust lighting for better ambiance
-        const ambientLight = new THREE.AmbientLight(0x404040, 2.0);
+        // Satellite geometry - add small satellites orbiting the planets
+        const satelliteGeometry = new THREE.BoxGeometry(20, 20, 40);
+        const satelliteMaterial = new THREE.MeshStandardMaterial({
+            color: 0xbbbbbb,
+            metalness: 0.7,
+            roughness: 0.3
+        });
+        const satellites = [];
+        planets.forEach(planet => {
+            const satellite = new THREE.Mesh(satelliteGeometry, satelliteMaterial);
+            satellite.position.set(planet.position.x + 300, planet.position.y, planet.position.z);
+            satellite.castShadow = true;
+            satellite.receiveShadow = true;
+            satellites.push(satellite);
+            scene.add(satellite);
+        });
+
+        // Lighting Setup - sophisticated lighting for enhanced visual quality
+        const ambientLight = new THREE.AmbientLight(0x404040, 3.0);
         scene.add(ambientLight);
 
-        const pointLight = new THREE.PointLight(0xffffff, 3.0, 1500);
-        pointLight.position.set(100, 500, 100);
-        scene.add(pointLight);
-
-        const spotLight = new THREE.SpotLight(0xffffff, 1.5, 1500, Math.PI / 6, 0.5, 2);
-        spotLight.position.set(-200, 600, 200);
-        scene.add(spotLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 4.0);
+        directionalLight.position.set(300, 1000, 500);
+        directionalLight.castShadow = true;
+        directionalLight.shadow.mapSize.width = 2048;
+        directionalLight.shadow.mapSize.height = 2048;
+        scene.add(directionalLight);
 
         // Camera Setup - adjust to show more of the scene
-        camera.position.set(0, 500, 1000);
-        camera.lookAt(0, 100, 0);
+        camera.position.set(0, 1000, 2000);
+        camera.lookAt(0, 0, 0);
 
         // Animation Loop
         function animate() {
             requestAnimationFrame(animate);
+
+            controls.update();
 
             // Rotate Point Cloud (Stars or Floating Particles)
             pointCloud.rotation.y += 0.0003;
 
             // Move Spaceships in a circular path
             spaceships.forEach((spaceship, index) => {
-                spaceship.position.x += Math.sin(Date.now() * 0.0005 + index) * 0.5;
-                spaceship.position.z += Math.cos(Date.now() * 0.0005 + index) * 0.5;
+                spaceship.position.x += Math.sin(Date.now() * 0.0005 + index) * 1.5;
+                spaceship.position.z += Math.cos(Date.now() * 0.0005 + index) * 1.5;
                 spaceship.rotation.y += 0.01;
             });
 
             // Rotate Planets slowly for effect
             planets.forEach(planet => {
                 planet.rotation.y += 0.001;
+            });
+
+            // Orbit Satellites around Planets
+            satellites.forEach((satellite, index) => {
+                const planet = planets[index % planets.length];
+                satellite.position.x = planet.position.x + Math.cos(Date.now() * 0.0005) * 300;
+                satellite.position.z = planet.position.z + Math.sin(Date.now() * 0.0005) * 300;
+                satellite.rotation.y += 0.01;
             });
 
             // Render Scene
