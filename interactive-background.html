@@ -26,9 +26,9 @@
 
         for (let i = 0; i < pointCloudCount; i++) {
             const i3 = i * 3;
-            pointPositions[i3] = (Math.random() - 0.5) * 600;
-            pointPositions[i3 + 1] = (Math.random() - 0.5) * 600;
-            pointPositions[i3 + 2] = (Math.random() - 0.5) * 600;
+            pointPositions[i3] = (Math.random() - 0.5) * 1000;
+            pointPositions[i3 + 1] = (Math.random() - 0.5) * 1000;
+            pointPositions[i3 + 2] = (Math.random() - 0.5) * 1000;
 
             const colorValue = Math.random();
             pointColors[i3] = colorValue;
@@ -40,7 +40,7 @@
         pointGeometry.setAttribute('color', new THREE.BufferAttribute(pointColors, 3));
 
         const pointMaterial = new THREE.PointsMaterial({
-            size: 1,
+            size: 1.5,
             vertexColors: true,
             blending: THREE.AdditiveBlending,
             transparent: true
@@ -50,90 +50,52 @@
         scene.add(pointCloud);
 
         // 3D Cloud Layer - make them more scattered and realistic
-        const cloudGeometry = new THREE.SphereGeometry(10, 16, 16);
+        const cloudGeometry = new THREE.SphereGeometry(20, 32, 32);
         const cloudMaterial = new THREE.MeshStandardMaterial({
             color: 0xffffff,
-            opacity: 0.7,
+            opacity: 0.5,
             transparent: true
         });
         const clouds = [];
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < 25; i++) {
             const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
             cloud.position.set(
-                (Math.random() - 0.5) * 400,
-                80 + Math.random() * 50, // Set height above the buildings, more random spacing
-                (Math.random() - 0.5) * 400
+                (Math.random() - 0.5) * 800,
+                100 + Math.random() * 100,
+                (Math.random() - 0.5) * 800
             );
-            cloud.scale.set(5 + Math.random() * 5, 3 + Math.random() * 2, 5 + Math.random() * 5);
+            cloud.scale.set(10 + Math.random() * 20, 5 + Math.random() * 5, 10 + Math.random() * 20);
             clouds.push(cloud);
             scene.add(cloud);
         }
 
-        // Floating Cityscape - reduce clutter, make buildings more distinct
-        const buildingGeometry = new THREE.BoxGeometry(10, 100, 10);
-        const buildingMaterial = new THREE.MeshStandardMaterial({
-            color: 0x6a5acd,
-            metalness: 0.5,
-            roughness: 0.6
-        });
-
-        const buildings = [];
-        for (let i = 0; i < 20; i++) {
-            const building = new THREE.Mesh(buildingGeometry, buildingMaterial);
-            building.position.set(
-                (Math.random() - 0.5) * 300,
-                50,
-                (Math.random() - 0.5) * 300
-            );
-            building.scale.y = Math.random() * 3 + 1; // Random height for buildings, more spread out
-            buildings.push(building);
-            scene.add(building);
-        }
-
-        // Floating Base - make it appear smaller, focus attention on the city
-        const floatingBaseGeometry = new THREE.CircleGeometry(200, 32);
-        const floatingBaseMaterial = new THREE.MeshStandardMaterial({
-            color: 0x2c3e50,
-            side: THREE.DoubleSide
-        });
-        const floatingBase = new THREE.Mesh(floatingBaseGeometry, floatingBaseMaterial);
-        floatingBase.rotation.x = -Math.PI / 2;
-        floatingBase.position.y = -15; // Position slightly below the city
-        scene.add(floatingBase);
-
         // Lighting Setup - adjust lighting for better ambiance
-        const ambientLight = new THREE.AmbientLight(0x404040, 1.5);
+        const ambientLight = new THREE.AmbientLight(0x404040, 1.8);
         scene.add(ambientLight);
 
-        const pointLight = new THREE.PointLight(0xffffff, 1.2, 800);
-        pointLight.position.set(50, 150, 50);
+        const pointLight = new THREE.PointLight(0xffffff, 2.0, 1000);
+        pointLight.position.set(100, 300, 100);
         scene.add(pointLight);
 
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
-        directionalLight.position.set(-1, 0.5, 1);
-        scene.add(directionalLight);
+        const spotLight = new THREE.SpotLight(0xffffff, 1.5, 1000, Math.PI / 6, 0.5, 2);
+        spotLight.position.set(-200, 400, 100);
+        scene.add(spotLight);
 
         // Camera Setup - adjust to show more of the scene
-        camera.position.set(0, 150, 500);
-        camera.lookAt(0, 50, 0);
+        camera.position.set(0, 300, 700);
+        camera.lookAt(0, 100, 0);
 
         // Animation Loop
         function animate() {
             requestAnimationFrame(animate);
 
             // Rotate Point Cloud (Stars or Floating Particles)
-            pointCloud.rotation.y += 0.0005;
+            pointCloud.rotation.y += 0.0003;
 
             // Move Clouds to simulate drifting
             clouds.forEach(cloud => {
-                cloud.position.x += Math.sin(Date.now() * 0.0001) * 0.02;
-                cloud.position.z += Math.cos(Date.now() * 0.0001) * 0.02;
-            });
-
-            // Float the base and buildings to create a levitating effect
-            floatingBase.position.y = -15 + Math.sin(Date.now() * 0.001) * 1.5;
-            buildings.forEach(building => {
-                building.position.y = 50 + Math.sin(Date.now() * 0.001) * 1.5;
+                cloud.position.x += Math.sin(Date.now() * 0.0001) * 0.1;
+                cloud.position.z += Math.cos(Date.now() * 0.0001) * 0.1;
             });
 
             // Render Scene
