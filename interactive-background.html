@@ -3,246 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Vision Interactive Background</title>
     <style>
-        body { margin: 0; overflow: hidden; background: #000; }
+        body { margin: 0; overflow: hidden; }
         canvas { display: block; }
     </style>
 </head>
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // Enhanced scene setup with post-processing-like effects
+        // Scene setup
         const scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x000000, 0.002);
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
         document.body.appendChild(renderer.domElement);
 
-        // Point cloud system simulating LIDAR/depth scanning
-        const particleCount = 15000;
-        const particles = new THREE.BufferGeometry();
-        const positions = new Float32Array(particleCount * 3);
-        const colors = new Float32Array(particleCount * 3);
-        const velocities = new Float32Array(particleCount * 3);
-        const sizes = new Float32Array(particleCount);
-        const scanLines = new Float32Array(particleCount); // For scanning effect
+        // Particle system for 3D Point Cloud Data
+        const pointCloudCount = 10000;
+        const pointGeometry = new THREE.BufferGeometry();
+        const pointPositions = new Float32Array(pointCloudCount * 3);
+        const pointColors = new Float32Array(pointCloudCount * 3);
 
-        // Colors representing different aspects of 3D vision
-        const colorPalette = [
-            new THREE.Color(0x00ff88), // Depth data
-            new THREE.Color(0xff0088), // Feature points
-            new THREE.Color(0x0088ff), // Camera rays
-            new THREE.Color(0xffff00), // Reconstruction points
-            new THREE.Color(0xff8800)  // SLAM landmarks
-        ];
-
-        // Create point cloud with structured patterns
-        for (let i = 0; i < particleCount; i++) {
+        for (let i = 0; i < pointCloudCount; i++) {
             const i3 = i * 3;
-            
-            // Create structured patterns simulating organized point clouds
-            if (i % 3 === 0) {
-                // Structured grid pattern
-                const gridSize = 50;
-                const x = ((i % gridSize) - gridSize/2) + (Math.random() - 0.5) * 2;
-                const y = (Math.floor(i / gridSize) % gridSize - gridSize/2) + (Math.random() - 0.5) * 2;
-                const z = (Math.floor(i / (gridSize * gridSize)) - gridSize/2) + (Math.random() - 0.5) * 2;
-                
-                positions[i3] = x * 2;
-                positions[i3 + 1] = y * 2;
-                positions[i3 + 2] = z * 2;
-            } else {
-                // Random points for organic feel
-                const radius = 50 + (Math.random() - 0.5) * 20;
-                const theta = Math.random() * Math.PI * 2;
-                const phi = Math.acos((Math.random() * 2) - 1);
-                
-                positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
-                positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-                positions[i3 + 2] = radius * Math.cos(phi);
-            }
+            pointPositions[i3] = (Math.random() - 0.5) * 200;
+            pointPositions[i3 + 1] = (Math.random() - 0.5) * 200;
+            pointPositions[i3 + 2] = (Math.random() - 0.5) * 200;
 
-            // Assign colors based on position to simulate depth coloring
-            const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-            colors[i3] = color.r;
-            colors[i3 + 1] = color.g;
-            colors[i3 + 2] = color.b;
-
-            // Dynamic velocities based on position
-            velocities[i3] = (Math.random() - 0.5) * 0.1;
-            velocities[i3 + 1] = (Math.random() - 0.5) * 0.1;
-            velocities[i3 + 2] = (Math.random() - 0.5) * 0.1;
-
-            // Varying sizes for depth perception
-            sizes[i] = Math.random() * 2 + 1;
-            
-            // Initialize scan line effect
-            scanLines[i] = Math.random() * 100;
+            const colorValue = Math.random();
+            pointColors[i3] = colorValue;
+            pointColors[i3 + 1] = colorValue * 0.5;
+            pointColors[i3 + 2] = 1.0 - colorValue;
         }
 
-        particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-        particles.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+        pointGeometry.setAttribute('position', new THREE.BufferAttribute(pointPositions, 3));
+        pointGeometry.setAttribute('color', new THREE.BufferAttribute(pointColors, 3));
 
-        // Custom shader material for advanced visual effects
-        const particleMaterial = new THREE.ShaderMaterial({
+        const pointMaterial = new THREE.PointsMaterial({
+            size: 0.5,
+            vertexColors: true,
+            blending: THREE.AdditiveBlending,
+            transparent: true
+        });
+
+        const pointCloud = new THREE.Points(pointGeometry, pointMaterial);
+        scene.add(pointCloud);
+
+        // 3D Reconstruction Feature (Mesh from Points)
+        const recGeometry = new THREE.SphereGeometry(10, 32, 32);
+        const recMaterial = new THREE.MeshStandardMaterial({
+            color: 0x0077ff,
+            metalness: 0.6,
+            roughness: 0.4
+        });
+
+        const reconstructedMesh = new THREE.Mesh(recGeometry, recMaterial);
+        reconstructedMesh.position.set(0, -50, -50);
+        scene.add(reconstructedMesh);
+
+        // Lighting for AI-based Ray Tracing-like Effect
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+        scene.add(ambientLight);
+
+        const pointLight = new THREE.PointLight(0xffffff, 1);
+        pointLight.position.set(50, 50, 50);
+        scene.add(pointLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight.position.set(-1, 0.5, 1);
+        scene.add(directionalLight);
+
+        // Adding Reflective Surfaces with Shader (Simulating Ray Tracing Effects)
+        const reflectiveMaterial = new THREE.ShaderMaterial({
             uniforms: {
-                time: { value: 0 },
-                scanLine: { value: 0 }
+                lightPosition: { value: pointLight.position },
+                cameraPosition: { value: camera.position }
             },
             vertexShader: `
-                attribute float size;
-                attribute float scanLine;
-                varying vec3 vColor;
-                uniform float time;
-                uniform float scanLine;
-                
+                varying vec3 vNormal;
+                varying vec3 vPosition;
                 void main() {
-                    vColor = color;
-                    vec3 pos = position;
-                    
-                    // Simulate scanning effect
-                    float scanEffect = sin(scanLine + time * 2.0);
-                    pos.z += scanEffect * 2.0;
-                    
-                    // Add wave effect
-                    pos.x += sin(time * 2.0 + position.z * 0.02) * 0.5;
-                    pos.y += cos(time * 2.0 + position.x * 0.02) * 0.5;
-                    
-                    vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-                    gl_PointSize = size * (300.0 / length(mvPosition.xyz));
-                    gl_Position = projectionMatrix * mvPosition;
+                    vNormal = normalize(normalMatrix * normal);
+                    vPosition = (modelViewMatrix * vec4(position, 1.0)).xyz;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
                 }
             `,
             fragmentShader: `
-                varying vec3 vColor;
-                
+                uniform vec3 lightPosition;
+                varying vec3 vNormal;
+                varying vec3 vPosition;
+
                 void main() {
-                    float dist = length(gl_PointCoord - vec2(0.5));
-                    if (dist > 0.5) discard;
-                    
-                    // Add glow effect
-                    float intensity = 1.0 - dist * 2.0;
-                    vec3 glow = vColor * intensity;
-                    gl_FragColor = vec4(glow, intensity);
+                    vec3 lightDir = normalize(lightPosition - vPosition);
+                    float brightness = dot(vNormal, lightDir);
+                    vec3 diffuse = vec3(0.2, 0.5, 1.0) * brightness;
+                    vec3 reflection = reflect(-lightDir, vNormal);
+                    float specular = pow(max(dot(reflection, normalize(-vPosition)), 0.0), 16.0);
+                    vec3 color = diffuse + vec3(1.0) * specular * 0.5;
+                    gl_FragColor = vec4(color, 1.0);
                 }
             `,
-            transparent: true,
-            blending: THREE.AdditiveBlending,
-            depthWrite: false
         });
 
-        const particleSystem = new THREE.Points(particles, particleMaterial);
-        scene.add(particleSystem);
+        const reflectiveSphere = new THREE.Mesh(
+            new THREE.SphereGeometry(5, 32, 32),
+            reflectiveMaterial
+        );
+        reflectiveSphere.position.set(30, 0, 0);
+        scene.add(reflectiveSphere);
 
-        // Simulated camera frustum visualization
-        const frustumGeometry = new THREE.ConeGeometry(20, 40, 4);
-        const frustumMaterial = new THREE.MeshBasicMaterial({
-            color: 0x0088ff,
-            wireframe: true,
-            transparent: true,
-            opacity: 0.2
-        });
-        const frustum = new THREE.Mesh(frustumGeometry, frustumMaterial);
-        frustum.position.z = -30;
-        frustum.rotation.z = Math.PI;
-        scene.add(frustum);
+        // Camera and Scene Setup
+        camera.position.z = 150;
 
-        // Ray visualization
-        const rayCount = 50;
-        const rays = [];
-        for (let i = 0; i < rayCount; i++) {
-            const rayGeometry = new THREE.BufferGeometry();
-            const rayVertices = new Float32Array(6); // Two points per line
-            rayGeometry.setAttribute('position', new THREE.BufferAttribute(rayVertices, 3));
-            const rayMaterial = new THREE.LineBasicMaterial({
-                color: 0x00ff88,
-                transparent: true,
-                opacity: 0.2
-            });
-            const ray = new THREE.Line(rayGeometry, rayMaterial);
-            rays.push(ray);
-            scene.add(ray);
-        }
-
-        camera.position.z = 100;
-
-        // Enhanced mouse interaction
-        const mouse = new THREE.Vector2();
-        const target = new THREE.Vector2();
-        const windowHalf = new THREE.Vector2(window.innerWidth / 2, window.innerHeight / 2);
-
-        document.addEventListener('mousemove', (event) => {
-            mouse.x = (event.clientX - windowHalf.x);
-            mouse.y = (event.clientY - windowHalf.y);
-        });
-
-        // Animation loop with enhanced effects
-        let time = 0;
+        // Animation Loop
         function animate() {
             requestAnimationFrame(animate);
-            time += 0.01;
 
-            // Update particle shader uniforms
-            particleMaterial.uniforms.time.value = time;
-            particleMaterial.uniforms.scanLine.value = Math.sin(time);
+            // Rotate Point Cloud
+            pointCloud.rotation.y += 0.001;
+            pointCloud.rotation.x += 0.0005;
 
-            // Update particle positions with more complex motion
-            const positions = particles.attributes.position.array;
-            const colors = particles.attributes.color.array;
-
-            for (let i = 0; i < particleCount * 3; i += 3) {
-                // Add scanning wave effect
-                positions[i] += velocities[i];
-                positions[i + 1] += velocities[i + 1];
-                positions[i + 2] += velocities[i + 2];
-
-                // Boundary checking with smooth transition
-                if (Math.abs(positions[i]) > 50) {
-                    velocities[i] *= -1;
-                    // Change color on boundary hit
-                    const newColor = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-                    colors[i] = newColor.r;
-                    colors[i + 1] = newColor.g;
-                    colors[i + 2] = newColor.b;
-                }
-                if (Math.abs(positions[i + 1]) > 50) velocities[i + 1] *= -1;
-                if (Math.abs(positions[i + 2]) > 50) velocities[i + 2] *= -1;
-            }
-
-            particles.attributes.position.needsUpdate = true;
-            particles.attributes.color.needsUpdate = true;
-
-            // Update rays
-            rays.forEach((ray, i) => {
-                const angle = (i / rayCount) * Math.PI * 2 + time;
-                const rayVertices = ray.geometry.attributes.position.array;
-                rayVertices[0] = 0;
-                rayVertices[1] = 0;
-                rayVertices[2] = -30;
-                rayVertices[3] = Math.cos(angle) * 50;
-                rayVertices[4] = Math.sin(angle) * 50;
-                rayVertices[5] = -80;
-                ray.geometry.attributes.position.needsUpdate = true;
-                ray.material.opacity = 0.1 + Math.sin(time + i) * 0.1;
-            });
-
-            // Rotate frustum for scanning effect
-            frustum.rotation.y = Math.sin(time * 0.5) * 0.5;
-
-            // Update camera with smooth movement
-            target.x = (1 - mouse.x) * 0.002;
-            target.y = (1 - mouse.y) * 0.002;
-
-            camera.rotation.x += 0.05 * (target.y - camera.rotation.x);
-            camera.rotation.y += 0.05 * (target.x - camera.rotation.y);
+            // Rotate Reconstructed Mesh and Reflective Sphere
+            reconstructedMesh.rotation.y += 0.002;
+            reflectiveSphere.rotation.y += 0.005;
 
             renderer.render(scene, camera);
         }
-
         animate();
 
         // Handle window resizing
@@ -250,7 +136,6 @@
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
-            windowHalf.set(window.innerWidth / 2, window.innerHeight / 2);
         });
     </script>
 </body>
