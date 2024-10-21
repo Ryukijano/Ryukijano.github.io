@@ -5,8 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enhanced 3D Vision Interactive Background</title>
     <style>
-        body { margin: 0; overflow: hidden; background: #000; }
-        canvas { display: block; }
+        body { 
+            margin: 0; 
+            overflow: hidden; 
+            background: #000; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+        canvas { 
+            display: block; 
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
         #controls {
             position: fixed;
             top: 10px;
@@ -16,6 +30,18 @@
             background: rgba(0,0,0,0.7);
             padding: 10px;
             border-radius: 5px;
+            z-index: 1;
+        }
+        #content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px; /* Adjust as needed */
+            padding: 20px;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5); /* Optional: semi-transparent background for readability */
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -29,26 +55,37 @@
             </select>
         </label>
     </div>
+    <div id="content">
+        <!-- Your central content goes here -->
+        <h1>Main Content Area</h1>
+        <p>This is where your central content will be displayed.</p>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
+        // Scene Setup
         const scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x000000, 0.002);
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        scene.fog = new THREE.FogExp2(0x000000, 0.001); // Reduced fog for better depth perception
+
+        // Camera Setup
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 2000);
+        camera.position.z = 500; // Moved camera back to capture more area
+
+        // Renderer Setup
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
         document.body.appendChild(renderer.domElement);
 
-        // Enhanced point cloud system
-        const particleCount = 20000;
-        const particles = new THREE.BufferGeometry();
-        const positions = new Float32Array(particleCount * 3);
-        const colors = new Float32Array(particleCount * 3);
-        const velocities = new Float32Array(particleCount * 3);
-        const sizes = new Float32Array(particleCount);
-        const scanLines = new Float32Array(particleCount);
-        const confidenceScores = new Float32Array(particleCount); // New: confidence scoring
+        // Group to Hold All Visualization Elements
+        const vizGroup = new THREE.Group();
+        scene.add(vizGroup);
 
+        // Parameters
+        const particleCount = 10000; // Increased particle count for denser visuals
+        const rayCount = 150;
+        const featureCount = 30;
+
+        // Color Palette for Diverse Visuals
         const colorPalette = [
             new THREE.Color(0x00ff88), // Depth data
             new THREE.Color(0xff0088), // Feature points
@@ -57,54 +94,47 @@
             new THREE.Color(0xff8800)  // SLAM landmarks
         ];
 
-        // Enhanced point cloud initialization
+        // Enhanced Point Cloud System
+        const particles = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+        const velocities = new Float32Array(particleCount * 3);
+        const sizes = new Float32Array(particleCount);
+        const confidenceScores = new Float32Array(particleCount); // Confidence scoring
+
+        // Initialize Particles with Central and Side Focus
         for (let i = 0; i < particleCount; i++) {
             const i3 = i * 3;
-            
-            // Create structured patterns with more variety
-            if (i % 4 === 0) {
-                // Structured grid pattern
-                const gridSize = 60;
-                const x = ((i % gridSize) - gridSize/2) + (Math.random() - 0.5) * 3;
-                const y = (Math.floor(i / gridSize) % gridSize - gridSize/2) + (Math.random() - 0.5) * 3;
-                const z = (Math.floor(i / (gridSize * gridSize)) - gridSize/2) + (Math.random() - 0.5) * 3;
-                
-                positions[i3] = x * 2;
-                positions[i3 + 1] = y * 2;
-                positions[i3 + 2] = z * 2;
-            } else if (i % 4 === 1) {
-                // Spherical distribution for feature points
-                const radius = 40 + (Math.random() - 0.5) * 20;
-                const theta = Math.random() * Math.PI * 2;
-                const phi = Math.acos((Math.random() * 2) - 1);
-                
-                positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
-                positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-                positions[i3 + 2] = radius * Math.cos(phi);
+
+            // Determine Position Distribution: Central Cluster or Side Spread
+            const isCentral = Math.random() < 0.5; // 50% central, 50% sides
+            if (isCentral) {
+                // Central Cluster
+                positions[i3] = (Math.random() - 0.5) * 100;
+                positions[i3 + 1] = (Math.random() - 0.5) * 100;
+                positions[i3 + 2] = (Math.random() - 0.5) * 100;
             } else {
-                // Random clusters simulating object detection
-                const cluster = Math.floor(i / 100);
-                const centerX = Math.cos(cluster) * 30;
-                const centerY = Math.sin(cluster) * 30;
-                const centerZ = (cluster % 5) * 10;
-                
-                positions[i3] = centerX + (Math.random() - 0.5) * 10;
-                positions[i3 + 1] = centerY + (Math.random() - 0.5) * 10;
-                positions[i3 + 2] = centerZ + (Math.random() - 0.5) * 10;
+                // Side Spread
+                const side = Math.random() < 0.5 ? -1 : 1;
+                positions[i3] = side * (150 + Math.random() * 150); // Positions between -300 to -150 or 150 to 300
+                positions[i3 + 1] = (Math.random() - 0.5) * 200;    // Spread vertically
+                positions[i3 + 2] = (Math.random() - 0.5) * 200;    // Spread in depth
             }
 
+            // Assign Colors from Palette
             const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
             colors[i3] = color.r;
             colors[i3 + 1] = color.g;
             colors[i3 + 2] = color.b;
 
-            velocities[i3] = (Math.random() - 0.5) * 0.15;
-            velocities[i3 + 1] = (Math.random() - 0.5) * 0.15;
-            velocities[i3 + 2] = (Math.random() - 0.5) * 0.15;
+            // Assign Velocities for Dynamic Movement
+            velocities[i3] = (Math.random() - 0.5) * 0.2;
+            velocities[i3 + 1] = (Math.random() - 0.5) * 0.2;
+            velocities[i3 + 2] = (Math.random() - 0.5) * 0.2;
 
-            sizes[i] = Math.random() * 3 + 1;
-            scanLines[i] = Math.random() * 100;
-            confidenceScores[i] = Math.random(); // Confidence score simulation
+            // Assign Sizes and Confidence Scores
+            sizes[i] = Math.random() * 4 + 2; // Larger particles
+            confidenceScores[i] = Math.random(); // Simulated confidence
         }
 
         particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -112,44 +142,37 @@
         particles.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
         particles.setAttribute('confidence', new THREE.BufferAttribute(confidenceScores, 1));
 
-        // Enhanced shader material
+        // Shader Material for Enhanced Visual Effects
         const particleMaterial = new THREE.ShaderMaterial({
             uniforms: {
                 time: { value: 0 },
-                scanLine: { value: 0 },
                 vizMode: { value: 0 }
             },
             vertexShader: `
                 attribute float size;
-                attribute float scanLine;
                 attribute float confidence;
                 varying vec3 vColor;
                 varying float vConfidence;
                 uniform float time;
-                uniform float scanLine;
                 uniform float vizMode;
-                
+
                 void main() {
                     vColor = color;
                     vConfidence = confidence;
                     vec3 pos = position;
-                    
-                    // Enhanced scanning effect
-                    float scanEffect = sin(scanLine + time * 2.0);
-                    pos.z += scanEffect * 2.0;
-                    
-                    // Multiple wave patterns
+
+                    // Dynamic Wave Patterns
                     float wave1 = sin(time * 2.0 + position.z * 0.02) * 0.5;
                     float wave2 = cos(time * 1.5 + position.x * 0.03) * 0.3;
                     float wave3 = sin(time * 1.0 + position.y * 0.04) * 0.4;
-                    
-                    // Apply waves based on visualization mode
+
+                    // Apply Waves Based on Visualization Mode
                     if(vizMode < 1.0) {
                         pos.x += wave1;
                         pos.y += wave2;
                         pos.z += wave3;
                     }
-                    
+
                     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
                     gl_PointSize = size * (300.0 / length(mvPosition.xyz));
                     gl_Position = projectionMatrix * mvPosition;
@@ -159,30 +182,31 @@
                 varying vec3 vColor;
                 varying float vConfidence;
                 uniform float vizMode;
-                
+
                 void main() {
                     float dist = length(gl_PointCoord - vec2(0.5));
                     if (dist > 0.5) discard;
-                    
-                    // Enhanced visualization modes
+
+                    // Base Color and Alpha
                     vec3 finalColor = vColor;
                     float alpha = 1.0 - dist * 2.0;
-                    
+
+                    // Visualization Modes
                     if(vizMode > 1.0) {
-                        // Depth map visualization
+                        // Depth Map Visualization
                         float depth = (gl_FragCoord.z + 1.0) * 0.5;
                         finalColor = vec3(depth);
                         alpha *= vConfidence;
                     } else if(vizMode > 0.0) {
-                        // Feature point visualization
+                        // Feature Point Visualization
                         finalColor *= vConfidence;
                         alpha *= smoothstep(0.3, 1.0, vConfidence);
                     }
-                    
-                    // Enhanced glow effect
+
+                    // Glow Effect
                     float glow = pow(1.0 - dist * 2.0, 2.0);
                     finalColor += vColor * glow * 0.5;
-                    
+
                     gl_FragColor = vec4(finalColor, alpha);
                 }
             `,
@@ -192,14 +216,13 @@
         });
 
         const particleSystem = new THREE.Points(particles, particleMaterial);
-        scene.add(particleSystem);
+        vizGroup.add(particleSystem);
 
-        // Enhanced ray visualization
-        const rayCount = 80;
+        // Enhanced Ray Visualization
         const rays = [];
         for (let i = 0; i < rayCount; i++) {
             const rayGeometry = new THREE.BufferGeometry();
-            const rayVertices = new Float32Array(6);
+            const rayVertices = new Float32Array(6); // Start and end points
             rayGeometry.setAttribute('position', new THREE.BufferAttribute(rayVertices, 3));
             const rayMaterial = new THREE.LineBasicMaterial({
                 color: new THREE.Color().setHSL(i / rayCount, 1, 0.5),
@@ -208,41 +231,42 @@
             });
             const ray = new THREE.Line(rayGeometry, rayMaterial);
             rays.push(ray);
-            scene.add(ray);
+            vizGroup.add(ray);
         }
 
-        // Feature tracking visualization
+        // Feature Tracking Visualization
         const featurePoints = [];
-        for (let i = 0; i < 20; i++) {
-            const geometry = new THREE.RingGeometry(0.5, 1, 16);
+        for (let i = 0; i < featureCount; i++) {
+            const geometry = new THREE.RingGeometry(1, 2, 16);
             const material = new THREE.MeshBasicMaterial({
                 color: 0xff0088,
                 transparent: true,
                 opacity: 0.5
             });
             const ring = new THREE.Mesh(geometry, material);
+            // Position Rings on the Sides
+            const side = Math.random() < 0.5 ? -1 : 1;
             ring.position.set(
-                (Math.random() - 0.5) * 100,
-                (Math.random() - 0.5) * 100,
-                (Math.random() - 0.5) * 100
+                side * (150 + Math.random() * 150),
+                (Math.random() - 0.5) * 200,
+                (Math.random() - 0.5) * 200
             );
             featurePoints.push(ring);
-            scene.add(ring);
+            vizGroup.add(ring);
         }
 
-        camera.position.z = 100;
-
+        // Mouse Interaction Setup
         const mouse = new THREE.Vector2();
         const target = new THREE.Vector2();
         const windowHalf = new THREE.Vector2(window.innerWidth / 2, window.innerHeight / 2);
 
-        // Enhanced mouse interaction
+        // Update Mouse Position
         document.addEventListener('mousemove', (event) => {
             mouse.x = (event.clientX - windowHalf.x);
             mouse.y = (event.clientY - windowHalf.y);
         });
 
-        // Visualization mode control
+        // Visualization Mode Control
         const vizModeSelect = document.getElementById('vizMode');
         vizModeSelect.addEventListener('change', (event) => {
             particleMaterial.uniforms.vizMode.value = 
@@ -256,55 +280,57 @@
             time += 0.01;
 
             particleMaterial.uniforms.time.value = time;
-            particleMaterial.uniforms.scanLine.value = Math.sin(time);
 
             const positions = particles.attributes.position.array;
             const colors = particles.attributes.color.array;
 
-            // Enhanced particle animation
+            // Enhanced Particle Animation with Side Bounds
             for (let i = 0; i < particleCount * 3; i += 3) {
                 positions[i] += velocities[i];
                 positions[i + 1] += velocities[i + 1];
                 positions[i + 2] += velocities[i + 2];
 
-                if (Math.abs(positions[i]) > 50) {
+                // Keep Particles Within Bounds
+                if (Math.abs(positions[i]) > 300) {
                     velocities[i] *= -1;
+                    // Reassign Color on Bounce
                     const newColor = colorPalette[Math.floor(Math.random() * colorPalette.length)];
                     colors[i] = newColor.r;
                     colors[i + 1] = newColor.g;
                     colors[i + 2] = newColor.b;
                 }
-                if (Math.abs(positions[i + 1]) > 50) velocities[i + 1] *= -1;
-                if (Math.abs(positions[i + 2]) > 50) velocities[i + 2] *= -1;
+                if (Math.abs(positions[i + 1]) > 200) velocities[i + 1] *= -1;
+                if (Math.abs(positions[i + 2]) > 200) velocities[i + 2] *= -1;
             }
 
             particles.attributes.position.needsUpdate = true;
             particles.attributes.color.needsUpdate = true;
 
-            // Enhanced ray animation
+            // Enhanced Ray Animation
             rays.forEach((ray, i) => {
                 const angle = (i / rayCount) * Math.PI * 2 + time;
                 const rayVertices = ray.geometry.attributes.position.array;
-                rayVertices[0] = 0;
-                rayVertices[1] = 0;
-                rayVertices[2] = -30;
-                rayVertices[3] = Math.cos(angle) * 50;
-                rayVertices[4] = Math.sin(angle) * 50;
-                rayVertices[5] = -80;
+                const side = Math.random() < 0.5 ? -1 : 1;
+                rayVertices[0] = side * 150; // Origin X
+                rayVertices[1] = 0;          // Origin Y
+                rayVertices[2] = -30;        // Origin Z
+                rayVertices[3] = side * (Math.cos(angle) * 300); // End X
+                rayVertices[4] = Math.sin(angle) * 150;            // End Y
+                rayVertices[5] = -80;                               // End Z
                 ray.geometry.attributes.position.needsUpdate = true;
                 ray.material.opacity = 0.1 + Math.sin(time + i) * 0.1;
             });
 
-            // Animate feature points
+            // Animate Feature Points
             featurePoints.forEach((point, i) => {
                 point.rotation.z += 0.02;
                 point.scale.setScalar(1 + Math.sin(time * 2 + i) * 0.2);
                 point.material.opacity = 0.3 + Math.sin(time * 3 + i) * 0.2;
             });
 
-            // Camera movement
-            target.x = (1 - mouse.x) * 0.002;
-            target.y = (1 - mouse.y) * 0.002;
+            // Camera Movement Based on Mouse
+            target.x = (1 - mouse.x / windowHalf.x) * 0.002;
+            target.y = (1 - mouse.y / windowHalf.y) * 0.002;
 
             camera.rotation.x += 0.05 * (target.y - camera.rotation.x);
             camera.rotation.y += 0.05 * (target.x - camera.rotation.y);
@@ -314,6 +340,7 @@
 
         animate();
 
+        // Handle Window Resize
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
