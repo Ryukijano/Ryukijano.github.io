@@ -192,41 +192,6 @@
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
-
-        // Frustum Culling
-        renderer.setAnimationLoop(() => {
-            camera.updateMatrixWorld();
-            const frustum = new THREE.Frustum();
-            frustum.setFromProjectionMatrix(new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
-            scene.traverse(object => {
-                if (object.isMesh) {
-                    object.visible = frustum.intersectsObject(object);
-                }
-            });
-            renderer.render(scene, camera);
-        });
-
-        // Interactivity - Click to display information
-        const raycaster = new THREE.Raycaster();
-        const mouse = new THREE.Vector2();
-        window.addEventListener('click', event => {
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-            raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(scene.children);
-            if (intersects.length > 0) {
-                const object = intersects[0].object;
-                alert(`You clicked on a ${object.type}`);
-            }
-        });
-
-        // User-triggered events - Change background theme
-        document.addEventListener('keydown', event => {
-            if (event.key === 't') {
-                const newColor = Math.random() * 0xffffff;
-                scene.background = new THREE.Color(newColor);
-            }
-        });
     </script>
 </body>
 </html>
