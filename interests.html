@@ -29,6 +29,13 @@
       <img src="Offrenda_Final_2000x1200__1_.jpg" alt="Interest Image">
     </section>
   </main>
+  <script>
+    document.addEventListener('keydown', event => {
+      if (event.key === 't') {
+        const newColor = Math.random() * 0xffffff;
+        document.body.style.backgroundColor = `#${newColor.toString(16)}`;
+      }
+    });
+  </script>
 </body>
 </html>
-

@@ -30,5 +30,14 @@
       <a href="https://app.roboflow.com/hackthethong/pothole-detection-gmnid/deploy/4" target="_blank">Roboflow Project</a>
       <img src="Java_Hero__1_.jpg" alt="Project Image">
     </section>
-  </main
-
+  </main>
+  <script>
+    document.addEventListener('keydown', event => {
+      if (event.key === 't') {
+        const newColor = Math.random() * 0xffffff;
+        document.body.style.backgroundColor = `#${newColor.toString(16)}`;
+      }
+    });
+  </script>
+</body>
+</html>
