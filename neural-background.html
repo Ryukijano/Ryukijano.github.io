@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { 
+            margin: 0; 
+            overflow: hidden; 
+            background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+        }
+        canvas { 
+            display: block; 
+        }
+        #info {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-family: monospace;
+            font-size: 0.8em;
+            opacity: 0.7;
+            display: none;
+        }
+        #controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            background-color: rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.8em;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="info">Neural Network Visualization | NeRF & Diffusion Model Representation</div>
+    <div id="controls">
+        <div>Visualization Mode: <span id="mode">Neural Network</span></div>
+        <div>Press 'M' to change visualization</div>
+        <div>Press 'I' for info panel</div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Constants and configuration
+        const MODES = {
+            NEURAL_NETWORK: 'Neural Network',
+            NERF: 'NeRF Representation',
+            DIFFUSION: 'Diffusion Process',
+            VISION_TRANSFORMER: 'Vision Transformer'
+        };
+        
+        // Main visualization state
+        let currentMode = MODES.NEURAL_NETWORK;
+        let showInfo = false;
+        let showControls = true;
+        
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+        camera.position.z = 50;
+        
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.body.appendChild(renderer.domElement);
+        
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0x404040, 1.5);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+        
+        // Neural Network Visualization Components
+        const neuralNetComponents = {
+            layers: [],
+            connections: [],
+            group: new THREE.Group()
+        };
+        
+        // NeRF Visualization Components
+        const nerfComponents = {
+            points: null,
+            rays: [],
+            reconstructedMesh: null,
+            group: new THREE.Group()
+        };
+        
+        // Diffusion Visualization Components
+        const diffusionComponents = {
+            particles: null,
+            attractors: [],
+            diffusionMesh: null,
+            group: new THREE.Group()
+        };
+        
+        // Vision Transformer Components
+        const transformerComponents = {
+            patches: [],
+            attentionLines: [],
+            group: new THREE.Group()
+        };
+        
+        // Initialize all visualizations
+        function initNeuralNetwork() {
+            // Clear previous
+            while(neuralNetComponents.group.children.length > 0) {
+                neuralNetComponents.group.remove(neuralNetComponents.group.children[0]);
+            }
+            neuralNetComponents.layers = [];
+            neuralNetComponents.connections = [];
+            
+            // Layer configuration [input, hidden1, hidden2, output]
+            const layerSizes = [12, 24, 16, 8];
+            const layerSpacing = 20;
+            const nodeSpacing = 3.5;
+            
+            // Create layers
+            for (let l = 0; l < layerSizes.length; l++) {
+                const layerSize = layerSizes[l];
+                const layer = new THREE.Group();
+                layer.position.x = (l - 1.5) * layerSpacing;
+                
+                for (let n = 0; n < layerSize; n++) {
+                    const y = (n - (layerSize - 1) / 2) * nodeSpacing;
+                    
+                    // Node geometry
+                    const nodeGeometry = new THREE.SphereGeometry(0.7, 16, 16);
+                    const nodeMaterial = new THREE.MeshStandardMaterial({
+                        color: new THREE.Color().setHSL(l / layerSizes.length, 0.8, 0.6),
+                        metalness: 0.3,
+                        roughness: 0.7,
+                        emissive: new THREE.Color().setHSL(l / layerSizes.length, 0.8, 0.3)
+                    });
+                    
+                    const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+                    node.position.set(0, y, 0);
+                    node.userData = {
+                        activation: Math.random(), // Random initial activation
+                        layer: l,
+                        index: n
+                    };
+                    
+                    layer.add(node);
+                    
+                    // Add connections to previous layer
+                    if (l > 0) {
+                        const prevLayer = neuralNetComponents.layers[l-1];
+                        const prevNodes = prevLayer.children;
+                        
+                        for (let p = 0; p < prevNodes.length; p++) {
+                            const startPoint = new THREE.Vector3();
+                            prevNodes[p].getWorldPosition(startPoint);
+                            
+                            const endPoint = new THREE.Vector3();
+                            node.getWorldPosition(endPoint);
+                            
+                            const connectionGeometry = new THREE.BufferGeometry().setFromPoints([startPoint, endPoint]);
+                            
+                            // Calculate strength as a normalized random value
+                            const strength = Math.random();
+                            const weight = strength * 2 - 1; // Range: -1 to 1
+                            
+                            // Connection line with color based on weight
+                            const connectionMaterial = new THREE.LineBasicMaterial({
+                                color: weight > 0 ? 0x00ffff : 0xff6666,
+                                transparent: true,
+                                opacity: Math.abs(weight) * 0.5 + 0.1,
+                                linewidth: 1
+                            });
+                            
+                            const connection = new THREE.Line(connectionGeometry, connectionMaterial);
+                            connection.userData = {
+                                startNode: prevNodes[p],
+                                endNode: node,
+                                weight: weight
+                            };
+                            
+                            neuralNetComponents.connections.push(connection);
+                            neuralNetComponents.group.add(connection);
+                        }
+                    }
+                }
+                
+                neuralNetComponents.layers.push(layer);
+                neuralNetComponents.group.add(layer);
+            }
+            
+            scene.add(neuralNetComponents.group);
+        }
+        
+        function initNeRF() {
+            // Clear previous
+            while(nerfComponents.group.children.length > 0) {
+                nerfComponents.group.remove(nerfComponents.group.children[0]);
+            }
+            nerfComponents.rays = [];
+            
+            // Point cloud representing scene points
+            const pointCount = 2000;
+            const pointsGeometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(pointCount * 3);
+            const colors = new Float32Array(pointCount * 3);
+            
+            // Create a torus knot shape for the point cloud
+            const curve = new THREE.TorusKnotCurve3(10, 3, 100, 16);
+            
+            for (let i = 0; i < pointCount; i++) {
+                const t = i / pointCount;
+                const point = curve.getPoint(t);
+                
+                // Add some noise to make it more realistic
+                const noise = new THREE.Vector3(
+                    (Math.random() - 0.5) * 5,
+                    (Math.random() - 0.5) * 5,
+                    (Math.random() - 0.5) * 5
+                );
+                
+                point.add(noise);
+                
+                const i3 = i * 3;
+                positions[i3] = point.x;
+                positions[i3 + 1] = point.y;
+                positions[i3 + 2] = point.z;
+                
+                // Color based on position
+                const color = new THREE.Color().setHSL(
+                    (point.y + 15) / 30, // Hue based on y-position
+                    0.7,
+                    0.5
+                );
+                
+                colors[i3] = color.r;
+                colors[i3 + 1] = color.g;
+                colors[i3 + 2] = color.b;
+            }
+            
+            pointsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            pointsGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            
+            const pointsMaterial = new THREE.PointsMaterial({
+                size: 0.3,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            nerfComponents.points = new THREE.Points(pointsGeometry, pointsMaterial);
+            nerfComponents.group.add(nerfComponents.points);
+            
+            // Camera positions (for ray casting)
+            const cameraPositions = [];
+            for (let i = 0; i < 12; i++) {
+                const angle = (i / 12) * Math.PI * 2;
+                const x = Math.cos(angle) * 30;
+                const z = Math.sin(angle) * 30;
+                cameraPositions.push(new THREE.Vector3(x, 0, z));
+            }
+            
+            // Create rays from cameras to scene points
+            for (let c = 0; c < cameraPositions.length; c++) {
+                const cameraPos = cameraPositions[c];
+                
+                // Create camera visualization
+                const cameraGeometry = new THREE.ConeGeometry(1, 2, 8);
+                cameraGeometry.rotateX(Math.PI / 2);
+                const cameraMaterial = new THREE.MeshStandardMaterial({
+                    color: 0xffffff,
+                    emissive: 0x6666ff
+                });
+                const cameraMesh = new THREE.Mesh(cameraGeometry, cameraMaterial);
+                cameraMesh.position.copy(cameraPos);
+                cameraMesh.lookAt(0, 0, 0);
+                nerfComponents.group.add(cameraMesh);
+                
+                // Add some random rays from this camera
+                for (let r = 0; r < 5; r++) {
+                    // Pick a random point in the scene
+                    const pointIndex = Math.floor(Math.random() * pointCount);
+                    const targetX = positions[pointIndex * 3];
+                    const targetY = positions[pointIndex * 3 + 1];
+                    const targetZ = positions[pointIndex * 3 + 2];
+                    const targetPoint = new THREE.Vector3(targetX, targetY, targetZ);
+                    
+                    const rayGeometry = new THREE.BufferGeometry().setFromPoints([
+                        cameraPos,
+                        targetPoint
+                    ]);
+                    
+                    const rayMaterial = new THREE.LineBasicMaterial({
+                        color: 0xffff00,
+                        transparent: true,
+                        opacity: 0.3
+                    });
+                    
+                    const ray = new THREE.Line(rayGeometry, rayMaterial);
+                    nerfComponents.rays.push(ray);
+                    nerfComponents.group.add(ray);
+                }
+            }
+            
+            // Create partially reconstructed mesh
+            const meshGeometry = new THREE.TorusKnotGeometry(10, 3, 64, 16);
+            const meshMaterial = new THREE.MeshStandardMaterial({
+                color: 0x6666ff,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.3,
+                emissive: 0x3333ff,
+                emissiveIntensity: 0.3
+            });
+            
+            nerfComponents.reconstructedMesh = new THREE.Mesh(meshGeometry, meshMaterial);
+            nerfComponents.group.add(nerfComponents.reconstructedMesh);
+            
+            scene.add(nerfComponents.group);
+            nerfComponents.group.visible = false; // Hide initially
+        }
+        
+        function initDiffusionProcess() {
+            // Clear previous
+            while(diffusionComponents.group.children.length > 0) {
+                diffusionComponents.group.remove(diffusionComponents.group.children[0]);
+            }
+            diffusionComponents.attractors = [];
+            
+            // Particle system
+            const particleCount = 3000;
+            const particlesGeometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            const sizes = new Float32Array(particleCount);
+            const velocities = [];
+            
+            // Initial state: Gaussian distribution of particles
+            for (let i = 0; i < particleCount; i++) {
+                // Box-Muller transform for Gaussian distribution
+                let u = 0, v = 0;
+                while(u === 0) u = Math.random();
+                while(v === 0) v = Math.random();
+                
+                const std = 10; // Standard deviation
+                
+                const i3 = i * 3;
+                positions[i3] = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v) * std;
+                positions[i3 + 1] = Math.sqrt(-2.0 * Math.log(u)) * Math.sin(2.0 * Math.PI * v) * std;
+                positions[i3 + 2] = Math.sqrt(-2.0 * Math.log(v)) * Math.cos(2.0 * Math.PI * u) * std;
+                
+                // Random color based on position
+                const distanceFromCenter = new THREE.Vector3(
+                    positions[i3], positions[i3 + 1], positions[i3 + 2]
+                ).length();
+                
+                const color = new THREE.Color().setHSL(
+                    (distanceFromCenter / 30) % 1, // Hue based on distance
+                    0.7,
+                    0.5
+                );
+                
+                colors[i3] = color.r;
+                colors[i3 + 1] = color.g;
+                colors[i3 + 2] = color.b;
+                
+                // Random size
+                sizes[i] = Math.random() * 0.5 + 0.1;
+                
+                // Initial velocity
+                velocities.push(new THREE.Vector3(
+                    (Math.random() - 0.5) * 0.1,
+                    (Math.random() - 0.5) * 0.1,
+                    (Math.random() - 0.5) * 0.1
+                ));
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            particlesGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+            
+            // Custom shader material for particles
+            const particlesMaterial = new THREE.ShaderMaterial({
+                uniforms: {
+                    time: { value: 0 }
+                },
+                vertexShader: `
+                    attribute float size;
+                    attribute vec3 color;
+                    varying vec3 vColor;
+                    uniform float time;
+                    
+                    void main() {
+                        vColor = color;
+                        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                        gl_PointSize = size * (300.0 / -mvPosition.z);
+                        gl_Position = projectionMatrix * mvPosition;
+                    }
+                `,
+                fragmentShader: `
+                    varying vec3 vColor;
+                    
+                    void main() {
+                        if (length(gl_PointCoord - vec2(0.5, 0.5)) > 0.5) discard;
+                        gl_FragColor = vec4(vColor, 0.8);
+                    }
+                `,
+                transparent: true,
+                depthTest: false
+            });
+            
+            diffusionComponents.particles = new THREE.Points(particlesGeometry, particlesMaterial);
+            diffusionComponents.particles.userData = {
+                velocities: velocities,
+                positions: positions,
+                time: 0,
+                noiseScale: 0.1
+            };
+            
+            diffusionComponents.group.add(diffusionComponents.particles);
+            
+            // Attractors (latent space guidance)
+            const attractorCount = 5;
+            for (let i = 0; i < attractorCount; i++) {
+                const angle = (i / attractorCount) * Math.PI * 2;
+                const radius = 15;
+                
+                const attractorGeometry = new THREE.SphereGeometry(1, 16, 16);
+                const attractorMaterial = new THREE.MeshStandardMaterial({
+                    color: new THREE.Color().setHSL(i / attractorCount, 0.8, 0.6),
+                    emissive: new THREE.Color().setHSL(i / attractorCount, 0.8, 0.3),
+                    emissiveIntensity: 0.5,
+                    transparent: true,
+                    opacity: 0.7
+                });
+                
+                const attractor = new THREE.Mesh(attractorGeometry, attractorMaterial);
+                attractor.position.set(
+                    Math.cos(angle) * radius,
+                    Math.sin(angle) * radius * 0.5,
+                    0
+                );
+                
+                attractor.userData = {
+                    strength: Math.random() * 0.5 + 0.5,
+                    phase: Math.random() * Math.PI * 2
+                };
+                
+                diffusionComponents.attractors.push(attractor);
+                diffusionComponents.group.add(attractor);
+            }
+            
+            // Target shape (what the diffusion process is converging to)
+            const targetGeometry = new THREE.TorusKnotGeometry(10, 2.5, 64, 8);
+            const targetMaterial = new THREE.MeshStandardMaterial({
+                color: 0xffffff,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.1,
+                emissive: 0xffffff,
+                emissiveIntensity: 0.1
+            });
+            
+            diffusionComponents.diffusionMesh = new THREE.Mesh(targetGeometry, targetMaterial);
+            diffusionComponents.group.add(diffusionComponents.diffusionMesh);
+            
+            scene.add(diffusionComponents.group);
+            diffusionComponents.group.visible = false; // Hide initially
+        }
+        
+        function initVisionTransformer() {
+            // Clear previous
+            while(transformerComponents.group.children.length > 0) {
+                transformerComponents.group.remove(transformerComponents.group.children[0]);
+            }
+            transformerComponents.patches = [];
+            transformerComponents.attentionLines = [];
+            
+            // Create a grid of image patches
+            const gridSize = 6; // 6x6 grid of patches
+            const patchSize = 2;
+            const spacing = 2.5;
+            
+            // Create the patches
+            for (let x = 0; x < gridSize; x++) {
+                for (let y = 0; y < gridSize; y++) {
+                    const patchGeometry = new THREE.BoxGeometry(patchSize, patchSize, patchSize);
+                    
+                    // Color based on position in grid
+                    const patchMaterial = new THREE.MeshStandardMaterial({
+                        color: new THREE.Color().setHSL(
+                            (x + y) / (gridSize * 2),
+                            0.7,
+                            0.5
+                        ),
+                        transparent: true,
+                        opacity: 0.9
+                    });
+                    
+                    const patch = new THREE.Mesh(patchGeometry, patchMaterial);
+                    
+                    // Position in grid
+                    const posX = (x - (gridSize - 1) / 2) * spacing;
+                    const posY = (y - (gridSize - 1) / 2) * spacing;
+                    patch.position.set(posX, posY, -10);
+                    
+                    patch.userData = {
+                        originalPosition: new THREE.Vector3(posX, posY, -10),
+                        gridX: x,
+                        gridY: y,
+                        attention: Math.random(), // Random initial attention value
+                        phase: Math.random() * Math.PI * 2
+                    };
+                    
+                    transformerComponents.patches.push(patch);
+                    transformerComponents.group.add(patch);
+                }
+            }
+            
+            // Create attention token (center of attention)
+            const tokenGeometry = new THREE.SphereGeometry(1.5, 16, 16);
+            const tokenMaterial = new THREE.MeshStandardMaterial({
+                color: 0xffff00,
+                emissive: 0xffcc00,
+                emissiveIntensity: 0.7
+            });
+            
+            const attentionToken = new THREE.Mesh(tokenGeometry, tokenMaterial);
+            attentionToken.position.set(0, 0, 5);
+            attentionToken.userData = {
+                phase: 0
+            };
+            
+            transformerComponents.attentionToken = attentionToken;
+            transformerComponents.group.add(attentionToken);
+            
+            // Create attention lines between token and patches
+            for (let i = 0; i < transformerComponents.patches.length; i++) {
+                const patch = transformerComponents.patches[i];
+                
+                const lineGeometry = new THREE.BufferGeometry().setFromPoints([
+                    attentionToken.position,
+                    patch.position
+                ]);
+                
+                const lineMaterial = new THREE.LineBasicMaterial({
+                    color: 0xffff00,
+                    transparent: true,
+                    opacity: patch.userData.attention * 0.3
+                });
+                
+                const line = new THREE.Line(lineGeometry, lineMaterial);
+                line.userData = {
+                    fromPatch: patch,
+                    toToken: attentionToken
+                };
+                
+                transformerComponents.attentionLines.push(line);
+                transformerComponents.group.add(line);
+            }
+            
+            // Create the transformer layers (abstraction of self-attention)
+            const layerCount = 3;
+            const layerSpacing = 10;
+            
+            for (let layer = 0; layer < layerCount; layer++) {
+                const layerGeometry = new THREE.CylinderGeometry(5 - layer * 0.5, 5 - layer * 0.5, 1, 16);
+                const layerMaterial = new THREE.MeshStandardMaterial({
+                    color: new THREE.Color().setHSL(layer / layerCount, 0.7, 0.5),
+                    transparent: true,
+                    opacity: 0.5,
+                    emissive: new THREE.Color().setHSL(layer / layerCount, 0.7, 0.3),
+                    wireframe: true
+                });
+                
+                const layerMesh = new THREE.Mesh(layerGeometry, layerMaterial);
+                layerMesh.position.set(0, 0, 10 + layer * layerSpacing);
+                layerMesh.userData = {
+                    layer: layer,
+                    phase: Math.random() * Math.PI * 2
+                };
+                
+                transformerComponents.group.add(layerMesh);
+            }
+            
+            scene.add(transformerComponents.group);
+            transformerComponents.group.visible = false; // Hide initially
+        }
+        
+        // Animation functions for each mode
+        function animateNeuralNetwork() {
+            // Activate the neural network nodes over time
+            neuralNetComponents.layers.forEach((layer, layerIndex) => {
+                layer.children.forEach((node) => {
+                    // Update node activation
+                    node.userData.activation = 0.5 + 0.5 * Math.sin(Date.now() * 0.001 + layerIndex * 0.5 + node.userData.index * 0.2);
+                    
+                    // Scale the node based on activation
+                    const scale = 0.8 + node.userData.activation * 0.4;
+                    node.scale.set(scale, scale, scale);
+                    
+                    // Update the emissive intensity based on activation
+                    node.material.emissiveIntensity = node.userData.activation * 0.5;
+                });
+            });
+            
+            // Update connections
+            neuralNetComponents.connections.forEach((connection) => {
+                // Get start and end node activations
+                const startActivation = connection.userData.startNode.userData.activation;
+                const endActivation = connection.userData.endNode.userData.activation;
+                const weight = connection.userData.weight;
+                
+                // Set connection strength based on start node activation and weight
+                const signal = startActivation * Math.abs(weight);
+                connection.material.opacity = signal * 0.5 + 0.05;
+                
+                // Pulse effect
+                const pulse = Math.sin(Date.now() * 0.002 + connection.userData.startNode.userData.index * 0.1) * 0.5 + 0.5;
+                connection.material.color.setRGB(
+                    weight > 0 ? 0 : (1 * pulse),
+                    weight > 0 ? (1 * pulse) : 0,
+                    1 * pulse
+                );
+            });
+            
+            // Rotate the entire network slowly
+            neuralNetComponents.group.rotation.y = Math.sin(Date.now() * 0.0005) * 0.2;
+            neuralNetComponents.group.rotation.x = Math.sin(Date.now() * 0.0003) * 0.1;
+        }
+        
+        function animateNeRF() {
+            // Rotate the points slowly
+            nerfComponents.points.rotation.y += 0.001;
+            
+            // Pulse the rays
+            nerfComponents.rays.forEach((ray, index) => {
+                const pulse = Math.sin(Date.now() * 0.001 + index * 0.1) * 0.5 + 0.5;
+                ray.material.opacity = pulse * 0.3 + 0.1;
+            });
+            
+            // Animate the reconstructed mesh
+            nerfComponents.reconstructedMesh.rotation.y += 0.002;
+            nerfComponents.reconstructedMesh.rotation.z += 0.001;
+            
+            // Slightly rotate the entire NeRF visualization
+            nerfComponents.group.rotation.y = Math.sin(Date.now() * 0.0003) * 0.2;
+        }
+        
+        function animateDiffusionProcess() {
+            // Update particle positions and material time
+            diffusionComponents.particles.userData.time += 0.01;
+            diffusionComponents.particles.material.uniforms.time.value = diffusionComponents.particles.userData.time;
+            
+            const positions = diffusionComponents.particles.geometry.attributes.position.array;
+            const velocities = diffusionComponents.particles.userData.velocities;
+            
+            // Animate attractors
+            diffusionComponents.attractors.forEach((attractor, index) => {
+                // Orbit around center
+                const orbit = 0.001;
+                const angle = Date.now() * orbit + attractor.userData.phase;
+                const radius = attractor.position.length();
+                
+                attractor.position.x = Math.cos(angle) * radius;
+                attractor.position.z = Math.sin(angle) * radius * 0.5;
+                attractor.position.y = Math.sin(angle * 1.5) * radius * 0.5;
+                
+                // Pulse effect
+                const pulse = Math.sin(Date.now() * 0.002 + index) * 0.5 + 0.5;
+                attractor.scale.set(1 + pulse * 0.3, 1 + pulse * 0.3, 1 + pulse * 0.3);
+                attractor.material.emissiveIntensity = 0.3 + pulse * 0.2;
+            });
+            
+            // Update particles based on diffusion process
+            const t = diffusionComponents.particles.userData.time * 0.05; // Time factor
+            const noiseStrength = Math.max(0, 1 - t * 0.3); // Decreases over time
+            const attractionStrength = Math.min(1, t * 0.2); // Increases over time
+            
+            for (let i = 0; i < positions.length / 3; i++) {
+                const i3 = i * 3;
+                
+                // Get current position vector
+                const position = new THREE.Vector3(
+                    positions[i3],
+                    positions[i3 + 1],
+                    positions[i3 + 2]
+                );
+                
+                // Add noise (diffusion)
+                velocities[i].x += (Math.random() - 0.5) * noiseStrength * 0.2;
+                velocities[i].y += (Math.random() - 0.5) * noiseStrength * 0.2;
+                velocities[i].z += (Math.random() - 0.5) * noiseStrength * 0.2;
+                
+                // Attraction to target shape (latent guidance)
+                let totalAttraction = new THREE.Vector3(0, 0, 0);
+                
+                // Contribute from all attractors
+                diffusionComponents.attractors.forEach(attractor => {
+                    const attractorPos = attractor.position.clone();
+                    const direction = attractorPos.sub(position);
+                    const distance = direction.length();
+                    
+                    // Inverse square law with min distance to prevent extreme values
+                    const force = Math.min(1, attractor.userData.strength / (0.1 + distance * distance * 0.01)) * attractionStrength;
+                    
+                    totalAttraction.add(direction.normalize().multiplyScalar(force * 0.03));
+                });
+                
+                // Add attraction to current velocity
+                velocities[i].add(totalAttraction);
+                
+                // Apply damping
+                velocities[i].multiplyScalar(0.98);
+                
+                // Update position
+                positions[i3] += velocities[i].x;
+                positions[i3 + 1] += velocities[i].y;
+                positions[i3 + 2] += velocities[i].z;
+            }
+            
+            // Update target mesh
+            diffusionComponents.diffusionMesh.rotation.x += 0.001;
+            diffusionComponents.diffusionMesh.rotation.y += 0.002;
+            
+            // Make target mesh more visible over time
+            diffusionComponents.diffusionMesh.material.opacity = Math.min(0.3, t * 0.01);
+            
+            // Flag geometry for update
+            diffusionComponents.particles.geometry.attributes.position.needsUpdate = true;
+            
+            // Rotate the entire system slightly
+            diffusionComponents.group.rotation.y = Math.sin(Date.now() * 0.0003) * 0.3;
+        }
+        
+        function animateVisionTransformer() {
+            // Animate attention token
+            transformerComponents.attentionToken.userData.phase += 0.01;
+            const tokenPhase = transformerComponents.attentionToken.userData.phase;
+            transformerComponents.attentionToken.position.z = 5 + Math.sin(tokenPhase) * 2;
+            
+            // Circular pulse from token
+            const pulseMagnitude = (Math.sin(tokenPhase * 2) * 0.5 + 0.5) * 0.3;
+            
+            // Update patch positions - make them move in a wave pattern
+            transformerComponents.patches.forEach((patch, index) => {
+                const originalPos = patch.userData.originalPosition;
+                const time = Date.now() * 0.001;
+                
+                // Attention varies over time
+                patch.userData.attention = 0.3 + 0.7 * Math.sin(time * 0.5 + patch.userData.gridX * 0.2 + patch.userData.gridY * 0.3) * 0.5 + 0.5;
+                
+                // Move patches based on attention
+                patch.position.z = originalPos.z + patch.userData.attention * 3;
+                
+                // Scale patches based on attention
+                const scale = 0.8 + patch.userData.attention * 0.5;
+                patch.scale.set(scale, scale, scale);
+                
+                // Emissive based on attention
+                patch.material.emissive = new THREE.Color(
+                    patch.userData.attention * 0.5,
+                    patch.userData.attention * 0.3,
+                    patch.userData.attention * 0.1
+                );
+            });
+            
+            // Update attention lines
+            transformerComponents.attentionLines.forEach((line, index) => {
+                const patch = line.userData.fromPatch;
+                const token = line.userData.toToken;
+                
+                // Update line geometry to connect current positions
+                const lineGeometry = new THREE.BufferGeometry().setFromPoints([
+                    token.position,
+                    patch.position
+                ]);
+                line.geometry.dispose();
+                line.geometry = lineGeometry;
+                
+                // Line opacity based on patch attention
+                line.material.opacity = patch.userData.attention * 0.5;
+            });
+            
+            // Rotate the entire system slightly
+            transformerComponents.group.rotation.x = Math.sin(Date.now() * 0.0003) * 0.2;
+            transformerComponents.group.rotation.y = Math.sin(Date.now() * 0.0005) * 0.3;
+        }
+        
+        // Initialize all visualizations
+        function init() {
+            initNeuralNetwork();
+            initNeRF();
+            initDiffusionProcess();
+            initVisionTransformer();
+            
+            // Initialize UI elements
+            document.getElementById("info").style.display = showInfo ? "block" : "none";
+            document.getElementById("controls").style.display = showControls ? "block" : "none";
+            document.getElementById("mode").textContent = currentMode;
+            
+            // Set up keyboard controls
+            document.addEventListener('keydown', (event) => {
+                if (event.key.toLowerCase() === 'm') {
+                    // Cycle through visualization modes
+                    switch(currentMode) {
+                        case MODES.NEURAL_NETWORK:
+                            currentMode = MODES.NERF;
+                            break;
+                        case MODES.NERF:
+                            currentMode = MODES.DIFFUSION;
+                            break;
+                        case MODES.DIFFUSION:
+                            currentMode = MODES.VISION_TRANSFORMER;
+                            break;
+                        case MODES.VISION_TRANSFORMER:
+                            currentMode = MODES.NEURAL_NETWORK;
+                            break;
+                    }
+                    
+                    // Update visibility
+                    neuralNetComponents.group.visible = (currentMode === MODES.NEURAL_NETWORK);
+                    nerfComponents.group.visible = (currentMode === MODES.NERF);
+                    diffusionComponents.group.visible = (currentMode === MODES.DIFFUSION);
+                    transformerComponents.group.visible = (currentMode === MODES.VISION_TRANSFORMER);
+                    
+                    // Update UI
+                    document.getElementById("mode").textContent = currentMode;
+                }
+                else if (event.key.toLowerCase() === 'i') {
+                    // Toggle info panel
+                    showInfo = !showInfo;
+                    document.getElementById("info").style.display = showInfo ? "block" : "none";
+                }
+                else if (event.key.toLowerCase() === 'c') {
+                    // Toggle controls panel
+                    showControls = !showControls;
+                    document.getElementById("controls").style.display = showControls ? "block" : "none";
+                }
+            });
+        }
+        
+        // Main animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Call appropriate animation function based on current mode
+            switch(currentMode) {
+                case MODES.NEURAL_NETWORK:
+                    animateNeuralNetwork();
+                    break;
+                case MODES.NERF:
+                    animateNeRF();
+                    break;
+                case MODES.DIFFUSION:
+                    animateDiffusionProcess();
+                    break;
+                case MODES.VISION_TRANSFORMER:
+                    animateVisionTransformer();
+                    break;
+            }
+            
+            // Render the scene
+            renderer.render(scene, camera);
+        }
+        
+        // Handle window resizing
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        
+        window.addEventListener('resize', onWindowResize);
+        
+        // Initialize and start animation
+        init();
+        animate();
+    </script>
+</body>
+</html>
