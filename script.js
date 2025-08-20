@@ -377,6 +377,7 @@ class PortfolioApp {
   setupProjectsFilter() {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const projectCards = document.querySelectorAll('.project-card');
+    const searchInput = document.getElementById('project-search');
 
     filterButtons.forEach(button => {
       button.addEventListener('click', () => {
@@ -386,11 +387,15 @@ class PortfolioApp {
         filterButtons.forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
         
-        // Filter projects
+        const query = (searchInput?.value || '').trim().toLowerCase();
         projectCards.forEach(card => {
           const categories = card.getAttribute('data-category').split(' ');
-          
-          if (filter === 'all' || categories.includes(filter)) {
+          const title = card.querySelector('.project-title')?.textContent?.toLowerCase() || '';
+          const desc = card.querySelector('.project-description')?.textContent?.toLowerCase() || '';
+          const matchesFilter = filter === 'all' || categories.includes(filter);
+          const matchesQuery = !query || title.includes(query) || desc.includes(query);
+
+          if (matchesFilter && matchesQuery) {
             card.classList.remove('hidden');
             card.style.display = 'block';
           } else {
@@ -402,6 +407,31 @@ class PortfolioApp {
             }, 300);
           }
         });
+      });
+    });
+
+    searchInput?.addEventListener('input', () => {
+      const query = searchInput.value.trim().toLowerCase();
+      const activeFilterBtn = document.querySelector('.filter-btn.active');
+      const filter = activeFilterBtn?.getAttribute('data-filter') || 'all';
+      projectCards.forEach(card => {
+        const categories = card.getAttribute('data-category').split(' ');
+        const title = card.querySelector('.project-title')?.textContent?.toLowerCase() || '';
+        const desc = card.querySelector('.project-description')?.textContent?.toLowerCase() || '';
+        const matchesFilter = filter === 'all' || categories.includes(filter);
+        const matchesQuery = !query || title.includes(query) || desc.includes(query);
+
+        if (matchesFilter && matchesQuery) {
+          card.classList.remove('hidden');
+          card.style.display = 'block';
+        } else {
+          card.classList.add('hidden');
+          setTimeout(() => {
+            if (card.classList.contains('hidden')) {
+              card.style.display = 'none';
+            }
+          }, 300);
+        }
       });
     });
   }
@@ -464,6 +494,9 @@ class PortfolioApp {
         content: `
           <div class="modal-project-details">
             <img src="diffusion.png" alt="LoRA Project" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
+            <video controls playsinline muted style="width: 100%; border-radius: 10px; margin-bottom: 16px;" poster="diffusion.png">
+              <source src="media/lora-demo.mp4" type="video/mp4">
+            </video>
             
             <h4>Project Overview</h4>
             <p>This project implements LoRA (Low-Rank Adaptation) fine-tuning for Stable Diffusion XL, specifically trained on anime art styles. The model achieves high-quality image generation while maintaining efficiency through parameter-efficient training techniques.</p>
@@ -502,6 +535,9 @@ class PortfolioApp {
         content: `
           <div class="modal-project-details">
             <img src="Feature_Github_Hero_Accessibility.jpg" alt="JAX Project" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
+            <video controls playsinline muted style="width: 100%; border-radius: 10px; margin-bottom: 16px;" poster="Feature_Github_Hero_Accessibility.jpg">
+              <source src="media/jax-controlnet-demo.mp4" type="video/mp4">
+            </video>
             
             <h4>Competition Achievement</h4>
             <p>Achieved 8th place globally in the Hugging Face JAX Diffusers community competition, competing against hundreds of participants worldwide. This project demonstrates expertise in cutting-edge AI frameworks and high-performance computing.</p>
@@ -661,6 +697,74 @@ class PortfolioApp {
           </div>
         `
       }
+      ,
+      gemma: {
+        title: 'Gemma-Le VLA (Robotics) - LeRobot Policy',
+        content: `
+          <div class="modal-project-details">
+            <img src="command-line__2_.jpg" alt="Gemma-Le" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
+            <p>Compact vision-language-action policy built on LeRobot, using SigLIP for vision, Gemma 3 for language reasoning, and a diffusion-based action head.</p>
+            <ul>
+              <li>Vision: SigLIP ViT encoder</li>
+              <li>Text: Gemma 3 4B-IT with LoRA</li>
+              <li>Action: Scalable Diffusion Transformer</li>
+            </ul>
+            <div style="margin-top: 12px;">
+              <a href="https://huggingface.co/Ryukijano/gemma-groot" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt"></i> Model</a>
+              <a href="https://github.com/Ryukijano/Gemma-Grook" target="_blank" class="btn btn-secondary" style="margin-left:8px;"><i class="fab fa-github"></i> Code</a>
+            </div>
+          </div>
+        `
+      },
+      a2c: {
+        title: 'A2C on PandaReachDense-v2',
+        content: `
+          <div class="modal-project-details">
+            <img src="ant_bullet.gif" alt="A2C PandaReach" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
+            <p>Stable-Baselines3 A2C agent trained on PandaReachDense-v2 with vectorized environments and observation normalization.</p>
+            <div style="margin-top: 12px;">
+              <a href="https://huggingface.co/Ryukijano/a2c-PandaReachDense-v2" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt"></i> Model</a>
+            </div>
+          </div>
+        `
+      },
+      ppo: {
+        title: 'PPO (CartPole / LunarLander)',
+        content: `
+          <div class="modal-project-details">
+            <img src="Feature_Community__1_.jpg" alt="PPO" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
+            <p>Proximal Policy Optimization agent training with logs and evaluation on gym control tasks.</p>
+            <div style="margin-top: 12px;">
+              <a href="https://huggingface.co/Ryukijano/ppo-CartPole-v1" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt"></i> Model</a>
+            </div>
+          </div>
+        `
+      },
+      qlearn: {
+        title: 'Q-Learning on FrozenLake (4x4 no-slippery)',
+        content: `
+          <div class="modal-project-details">
+            <img src="kanagawa_latentspace_autoencoder.jpg" alt="Q-Learning FrozenLake" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
+            <p>Tabular Q-Learning agent packaged on Hugging Face Hub for easy reuse.</p>
+            <div style="margin-top: 12px;">
+              <a href="https://huggingface.co/Ryukijano/q-FrozenLake-v1-4x4-noSlippery" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt"></i> Model</a>
+            </div>
+          </div>
+        `
+      },
+      dalton: {
+        title: 'Dalton Mills: VR & AI Cultural Preservation',
+        content: `
+          <div class="modal-project-details">
+            <img src="Offrenda_Final_2000x1200__1_.jpg" alt="Dalton Mills" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
+            <p>HELIX case study at the University of Leeds: reconstructing Dalton Mills via deep learning 3D techniques and Unreal Engine for immersive VR.</p>
+            <div style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap;">
+              <a href="https://digitaleducation.leeds.ac.uk/2025/01/08/reconstructing-dalton-mills-vr-and-ai-in-cultural-preservation/" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt"></i> Case Study</a>
+              <a href="https://github.com/congruence-engine/Aesthetics-of-AI-Reconstruction" target="_blank" class="btn btn-secondary"><i class="fab fa-github"></i> Repo</a>
+            </div>
+          </div>
+        `
+      },
     };
 
     detailButtons.forEach(button => {

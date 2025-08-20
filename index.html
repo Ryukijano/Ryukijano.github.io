@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gyanateet Dutta | AI & Computer Graphics Expert</title>
     <meta name="description" content="Portfolio of Gyanateet Dutta - Master's student in CS & AI, specializing in computer graphics, machine learning, and quantum computing">
+    <meta property="og:title" content="Gyanateet Dutta | AI & Computer Graphics Expert">
+    <meta property="og:description" content="Portfolio of Gyanateet Dutta - Master's student in CS & AI, specializing in computer graphics, machine learning, and quantum computing">
+    <meta property="og:image" content="IMG20231231141400.jpg">
+    <meta property="og:url" content="https://ryukijano.github.io/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Gyanateet Dutta | AI & Computer Graphics Expert">
+    <meta name="twitter:description" content="Portfolio of Gyanateet Dutta - Master's student in CS & AI, specializing in computer graphics, machine learning, and quantum computing">
+    <link rel="canonical" href="https://ryukijano.github.io/">
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -12,16 +21,21 @@
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Preconnects -->
+    <link rel="preconnect" href="https://huggingface.co">
+    <link rel="preconnect" href="https://cdn-lfs.huggingface.co" crossorigin>
+
     <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="new-styles.css">
+    <link rel="stylesheet" href="styles.css">
     
     <!-- Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
+    <div id="three-bg"></div>
     <!-- Loading Screen -->
     <div id="loading-screen">
         <div class="loading-content">
@@ -50,6 +64,7 @@
                 <li><a href="#timeline" class="nav-link">Timeline</a></li>
                 <li><a href="#research" class="nav-link">Research</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="/resumes/updated_resume.pdf" class="nav-link" target="_blank" rel="noopener">Resume</a></li>
             </ul>
             <div class="nav-toggle">
                 <span></span>
@@ -100,6 +115,10 @@
                             <i class="fas fa-envelope"></i>
                             Get In Touch
                         </a>
+                        <a href="/resumes/updated_resume.pdf" class="btn btn-secondary" target="_blank" rel="noopener">
+                            <i class="fas fa-file"></i>
+                            Download Resume
+                        </a>
                     </div>
                     <div class="hero-social animate__animated animate__fadeInUp animate__delay-1s">
                         <a href="https://github.com/Ryukijano" target="_blank" class="social-link">
@@ -111,6 +130,15 @@
                         <a href="https://huggingface.co/Ryukijano" target="_blank" class="social-link">
                             <i class="fas fa-face-smile"></i>
                         </a>
+                        <a href="https://wandb.ai/ryukijano" target="_blank" class="social-link" title="Weights & Biases">
+                            <i class="fas fa-chart-line"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCf1XZKm0A_LoZj6Y22fIfcg" target="_blank" class="social-link" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://twitter.com/gyanateet" target="_blank" class="social-link" title="X (Twitter)">
+                            <i class="fab fa-x-twitter"></i>
+                        </a>
                         <a href="mailto:gyanateet@gmail.com" class="social-link">
                             <i class="fas fa-envelope"></i>
                         </a>
@@ -118,7 +146,7 @@
                 </div>
                 <div class="hero-visual">
                     <div class="hero-image-container">
-                        <img src="IMG20231231141400.jpg" alt="Gyanateet Dutta" class="hero-image">
+                        <img src="IMG20231231141400.jpg" alt="Gyanateet Dutta" class="hero-image" loading="lazy">
                         <div class="hero-image-overlay"></div>
                     </div>
                     <div class="floating-elements">
@@ -424,11 +452,12 @@
                     <button class="filter-btn" data-filter="graphics">Graphics</button>
                     <button class="filter-btn" data-filter="quantum">Quantum</button>
                     <button class="filter-btn" data-filter="web">Web</button>
+                    <input type="search" id="project-search" class="project-search-input" placeholder="Search projects..." aria-label="Search projects">
                 </div>
                 <div class="projects-grid">
                     <div class="project-card" data-category="ai">
                         <div class="project-image">
-                            <img src="diffusion.png" alt="LoRA Dreambooth Project">
+                            <img src="diffusion.png" alt="LoRA Dreambooth Project" loading="lazy">
                             <div class="project-overlay">
                                 <div class="project-actions">
                                     <a href="https://huggingface.co/Ryukijano/lora-trained-xl-kaggle-p100" target="_blank" class="project-btn">
@@ -468,7 +497,7 @@
 
                     <div class="project-card" data-category="ai graphics">
                         <div class="project-image">
-                            <img src="Feature_Github_Hero_Accessibility.jpg" alt="JAX Diffusers Project">
+                            <img src="Feature_Github_Hero_Accessibility.jpg" alt="JAX Diffusers Project" loading="lazy">
                             <div class="project-overlay">
                                 <div class="project-actions">
                                     <a href="https://github.com/Ryukijano/CatCon-Controlnet-WD-1-5-b2" target="_blank" class="project-btn">
@@ -508,7 +537,7 @@
 
                     <div class="project-card" data-category="ai">
                         <div class="project-image">
-                            <img src="computer_vision.jpg" alt="YOLO Pothole Detection">
+                            <img src="computer_vision.jpg" alt="YOLO Pothole Detection" loading="lazy">
                             <div class="project-overlay">
                                 <div class="project-actions">
                                     <a href="https://github.com/Ryukijano/ESRGAN_AND_YOLOV7" target="_blank" class="project-btn">
@@ -548,7 +577,7 @@
 
                     <div class="project-card" data-category="quantum">
                         <div class="project-image">
-                            <img src="command-line__2_.jpg" alt="Quantum TSP">
+                            <img src="command-line__2_.jpg" alt="Quantum TSP" loading="lazy">
                             <div class="project-overlay">
                                 <div class="project-actions">
                                     <a href="https://arxiv.org/abs/2202.13746" target="_blank" class="project-btn">
@@ -588,7 +617,7 @@
 
                     <div class="project-card" data-category="web graphics">
                         <div class="project-image">
-                            <img src="nightcity.jpg" alt="Interactive Portfolio">
+                            <img src="nightcity.jpg" alt="Interactive Portfolio" loading="lazy">
                             <div class="project-overlay">
                                 <div class="project-actions">
                                     <a href="#" class="project-btn">
@@ -628,7 +657,7 @@
 
                     <div class="project-card" data-category="ai">
                         <div class="project-image">
-                            <img src="doom_ppo.gif" alt="RL Game Agent">
+                            <img src="doom_ppo.gif" alt="RL Game Agent" loading="lazy">
                             <div class="project-overlay">
                                 <div class="project-actions">
                                     <button class="project-btn project-details-btn" data-project="rl">
@@ -660,6 +689,214 @@
                                     <span>Deep Learning</span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="ai">
+                        <div class="project-image">
+                            <img src="command-line__2_.jpg" alt="Gemma-Le Robotics VLA" loading="lazy">
+                            <div class="project-overlay">
+                                <div class="project-actions">
+                                    <a href="https://github.com/Ryukijano/Gemma-Grook" target="_blank" class="project-btn">
+                                        <i class="fab fa-github"></i>
+                                    </a>
+                                    <a href="https://huggingface.co/Ryukijano/gemma-groot" target="_blank" class="project-btn">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                    <button class="project-btn project-details-btn" data-project="gemma">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Gemma-Le VLA (Robotics)</h3>
+                                <div class="project-tech">
+                                    <span class="tech-tag">SigLIP</span>
+                                    <span class="tech-tag">Gemma 3</span>
+                                    <span class="tech-tag">Diffusion Policy</span>
+                                </div>
+                            </div>
+                            <p class="project-description">
+                                Compact vision-language-action policy for robotic manipulation using LeRobot with SigLIP vision and Gemma 3 for language reasoning.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="ai">
+                        <div class="project-image">
+                            <img src="ant_bullet.gif" alt="A2C PandaReachDense-v2" loading="lazy">
+                            <div class="project-overlay">
+                                <div class="project-actions">
+                                    <a href="https://huggingface.co/Ryukijano/a2c-PandaReachDense-v2" target="_blank" class="project-btn">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                    <button class="project-btn project-details-btn" data-project="a2c">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3 class="project-title">A2C on PandaReachDense-v2</h3>
+                                <div class="project-tech">
+                                    <span class="tech-tag">A2C</span>
+                                    <span class="tech-tag">Stable-Baselines3</span>
+                                    <span class="tech-tag">PyBullet</span>
+                                </div>
+                            </div>
+                            <p class="project-description">
+                                Actor-Critic agent trained on PandaReachDense-v2 with vectorized environments and normalized observations.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="ai">
+                        <div class="project-image">
+                            <img src="Feature_Community__1_.jpg" alt="PPO LunarLander/CartPole" loading="lazy">
+                            <div class="project-overlay">
+                                <div class="project-actions">
+                                    <a href="https://huggingface.co/Ryukijano/ppo-CartPole-v1" target="_blank" class="project-btn">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                    <button class="project-btn project-details-btn" data-project="ppo">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3 class="project-title">PPO (CartPole/LunarLander)</h3>
+                                <div class="project-tech">
+                                    <span class="tech-tag">PPO</span>
+                                    <span class="tech-tag">SB3</span>
+                                    <span class="tech-tag">Gym</span>
+                                </div>
+                            </div>
+                            <p class="project-description">
+                                Proximal Policy Optimization agent with training logs and evaluation on classic control tasks.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="ai">
+                        <div class="project-image">
+                            <img src="kanagawa_latentspace_autoencoder.jpg" alt="Q-Learning FrozenLake" loading="lazy">
+                            <div class="project-overlay">
+                                <div class="project-actions">
+                                    <a href="https://huggingface.co/Ryukijano/q-FrozenLake-v1-4x4-noSlippery" target="_blank" class="project-btn">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                    <button class="project-btn project-details-btn" data-project="qlearn">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Q-Learning (FrozenLake 4x4)</h3>
+                                <div class="project-tech">
+                                    <span class="tech-tag">Q-Learning</span>
+                                    <span class="tech-tag">Gym</span>
+                                    <span class="tech-tag">HF Hub</span>
+                                </div>
+                            </div>
+                            <p class="project-description">
+                                Tabular Q-learning agent trained on no-slippery FrozenLake with hub packaging and usage instructions.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="graphics web">
+                        <div class="project-image">
+                            <img src="Offrenda_Final_2000x1200__1_.jpg" alt="Dalton Mills VR Reconstruction" loading="lazy">
+                            <div class="project-overlay">
+                                <div class="project-actions">
+                                    <a href="https://digitaleducation.leeds.ac.uk/2025/01/08/reconstructing-dalton-mills-vr-and-ai-in-cultural-preservation/" target="_blank" class="project-btn">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                    <button class="project-btn project-details-btn" data-project="dalton">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Dalton Mills: VR & AI Preservation</h3>
+                                <div class="project-tech">
+                                    <span class="tech-tag">Unreal Engine</span>
+                                    <span class="tech-tag">3D Reconstruction</span>
+                                    <span class="tech-tag">HELIX XR</span>
+                                </div>
+                            </div>
+                            <p class="project-description">
+                                University of Leeds HELIX case study: reconstructing Dalton Mills with deep learning-driven 3D techniques and VR.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="ai graphics">
+                        <div class="project-image">
+                            <img src="Feature_Github_Hero_Accessibility.jpg" alt="Aesthetics of AI Reconstruction" loading="lazy">
+                            <div class="project-overlay">
+                                <div class="project-actions">
+                                    <a href="https://github.com/congruence-engine/Aesthetics-of-AI-Reconstruction" target="_blank" class="project-btn">
+                                        <i class="fab fa-github"></i>
+                                    </a>
+                                    <button class="project-btn project-details-btn" data-project="aesthetics">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Aesthetics of AI Reconstruction</h3>
+                                <div class="project-tech">
+                                    <span class="tech-tag">Cultural Heritage</span>
+                                    <span class="tech-tag">3D/AI</span>
+                                    <span class="tech-tag">Open Source</span>
+                                </div>
+                            </div>
+                            <p class="project-description">
+                                Open collaboration exploring ethical and aesthetic implications of AI-driven reconstruction workflows.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Media Showcase -->
+        <section id="media" class="media">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Watch</span>
+                    <h2 class="section-title">Media Showcase</h2>
+                    <p class="section-subtitle">Demo videos from my models and competitions</p>
+                </div>
+                <div class="media-grid">
+                    <div class="media-card">
+                        <video controls playsinline muted preload="metadata" poster="diffusion.png">
+                            <source src="media/lora-demo.mp4" type="video/mp4">
+                        </video>
+                        <div class="media-content">
+                            <div class="media-title">LoRA Dreambooth Demo</div>
+                            <div class="media-desc">Stable Diffusion XL fine-tuned with LoRA on diverse anime styles.</div>
+                        </div>
+                    </div>
+                    <div class="media-card">
+                        <video controls playsinline muted preload="metadata" poster="Feature_Github_Hero_Accessibility.jpg">
+                            <source src="media/jax-controlnet-demo.mp4" type="video/mp4">
+                        </video>
+                        <div class="media-content">
+                            <div class="media-title">JAX ControlNet Demo</div>
+                            <div class="media-desc">Anime-realism ControlNet optimized for TPU v4 MXUs.</div>
                         </div>
                     </div>
                 </div>
@@ -833,6 +1070,10 @@
                                 <i class="fab fa-github"></i>
                                 Code
                             </a>
+                            <a href="https://dblp.org/pid/314/7360.html" target="_blank" class="research-btn secondary">
+                                <i class="fas fa-book"></i>
+                                DBLP Profile
+                            </a>
                         </div>
                     </div>
 
@@ -865,6 +1106,10 @@
                             <a href="https://arxiv.org/abs/2202.13746" target="_blank" class="research-btn">
                                 <i class="fas fa-file-pdf"></i>
                                 Read Paper
+                            </a>
+                            <a href="https://dblp.org/pid/314/7360.html" target="_blank" class="research-btn secondary">
+                                <i class="fas fa-book"></i>
+                                DBLP Profile
                             </a>
                         </div>
                     </div>
@@ -947,12 +1192,92 @@
                         </div>
                         <div class="contact-card">
                             <div class="contact-icon">
+                                <i class="fab fa-youtube"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>YouTube</h3>
+                                <p>Gyanateet "Boomon" Dutta</p>
+                                <a href="https://www.youtube.com/channel/UCf1XZKm0A_LoZj6Y22fIfcg" target="_blank" class="contact-link">Subscribe</a>
+                            </div>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fab fa-x-twitter"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>X (Twitter)</h3>
+                                <p>@Ryukijano / @gyanateet</p>
+                                <a href="https://twitter.com/gyanateet" target="_blank" class="contact-link">Follow</a>
+                            </div>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-icon">
                                 <i class="fas fa-face-smile"></i>
                             </div>
                             <div class="contact-details">
                                 <h3>Hugging Face</h3>
                                 <p>AI Models & Datasets</p>
                                 <a href="https://huggingface.co/Ryukijano" target="_blank" class="contact-link">Explore</a>
+                            </div>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Weights & Biases</h3>
+                                <p>ML Experiments Portfolio</p>
+                                <a href="https://wandb.ai/ryukijano" target="_blank" class="contact-link">View Profile</a>
+                            </div>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fab fa-google"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Cloud Skills Boost</h3>
+                                <p>Certifications & Labs</p>
+                                <a href="https://www.cloudskillsboost.google/public_profiles/1300e096-abee-4d20-a610-37564943df5c" target="_blank" class="contact-link">View Achievements</a>
+                            </div>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>DBLP</h3>
+                                <p>Publications Index</p>
+                                <a href="https://dblp.org/pid/314/7360.html" target="_blank" class="contact-link">Open DBLP</a>
+                            </div>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fab fa-orcid"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>ORCID</h3>
+                                <p>0009-0008-0480-9241</p>
+                                <a href="https://orcid.org/0009-0008-0480-9241" target="_blank" class="contact-link">View ORCID</a>
+                            </div>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>GitHub Gists</h3>
+                                <p>Snippets & Utilities</p>
+                                <a href="https://gist.github.com/Ryukijano" target="_blank" class="contact-link">View Gists</a>
+                            </div>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Devpost</h3>
+                                <p>Hackathons & Challenges</p>
+                                <a href="https://devpost.com/Ryukijano" target="_blank" class="contact-link">View Profile</a>
                             </div>
                         </div>
                     </div>
@@ -1010,6 +1335,14 @@
                         <a href="https://www.linkedin.com/in/gyanateet-dutta-386215192" target="_blank">LinkedIn</a>
                         <a href="https://huggingface.co/Ryukijano" target="_blank">Hugging Face</a>
                         <a href="mailto:gyanateet@gmail.com">Email</a>
+                        <a href="https://wandb.ai/ryukijano" target="_blank">Weights & Biases</a>
+                        <a href="https://dblp.org/pid/314/7360.html" target="_blank">DBLP</a>
+                        <a href="https://www.cloudskillsboost.google/public_profiles/1300e096-abee-4d20-a610-37564943df5c" target="_blank">Cloud Skills Boost</a>
+                        <a href="https://www.youtube.com/channel/UCf1XZKm0A_LoZj6Y22fIfcg" target="_blank">YouTube</a>
+                        <a href="https://twitter.com/gyanateet" target="_blank">X (Twitter)</a>
+                        <a href="https://orcid.org/0009-0008-0480-9241" target="_blank">ORCID</a>
+                        <a href="https://gist.github.com/Ryukijano" target="_blank">GitHub Gists</a>
+                        <a href="https://devpost.com/Ryukijano" target="_blank">Devpost</a>
                     </div>
                 </div>
                 <div class="footer-social">
@@ -1021,6 +1354,18 @@
                     </a>
                     <a href="https://huggingface.co/Ryukijano" target="_blank">
                         <i class="fas fa-face-smile"></i>
+                    </a>
+                    <a href="https://wandb.ai/ryukijano" target="_blank">
+                        <i class="fas fa-chart-line"></i>
+                    </a>
+                    <a href="https://dblp.org/pid/314/7360.html" target="_blank">
+                        <i class="fas fa-book"></i>
+                    </a>
+                    <a href="https://www.youtube.com/channel/UCf1XZKm0A_LoZj6Y22fIfcg" target="_blank">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://twitter.com/gyanateet" target="_blank">
+                        <i class="fab fa-x-twitter"></i>
                     </a>
                     <a href="mailto:gyanateet@gmail.com">
                         <i class="fas fa-envelope"></i>
@@ -1049,6 +1394,8 @@
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <script src="new-script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="three-background.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

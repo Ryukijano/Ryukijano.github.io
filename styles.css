@@ -926,6 +926,15 @@ body {
   transform: translateY(-2px);
 }
 
+.project-search-input {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: 1px solid var(--border-color);
+  border-radius: 25px;
+  background: var(--background-card);
+  color: var(--text-primary);
+  min-width: 240px;
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -1069,6 +1078,65 @@ body {
 
 .stat i {
   color: var(--primary-color);
+}
+
+/* Three.js background container */
+#three-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Media Showcase */
+.media {
+  padding: var(--spacing-3xl) 0;
+}
+
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--spacing-xl);
+}
+
+.media-card {
+  background: var(--background-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-light);
+  transition: all var(--animation-normal) var(--ease-out);
+}
+
+.media-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-medium);
+}
+
+.media-card video,
+.media-card iframe {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 16 / 9;
+}
+
+.media-content {
+  padding: var(--spacing-xl);
+}
+
+.media-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.media-desc {
+  color: var(--text-secondary);
 }
 
 /* Timeline Section */
