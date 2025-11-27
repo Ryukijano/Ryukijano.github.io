@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Particle system for the base background (stars or particles)
+        const pointCloudCount = 10000;
+        const pointGeometry = new THREE.BufferGeometry();
+        const pointPositions = new Float32Array(pointCloudCount * 3);
+        const pointColors = new Float32Array(pointCloudCount * 3);
+
+        for (let i = 0; i < pointCloudCount; i++) {
+            const i3 = i * 3;
+            pointPositions[i3] = (Math.random() - 0.5) * 2000;
+            pointPositions[i3 + 1] = (Math.random() - 0.5) * 2000;
+            pointPositions[i3 + 2] = (Math.random() - 0.5) * 2000;
+
+            const colorValue = Math.random();
+            pointColors[i3] = colorValue;
+            pointColors[i3 + 1] = colorValue * 0.5;
+            pointColors[i3 + 2] = 1.0 - colorValue;
+        }
+
+        pointGeometry.setAttribute('position', new THREE.BufferAttribute(pointPositions, 3));
+        pointGeometry.setAttribute('color', new THREE.BufferAttribute(pointColors, 3));
+
+        const pointMaterial = new THREE.PointsMaterial({
+            size: 1.5,
+            vertexColors: true,
+            blending: THREE.AdditiveBlending,
+            transparent: true
+        });
+
+        const pointCloud = new THREE.Points(pointGeometry, pointMaterial);
+        scene.add(pointCloud);
+
+        // Detailed Spaceships - more complex geometry and additional materials
+        const spaceshipGeometry = new THREE.CylinderGeometry(3, 10, 40, 32);
+        const spaceshipMaterial = new THREE.MeshStandardMaterial({
+            color: 0x3333ff,
+            emissive: 0x1111ff,
+            metalness: 0.9,
+            roughness: 0.1
+        });
+        const detailWingGeometry = new THREE.BoxGeometry(20, 2, 5);
+        const spaceships = [];
+        for (let i = 0; i < 10; i++) {
+            const spaceship = new THREE.Mesh(spaceshipGeometry, spaceshipMaterial);
+            spaceship.position.set(
+                (Math.random() - 0.5) * 1000,
+                (Math.random() - 0.5) * 500,
+                (Math.random() - 0.5) * 1000
+            );
+            spaceship.rotation.z = Math.PI / 2;
+            spaceship.scale.set(0.5, 0.5, 0.5);
+
+            // Adding wings to the spaceship
+            const wing1 = new THREE.Mesh(detailWingGeometry, spaceshipMaterial);
+            wing1.position.set(0, -10, 10);
+            spaceship.add(wing1);
+
+            const wing2 = new THREE.Mesh(detailWingGeometry, spaceshipMaterial);
+            wing2.position.set(0, -10, -10);
+            spaceship.add(wing2);
+
+            spaceships.push(spaceship);
+            scene.add(spaceship);
+        }
+
+        // Exhaust Flames for Spaceships
+        const flameGeometry = new THREE.ConeGeometry(3, 15, 16);
+        const flameMaterial = new THREE.MeshBasicMaterial({ color: 0xff4500 });
+        const flames = [];
+        spaceships.forEach(spaceship => {
+            const flame = new THREE.Mesh(flameGeometry, flameMaterial);
+            flame.position.set(-20, 0, 0);
+            spaceship.add(flame);
+            flames.push(flame);
+        });
+
+        // Detailed Planets and Satellites
+        const planetTextures = [
+            new THREE.TextureLoader().load('https://threejs.org/examples/textures/earth.jpg'),
+            new THREE.TextureLoader().load('https://threejs.org/examples/textures/moon.jpg'),
+            new THREE.TextureLoader().load('https://threejs.org/examples/textures/mars.jpg')
+        ];
+        const planetGeometry = new THREE.SphereGeometry(80, 64, 64);
+        const planets = [];
+        for (let i = 0; i < 3; i++) {
+            const planetMaterial = new THREE.MeshStandardMaterial({
+                map: planetTextures[i],
+                metalness: 0.3,
+                roughness: 0.7
+            });
+            const planet = new THREE.Mesh(planetGeometry, planetMaterial);
+            planet.position.set(
+                (Math.random() - 0.5) * 1500,
+                (Math.random() - 0.5) * 800,
+                (Math.random() - 0.5) * 1500
+            );
+            planets.push(planet);
+            scene.add(planet);
+        }
+
+        // Satellite geometry - add small satellites orbiting the planets
+        const satelliteGeometry = new THREE.BoxGeometry(10, 10, 20);
+        const satelliteMaterial = new THREE.MeshStandardMaterial({
+            color: 0xaaaaaa,
+            metalness: 0.8,
+            roughness: 0.4
+        });
+        const satellites = [];
+        planets.forEach(planet => {
+            const satellite = new THREE.Mesh(satelliteGeometry, satelliteMaterial);
+            satellite.position.set(planet.position.x + 150, planet.position.y, planet.position.z);
+            satellites.push(satellite);
+            scene.add(satellite);
+        });
+
+        // Lighting Setup - adjust lighting for better ambiance
+        const ambientLight = new THREE.AmbientLight(0x404040, 2.0);
+        scene.add(ambientLight);
+
+        const pointLight = new THREE.PointLight(0xffffff, 3.0, 1500);
+        pointLight.position.set(100, 500, 100);
+        scene.add(pointLight);
+
+        const spotLight = new THREE.SpotLight(0xffffff, 1.5, 1500, Math.PI / 6, 0.5, 2);
+        spotLight.position.set(-200, 600, 200);
+        scene.add(spotLight);
+
+        // Camera Setup - adjust to show more of the scene
+        camera.position.set(0, 500, 1500);
+        camera.lookAt(0, 100, 0);
+
+        // Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Rotate Point Cloud (Stars or Floating Particles)
+            pointCloud.rotation.y += 0.0003;
+
+            // Move Spaceships in a circular path
+            spaceships.forEach((spaceship, index) => {
+                spaceship.position.x += Math.sin(Date.now() * 0.0005 + index) * 0.5;
+                spaceship.position.z += Math.cos(Date.now() * 0.0005 + index) * 0.5;
+                spaceship.rotation.y += 0.01;
+            });
+
+            // Rotate Planets slowly for effect
+            planets.forEach(planet => {
+                planet.rotation.y += 0.001;
+            });
+
+            // Orbit Satellites around Planets
+            satellites.forEach((satellite, index) => {
+                const planet = planets[index % planets.length];
+                satellite.position.x = planet.position.x + Math.cos(Date.now() * 0.0005) * 150;
+                satellite.position.z = planet.position.z + Math.sin(Date.now() * 0.0005) * 150;
+                satellite.rotation.y += 0.01;
+            });
+
+            // Render Scene
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle Window Resizing
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
