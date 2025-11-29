@@ -458,11 +458,11 @@ const Pane = ({
     >
       {children}
       
-      {/* Soundcloud Widget (Ryukijano only) - Only visible on hover */}
-      {id === 'left' && isContentVisible && (
-        <div className={`absolute bottom-4 left-4 z-30 w-[calc(100%-2rem)] sm:w-[280px] lg:w-[300px] pointer-events-auto transition-opacity duration-300 ${isMobile ? 'hidden sm:block' : ''}`}
+      {/* Soundcloud Widget (Ryukijano only) - Always visible, overlayed on top */}
+      {id === 'left' && (
+        <div className={`absolute bottom-4 left-4 z-[100] w-[calc(100%-2rem)] sm:w-[280px] lg:w-[300px] pointer-events-auto transition-all duration-300 ${isMobile ? 'hidden sm:block' : ''}`}
              style={{ opacity: showSoundCloud ? 1 : 0, pointerEvents: showSoundCloud ? 'auto' : 'none' }}>
-           <div className="bg-white/80 backdrop-blur-md rounded-xl overflow-hidden shadow-lg border border-[#1a237e]/10 relative">
+           <div className="bg-white/90 backdrop-blur-xl rounded-xl overflow-hidden shadow-2xl border border-[#1a237e]/20 relative">
              <iframe 
                width="100%" 
                height="80" 
@@ -473,17 +473,17 @@ const Pane = ({
              ></iframe>
              <button 
                onClick={() => setShowSoundCloud(false)}
-               className="absolute top-1 right-1 bg-white rounded-full p-1 text-[#1a237e] hover:bg-[#1a237e] hover:text-white transition-colors z-40 shadow-sm"
+               className="absolute top-1 right-1 bg-white rounded-full p-1 text-[#1a237e] hover:bg-[#1a237e] hover:text-white transition-colors z-[101] shadow-sm"
              >
                <X size={12} />
              </button>
            </div>
         </div>
       )}
-      {id === 'left' && isContentVisible && !showSoundCloud && (
+      {id === 'left' && !showSoundCloud && (
         <button 
           onClick={() => setShowSoundCloud(true)}
-          className="absolute bottom-4 left-4 z-30 bg-white/80 backdrop-blur-md p-2 rounded-full text-[#1a237e] shadow-lg hover:scale-110 transition-transform hidden sm:block"
+          className="absolute bottom-4 left-4 z-[100] bg-white/90 backdrop-blur-xl p-2.5 rounded-full text-[#1a237e] shadow-2xl hover:scale-110 transition-transform hidden sm:block border border-[#1a237e]/20"
         >
           <Activity size={20} />
         </button>
