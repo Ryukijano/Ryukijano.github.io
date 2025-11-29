@@ -458,8 +458,8 @@ const Pane = ({
     >
       {children}
       
-      {/* Soundcloud Widget (Ryukijano only) - Hidden on very small screens */}
-      {id === 'left' && (
+      {/* Soundcloud Widget (Ryukijano only) - Only visible on hover */}
+      {id === 'left' && isContentVisible && (
         <div className={`absolute bottom-4 left-4 z-30 w-[calc(100%-2rem)] sm:w-[280px] lg:w-[300px] pointer-events-auto transition-opacity duration-300 ${isMobile ? 'hidden sm:block' : ''}`}
              style={{ opacity: showSoundCloud ? 1 : 0, pointerEvents: showSoundCloud ? 'auto' : 'none' }}>
            <div className="bg-white/80 backdrop-blur-md rounded-xl overflow-hidden shadow-lg border border-[#1a237e]/10 relative">
@@ -480,7 +480,7 @@ const Pane = ({
            </div>
         </div>
       )}
-      {id === 'left' && !showSoundCloud && (
+      {id === 'left' && isContentVisible && !showSoundCloud && (
         <button 
           onClick={() => setShowSoundCloud(true)}
           className="absolute bottom-4 left-4 z-30 bg-white/80 backdrop-blur-md p-2 rounded-full text-[#1a237e] shadow-lg hover:scale-110 transition-transform hidden sm:block"
@@ -525,12 +525,14 @@ const Pane = ({
             ))}
           </h2>
 
-          {/* Subtitle & Description - visible on mobile always, on desktop only on hover */}
+          {/* Subtitle - always visible */}
+          <p className={`text-xs sm:text-sm lg:text-base font-medium uppercase tracking-wider opacity-70 ${fontBody}`}>
+            {subtitle}
+          </p>
+          
+          {/* Description & Social Links - only on hover/mobile */}
           {isContentVisible && (
-            <div className="animate-fadeIn">
-              <p className={`text-xs sm:text-sm lg:text-base font-medium uppercase tracking-wider mb-1 sm:mb-2 opacity-70 ${fontBody}`}>
-                {subtitle}
-              </p>
+            <div className="animate-fadeIn mt-2 sm:mt-3">
               <p className={`text-sm sm:text-base lg:text-lg opacity-70 max-w-md leading-relaxed ${fontBody} ${id === 'left' ? 'italic' : ''} line-clamp-3 sm:line-clamp-none`}>
                 {desc}
               </p>
@@ -559,32 +561,32 @@ const Pane = ({
           )}
         </div>
         
-        {/* Project List - Always visible on mobile, visible when active on desktop */}
-        <div className={`space-y-4 sm:space-y-6 transition-all duration-500 pointer-events-auto mt-4 sm:mt-6
-          opacity-100 translate-y-0
-        `}>
-           <div className={`h-px w-full mb-2 sm:mb-4 
-             ${id === 'left' ? 'bg-[#1a237e]/20' : ''}
-             ${id === 'center' ? 'bg-white/20' : ''}
-             ${id === 'right' ? 'bg-[#FF2E63]/30' : ''}
-           `}></div>
-           <ProjectList items={projects.slice(0, isMobile ? 2 : 3)} theme={id === 'left' ? 'light' : id === 'center' ? 'dark' : 'neon'} isMobile={isMobile} />
-           
-           {/* View All Button */}
-           <button
-             onClick={onExpand}
-             className={`
-               w-full py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg flex items-center justify-center gap-2 
-               transition-all duration-300 font-medium text-xs sm:text-sm
-               active:scale-[0.98]
-               ${id === 'left' ? 'bg-[#1a237e]/10 hover:bg-[#1a237e]/20 text-[#1a237e] border border-[#1a237e]/20' : ''}
-               ${id === 'center' ? 'bg-white/10 hover:bg-white/20 text-white border border-white/20' : ''}
-               ${id === 'right' ? 'bg-[#FF2E63]/10 hover:bg-[#FF2E63]/20 text-[#FF2E63] border border-[#FF2E63]/30 hover:shadow-[0_0_15px_rgba(255,46,99,0.2)]' : ''}
-             `}
-           >
-             View All Projects <ChevronRight size={isMobile ? 14 : 16} />
-           </button>
-        </div>
+        {/* Project List - Only visible on hover/mobile */}
+        {isContentVisible && (
+          <div className={`space-y-4 sm:space-y-6 transition-all duration-500 pointer-events-auto mt-4 sm:mt-6 animate-fadeIn`}>
+             <div className={`h-px w-full mb-2 sm:mb-4 
+               ${id === 'left' ? 'bg-[#1a237e]/20' : ''}
+               ${id === 'center' ? 'bg-white/20' : ''}
+               ${id === 'right' ? 'bg-[#FF2E63]/30' : ''}
+             `}></div>
+             <ProjectList items={projects.slice(0, isMobile ? 2 : 3)} theme={id === 'left' ? 'light' : id === 'center' ? 'dark' : 'neon'} isMobile={isMobile} />
+             
+             {/* View All Button */}
+             <button
+               onClick={onExpand}
+               className={`
+                 w-full py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg flex items-center justify-center gap-2 
+                 transition-all duration-300 font-medium text-xs sm:text-sm
+                 active:scale-[0.98]
+                 ${id === 'left' ? 'bg-[#1a237e]/10 hover:bg-[#1a237e]/20 text-[#1a237e] border border-[#1a237e]/20' : ''}
+                 ${id === 'center' ? 'bg-white/10 hover:bg-white/20 text-white border border-white/20' : ''}
+                 ${id === 'right' ? 'bg-[#FF2E63]/10 hover:bg-[#FF2E63]/20 text-[#FF2E63] border border-[#FF2E63]/30 hover:shadow-[0_0_15px_rgba(255,46,99,0.2)]' : ''}
+               `}
+             >
+               View All Projects <ChevronRight size={isMobile ? 14 : 16} />
+             </button>
+          </div>
+        )}
       </div>
       
       {/* Overlay to dim inactive panes - only on desktop */}
