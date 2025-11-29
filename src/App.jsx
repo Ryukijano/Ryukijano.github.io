@@ -267,7 +267,7 @@ const Portfolio = () => {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen w-full bg-black overflow-x-hidden font-sans selection:bg-white selection:text-black">
+    <div className="flex flex-col lg:flex-row min-h-screen lg:h-screen w-full bg-black overflow-x-hidden font-sans selection:bg-white selection:text-black">
       
       {/* Hero Background - Absolutely positioned behind everything */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -441,7 +441,7 @@ const Pane = ({
   };
 
   // Check if content should be visible (always on mobile, or when active on desktop)
-  const isContentVisible = isMobile || activePane === id;
+  const isContentVisible = true;
 
   return (
     <div 
@@ -451,7 +451,7 @@ const Pane = ({
       className={`
         relative min-h-[50vh] sm:min-h-[40vh] lg:min-h-0 lg:h-full ${widthClass} ${textColor}
         transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]
-        overflow-hidden border-b lg:border-b-0 lg:border-r border-white/5
+        overflow-y-auto overflow-x-hidden border-b lg:border-b-0 lg:border-r border-white/5
         group cursor-default
       `}
       style={gradientStyle}
@@ -561,7 +561,7 @@ const Pane = ({
         
         {/* Project List - Always visible on mobile, visible when active on desktop */}
         <div className={`space-y-4 sm:space-y-6 transition-all duration-500 pointer-events-auto mt-4 sm:mt-6
-          ${isContentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 lg:hidden'}
+          opacity-100 translate-y-0
         `}>
            <div className={`h-px w-full mb-2 sm:mb-4 
              ${id === 'left' ? 'bg-[#1a237e]/20' : ''}
