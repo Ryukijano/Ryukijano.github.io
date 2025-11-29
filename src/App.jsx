@@ -441,7 +441,7 @@ const Pane = ({
   };
 
   // Check if content should be visible (always on mobile, or when active on desktop)
-  const isContentVisible = true;
+  const isContentVisible = isMobile || activePane === id;
 
   return (
     <div 
