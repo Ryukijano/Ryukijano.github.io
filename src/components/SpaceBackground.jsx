@@ -5,7 +5,8 @@ const SpaceBackground = () => {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const container = containerRef.current;
+    if (!container) return;
 
     // Scene setup
     const scene = new THREE.Scene();
@@ -16,7 +17,7 @@ const SpaceBackground = () => {
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Optimization
-    containerRef.current.appendChild(renderer.domElement);
+    container.appendChild(renderer.domElement);
 
     // Particle system for the base background (stars or particles)
     const pointCloudCount = 8000; // Reduced slightly for performance
@@ -101,11 +102,6 @@ const SpaceBackground = () => {
     const textureLoader = new THREE.TextureLoader();
     // Using simple colors/standard materials if textures fail or for style consistency with current design
     // but attempting to load textures as per original code
-    const planetTextures = [
-      // Fallback or real URLs. Using placeholder colors if textures take time
-       null, null, null
-    ];
-    
     // We'll use colors as fallback/base
     const planetColors = [0x2233ff, 0xaaaaaa, 0xff3322];
 
@@ -245,8 +241,8 @@ const SpaceBackground = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
-      if (containerRef.current && containerRef.current.contains(renderer.domElement)) {
-        containerRef.current.removeChild(renderer.domElement);
+      if (container && container.contains(renderer.domElement)) {
+        container.removeChild(renderer.domElement);
       }
       
       // Dispose resources

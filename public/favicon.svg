@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Ryukijano mark">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6366f1"/>
+      <stop offset="0.55" stop-color="#a855f7"/>
+      <stop offset="1" stop-color="#FF2E63"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0b0d14"/>
+  <!-- Wave (graphics) -->
+  <path d="M8 24 C16 14, 24 34, 32 24 S48 14, 56 24" fill="none" stroke="url(#g)" stroke-width="3" stroke-linecap="round"/>
+  <!-- Field (AI) particles -->
+  <circle cx="20" cy="38" r="2.2" fill="#8b9bff"/>
+  <circle cx="32" cy="34" r="2.2" fill="#a855f7"/>
+  <circle cx="44" cy="38" r="2.2" fill="#22d3ee"/>
+  <!-- Lattice (quantum) -->
+  <g stroke="#FF2E63" stroke-width="2" stroke-linecap="round" opacity="0.9">
+    <line x1="20" y1="38" x2="32" y2="34"/>
+    <line x1="32" y1="34" x2="44" y2="38"/>
+    <line x1="20" y1="38" x2="32" y2="48"/>
+    <line x1="44" y1="38" x2="32" y2="48"/>
+  </g>
+  <circle cx="32" cy="48" r="2.6" fill="#FF2E63"/>
+</svg>
