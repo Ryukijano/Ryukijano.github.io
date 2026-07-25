@@ -3,12 +3,18 @@ import { Download } from 'lucide-react';
 import { DATA } from './data/portfolio';
 import Pane from './components/Pane';
 import ExpandedSection from './components/ExpandedSection';
+import ModeSwitch from './components/ModeSwitch';
+import PublicationList from './components/PublicationList';
 import { FluidWaves, EmbeddingSpace, CyberGrid } from './components/backgrounds';
 
 const Portfolio = () => {
   const [activePane, setActivePane] = useState(null); // 'left', 'center', 'right', or null
   const [expandedSection, setExpandedSection] = useState(null); // 'ryukijano', 'ai', 'ryoushi', or null
   const [isMobile, setIsMobile] = useState(false);
+  const [mode, setMode] = useState(() => {
+    const hash = window.location.hash.replace('#', '');
+    return hash === 'academic' ? 'academic' : 'builder';
+  });
 
   useEffect(() => {
     const checkDevice = () => {
@@ -21,21 +27,33 @@ const Portfolio = () => {
 
   // If a section is expanded, show the expanded view
   if (expandedSection) {
-    const sectionData = expandedSection === 'ryukijano' ? DATA.ryukijano : 
-                        expandedSection === 'ai' ? DATA.ai : DATA.ryoushi;
+    const sectionData = expandedSection === 'ryukijano' ? DATA.ryukijano :
+      expandedSection === 'ai' ? DATA.ai : DATA.ryoushi;
     return <ExpandedSection data={sectionData} onClose={() => setExpandedSection(null)} />;
   }
 
+  // --- ACADEMIC MODE ---
+  if (mode === 'academic') {
+    return (
+      <div className="min-h-screen w-full bg-white text-black font-sans">
+        <ModeSwitch mode={mode} setMode={setMode} />
+        <PublicationList />
+      </div>
+    );
+  }
+
+  // --- BUILDER MODE (default) ---
   return (
     <div className="flex flex-col lg:flex-row min-h-screen lg:h-screen w-full bg-black overflow-x-hidden font-sans selection:bg-white selection:text-black">
-      
+      <ModeSwitch mode={mode} setMode={setMode} />
+
       {/* Hero Background - Absolutely positioned behind everything */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         {/* Main hero image with mask */}
         <div className="absolute inset-0">
-          <img 
-            src="/assets/images/1500x500.jpg" 
-            alt="Kanagawa Wave to Digital Transformation" 
+          <img
+            src="/assets/images/1500x500.jpg"
+            alt="Kanagawa Wave to Digital Transformation"
             className="w-full h-[30vh] sm:h-[40vh] lg:h-[50vh] object-cover object-top opacity-60"
             style={{
               maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
@@ -45,9 +63,9 @@ const Portfolio = () => {
         </div>
         {/* Chromatic aberration / glitch layers */}
         <div className="absolute inset-0 mix-blend-screen opacity-30 hidden sm:block">
-          <img 
-            src="/assets/images/1500x500.jpg" 
-            alt="" 
+          <img
+            src="/assets/images/1500x500.jpg"
+            alt=""
             className="w-full h-[30vh] sm:h-[40vh] lg:h-[50vh] object-cover object-top"
             style={{
               filter: 'hue-rotate(90deg) saturate(2)',
@@ -58,9 +76,9 @@ const Portfolio = () => {
           />
         </div>
         <div className="absolute inset-0 mix-blend-multiply opacity-20 hidden sm:block">
-          <img 
-            src="/assets/images/1500x500.jpg" 
-            alt="" 
+          <img
+            src="/assets/images/1500x500.jpg"
+            alt=""
             className="w-full h-[30vh] sm:h-[40vh] lg:h-[50vh] object-cover object-top"
             style={{
               filter: 'hue-rotate(-60deg) saturate(1.5)',
@@ -71,28 +89,26 @@ const Portfolio = () => {
           />
         </div>
         {/* Noise overlay for texture */}
-        <div 
+        <div
           className="absolute inset-0 opacity-[0.03] mix-blend-overlay"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
           }}
         />
       </div>
-
       {/* --- Resume Button - Fixed position --- */}
-      <a 
-        href="/resume/Gyanateet_Dutta_Resume_updated.pdf" 
+      <a
+        href="/resume/Gyanateet_Dutta_Resume_updated.pdf"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed top-3 right-3 sm:top-4 sm:right-4 z-50 flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-white/90 backdrop-blur-md text-black rounded-full shadow-lg hover:bg-white hover:scale-105 transition-all duration-300 font-medium text-xs sm:text-sm"
+        className="fixed top-3 left-3 sm:top-4 sm:left-4 z-50 flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-white/90 backdrop-blur-md text-black rounded-full shadow-lg hover:bg-white hover:scale-105 transition-all duration-300 font-medium text-xs sm:text-sm"
       >
         <Download size={14} className="sm:w-4 sm:h-4" />
         <span className="hidden xs:inline">Resume</span>
         <span className="xs:hidden">CV</span>
       </a>
-
       {/* --- LEFT PANE: RYUKIJANO --- */}
-      <Pane 
+      <Pane
         id="left"
         activePane={activePane}
         setActivePane={setActivePane}
@@ -112,14 +128,13 @@ const Portfolio = () => {
       >
         <FluidWaves />
       </Pane>
-
       {/* --- CENTER PANE: GYANATEET --- */}
-      <Pane 
+      <Pane
         id="center"
         activePane={activePane}
         setActivePane={setActivePane}
         onExpand={() => setExpandedSection('ai')}
-        baseColor="bg-[#2a2a2a]" 
+        baseColor="bg-[#2a2a2a]"
         textColor="text-white"
         accentColor="bg-indigo-500"
         titleLines={['G', 'YANA', 'TEET']}
@@ -134,15 +149,14 @@ const Portfolio = () => {
       >
         <EmbeddingSpace />
       </Pane>
-
       {/* --- RIGHT PANE: RYOUSHI --- */}
-      <Pane 
+      <Pane
         id="right"
         activePane={activePane}
         setActivePane={setActivePane}
         onExpand={() => setExpandedSection('ryoushi')}
-        baseColor="bg-[#050505]" 
-        textColor="text-magenta" 
+        baseColor="bg-[#050505]"
+        textColor="text-magenta"
         accentColor="bg-magenta"
         titleLines={['RY', 'OU', 'SHI']}
         subtitle={DATA.ryoushi.subtitle}
@@ -156,7 +170,6 @@ const Portfolio = () => {
       >
         <CyberGrid />
       </Pane>
-
     </div>
   );
 };
