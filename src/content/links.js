@@ -8,6 +8,12 @@ export const routeFor = {
   'Intro.dc.html': '/',
   'Academic.dc.html': '/academic',
   'Revamp E - Method Transfer.dc.html': '/work',
+  'Index - What We Trust.dc.html': '/trust',
+  // "What It Knows" is a near-identical earlier prototype of the same page and
+  // is not being ported separately — "What We Trust" is the canonical one. It
+  // points at /trust so a link quoting the older filename lands on the page it
+  // meant rather than falling through to the /work default.
+  'Index - What It Knows.dc.html': '/trust',
 
   'Case Study - Conditional GQE.dc.html': '/work/conditional-gqe',
   'Case Study - Cosmos Sentinel.dc.html': '/work/cosmos-sentinel',

@@ -6,6 +6,10 @@
  * neutral ramps seeded separately from this site's own paper (#E6E1D3) and ink
  * (#161618) so surfaces stay warm instead of taking the accent's hue.
  *
+ * The --md-sys-trust-* family is the exception: it is seeded from its own four
+ * hues and varies only with the ground, never with the persona, because a band
+ * that changed hue between pages would stop meaning anything.
+ *
  * Every text-on-background pair here is checked against WCAG AA at generation
  * time; the generator exits non-zero if one drops below 4.5:1.
  */
@@ -205,6 +209,20 @@
     --md-sys-color-inverse-primary: #a0caff;
     --md-sys-color-scrim: #000000;
     --md-sys-color-shadow: #000000;
+
+    /* trust bands — semantic, so identical under every persona */
+    --md-sys-trust-measured: #37618e;
+    --md-sys-trust-measured-container: #dde9fd;
+    --md-sys-trust-measured-outline: #567fae;
+    --md-sys-trust-restored: #096b5a;
+    --md-sys-trust-restored-container: #d3eee5;
+    --md-sys-trust-restored-outline: #378977;
+    --md-sys-trust-inferred: #7c580d;
+    --md-sys-trust-inferred-container: #fee5c0;
+    --md-sys-trust-inferred-outline: #9d752b;
+    --md-sys-trust-invented: #8e4d30;
+    --md-sys-trust-invented-container: #ffe2d8;
+    --md-sys-trust-invented-outline: #b2694b;
   }
 
   [data-theme='ryukijano-dark'] {
@@ -244,6 +262,20 @@
     --md-sys-color-inverse-primary: #2c6196;
     --md-sys-color-scrim: #000000;
     --md-sys-color-shadow: #000000;
+
+    /* trust bands — semantic, so identical under every persona */
+    --md-sys-trust-measured: #a1c9fd;
+    --md-sys-trust-measured-container: #2a3645;
+    --md-sys-trust-measured-outline: #517aa9;
+    --md-sys-trust-restored: #85d6c1;
+    --md-sys-trust-restored-container: #213933;
+    --md-sys-trust-restored-outline: #318472;
+    --md-sys-trust-inferred: #efbf6d;
+    --md-sys-trust-inferred-container: #41321a;
+    --md-sys-trust-inferred-outline: #987026;
+    --md-sys-trust-invented: #ffb598;
+    --md-sys-trust-invented-container: #492e24;
+    --md-sys-trust-invented-outline: #ac6546;
   }
 
   /* ryoushi — seed #b04a75, default ground light */
@@ -285,6 +317,20 @@
     --md-sys-color-inverse-primary: #ffb0cb;
     --md-sys-color-scrim: #000000;
     --md-sys-color-shadow: #000000;
+
+    /* trust bands — semantic, so identical under every persona */
+    --md-sys-trust-measured: #37618e;
+    --md-sys-trust-measured-container: #dde9fd;
+    --md-sys-trust-measured-outline: #567fae;
+    --md-sys-trust-restored: #096b5a;
+    --md-sys-trust-restored-container: #d3eee5;
+    --md-sys-trust-restored-outline: #378977;
+    --md-sys-trust-inferred: #7c580d;
+    --md-sys-trust-inferred-container: #fee5c0;
+    --md-sys-trust-inferred-outline: #9d752b;
+    --md-sys-trust-invented: #8e4d30;
+    --md-sys-trust-invented-container: #ffe2d8;
+    --md-sys-trust-invented-outline: #b2694b;
   }
 
   [data-theme='ryoushi-dark'] {
@@ -324,6 +370,20 @@
     --md-sys-color-inverse-primary: #9d3b66;
     --md-sys-color-scrim: #000000;
     --md-sys-color-shadow: #000000;
+
+    /* trust bands — semantic, so identical under every persona */
+    --md-sys-trust-measured: #a1c9fd;
+    --md-sys-trust-measured-container: #2a3645;
+    --md-sys-trust-measured-outline: #517aa9;
+    --md-sys-trust-restored: #85d6c1;
+    --md-sys-trust-restored-container: #213933;
+    --md-sys-trust-restored-outline: #318472;
+    --md-sys-trust-inferred: #efbf6d;
+    --md-sys-trust-inferred-container: #41321a;
+    --md-sys-trust-inferred-outline: #987026;
+    --md-sys-trust-invented: #ffb598;
+    --md-sys-trust-invented-container: #492e24;
+    --md-sys-trust-invented-outline: #ac6546;
   }
 
   /* study — seed #c96442, default ground light */
@@ -365,6 +425,20 @@
     --md-sys-color-inverse-primary: #ffb59d;
     --md-sys-color-scrim: #000000;
     --md-sys-color-shadow: #000000;
+
+    /* trust bands — semantic, so identical under every persona */
+    --md-sys-trust-measured: #37618e;
+    --md-sys-trust-measured-container: #dde9fd;
+    --md-sys-trust-measured-outline: #567fae;
+    --md-sys-trust-restored: #096b5a;
+    --md-sys-trust-restored-container: #d3eee5;
+    --md-sys-trust-restored-outline: #378977;
+    --md-sys-trust-inferred: #7c580d;
+    --md-sys-trust-inferred-container: #fee5c0;
+    --md-sys-trust-inferred-outline: #9d752b;
+    --md-sys-trust-invented: #8e4d30;
+    --md-sys-trust-invented-container: #ffe2d8;
+    --md-sys-trust-invented-outline: #b2694b;
   }
 
   [data-theme='study-dark'] {
@@ -404,5 +478,19 @@
     --md-sys-color-inverse-primary: #9d4324;
     --md-sys-color-scrim: #000000;
     --md-sys-color-shadow: #000000;
+
+    /* trust bands — semantic, so identical under every persona */
+    --md-sys-trust-measured: #a1c9fd;
+    --md-sys-trust-measured-container: #2a3645;
+    --md-sys-trust-measured-outline: #517aa9;
+    --md-sys-trust-restored: #85d6c1;
+    --md-sys-trust-restored-container: #213933;
+    --md-sys-trust-restored-outline: #318472;
+    --md-sys-trust-inferred: #efbf6d;
+    --md-sys-trust-inferred-container: #41321a;
+    --md-sys-trust-inferred-outline: #987026;
+    --md-sys-trust-invented: #ffb598;
+    --md-sys-trust-invented-container: #492e24;
+    --md-sys-trust-invented-outline: #ac6546;
   }
 }

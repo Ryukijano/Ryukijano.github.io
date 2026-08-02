@@ -337,6 +337,9 @@ function Header({ strands: list, focusStrand, setFocusStrand, dimmed }) {
             </Band>
           );
         })}
+        <Link to="/trust" className="m3-state" style={navLink(false, false)}>
+          TRUST
+        </Link>
         <Link to="/academic" className="m3-state" style={navLink(false, false)}>
           ACADEMIC
         </Link>

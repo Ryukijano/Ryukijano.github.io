@@ -23,6 +23,7 @@ import Intro from './src/pages/Intro.jsx';
 import Academic from './src/pages/Academic.jsx';
 import WorkIndex from './src/pages/WorkIndex.jsx';
 import CaseStudyPage from './src/pages/CaseStudyPage.jsx';
+import Trust from './src/pages/Trust.jsx';
 import { caseStudies } from './src/content/caseStudies/index.js';
 
 const tree = (
@@ -31,6 +32,7 @@ const tree = (
     <Route path="/academic" element={<Academic />} />
     <Route path="/work" element={<WorkIndex />} />
     <Route path="/work/:slug" element={<CaseStudyPage />} />
+    <Route path="/trust" element={<Trust />} />
     <Route path="*" element={<Navigate to="/" replace />} />
   </Routes>
 );
@@ -50,6 +52,50 @@ const text = (h) => h.replace(/<[^>]+>/g, ' ').replace(/&amp;/g,'&').replace(/&#
  * necessarily a bug — but it is always something to look at.
  */
 const MUST = {
+  /*
+   * /trust is an index, not a case study: it re-sorts the same eleven projects
+   * by how much of the output was recorded rather than supplied. Two things
+   * hold that argument up.
+   *
+   * The band names, because the whole page is a claim about which of four
+   * kinds of output you are looking at.
+   *
+   * The per-band project counts, because the page's own closing line reads
+   * "eleven projects. five you could check, one you could check if you kept
+   * the original, three you'd have to wait for, and two that nobody is ever
+   * going to check" — 5 + 1 + 3 + 2 = 11. If a project quietly moved band the
+   * page would still render and that sentence would be false, so the band
+   * headings and the closing line are locked against each other: change one
+   * without the other and this fails.
+   *
+   * Everything here is a presence check. The counts in the [string, n] pairs
+   * elsewhere in this file were read off rendered output; this page did not
+   * exist when these were written, so none of its multiplicities could be
+   * verified and a guessed count would fail the build for the wrong reason.
+   * Tighten these to pairs once the page renders — every figure below is
+   * quoted once in card prose and several also appear in the band ramp.
+   */
+  /*
+   * The band headings and the closing sentence state the same split twice —
+   * 5 + 1 + 3 + 2 = 11 — in two different registers, and nothing in the page
+   * makes them agree. Move one project between bands and a heading updates
+   * while the sentence quietly becomes false. Both are locked at exactly one
+   * occurrence, so a move fails on the heading and a rewrite fails on the
+   * sentence.
+   */
+  '/trust': [
+    ['5 projects', 1], ['1 project', 1], ['3 projects', 1], ['2 projects', 1],
+    ['five you could check', 1],
+    ['one you could check if you kept the original', 1],
+    ['three you\u2019d have to wait for', 1],
+    ['two that nobody is ever going to check', 1],
+    // figures quoted in the card prose
+    ['12.5', 1], ['17.0', 1],
+    ['0.73', 1], ['0.85', 1], ['53 ms', 1], ['69 ms', 1],
+    ['\u22122.15 eV', 1], ['\u22122.20 eV', 1],
+    ['28.13 dB', 1], ['0.927', 1], ['0.062', 1],
+    ['2048', 1], ['1.6 mHa', 1],
+  ],
   '/work/surgical-phase-detection': [
     ['21.8M', 4], ['303.9M', 4], ['90.0%', 2], ['89.5%', 2], ['25 ms', 2],
     ['12.5', 2], ['17.0', 1], ['0.099M', 3], ['0.57%', 2], ['64%', 1],
@@ -81,6 +127,11 @@ const countOf = (hay, needle) => hay.split(needle).length - 1;
 
 // words that MUST appear (disclosure language)
 const MUST_WORDS = {
+  /* The four bands are this page's disclosure vocabulary: they are the words
+   * that say how much of an output was recorded. Checked here rather than in
+   * MUST because MUST_WORDS is case-insensitive, and the prototype sets them
+   * in caps while the ids in src/content/trust.js are lower-case. */
+  '/trust': ['measured', 'restored', 'inferred', 'invented'],
   '/work/dalton-mills': ['schematic'],
   '/work/cosmos-sentinel': ['schematic'],
   '/work/syndrome-net': ['schematic'],
@@ -94,7 +145,7 @@ const MUST_WORDS = {
 const BANNED = ['pid/345/4093','undefined','NaN','[object Object]','not yet ported','NOT YET PORTED','cubic-bezier(.16,1,.3,1)'];
 const CLICHE = ['revolutionary','cutting-edge','seamless','game-changing','at the intersection of','passionate about'];
 
-const routes = ['/','/academic','/work', ...caseStudies.map(s=>`/work/${s.slug}`)];
+const routes = ['/','/academic','/work','/trust', ...caseStudies.map(s=>`/work/${s.slug}`)];
 let fail = 0, hexTotal = 0;
 for (const r of routes) {
   const html = render(r);

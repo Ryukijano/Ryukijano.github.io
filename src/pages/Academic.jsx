@@ -274,6 +274,15 @@ export default function Academic() {
               )}
             >
               the work
+            </Link>{' '}
+            ·{' '}
+            <Link
+              to="/trust"
+              style={parseStyle(
+                'color:var(--md-sys-color-on-surface-variant);text-decoration:none',
+              )}
+            >
+              what we trust
             </Link>
           </Text>
         </aside>

@@ -4,6 +4,7 @@ import Intro from './src/pages/Intro.jsx';
 import Academic from './src/pages/Academic.jsx';
 import WorkIndex from './src/pages/WorkIndex.jsx';
 import CaseStudyPage from './src/pages/CaseStudyPage.jsx';
+import Trust from './src/pages/Trust.jsx';
 import { caseStudies } from './src/content/caseStudies/index.js';
 
 const tree = (
@@ -12,6 +13,7 @@ const tree = (
     <Route path="/academic" element={<Academic />} />
     <Route path="/work" element={<WorkIndex />} />
     <Route path="/work/:slug" element={<CaseStudyPage />} />
+    <Route path="/trust" element={<Trust />} />
     <Route path="*" element={<Navigate to="/" replace />} />
   </Routes>
 );
@@ -25,6 +27,7 @@ const routes = [
   '/',
   '/academic',
   '/work',
+  '/trust',
   ...caseStudies.map((s) => `/work/${s.slug}`),
   '/work/does-not-exist',
 ];

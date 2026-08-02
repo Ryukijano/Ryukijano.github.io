@@ -17,7 +17,16 @@
  *    page warm and painterly instead of looking like a Google product. This is
  *    the "M3 as the system, our look on top" decision, made concrete.
  *
- * 3. Motion tokens are the official M3 Expressive spring set, transcribed from
+ * 3. The trust bands are the one colour family that does NOT retint per persona.
+ *    Everything else here is a tone off the active persona's seed, because a
+ *    page's accent should follow whose page it is. The epistemic index is the
+ *    opposite case: "measured" has to mean the same thing wherever it appears,
+ *    and a scale that changed hue between personas would stop being a scale and
+ *    become decoration. So the bands are seeded from their own four hues, vary
+ *    only with the ground, and the same twelve values are repeated verbatim into
+ *    every light block and every dark block.
+ *
+ * 4. Motion tokens are the official M3 Expressive spring set, transcribed from
  *    Google's own spring-to-curve conversion table for web
  *    (m3.material.io/styles/motion/overview/specs). Springs cannot be expressed
  *    in CSS, so Material publishes equivalent cubic-beziers; these are those,
@@ -95,6 +104,45 @@ const ROLES = [
   ['shadow', 'n', 0, 0],
 ];
 
+/* ------------------------------------------------------------ trust bands */
+
+/*
+ * A deliberate cool-to-warm ramp for /trust, reading "a sensor recorded it" at
+ * one end and "nothing can check it" at the other. The four hexes below are
+ * seeds, not values: each one goes through HCT exactly like a persona accent so
+ * the bands land on the same tonal grid as every other role and behave against
+ * the neutral ramps instead of merely looking acceptable on one background.
+ *
+ * Two palettes per band, the same split the p/s pair uses: the full-chroma one
+ * carries the band (chip label, hovered card title, the 2px ramp bar) and is the
+ * only thing separating the four, since a shared chroma leaves hue to do all the
+ * work; the quiet one carries the container, because a hover tint behind eleven
+ * stacked cards should whisper and a saturated cyan at tone 92 does not.
+ */
+const TRUST_SEEDS = {
+  measured: '#6f9fd8',
+  restored: '#5fa392',
+  inferred: '#c9a15e',
+  invented: '#d1764f',
+};
+
+const TRUST_ROLES = [
+  ['', 'c', 40, 80],
+  ['-container', 'q', 92, 22],
+  ['-outline', 'c', 52, 50],
+];
+
+function trustFor(mode) {
+  const out = {};
+  for (const [band, seed] of Object.entries(TRUST_SEEDS)) {
+    const pal = { c: derive(seed, 0, 36), q: derive(seed, 0, 16) };
+    for (const [suffix, key, lt, dt] of TRUST_ROLES) {
+      out[band + suffix] = hexFromArgb(pal[key].tone(mode === 'dark' ? dt : lt));
+    }
+  }
+  return out;
+}
+
 /* --------------------------------------------------------------- contrast */
 
 const lin = (c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
@@ -143,26 +191,39 @@ const AA_PAIRS = [
 ];
 const AA_NONTEXT = [['outline', 'surface']];
 
+/* A band is a mono chip label and a card title, so it is text on both the plain
+ * surface and the container a card sits on; an outline is a border and only ever
+ * meets the plain surface. */
+const TRUST_AA = Object.keys(TRUST_SEEDS).flatMap((b) => [
+  [b, 'surface'],
+  [b, 'surface-container'],
+]);
+const TRUST_NONTEXT = Object.keys(TRUST_SEEDS).map((b) => [`${b}-outline`, 'surface']);
+
 let failures = 0;
 const report = [];
 
-function block(selector, roles, label) {
-  for (const [fg, bg] of AA_PAIRS) {
-    const r = contrast(roles[fg], roles[bg]);
-    if (r < 4.5) {
-      failures++;
-      report.push(`  FAIL ${label}  ${fg} on ${bg}  ${r.toFixed(2)}:1  (need 4.5)`);
-    }
+function check(fg, bg, fgHex, bgHex, min, label) {
+  const r = contrast(fgHex, bgHex);
+  if (r < min) {
+    failures++;
+    report.push(`  FAIL ${label}  ${fg} on ${bg}  ${r.toFixed(2)}:1  (need ${min.toFixed(1)})`);
   }
-  for (const [fg, bg] of AA_NONTEXT) {
-    const r = contrast(roles[fg], roles[bg]);
-    if (r < 3) {
-      failures++;
-      report.push(`  FAIL ${label}  ${fg} on ${bg}  ${r.toFixed(2)}:1  (need 3.0)`);
-    }
-  }
+}
+
+function block(selector, roles, trust, label) {
+  for (const [fg, bg] of AA_PAIRS) check(fg, bg, roles[fg], roles[bg], 4.5, label);
+  for (const [fg, bg] of AA_NONTEXT) check(fg, bg, roles[fg], roles[bg], 3, label);
+  for (const [fg, bg] of TRUST_AA) check(`trust-${fg}`, bg, trust[fg], roles[bg], 4.5, label);
+  for (const [fg, bg] of TRUST_NONTEXT) check(`trust-${fg}`, bg, trust[fg], roles[bg], 3, label);
+
   const lines = Object.entries(roles).map(([k, v]) => `    --md-sys-color-${k}: ${v};`);
-  return `${selector} {\n${lines.join('\n')}\n  }`;
+  const trustLines = Object.entries(trust).map(([k, v]) => `    --md-sys-trust-${k}: ${v};`);
+  return (
+    `${selector} {\n${lines.join('\n')}\n\n` +
+    `    /* trust bands — semantic, so identical under every persona */\n` +
+    `${trustLines.join('\n')}\n  }`
+  );
 }
 
 /* ------------------------------------------------------------------ shape */
@@ -221,15 +282,23 @@ const isBrand = (r) => r.startsWith('display') || r.startsWith('headline');
 
 /* ------------------------------------------------------------------ build */
 
+const trustLight = trustFor('light');
+const trustDark = trustFor('dark');
+
 const themeBlocks = [];
 for (const [name, { seed, ground }] of Object.entries(THEMES)) {
   const light = rolesFor(seed, 'light');
   const dark = rolesFor(seed, 'dark');
   themeBlocks.push(`  /* ${name} — seed ${seed}, default ground ${ground} */`);
   themeBlocks.push(
-    block(`  [data-theme='${name}'], [data-theme='${name}-light']`, light, `${name}/light`),
+    block(
+      `  [data-theme='${name}'], [data-theme='${name}-light']`,
+      light,
+      trustLight,
+      `${name}/light`,
+    ),
   );
-  themeBlocks.push(block(`  [data-theme='${name}-dark']`, dark, `${name}/dark`));
+  themeBlocks.push(block(`  [data-theme='${name}-dark']`, dark, trustDark, `${name}/dark`));
 }
 
 const css = `/*
@@ -239,6 +308,10 @@ const css = `/*
  * Colour roles are HCT tonal palettes seeded from the persona accents, with the
  * neutral ramps seeded separately from this site's own paper (${PAPER}) and ink
  * (${INK}) so surfaces stay warm instead of taking the accent's hue.
+ *
+ * The --md-sys-trust-* family is the exception: it is seeded from its own four
+ * hues and varies only with the ground, never with the persona, because a band
+ * that changed hue between pages would stop meaning anything.
  *
  * Every text-on-background pair here is checked against WCAG AA at generation
  * time; the generator exits non-zero if one drops below 4.5:1.
@@ -299,8 +372,15 @@ writeFileSync('src/styles/m3-tokens.css', css);
 
 console.log(`wrote src/styles/m3-tokens.css  (${(Buffer.byteLength(css) / 1024).toFixed(1)} kB)`);
 console.log(`themes: ${Object.keys(THEMES).join(', ')} x {light, dark}`);
+const blocks = Object.keys(THEMES).length * 2;
 console.log(
-  `contrast: ${AA_PAIRS.length + AA_NONTEXT.length} pairs x ${Object.keys(THEMES).length * 2} themes checked`,
+  `contrast: ${AA_PAIRS.length + AA_NONTEXT.length} role pairs + ` +
+    `${TRUST_AA.length + TRUST_NONTEXT.length} trust pairs ` +
+    `x ${blocks} blocks = ${(AA_PAIRS.length + AA_NONTEXT.length + TRUST_AA.length + TRUST_NONTEXT.length) * blocks} checks`,
+);
+console.log(
+  `trust: ${Object.keys(TRUST_SEEDS).length} bands x ${TRUST_ROLES.length} roles, ` +
+    `${Object.keys(trustLight).length} tokens per block, persona-invariant`,
 );
 
 if (failures) {
