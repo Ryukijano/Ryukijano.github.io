@@ -70,3 +70,24 @@ Numbers here are traceable to a source. Check before editing them.
 - Surgical phase recognition: 90.0% porcine, 89.5% human, 25 ms on an NVIDIA A2.
 - ORCID is `0009-0008-0480-9241`. A DBLP author page under a similar name
   belongs to someone else and is deliberately not linked.
+
+## Checks
+
+```
+npm run lint     # eslint, must be clean
+npm run build    # vite build; also copies dist/index.html -> dist/404.html
+npm run smoke    # server-renders every route and fails if one throws
+```
+
+`npm run smoke` exists because a rename once broke three of four routes while
+the build stayed green — Vite only proves the bundle compiles, not that the
+components mount. The smoke test renders `/`, `/academic`, `/work`,
+`/work/conditional-gqe` and an unknown slug through `react-dom/server` and
+fails on the first exception.
+
+GitHub Pages has no server-side rewrite, so a deep link like `/work/…` is a
+real 404 unless `dist/404.html` is byte-identical to `dist/index.html`. A Vite
+`closeBundle` plugin copies it on every build; don't hand-write that file.
+
+`src/legacy/` is the previous single-file site, kept for reference. It is not
+imported, not built, and eslint ignores it.
