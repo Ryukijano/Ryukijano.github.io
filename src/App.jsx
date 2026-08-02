@@ -73,7 +73,6 @@ const DATA = {
     tags: ["PyTorch", "JAX", "Computer Vision", "Hugging Face", "TensorFlow"],
     socials: [
       { icon: BookOpen, link: "https://orcid.org/0009-0008-0480-9241", label: "ORCID" },
-      { icon: Layers, link: "https://dblp.org/pid/345/4093.html", label: "DBLP" },
       { icon: Activity, link: "https://wandb.ai/ryukijano", label: "W&B" },
       { icon: Linkedin, link: "https://www.linkedin.com/in/gyanateet-dutta-386215192/", label: "LinkedIn" },
     ],
