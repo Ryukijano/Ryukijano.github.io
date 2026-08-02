@@ -73,16 +73,16 @@ export const fonts = {
  * Kept as strings so they can be concatenated and passed through parseStyle().
  */
 export const cs = {
-  numStyle: `font-family:${fonts.mono};font-size:13px;color:${light.terracotta};letter-spacing:0.1em;margin:0`,
-  kickerStyle: `font-family:${fonts.mono};font-size:11px;color:${light.muted};letter-spacing:0.1em;margin:8px 0 0`,
+  numStyle: `font-family:var(--md-sys-typescale-mono-font);font-size:13px;color:var(--md-sys-color-primary);letter-spacing:0.1em;margin:0`,
+  kickerStyle: `font-family:var(--md-sys-typescale-mono-font);font-size:11px;color:var(--md-sys-color-on-surface-variant);letter-spacing:0.1em;margin:8px 0 0`,
   h2Style: `font-family:${fonts.serif};font-weight:500;font-size:29px;letter-spacing:-0.012em;margin:0 0 16px;line-height:1.2`,
-  bodyStyle: `font-size:15.5px;line-height:1.65;color:${light.body};max-width:64ch;margin:0`,
-  bodyStyleSpaced: `font-size:15.5px;line-height:1.65;color:${light.body};max-width:64ch;margin:18px 0 0`,
-  bodyStyleTop: `font-size:15.5px;line-height:1.65;color:${light.body};max-width:64ch;margin:40px 0 0`,
-  caption: `font-family:${fonts.mono};font-size:10.5px;color:${light.muted};margin:12px 0 0;line-height:1.6`,
-  captionTight: `font-family:${fonts.mono};font-size:10.5px;color:${light.muted};margin:11px 0 0;line-height:1.6`,
-  figureFrame: `border:1px solid ${light.rule};border-radius:10px;overflow:hidden;background:${light.paper}`,
-  tableCell: `font-family:${fonts.mono};font-size:11.5px;padding:13px 14px;color:${light.body};border-left:1px solid ${light.faint};line-height:1.5`,
+  bodyStyle: `font-size:15.5px;line-height:1.65;color:var(--md-sys-color-on-surface);max-width:64ch;margin:0`,
+  bodyStyleSpaced: `font-size:15.5px;line-height:1.65;color:var(--md-sys-color-on-surface);max-width:64ch;margin:18px 0 0`,
+  bodyStyleTop: `font-size:15.5px;line-height:1.65;color:var(--md-sys-color-on-surface);max-width:64ch;margin:40px 0 0`,
+  caption: `font-family:var(--md-sys-typescale-mono-font);font-size:10.5px;color:var(--md-sys-color-on-surface-variant);margin:12px 0 0;line-height:1.6`,
+  captionTight: `font-family:var(--md-sys-typescale-mono-font);font-size:10.5px;color:var(--md-sys-color-on-surface-variant);margin:11px 0 0;line-height:1.6`,
+  figureFrame: `border:1px solid var(--md-sys-color-outline-variant);border-radius:var(--md-sys-shape-corner-medium);overflow:hidden;background:var(--md-sys-color-surface)`,
+  tableCell: `font-family:var(--md-sys-typescale-mono-font);font-size:11.5px;padding:13px 14px;color:var(--md-sys-color-on-surface);border-left:1px solid var(--md-sys-color-outline-variant);line-height:1.5`,
 };
 
 export default { light, dark, intro, workIndex, fonts, cs };

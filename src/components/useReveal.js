@@ -24,11 +24,24 @@ function prefersReducedMotion() {
   );
 }
 
+/*
+ * Opacity and transform get DIFFERENT springs, which is the whole point.
+ *
+ * M3 Expressive splits motion into two families: spatial springs, which
+ * overshoot, for anything that moves or resizes; and effects springs, which do
+ * not, for colour and opacity. This hook used to run one hand-written curve
+ * across both. A fade on an overshooting curve visibly flickers past full
+ * opacity and back — it reads as a rendering fault rather than as motion.
+ */
 const DEFAULTS = {
   threshold: 0.2,
   distance: 20,
-  duration: '.75s',
-  easing: 'cubic-bezier(.16,1,.3,1)',
+  // transform: spatial, allowed to overshoot and settle.
+  spatialDuration: 'var(--md-sys-motion-duration-expressive-slow-spatial)',
+  spatialEasing: 'var(--md-sys-motion-spring-expressive-slow-spatial)',
+  // opacity: effects, must not overshoot.
+  effectsDuration: 'var(--md-sys-motion-duration-expressive-slow-effects)',
+  effectsEasing: 'var(--md-sys-motion-spring-expressive-slow-effects)',
   prefix: '',
   // per-index delay applied to the opacity transition only, matching the
   // case-study pages (`${i === 0 ? 0 : 0.05}s`).
@@ -37,7 +50,16 @@ const DEFAULTS = {
 
 export default function useReveal(count, options = {}) {
   const opts = { ...DEFAULTS, ...options };
-  const { threshold, distance, duration, easing, prefix, delayFor } = opts;
+  const {
+    threshold,
+    distance,
+    spatialDuration,
+    spatialEasing,
+    effectsDuration,
+    effectsEasing,
+    prefix,
+    delayFor,
+  } = opts;
 
   // lazy useState, not useRef().current — reading a ref during render is
   // a React violation and the value never changes after mount anyway.
@@ -91,11 +113,20 @@ export default function useReveal(count, options = {}) {
       return (
         `${prefix}opacity:${on ? 1 : 0};` +
         `transform:translateY(${on ? 0 : distance}px);` +
-        `transition:opacity ${duration} ${easing}${delay},` +
-        `transform ${duration} ${easing}`
+        `transition:opacity ${effectsDuration} ${effectsEasing}${delay},` +
+        `transform ${spatialDuration} ${spatialEasing}`
       );
     },
-    [visible, prefix, distance, duration, easing, delayFor],
+    [
+      visible,
+      prefix,
+      distance,
+      spatialDuration,
+      spatialEasing,
+      effectsDuration,
+      effectsEasing,
+      delayFor,
+    ],
   );
 
   return { attach: (i) => setters[i], style, visible, reduced };

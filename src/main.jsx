@@ -1,5 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import './styles/layers.css';
 import './styles/m3-tokens.css';
 import './base.css';
 import App from './routes.jsx';

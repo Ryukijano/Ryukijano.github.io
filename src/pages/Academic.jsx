@@ -1,25 +1,131 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { parseStyle } from '../lib/style.js';
-import { dark as C, fonts } from '../components/tokens.js';
+import { joinStyle, parseStyle } from '../lib/style.js';
+import { Card, Divider, Text, Theme } from '../components/m3/index.jsx';
 import useReveal from '../components/useReveal.js';
 import content from '../content/academic.js';
 
 /** /academic — ported from "Academic.dc.html". SECTION_COUNT there is 10. */
 const SECTION_COUNT = 10;
 
+/*
+ * study-dark, not ryukijano-dark.
+ *
+ * All three dark ramps share one neutral spine and differ only in
+ * primary/secondary/tertiary, so this is a choice of accent, not of ground.
+ * This page is the whole person — surgical video, quantum circuits, heritage
+ * graphics — so it cannot wear the graphics persona's slate-blue without
+ * implying everything under it is graphics work. `study` is the reading
+ * register the case studies already wear, and its terracotta primary is the
+ * ramp nearest the accent this page shipped with, so the page keeps its own
+ * face while moving onto the token system.
+ */
+const THEME = 'study-dark';
+
+/*
+ * Motion pairs: a duration always travels with its own curve. `spatial` for
+ * anything that moves, resizes or changes corner radius — those overshoot, and
+ * that overshoot is the expressive part. `effects` for colour and opacity —
+ * those must not, because a colour that overshoots leaves gamut and reads as a
+ * render bug. base.css already zeroes both under prefers-reduced-motion.
+ */
+const SPATIAL =
+  'var(--md-sys-motion-duration-expressive-default-spatial) var(--md-sys-motion-spring-expressive-default-spatial)';
+const EFFECTS =
+  'var(--md-sys-motion-duration-expressive-default-effects) var(--md-sys-motion-spring-expressive-default-effects)';
+const EFFECTS_FAST =
+  'var(--md-sys-motion-duration-expressive-fast-effects) var(--md-sys-motion-spring-expressive-fast-effects)';
+
+/**
+ * Mono with tabular numerals — every identifier, metric, date, venue, arXiv id
+ * and parameter count on the page. Tabular so a column of figures lines up
+ * instead of shifting under itself.
+ */
+const MONO = '--m3-font:var(--md-sys-typescale-mono-font);font-variant-numeric:tabular-nums';
+
+/**
+ * The third text rank. M3 stops at on-surface-variant, so rather than pick a
+ * dimmer grey by eye the quietest tier is a mix of the role that already owns
+ * secondary text. It still clears AA on every surface tone this page uses.
+ */
+const DIM = 'color-mix(in srgb, var(--md-sys-color-on-surface-variant) 74%, transparent)';
+
+/*
+ * Cards step up a tone rather than cast a shadow. On a near-black ground a
+ * shadow barely registers, which is why M3 layers dark surfaces by tone; the
+ * outlined variant keeps its hairline and the background moves from `surface`
+ * (the page ground) to `surface-container`.
+ */
+const CARD_TONE = 'background:var(--md-sys-color-surface-container)';
+
+/* Card renders an <a> or a <div>, never a react-router Link, so the link-cards
+ * borrow its classes directly. Same component layer either way. */
+const CARD_LINK = 'm3-card m3-card--outlined m3-state';
+
+/* Ids in document order, taken from the rail so the two can't drift apart. */
+const NAV_IDS = content.nav.map((n) => n.href.replace('#', ''));
+
+/**
+ * Reading position for the rail. The observer watches a band across the upper
+ * part of the viewport and reports the first section in document order that is
+ * inside it, which is the section you are actually reading rather than the one
+ * that happens to be largest on screen.
+ *
+ * Everything touching the DOM is inside the effect: this page is also rendered
+ * with react-dom/server, where there is no document and no IntersectionObserver.
+ * The initial value is the first section, which is what a server-rendered page
+ * scrolled to the top is showing anyway.
+ */
+function useReadingPosition(ids) {
+  const [activeId, setActiveId] = useState(ids[0]);
+
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') return undefined;
+    const nodes = ids.map((id) => document.getElementById(id)).filter(Boolean);
+    if (nodes.length === 0) return undefined;
+
+    const onscreen = new Set();
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) onscreen.add(entry.target.id);
+          else onscreen.delete(entry.target.id);
+        });
+        const first = ids.find((id) => onscreen.has(id));
+        // No match means the band is between two sections mid-scroll; holding
+        // the last answer is better than blanking the rail for a frame.
+        if (first) setActiveId(first);
+      },
+      { rootMargin: '-10% 0px -70% 0px', threshold: 0 },
+    );
+
+    nodes.forEach((n) => io.observe(n));
+    return () => io.disconnect();
+  }, [ids]);
+
+  return activeId;
+}
+
 export default function Academic() {
   const reveal = useReveal(SECTION_COUNT, {
     threshold: 0.06,
     distance: 12,
-    duration: '.6s',
-    easing: 'ease',
+    // useReveal drives opacity and transform off a single duration/curve pair.
+    // That pair has to be `effects`: a spatial spring would overshoot the fade
+    // past 1 and flicker, and a 12px nudge loses very little by not springing.
+    duration: 'var(--md-sys-motion-duration-expressive-slow-effects)',
+    easing: 'var(--md-sys-motion-spring-expressive-slow-effects)',
     delayFor: null,
   });
+  const activeId = useReadingPosition(NAV_IDS);
+
   const [hover, setHover] = useState({});
   const set = (group, i) => ({
     onMouseEnter: () => setHover((h) => ({ ...h, [group]: i })),
     onMouseLeave: () => setHover((h) => ({ ...h, [group]: null })),
+    // keyboard parity: the same feedback the pointer gets.
+    onFocus: () => setHover((h) => ({ ...h, [group]: i })),
+    onBlur: () => setHover((h) => ({ ...h, [group]: null })),
   });
   const isOn = (group, i) => hover[group] === i;
 
@@ -27,105 +133,154 @@ export default function Academic() {
     document.title = 'Gyanateet Dutta — academic';
   }, []);
 
-  const cardBase = (on) =>
-    `display:block;background:${on ? C.cardHover : C.card};` +
-    `border:1px solid ${on ? 'rgba(209,118,79,0.35)' : C.hairline};border-radius:9px;` +
-    `padding:20px 22px;margin:0 0 12px;text-decoration:none;transition:background .25s,border-color .25s`;
-
   return (
-    <div
+    <Theme
+      name={THEME}
       style={parseStyle(
-        `min-height:100vh;background:${C.bg};color:${C.text};font-family:${fonts.body};-webkit-font-smoothing:antialiased`,
+        'position:relative;min-height:100vh;' +
+          'background:var(--md-sys-color-surface);color:var(--md-sys-color-on-surface);' +
+          'font-family:var(--md-sys-typescale-plain-font);-webkit-font-smoothing:antialiased',
       )}
     >
+      {/* dusk: the page's own primary, thinned, sitting behind the first
+          screenful and gone by the time you're reading. */}
+      <div
+        aria-hidden="true"
+        style={parseStyle(
+          'position:absolute;top:0;left:0;right:0;height:460px;pointer-events:none;' +
+            'background:linear-gradient(to bottom,' +
+            'color-mix(in srgb, var(--md-sys-color-primary) 7%, transparent) 0%,' +
+            'color-mix(in srgb, var(--md-sys-color-primary) 2%, transparent) 45%,' +
+            'transparent 100%)',
+        )}
+      />
+
       <div
         style={parseStyle(
-          'max-width:1080px;margin:0 auto;padding:0 32px;display:grid;' +
-            'grid-template-columns:250px 1fr;gap:56px;align-items:start',
+          'position:relative;max-width:1080px;margin:0 auto;padding:0 32px;display:grid;' +
+            'grid-template-columns:250px minmax(0,1fr);gap:56px;align-items:start',
         )}
       >
         <aside style={parseStyle('position:sticky;top:0;padding:56px 0 40px;align-self:start')}>
-          <h1
-            style={parseStyle(
-              `font-size:21px;font-weight:600;letter-spacing:-0.01em;margin:0 0 10px;color:${C.text}`,
-            )}
+          <Text
+            as="h1"
+            role="headline-small"
+            style={parseStyle('color:var(--md-sys-color-on-surface);margin:0 0 12px')}
           >
             {content.rail.name}
-          </h1>
-          <p style={parseStyle(`font-size:13px;line-height:1.6;color:${C.muted};margin:0 0 14px`)}>
-            {content.rail.line}
-          </p>
-          <p
-            style={parseStyle(
-              `font-family:${fonts.mono};font-size:10.5px;line-height:1.7;color:${C.dim};margin:0`,
-            )}
+          </Text>
+          <Text
+            role="body-medium"
+            style={parseStyle('color:var(--md-sys-color-on-surface-variant);margin:0 0 16px')}
           >
+            {content.rail.line}
+          </Text>
+          <Text role="label-small" style={parseStyle(`${MONO};--m3-lh:1.75;color:${DIM};margin:0`)}>
             {content.rail.meta.map((line, i) => (
               <span key={line}>
                 {line}
                 {i < content.rail.meta.length - 1 ? <br /> : null}
               </span>
             ))}
-          </p>
+          </Text>
 
-          <nav style={{ margin: '24px 0 0' }}>
-            {content.nav.map((n, i) => (
-              <a
-                key={n.href}
-                href={n.href}
-                {...set('nav', i)}
-                style={parseStyle(
-                  `display:block;font-size:12.5px;line-height:1.95;text-decoration:none;` +
-                    `color:${isOn('nav', i) ? C.accent : C.muted};transition:color .2s`,
-                )}
-              >
-                {n.label}
-              </a>
-            ))}
+          <nav aria-label="sections" style={parseStyle('margin:26px 0 0')}>
+            {content.nav.map((n) => {
+              const id = n.href.replace('#', '');
+              const on = activeId === id;
+              return (
+                <a
+                  key={n.href}
+                  href={n.href}
+                  aria-current={on ? 'location' : undefined}
+                  className="m3-state"
+                  style={parseStyle(
+                    'position:relative;display:block;padding:4px 8px 4px 15px;' +
+                      'text-decoration:none;' +
+                      'border-radius:var(--md-sys-shape-corner-small);' +
+                      `color:var(--md-sys-color-${on ? 'primary' : 'on-surface-variant'});` +
+                      `transition:color ${EFFECTS}`,
+                  )}
+                >
+                  {/* Reading position is the primary colour and the emphasized
+                      weight first; this marker only seconds them. It grows on a
+                      spatial spring and fades on an effects one. */}
+                  <span
+                    aria-hidden="true"
+                    style={parseStyle(
+                      'position:absolute;left:0;top:5px;bottom:5px;width:2px;' +
+                        'border-radius:var(--md-sys-shape-corner-full);' +
+                        'background:var(--md-sys-color-primary);transform-origin:center;' +
+                        `transform:scaleY(${on ? 1 : 0});opacity:${on ? 1 : 0};` +
+                        `transition:transform ${SPATIAL},opacity ${EFFECTS}`,
+                    )}
+                  />
+                  <Text
+                    as="span"
+                    role="label-large"
+                    emphasized={on}
+                    style={parseStyle(`--m3-lh:1.5;transition:font-weight ${EFFECTS}`)}
+                  >
+                    {n.label}
+                  </Text>
+                </a>
+              );
+            })}
           </nav>
 
-          <div style={parseStyle('display:flex;gap:6px;flex-wrap:wrap;margin:24px 0 0')}>
-            {content.links.map((l, i) => (
-              <a
-                key={l.href}
-                href={l.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                {...set('links', i)}
-                style={parseStyle(
-                  `font-family:${fonts.mono};font-size:10px;padding:6px 10px;` +
-                    `border:1px solid ${isOn('links', i) ? C.accent : C.hairline};border-radius:5px;` +
-                    `text-decoration:none;color:${isOn('links', i) ? C.accent : C.muted};` +
-                    `transition:border-color .2s,color .2s`,
-                )}
-              >
-                {l.label}
-              </a>
-            ))}
+          <div style={parseStyle('display:flex;gap:6px;flex-wrap:wrap;margin:26px 0 0')}>
+            {content.links.map((l, i) => {
+              const on = isOn('links', i);
+              return (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="m3-chip m3-state"
+                  {...set('links', i)}
+                  style={parseStyle(
+                    'cursor:pointer;' +
+                      `color:var(--md-sys-color-${on ? 'primary' : 'on-surface-variant'});` +
+                      `border-color:var(--md-sys-color-${on ? 'primary' : 'outline-variant'});` +
+                      `transition:color ${EFFECTS_FAST},border-color ${EFFECTS_FAST}`,
+                  )}
+                >
+                  {l.label}
+                </a>
+              );
+            })}
           </div>
 
-          <p
-            style={parseStyle(
-              `font-family:${fonts.mono};font-size:10.5px;color:${C.dim};margin:26px 0 0;` +
-                `padding-top:18px;border-top:1px solid ${C.hairline}`,
-            )}
+          <Divider style={parseStyle('margin:26px 0 0')} />
+          <Text
+            role="label-small"
+            style={parseStyle(`${MONO};--m3-lh:1.8;color:${DIM};margin:16px 0 0`)}
           >
             ←{' '}
-            <Link to="/" style={parseStyle(`color:${C.muted};text-decoration:none`)}>
+            <Link
+              to="/"
+              style={parseStyle(
+                'color:var(--md-sys-color-on-surface-variant);text-decoration:none',
+              )}
+            >
               index
             </Link>{' '}
             ·{' '}
-            <Link to="/work" style={parseStyle(`color:${C.muted};text-decoration:none`)}>
+            <Link
+              to="/work"
+              style={parseStyle(
+                'color:var(--md-sys-color-on-surface-variant);text-decoration:none',
+              )}
+            >
               the work
             </Link>
-          </p>
+          </Text>
         </aside>
 
         <main style={parseStyle('padding:56px 0 130px;min-width:0')}>
-          <section id="about">
-            <h2 style={parseStyle(`font-size:19px;font-weight:600;color:${C.text};margin:0 0 14px`)}>
-              about
-            </h2>
+          <section id="about" style={parseStyle('scroll-margin-top:24px')}>
+            <SectionHead>about</SectionHead>
             <P>
               most of what i do is surgical video. keyhole surgery specifically, where there’s one
               camera, it’s inside someone, and a fair amount of the time you can’t see anything
@@ -142,100 +297,129 @@ export default function Academic() {
           </section>
 
           <RevealSection id="research" reveal={reveal} index={0} title="research">
-            <p
+            <Text
+              role="body-large"
               style={parseStyle(
-                `font-size:14.5px;line-height:1.78;color:${C.muted};margin:0 0 20px;max-width:68ch;` +
-                  `padding-left:15px;border-left:2px solid ${C.accent}`,
+                'color:var(--md-sys-color-on-surface-variant);margin:0 0 22px;max-width:64ch;' +
+                  'padding-left:16px;border-left:2px solid var(--md-sys-color-primary)',
               )}
             >
               {content.prose.research}
-            </p>
+            </Text>
             {content.themes.map((t) => (
-              <div
-                key={t.n}
-                style={parseStyle(
-                  `display:block;background:${C.card};border:1px solid ${C.hairline};` +
-                    `border-radius:9px;padding:22px;margin:0 0 12px`,
-                )}
-              >
-                <span
+              <Card key={t.n} variant="outlined" style={parseStyle(`${CARD_TONE};margin:0 0 14px`)}>
+                <Text
+                  as="span"
+                  role="label-medium"
+                  emphasized
                   style={parseStyle(
-                    `display:block;font-family:${fonts.mono};font-size:10.5px;color:${C.accent};margin-bottom:9px`,
+                    `${MONO};--m3-track:0.14em;display:block;` +
+                      'color:var(--md-sys-color-primary);margin:0 0 10px',
                   )}
                 >
                   {t.n}
-                </span>
-                <span
-                  style={parseStyle(
-                    `display:block;font-size:16px;font-weight:600;color:${C.text};margin-bottom:10px`,
-                  )}
+                </Text>
+                <Text
+                  as="h3"
+                  role="title-medium"
+                  style={parseStyle('color:var(--md-sys-color-on-surface);margin:0 0 10px')}
                 >
                   {t.t}
-                </span>
-                <p style={parseStyle(`font-size:13.5px;line-height:1.72;color:${C.muted};margin:0 0 12px`)}>
-                  {t.b}
-                </p>
-                <p
+                </Text>
+                <Text
+                  role="body-large"
                   style={parseStyle(
-                    `font-family:${fonts.mono};font-size:11px;line-height:1.65;color:${C.slate};` +
-                      `margin:0;padding-left:13px;border-left:1px solid rgba(111,159,216,0.35)`,
+                    'color:var(--md-sys-color-on-surface-variant);margin:0 0 14px;max-width:62ch',
+                  )}
+                >
+                  {t.b}
+                </Text>
+                {/* where the method gives out. tertiary rather than primary so a
+                    limit never reads as a claim, and the inner radius is the
+                    card's 28 minus its 20 of padding — 8, not 28 again. */}
+                <Text
+                  role="body-small"
+                  style={parseStyle(
+                    `${MONO};--m3-lh:1.65;margin:0;padding:11px 14px;` +
+                      'color:var(--md-sys-color-tertiary);' +
+                      'background:var(--md-sys-color-surface-container-high);' +
+                      'border-radius:var(--md-sys-shape-corner-small);' +
+                      'border-left:2px solid color-mix(in srgb, var(--md-sys-color-tertiary) 60%, transparent)',
                   )}
                 >
                   {t.e}
-                </p>
-              </div>
+                </Text>
+              </Card>
             ))}
           </RevealSection>
 
           <RevealSection id="timeline" reveal={reveal} index={1} title="how i got here">
             {content.timeline.map((e) => (
-              <div
+              <Card
                 key={e.y}
+                variant="outlined"
                 style={parseStyle(
-                  `display:grid;grid-template-columns:52px 1fr;gap:18px;background:${C.card};` +
-                    `border:1px solid ${C.hairline};border-radius:9px;padding:18px 22px;margin:0 0 12px`,
+                  `${CARD_TONE};margin:0 0 14px;display:grid;` +
+                    'grid-template-columns:56px minmax(0,1fr);gap:18px',
                 )}
               >
-                <span
-                  style={parseStyle(
-                    `font-family:${fonts.mono};font-size:12px;color:${C.accent};padding-top:2px`,
-                  )}
+                {/* the year is the one figure in the row: emphasized weight,
+                    primary, tabular so the column stays a column. */}
+                <Text
+                  as="span"
+                  role="label-large"
+                  emphasized
+                  style={parseStyle(`${MONO};color:var(--md-sys-color-primary)`)}
                 >
                   {e.y}
-                </span>
-                <p style={parseStyle(`font-size:13.5px;line-height:1.72;color:${C.muted};margin:0`)}>
+                </Text>
+                <Text
+                  role="body-large"
+                  style={parseStyle('color:var(--md-sys-color-on-surface-variant);max-width:60ch')}
+                >
                   {e.b}
-                </p>
-              </div>
+                </Text>
+              </Card>
             ))}
           </RevealSection>
 
           <RevealSection id="work" reveal={reveal} index={2} title="selected work">
             <Sub>{content.prose.workSub}</Sub>
             {content.work.map((w, i) => (
-              <Link key={w.t} to={w.to} {...set('work', i)} style={parseStyle(cardBase(isOn('work', i)))}>
-                <span
+              <Link
+                key={w.t}
+                to={w.to}
+                className={CARD_LINK}
+                {...set('work', i)}
+                style={parseStyle(`${CARD_TONE};margin:0 0 14px`)}
+              >
+                <Text
+                  as="span"
+                  role="title-medium"
                   style={parseStyle(
-                    `display:block;font-size:16.5px;font-weight:600;` +
-                      `color:${isOn('work', i) ? C.accent : C.text};transition:color .25s`,
+                    `display:block;color:var(--md-sys-color-${isOn('work', i) ? 'primary' : 'on-surface'});` +
+                      `transition:color ${EFFECTS}`,
                   )}
                 >
                   {w.t}
-                </span>
-                <span
+                </Text>
+                <Text
+                  as="span"
+                  role="body-medium"
                   style={parseStyle(
-                    `display:block;font-size:13.5px;line-height:1.65;color:${C.muted};margin-top:7px`,
+                    'display:block;color:var(--md-sys-color-on-surface-variant);' +
+                      'margin:8px 0 0;max-width:62ch',
                   )}
                 >
                   {w.d}
-                </span>
-                <span
-                  style={parseStyle(
-                    `display:block;font-family:${fonts.mono};font-size:10.5px;color:${C.dim};margin-top:11px`,
-                  )}
+                </Text>
+                <Text
+                  as="span"
+                  role="label-medium"
+                  style={parseStyle(`${MONO};display:block;color:${DIM};margin:12px 0 0`)}
                 >
                   {w.m}
-                </span>
+                </Text>
               </Link>
             ))}
           </RevealSection>
@@ -245,32 +429,50 @@ export default function Academic() {
               const on = isOn('papers', i);
               const inner = (
                 <>
-                  <span
+                  <Text
+                    as="span"
+                    role="title-medium"
                     style={parseStyle(
-                      `display:block;font-size:15.5px;font-weight:600;line-height:1.4;` +
-                        `color:${on ? C.accent : C.text};transition:color .25s`,
+                      'display:block;--m3-lh:1.4;max-width:56ch;' +
+                        `color:var(--md-sys-color-${on ? 'primary' : 'on-surface'});` +
+                        `transition:color ${EFFECTS}`,
                     )}
                   >
                     {p.t}
-                  </span>
-                  <span
+                  </Text>
+                  <Text
+                    as="span"
+                    role="body-medium"
                     style={parseStyle(
-                      `display:block;font-size:13px;line-height:1.65;color:${C.muted};margin-top:7px`,
+                      'display:block;color:var(--md-sys-color-on-surface-variant);' +
+                        'margin:8px 0 0;max-width:62ch',
                     )}
                   >
                     {p.d}
-                  </span>
-                  <span
+                  </Text>
+                  {/* venue, ids and measured figures: mono, tabular, and kept a
+                      rank brighter than the other meta lines because this is
+                      the line a reader checks. */}
+                  <Text
+                    as="span"
+                    role="label-medium"
                     style={parseStyle(
-                      `display:block;font-family:${fonts.mono};font-size:10.5px;color:${C.dim};margin-top:10px`,
+                      `${MONO};display:block;--m3-lh:1.6;` +
+                        'color:var(--md-sys-color-on-surface-variant);margin:12px 0 0',
                     )}
                   >
                     {p.m}
-                  </span>
+                  </Text>
                 </>
               );
               return p.internal ? (
-                <Link key={p.t} to={p.to} {...set('papers', i)} style={parseStyle(cardBase(on))}>
+                <Link
+                  key={p.t}
+                  to={p.to}
+                  className={CARD_LINK}
+                  {...set('papers', i)}
+                  style={parseStyle(`${CARD_TONE};margin:0 0 14px`)}
+                >
                   {inner}
                 </Link>
               ) : (
@@ -279,8 +481,9 @@ export default function Academic() {
                   href={p.to}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className={CARD_LINK}
                   {...set('papers', i)}
-                  style={parseStyle(cardBase(on))}
+                  style={parseStyle(`${CARD_TONE};margin:0 0 14px`)}
                 >
                   {inner}
                 </a>
@@ -294,115 +497,136 @@ export default function Academic() {
 
           <RevealSection id="software" reveal={reveal} index={4} title="software & releases">
             <Sub>{content.prose.softwareSub}</Sub>
-            <div
-              style={parseStyle(
-                `background:${C.card};border:1px solid ${C.hairline};border-radius:9px;overflow:hidden`,
-              )}
-            >
-              {content.software.map((s, i) => {
-                const on = isOn('software', i);
-                return (
-                  <a
-                    key={s.n}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    {...set('software', i)}
+            <ListPanel>
+              {content.software.map((s, i, a) => (
+                <a
+                  key={s.n}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="m3-state"
+                  {...set('software', i)}
+                  style={parseStyle(
+                    'display:grid;grid-template-columns:54px 190px minmax(0,1fr) auto;gap:14px;' +
+                      'align-items:baseline;padding:14px 20px;text-decoration:none;' +
+                      // the panel clips at its radius, so the ring turns inward
+                      'outline-offset:-3px' +
+                      (i === a.length - 1
+                        ? ''
+                        : ';border-bottom:1px solid var(--md-sys-color-outline-variant)'),
+                  )}
+                >
+                  <Text
+                    as="span"
+                    role="label-small"
+                    style={parseStyle(`${MONO};--m3-track:0.14em;color:${DIM}`)}
+                  >
+                    {s.k}
+                  </Text>
+                  <Text
+                    as="span"
+                    role="label-large"
                     style={parseStyle(
-                      `display:grid;grid-template-columns:52px 190px 1fr auto;gap:14px;` +
-                        `align-items:baseline;padding:13px 20px;text-decoration:none;` +
-                        `background:${on ? C.cardHover : 'transparent'};` +
-                        `border-bottom:1px solid ${C.hairline};transition:background .2s`,
+                      `${MONO};` +
+                        `color:var(--md-sys-color-${isOn('software', i) ? 'primary' : 'on-surface'});` +
+                        `transition:color ${EFFECTS_FAST}`,
                     )}
                   >
-                    <span
-                      style={parseStyle(
-                        `font-family:${fonts.mono};font-size:9.5px;letter-spacing:0.1em;color:${C.dim}`,
-                      )}
-                    >
-                      {s.k}
-                    </span>
-                    <span
-                      style={parseStyle(
-                        `font-family:${fonts.mono};font-size:12.5px;color:${on ? C.accent : C.text};transition:color .2s`,
-                      )}
-                    >
-                      {s.n}
-                    </span>
-                    <span style={parseStyle(`font-size:12.5px;color:${C.muted};line-height:1.5`)}>
-                      {s.d}
-                    </span>
-                    <span
-                      style={parseStyle(
-                        `font-family:${fonts.mono};font-size:10px;color:${C.dim};white-space:nowrap`,
-                      )}
-                    >
-                      {s.s}
-                    </span>
-                  </a>
-                );
-              })}
-            </div>
+                    {s.n}
+                  </Text>
+                  <Text
+                    as="span"
+                    role="body-medium"
+                    style={parseStyle('color:var(--md-sys-color-on-surface-variant)')}
+                  >
+                    {s.d}
+                  </Text>
+                  <Text
+                    as="span"
+                    role="label-medium"
+                    style={parseStyle(`${MONO};color:${DIM};white-space:nowrap`)}
+                  >
+                    {s.s}
+                  </Text>
+                </a>
+              ))}
+            </ListPanel>
           </RevealSection>
 
           <RevealSection id="competitions" reveal={reveal} index={5} title="competitions">
             <Sub>{content.prose.competitionsSub}</Sub>
-            <div
-              style={parseStyle(
-                `background:${C.card};border:1px solid ${C.hairline};border-radius:9px;overflow:hidden`,
-              )}
-            >
+            <ListPanel>
               {content.competitions.map((c, i, a) => (
                 <div
                   key={c.n}
                   style={parseStyle(
-                    `display:flex;align-items:baseline;gap:13px;padding:13px 22px` +
-                      (i === a.length - 1 ? '' : `;border-bottom:1px solid ${C.hairline}`),
+                    'display:flex;align-items:baseline;gap:14px;padding:14px 20px' +
+                      (i === a.length - 1
+                        ? ''
+                        : ';border-bottom:1px solid var(--md-sys-color-outline-variant)'),
                   )}
                 >
-                  <span
+                  {/* the placement is the figure in the row, so it takes the
+                      emphasized weight; nothing else in the row does. */}
+                  <Text
+                    as="span"
+                    role="label-medium"
+                    emphasized
                     style={parseStyle(
-                      `font-family:${fonts.mono};font-size:10.5px;color:${C.accent};flex:none;min-width:74px`,
+                      `${MONO};color:var(--md-sys-color-primary);flex:none;min-width:76px`,
                     )}
                   >
                     {c.p}
-                  </span>
-                  <span style={parseStyle(`font-size:13.5px;color:${C.text};flex:none`)}>{c.n}</span>
+                  </Text>
+                  <Text
+                    as="span"
+                    role="body-medium"
+                    style={parseStyle('color:var(--md-sys-color-on-surface);flex:none')}
+                  >
+                    {c.n}
+                  </Text>
                   <span
+                    aria-hidden="true"
                     style={parseStyle(
-                      `flex:1;min-width:14px;height:1px;align-self:center;` +
-                        `background:repeating-linear-gradient(to right,${C.hairline} 0 2px,transparent 2px 6px)`,
+                      'flex:1;min-width:14px;height:1px;align-self:center;' +
+                        'background:repeating-linear-gradient(to right,' +
+                        'var(--md-sys-color-outline-variant) 0 2px,transparent 2px 6px)',
                     )}
                   />
-                  <span
-                    style={parseStyle(
-                      `font-family:${fonts.mono};font-size:11px;color:${C.dim};flex:none`,
-                    )}
+                  <Text
+                    as="span"
+                    role="label-medium"
+                    style={parseStyle(`${MONO};color:${DIM};flex:none`)}
                   >
                     {c.y}
-                  </span>
+                  </Text>
                 </div>
               ))}
-            </div>
+            </ListPanel>
           </RevealSection>
 
           <RevealSection id="where" reveal={reveal} index={6} title="where the work happens">
             {content.places.map((p, i, a) => (
-              <div
-                key={p.n}
-                style={parseStyle(
-                  `display:block;padding:14px 0` +
-                    (i === a.length - 1 ? '' : `;border-bottom:1px solid ${C.hairline}`),
-                )}
-              >
-                <span style={parseStyle(`display:block;font-size:14px;color:${C.text}`)}>{p.n}</span>
-                <span
-                  style={parseStyle(
-                    `display:block;font-size:12.5px;line-height:1.6;color:${C.muted};margin-top:4px`,
-                  )}
-                >
-                  {p.d}
-                </span>
+              <div key={p.n}>
+                <div style={parseStyle('padding:15px 0')}>
+                  <Text
+                    as="span"
+                    role="title-small"
+                    style={parseStyle('display:block;color:var(--md-sys-color-on-surface)')}
+                  >
+                    {p.n}
+                  </Text>
+                  <Text
+                    as="span"
+                    role="body-medium"
+                    style={parseStyle(
+                      'display:block;color:var(--md-sys-color-on-surface-variant);margin:5px 0 0',
+                    )}
+                  >
+                    {p.d}
+                  </Text>
+                </div>
+                {i === a.length - 1 ? null : <Divider />}
               </div>
             ))}
           </RevealSection>
@@ -415,74 +639,111 @@ export default function Academic() {
 
           <RevealSection id="misc" reveal={reveal} index={8} title="misc, unsorted">
             {content.misc.map((m) => (
-              <p
+              <Text
                 key={m.slice(0, 24)}
+                role="body-medium"
                 style={parseStyle(
-                  `font-size:13.5px;line-height:1.75;color:${C.muted};margin:0 0 11px;` +
-                    `padding-left:15px;border-left:1px solid ${C.hairline}`,
+                  'color:var(--md-sys-color-on-surface-variant);margin:0 0 12px;max-width:64ch;' +
+                    'padding-left:16px;border-left:1px solid var(--md-sys-color-outline-variant)',
                 )}
               >
                 {m}
-              </p>
+              </Text>
             ))}
           </RevealSection>
 
           <RevealSection id="contact" reveal={reveal} index={9} title="contact">
             <P>{content.prose.contact}</P>
-            <p style={parseStyle(`font-family:${fonts.mono};font-size:14px;margin:0 0 8px`)}>
+            <Text role="body-large" style={parseStyle(`${MONO};margin:0`)}>
               <A href="mailto:gyanateet@gmail.com">gyanateet@gmail.com</A>
-            </p>
-            <p
-              style={parseStyle(
-                `font-family:${fonts.mono};font-size:10.5px;line-height:1.75;color:${C.dim};` +
-                  `margin:44px 0 0;padding-top:22px;border-top:1px solid ${C.hairline}`,
-              )}
+            </Text>
+            <Divider style={parseStyle('margin:46px 0 0')} />
+            <Text
+              role="label-small"
+              style={parseStyle(`${MONO};--m3-lh:1.85;color:${DIM};margin:20px 0 0;max-width:64ch`)}
             >
               {content.prose.foot}
-            </p>
+            </Text>
           </RevealSection>
         </main>
       </div>
-    </div>
+    </Theme>
+  );
+}
+
+/**
+ * Section heading: brand face at headline scale, with a rule running out to the
+ * right margin. Plain weight, not emphasized — on a page of eleven headings the
+ * second weight axis would stop meaning anything.
+ */
+function SectionHead({ children }) {
+  return (
+    <header style={parseStyle('display:flex;align-items:baseline;gap:16px;margin:0 0 18px')}>
+      <Text
+        as="h2"
+        role="headline-small"
+        style={parseStyle('color:var(--md-sys-color-on-surface);flex:none')}
+      >
+        {children}
+      </Text>
+      <span
+        aria-hidden="true"
+        style={parseStyle(
+          'flex:1;min-width:20px;height:1px;' +
+            'background:linear-gradient(to right,var(--md-sys-color-outline-variant),transparent)',
+        )}
+      />
+    </header>
   );
 }
 
 function RevealSection({ id, reveal, index, title, children }) {
   return (
-    <section id={id} ref={reveal.attach(index)} style={parseStyle(reveal.style(index))}>
-      <h2
-        style={parseStyle(
-          `font-size:19px;font-weight:600;color:${C.text};margin:0 0 14px;padding:40px 0 0`,
-        )}
-      >
-        {title}
-      </h2>
+    <section
+      id={id}
+      ref={reveal.attach(index)}
+      style={parseStyle(joinStyle(reveal.style(index), 'padding:52px 0 0;scroll-margin-top:24px'))}
+    >
+      <SectionHead>{title}</SectionHead>
       {children}
     </section>
   );
 }
 
-function P({ children }) {
+/** A tonal panel holding rows: one step up from the ground, radius `large`
+ *  rather than the cards' `extra-large` because 14px rows inside a 28px corner
+ *  collide with the curve. */
+function ListPanel({ children }) {
   return (
-    <p
+    <div
       style={parseStyle(
-        `font-size:14.5px;line-height:1.78;color:${C.muted};margin:0 0 15px;max-width:68ch`,
+        `${CARD_TONE};border:1px solid var(--md-sys-color-outline-variant);` +
+          'border-radius:var(--md-sys-shape-corner-large);overflow:hidden',
       )}
     >
       {children}
-    </p>
+    </div>
   );
 }
 
-function Sub({ children }) {
+/** Running prose: plain face at body-large, the reading size for this page. */
+function P({ children }) {
   return (
-    <p
-      style={parseStyle(
-        `font-size:13px;line-height:1.7;color:${C.dim};margin:0 0 16px;max-width:68ch`,
-      )}
+    <Text
+      role="body-large"
+      style={parseStyle('color:var(--md-sys-color-on-surface-variant);margin:0 0 16px;max-width:64ch')}
     >
       {children}
-    </p>
+    </Text>
+  );
+}
+
+/** The note under a heading that qualifies the section below it. */
+function Sub({ children }) {
+  return (
+    <Text role="body-medium" style={parseStyle(`color:${DIM};margin:0 0 18px;max-width:64ch`)}>
+      {children}
+    </Text>
   );
 }
 
@@ -493,7 +754,8 @@ function A({ href, children }) {
       href={href}
       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
       style={parseStyle(
-        `color:${C.accent};text-decoration:none;border-bottom:1px solid rgba(209,118,79,0.3)`,
+        'color:var(--md-sys-color-primary);text-decoration:none;' +
+          'border-bottom:1px solid color-mix(in srgb, var(--md-sys-color-primary) 35%, transparent)',
       )}
     >
       {children}

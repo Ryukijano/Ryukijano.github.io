@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { parseStyle } from '../lib/style.js';
-import { fonts, light } from './tokens.js';
 import {
   E_GROUND,
   E_REF,
@@ -12,8 +11,9 @@ import {
   isDiagonal,
 } from '../lib/qsim.js';
 
-const ACCENT = light.terracotta; // #c96442
-const SLATE = light.slate; // #6f9fd8
+// Roles, not literals: the lab retints with whatever theme its page sets.
+const ACCENT = 'var(--md-sys-color-primary)';
+const SLATE = 'var(--md-sys-color-secondary)';
 
 const START_ANGLES = [0.15, 0.15, 0.15, 0.15];
 const STEPS_PER_FRAME = 3;
@@ -127,7 +127,7 @@ export default function CircuitLab() {
   return (
     <div
       style={parseStyle(
-        `margin:30px 0 0;border:1px solid ${light.rule};border-radius:12px;background:${light.paper};padding:22px`,
+        `margin:30px 0 0;border:1px solid var(--md-sys-color-outline-variant);border-radius:12px;background:var(--md-sys-color-surface);padding:22px`,
       )}
     >
       <p style={parseStyle(statLabel)}>THE CIRCUIT — CLICK TO CHANGE AN OPERATOR</p>
@@ -156,28 +156,28 @@ export default function CircuitLab() {
             >
               <span
                 style={parseStyle(
-                  `font-family:${fonts.mono};font-size:15px;letter-spacing:0.09em;color:${col};display:block`,
+                  `font-family:var(--md-sys-typescale-mono-font);font-size:15px;letter-spacing:0.09em;color:${col};display:block`,
                 )}
               >
                 {p}
               </span>
               <span
                 style={parseStyle(
-                  `font-family:${fonts.mono};font-size:8.5px;letter-spacing:0.1em;color:${light.muted};display:block;margin-top:4px`,
+                  `font-family:var(--md-sys-typescale-mono-font);font-size:8.5px;letter-spacing:0.1em;color:var(--md-sys-color-on-surface-variant);display:block;margin-top:4px`,
                 )}
               >
                 {d ? 'diagonal' : 'entangling'}
               </span>
               <span
                 style={parseStyle(
-                  `font-family:${fonts.mono};font-size:9.5px;color:${light.muted};display:block;margin-top:7px`,
+                  `font-family:var(--md-sys-typescale-mono-font);font-size:9.5px;color:var(--md-sys-color-on-surface-variant);display:block;margin-top:7px`,
                 )}
               >
                 {`θ ${th[i].toFixed(3)}`}
               </span>
               <div
                 style={parseStyle(
-                  `height:5px;border:1px solid ${light.faint};border-radius:3px;margin-top:7px;overflow:hidden`,
+                  `height:5px;border:1px solid var(--md-sys-color-outline-variant);border-radius:3px;margin-top:7px;overflow:hidden`,
                 )}
               >
                 <div
@@ -199,7 +199,7 @@ export default function CircuitLab() {
         <Stat label="ENERGY">
           <p
             style={parseStyle(
-              `font-family:${fonts.mono};font-size:26px;color:${allDiag ? ACCENT : SLATE};margin:0`,
+              `font-family:var(--md-sys-typescale-mono-font);font-size:26px;color:${allDiag ? ACCENT : SLATE};margin:0`,
             )}
           >
             {E.toFixed(6)}
@@ -208,7 +208,7 @@ export default function CircuitLab() {
         <Stat label="VS REFERENCE">
           <p
             style={parseStyle(
-              `font-family:${fonts.mono};font-size:13px;color:${light.body};margin:0`,
+              `font-family:var(--md-sys-typescale-mono-font);font-size:13px;color:var(--md-sys-color-on-surface);margin:0`,
             )}
           >
             {delta}
@@ -217,7 +217,7 @@ export default function CircuitLab() {
         <Stat label="LARGEST GRADIENT">
           <p
             style={parseStyle(
-              `font-family:${fonts.mono};font-size:13px;color:${gmax < 1e-9 ? ACCENT : SLATE};margin:0`,
+              `font-family:var(--md-sys-typescale-mono-font);font-size:13px;color:${gmax < 1e-9 ? ACCENT : SLATE};margin:0`,
             )}
           >
             {gmax < 1e-9 ? 'exactly zero' : gmax.toFixed(6)}
@@ -226,7 +226,7 @@ export default function CircuitLab() {
         <Stat label="DESCENT">
           <p
             style={parseStyle(
-              `font-family:${fonts.mono};font-size:13px;color:${light.body};margin:0`,
+              `font-family:var(--md-sys-typescale-mono-font);font-size:13px;color:var(--md-sys-color-on-surface);margin:0`,
             )}
           >
             {`${steps} steps`}
@@ -236,12 +236,12 @@ export default function CircuitLab() {
 
       <div
         style={parseStyle(
-          `position:relative;height:132px;border:1px solid ${light.faint};border-radius:8px;background:${light.well};overflow:hidden`,
+          `position:relative;height:132px;border:1px solid var(--md-sys-color-outline-variant);border-radius:8px;background:var(--md-sys-color-surface-container-low);overflow:hidden`,
         )}
       >
         <div
           style={parseStyle(
-            `position:absolute;left:0;right:0;top:${(toY(E_REF) * 100).toFixed(2)}%;border-top:1px dashed ${light.divider};pointer-events:none`,
+            `position:absolute;left:0;right:0;top:${(toY(E_REF) * 100).toFixed(2)}%;border-top:1px dashed var(--md-sys-color-outline-variant);pointer-events:none`,
           )}
         />
         <div
@@ -268,7 +268,7 @@ export default function CircuitLab() {
       <div style={parseStyle('display:flex;justify-content:space-between;margin:7px 0 0')}>
         <span
           style={parseStyle(
-            `font-family:${fonts.mono};font-size:9px;color:${light.muted}`,
+            `font-family:var(--md-sys-typescale-mono-font);font-size:9px;color:var(--md-sys-color-on-surface-variant)`,
           )}
         >
           dashed upper — where you start · dashed lower — the best this Hamiltonian
@@ -293,7 +293,7 @@ export default function CircuitLab() {
 
       <p
         style={parseStyle(
-          `font-size:14px;line-height:1.6;color:${light.body};margin:18px 0 0;max-width:66ch`,
+          `font-size:14px;line-height:1.6;color:var(--md-sys-color-on-surface);margin:18px 0 0;max-width:66ch`,
         )}
       >
         {verdict}
@@ -311,12 +311,12 @@ function Stat({ label, children }) {
   );
 }
 
-const statLabel = `font-family:${fonts.mono};font-size:9px;letter-spacing:0.12em;color:${light.muted};margin:0 0 5px`;
+const statLabel = `font-family:var(--md-sys-typescale-mono-font);font-size:9px;letter-spacing:0.12em;color:var(--md-sys-color-on-surface-variant);margin:0 0 5px`;
 
 const btnStyle =
-  `font-family:${fonts.mono};font-size:11px;letter-spacing:0.08em;padding:9px 16px;` +
-  `border:1px solid ${ACCENT};border-radius:6px;background:${ACCENT};color:${light.paper};cursor:pointer`;
+  `font-family:var(--md-sys-typescale-mono-font);font-size:11px;letter-spacing:0.08em;padding:9px 16px;` +
+  `border:1px solid ${ACCENT};border-radius:6px;background:${ACCENT};color:var(--md-sys-color-surface);cursor:pointer`;
 
 const btnGhost =
-  `font-family:${fonts.mono};font-size:11px;letter-spacing:0.08em;padding:9px 16px;` +
-  `border:1px solid ${light.rule};border-radius:6px;background:transparent;color:${light.body};cursor:pointer`;
+  `font-family:var(--md-sys-typescale-mono-font);font-size:11px;letter-spacing:0.08em;padding:9px 16px;` +
+  `border:1px solid var(--md-sys-color-outline-variant);border-radius:6px;background:transparent;color:var(--md-sys-color-on-surface);cursor:pointer`;

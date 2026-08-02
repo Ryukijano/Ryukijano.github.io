@@ -4,8 +4,7 @@ import CaseStudy from '../components/CaseStudy.jsx';
 import Section, { Body, H2 } from '../components/Section.jsx';
 import PullQuote from '../components/PullQuote.jsx';
 import MediaFigure from '../components/MediaFigure.jsx';
-import { parseStyle } from '../lib/style.js';
-import { fonts, light } from '../components/tokens.js';
+import { Text, Theme } from '../components/m3/index.jsx';
 import { getStudy } from '../content/caseStudies/index.js';
 import ConditionalGqe from './studies/ConditionalGqe.jsx';
 
@@ -43,6 +42,9 @@ export default function CaseStudyPage() {
  * A case study whose body has not been ported yet. It says so rather than
  * pretending, and it still renders whatever the content module does carry —
  * the pull quote on Dalton Mills, the second figure on NQCC.
+ *
+ * The notice sits in its own tonal container so it reads as a disclosure
+ * about the page rather than as one more section of the write-up.
  */
 function StubBody({ study }) {
   return (
@@ -66,50 +68,79 @@ function StubBody({ study }) {
       ) : null}
 
       <Section num="—" kicker="NOT YET PORTED" reveal={1}>
-        <H2>The rest of this write-up is still in the prototype</H2>
-        <Body>
-          {`The hero, the meta bar and the lead figure above come from ${study.source}. The numbered sections of that file — constraint, method, results, limits, artefacts — have not been moved across yet.`}
-        </Body>
-        <Body spacing="spaced">
-          Nothing has been paraphrased or filled in to cover the gap.
-        </Body>
+        <div style={noticeStyle}>
+          <H2>The rest of this write-up is still in the prototype</H2>
+          <Body>
+            {`The hero, the meta bar and the lead figure above come from ${study.source}. The numbered sections of that file — constraint, method, results, limits, artefacts — have not been moved across yet.`}
+          </Body>
+          <Body spacing="spaced">
+            Nothing has been paraphrased or filled in to cover the gap.
+          </Body>
+        </div>
       </Section>
     </>
   );
 }
 
+/* Outer radius large-increased at 24px of padding, so anything nested inside
+ * would want ~0 — which is why nothing inside it is rounded. */
+const noticeStyle = {
+  padding: '24px 28px',
+  background: 'var(--md-sys-color-surface-container)',
+  borderLeft: '3px solid var(--md-sys-color-outline)',
+  borderRadius: 'var(--md-sys-shape-corner-large-increased)',
+};
+
 function NotFound({ slug }) {
   return (
-    <div
-      style={parseStyle(
-        `min-height:100vh;background:${light.paper};color:${light.ink};` +
-          `font-family:${fonts.body};display:flex;align-items:center;justify-content:center`,
-      )}
+    <Theme
+      name="study"
+      style={{
+        minHeight: '100vh',
+        background: 'var(--md-sys-color-surface)',
+        color: 'var(--md-sys-color-on-surface)',
+        fontFamily: 'var(--md-sys-typescale-plain-font)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
     >
       <div style={{ textAlign: 'center', padding: '0 40px' }}>
-        <p
-          style={parseStyle(
-            `font-family:${fonts.mono};font-size:11px;letter-spacing:0.14em;color:${light.terracotta};margin:0 0 16px`,
-          )}
+        <Text
+          as="p"
+          role="label-medium"
+          style={{
+            '--m3-font': 'var(--md-sys-typescale-mono-font)',
+            color: 'var(--md-sys-color-primary)',
+            letterSpacing: '0.14em',
+            margin: '0 0 16px',
+          }}
         >
           NO SUCH CASE STUDY
-        </p>
-        <h1
-          style={parseStyle(
-            `font-family:${fonts.serif};font-weight:500;font-size:32px;margin:0 0 20px`,
-          )}
+        </Text>
+        <Text
+          as="h1"
+          role="display-small"
+          emphasized
+          style={{ margin: '0 0 20px', wordBreak: 'break-word' }}
         >
           {slug}
-        </h1>
-        <Link
-          to="/work"
-          style={parseStyle(
-            `font-family:${fonts.mono};font-size:11px;letter-spacing:0.1em;color:${light.muted}`,
-          )}
-        >
+        </Text>
+        <Link to="/work" className="m3-button m3-button--text m3-state" style={backStyle}>
           ← ALL PROJECTS
         </Link>
       </div>
-    </div>
+    </Theme>
   );
 }
+
+/* Colour comes from .m3-button--text (primary); only the face and the
+ * tracking are the page's. */
+const backStyle = {
+  fontFamily: 'var(--md-sys-typescale-mono-font)',
+  fontSize: 'var(--md-sys-typescale-label-small-size)',
+  letterSpacing: '0.1em',
+  /* base.css carries an unlayered `a { color: inherit }`, which outranks the
+   * layered .m3-button--text rule, so the role colour is set here. */
+  color: 'var(--md-sys-color-primary)',
+};

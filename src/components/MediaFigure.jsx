@@ -1,5 +1,5 @@
 import { parseStyle } from '../lib/style.js';
-import { cs, light } from './tokens.js';
+import { cs } from './tokens.js';
 
 /**
  * A GIF or still with its caption underneath.
@@ -43,7 +43,7 @@ export function Caption({ text, highlight, tight = false }) {
     <figcaption style={parseStyle(style)}>
       {splitOnHighlights(text, highlight).map((part, i) =>
         part.hit ? (
-          <span key={i} style={{ color: light.terracotta }}>
+          <span key={i} style={{ color: 'var(--md-sys-color-primary)' }}>
             {part.text}
           </span>
         ) : (

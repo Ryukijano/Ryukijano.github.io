@@ -1,5 +1,4 @@
 import { parseStyle } from '../lib/style.js';
-import { fonts, light } from './tokens.js';
 
 /**
  * Terracotta rule down the left, serif quote, mono attribution.
@@ -7,9 +6,9 @@ import { fonts, light } from './tokens.js';
  * is why the narrow column is rendered empty rather than dropped.
  */
 export default function PullQuote({ quote, attribution }) {
-  const wrap = `border-left:2px solid ${light.terracotta};padding:6px 0 6px 26px;margin:0`;
-  const quoteStyle = `font-family:${fonts.serifShort};font-size:21px;line-height:1.5;color:${light.ink};margin:0;max-width:56ch`;
-  const attrStyle = `font-family:${fonts.mono};font-size:10px;letter-spacing:0.1em;color:${light.muted};margin:16px 0 0`;
+  const wrap = `border-left:2px solid var(--md-sys-color-primary);padding:6px 0 6px 26px;margin:0`;
+  const quoteStyle = `font-family:var(--md-sys-typescale-brand-font);font-size:21px;line-height:1.5;color:var(--md-sys-color-on-surface);margin:0;max-width:56ch`;
+  const attrStyle = `font-family:var(--md-sys-typescale-mono-font);font-size:10px;letter-spacing:0.1em;color:var(--md-sys-color-on-surface-variant);margin:16px 0 0`;
 
   return (
     <section style={{ padding: '0 0 4px' }}>
