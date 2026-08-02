@@ -7,14 +7,38 @@ import MediaFigure from '../components/MediaFigure.jsx';
 import { Text, Theme } from '../components/m3/index.jsx';
 import { getStudy } from '../content/caseStudies/index.js';
 import ConditionalGqe from './studies/ConditionalGqe.jsx';
+import CosmosSentinel from './studies/CosmosSentinel.jsx';
+import DaltonMills from './studies/DaltonMills.jsx';
+import FetVaeSurgicalPrediction from './studies/FetVaeSurgicalPrediction.jsx';
+import GemmaLeVla from './studies/GemmaLeVla.jsx';
+import GotJepaToolTracking from './studies/GotJepaToolTracking.jsx';
+import NqccRollsRoyce from './studies/NqccRollsRoyce.jsx';
+import PotholeDetection from './studies/PotholeDetection.jsx';
+import SurgicalPhaseDetection from './studies/SurgicalPhaseDetection.jsx';
+import SyndromeNet from './studies/SyndromeNet.jsx';
+import YquantumShorsAlgorithm from './studies/YquantumShorsAlgorithm.jsx';
 
 /**
- * Bodies that have been ported. Anything not in here renders the stub body,
- * which shows what is in the content module and names the prototype the rest
- * still lives in.
+ * Every case study, mapped to the component that renders its numbered
+ * sections. Anything absent falls back to the stub body, which says so rather
+ * than pretending; nothing is absent now.
+ *
+ * `sectionCount` is SECTION_COUNT from the corresponding .dc.html — the number
+ * of reveal slots, slot 0 being the hero. It is 6 everywhere except
+ * gemma-le-vla, whose prototype has one fewer numbered section.
  */
 const bodies = {
   'conditional-gqe': { Body: ConditionalGqe, sectionCount: 6 },
+  'cosmos-sentinel': { Body: CosmosSentinel, sectionCount: 6 },
+  'dalton-mills': { Body: DaltonMills, sectionCount: 6 },
+  'fet-vae-surgical-prediction': { Body: FetVaeSurgicalPrediction, sectionCount: 6 },
+  'gemma-le-vla': { Body: GemmaLeVla, sectionCount: 5 },
+  'got-jepa-tool-tracking': { Body: GotJepaToolTracking, sectionCount: 6 },
+  'nqcc-rolls-royce': { Body: NqccRollsRoyce, sectionCount: 6 },
+  'pothole-detection': { Body: PotholeDetection, sectionCount: 6 },
+  'surgical-phase-detection': { Body: SurgicalPhaseDetection, sectionCount: 6 },
+  'syndrome-net': { Body: SyndromeNet, sectionCount: 6 },
+  'yquantum-shors-algorithm': { Body: YquantumShorsAlgorithm, sectionCount: 6 },
 };
 
 export default function CaseStudyPage() {

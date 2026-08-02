@@ -26,4 +26,11 @@ export default defineConfig([
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
   },
+  {
+    // Tooling that runs in Node, not the browser: the Vite config, the SSR
+    // smoke harness, and the token generator. They legitimately reach for
+    // `process` and `__dirname`, which globals.browser does not define.
+    files: ['vite.config.js', 'ssr-smoke.jsx', 'fact-check.jsx', 'tools/**/*.mjs'],
+    languageOptions: { globals: globals.node },
+  },
 ])

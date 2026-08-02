@@ -20,7 +20,21 @@ import { cs } from './tokens.js';
 const M = '--md-sys-';
 const NUMERIC = /^[-+−]?[.\d]/;
 
-export default function DataTable({ head, rows, columns = '1.35fr 0.85fr 1fr 1.5fr' }) {
+export default function DataTable({
+  head,
+  rows,
+  columns = '1.35fr 0.85fr 1fr 1.5fr',
+  highlight,
+}) {
+  /*
+   * Cells whose value marks an absence rather than a measurement — `tbc`,
+   * `skipped`, `paused`, `blocked` — are tinted in the prototypes, the same
+   * way MediaFigure tints the word "schematic". It is the site's disclosure
+   * colour, not decoration, so a table that drops it is quietly claiming more
+   * than the source did. `tbc` is always marked; anything else a page needs is
+   * passed in.
+   */
+  const marked = new Set(['tbc', ...(Array.isArray(highlight) ? highlight : highlight ? [highlight] : [])]);
   const headWrap =
     `display:grid;grid-template-columns:${columns};gap:0;` +
     `background:var(${M}color-surface-container);` +
@@ -40,11 +54,11 @@ export default function DataTable({ head, rows, columns = '1.35fr 0.85fr 1fr 1.5
     `line-height:var(${M}typescale-body-medium-line-height);` +
     `color:var(${M}color-on-surface);padding:13px 14px`;
 
-  const dataCell = (numeric) =>
+  const dataCell = (numeric, flagged) =>
     `font-family:var(${M}typescale-mono-font);` +
     `font-size:var(${M}typescale-body-small-size);` +
     `line-height:var(${M}typescale-body-small-line-height);` +
-    `color:var(${M}color-on-surface);padding:13px 14px;` +
+    `color:var(${M}color-${flagged ? 'primary' : 'on-surface'});padding:13px 14px;` +
     `font-variant-numeric:tabular-nums;` +
     `text-align:${numeric ? 'right' : 'left'}`;
 
@@ -73,7 +87,12 @@ export default function DataTable({ head, rows, columns = '1.35fr 0.85fr 1fr 1.5
           <div key={i} style={parseStyle(rowStyle)}>
             <span style={parseStyle(nameCell)}>{row.name}</span>
             {row.cells.map((cell, j) => (
-              <span key={j} style={parseStyle(dataCell(numericCol[j]))}>
+              <span
+                key={j}
+                style={parseStyle(
+                  dataCell(numericCol[j], marked.has(String(cell).trim())),
+                )}
+              >
                 {cell}
               </span>
             ))}

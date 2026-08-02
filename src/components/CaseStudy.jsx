@@ -236,6 +236,19 @@ function NextLinks({ items = [] }) {
             <Text as="span" role="headline-small">
               {item.title}
             </Text>
+            {/* Present only on the sticky-header prototypes, which give the
+              * next project one wide card with a sentence under the title
+              * rather than three narrow title-only ones. Dropping it silently
+              * lost a sentence on five pages. */}
+            {item.desc ? (
+              <Text
+                as="span"
+                role="body-medium"
+                style={{ color: 'var(--md-sys-color-on-surface-variant)' }}
+              >
+                {item.desc}
+              </Text>
+            ) : null}
           </>
         );
         return item.to.startsWith('http') ? (
