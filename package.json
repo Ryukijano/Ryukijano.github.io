@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "smoke": "esbuild ssr-smoke.jsx --bundle --platform=node --format=cjs --jsx=automatic --loader:.js=jsx --outfile=node_modules/.cache/ssr-smoke.cjs --log-level=error && node node_modules/.cache/ssr-smoke.cjs"
+    "smoke": "esbuild ssr-smoke.jsx --bundle --platform=node --format=cjs --jsx=automatic --loader:.js=jsx --outfile=node_modules/.cache/ssr-smoke.cjs --log-level=error && node node_modules/.cache/ssr-smoke.cjs",
+    "tokens": "node tools/patch-mcu.mjs && node tools/gen-m3-tokens.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@material/material-color-utilities": "^0.4.0",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
@@ -33,5 +35,5 @@
     "globals": "^16.5.0",
     "vite": "^7.2.4"
   },
-  "description": "Portfolio of Gyanateet Dutta — graphics, surgical vision, and quantum algorithms."
+  "description": "Portfolio of Gyanateet Dutta \u2014 graphics, surgical vision, and quantum algorithms."
 }
