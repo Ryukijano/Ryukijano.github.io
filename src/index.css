@@ -1,5 +1,31 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Source Serif 4", "Source Serif Pro", Palatino, "Palatino Linotype", "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --color-washi: #e6e1d3;
+  --color-indigo-ink: #1a237e;
+  --color-magenta: #ff2e63;
+  --color-work-ink: #11110e;
+  --color-work-cream: #e6e1d3;
+  --color-work-muted: #9a9588;
+  --color-work-rule: rgba(230, 225, 211, 0.16);
+  --color-hall-center: #2a2a2a;
+  --color-ryoushi-bg: #050505;
+  --color-academic-ink: #16140f;
+  --color-academic-muted: rgba(26, 35, 126, 0.55);
+  --color-academic-rule: rgba(26, 35, 126, 0.18);
+}
+
+@layer base {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+}
+
 /* Custom xs breakpoint for very small screens */
 @media (min-width: 480px) {
   .xs\:inline {
@@ -36,11 +62,9 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -48,12 +72,10 @@
   animation: fadeIn 0.4s ease-out forwards;
 }
 
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Better touch targets for mobile */
 @media (max-width: 640px) {
   a, button {
     min-height: 44px;
@@ -61,7 +83,68 @@ html {
   }
 }
 
-/* Prevent horizontal overflow on mobile */
 body {
   overflow-x: hidden;
+}
+
+/* The triptych becomes a linear reading order below the wide-layout breakpoint.
+   Decorative canvases are intentionally removed on touch and reduced-motion
+   contexts so essential content remains the only moving/interactive layer. */
+@media (max-width: 899px), (prefers-reduced-motion: reduce) {
+  canvas,
+  .hero-effects {
+    display: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@media (max-width: 899px) {
+  .min-h-screen.min-\[900px\]\:h-screen {
+    min-height: 100dvh;
+  }
+}
+
+.pane-ryukijano {
+  background-color: #e6e1d3;
+}
+
+.pane-gyanateet {
+  background-color: #2a2a2a;
+}
+
+.pane-ryoushi {
+  background-color: #050505;
+}
+
+@media (min-width: 900px) {
+  .pane-ryukijano {
+    background-image: linear-gradient(
+      transparent 0%,
+      rgba(230, 225, 211, 0.4) 15%,
+      rgba(230, 225, 211, 0.85) 35%,
+      rgb(230, 225, 211) 50%
+    );
+  }
+
+  .pane-gyanateet {
+    background-image: linear-gradient(
+      transparent 0%,
+      rgba(26, 26, 26, 0.5) 15%,
+      rgba(26, 26, 26, 0.9) 35%,
+      rgb(26, 26, 26) 50%
+    );
+  }
+
+  .pane-ryoushi {
+    background-image: linear-gradient(
+      transparent 0%,
+      transparent 20%,
+      rgba(5, 5, 5, 0.3) 35%,
+      rgba(5, 5, 5, 0.6) 50%,
+      rgba(5, 5, 5, 0.85) 65%,
+      rgb(5, 5, 5) 80%
+    );
+  }
 }
