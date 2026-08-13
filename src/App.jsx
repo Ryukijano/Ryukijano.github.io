@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ExternalLink, Activity, X, Download, ArrowLeft, ChevronRight } from 'lucide-react';
+import { ExternalLink, Activity, X, Download, ArrowLeft } from 'lucide-react';
 import { DATA, CV_URL, findProject, projectSlug } from './data/portfolio';
 import { resolveRoute, navigate } from './lib/navigation';
 import { usePath } from './lib/usePath';
+import Link from './lib/Link';
 import SiteNav from './components/SiteNav';
 import AcademicPage from './pages/AcademicPage';
 import WorkPage from './pages/WorkPage';
@@ -11,18 +12,21 @@ import CaseStudyPage from './pages/CaseStudyPage';
 
 function NotFoundPage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-black px-6 text-white">
-      <p className="font-mono text-xs uppercase tracking-[0.28em] text-white/40">404</p>
-      <h1 className="mt-4 text-5xl font-extrabold tracking-tight">Lost the thread.</h1>
-      <p className="mt-4 max-w-md text-center text-white/60">That route is not a page yet. The personal index and the academic record are live.</p>
-      <div className="mt-8 flex gap-3 font-mono text-xs uppercase tracking-widest">
-        <button type="button" onClick={() => navigate('/')} className="rounded-full bg-white px-5 py-2.5 text-black">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-[#11110e] px-6 text-[#E6E1D3]">
+      <p className="max-w-md text-center text-[17px]">This path isn't on the site.</p>
+      <nav className="mt-6 flex items-center gap-3 font-serif text-[15px]">
+        <Link href="/" className="underline decoration-[#E6E1D3]/30 underline-offset-4 hover:decoration-[#E6E1D3]">
           Personal
-        </button>
-        <button type="button" onClick={() => navigate('/academic')} className="rounded-full border border-white/30 px-5 py-2.5">
+        </Link>
+        <span aria-hidden="true">·</span>
+        <Link href="/work" className="underline decoration-[#E6E1D3]/30 underline-offset-4 hover:decoration-[#E6E1D3]">
+          Work
+        </Link>
+        <span aria-hidden="true">·</span>
+        <Link href="/academic" className="underline decoration-[#E6E1D3]/30 underline-offset-4 hover:decoration-[#E6E1D3]">
           Academic
-        </button>
-      </div>
+        </Link>
+      </nav>
     </main>
   );
 }
@@ -72,7 +76,6 @@ const PersonalIndex = () => {
       
       {/* Hero Background - Absolutely positioned behind everything */}
       <div className="hero-effects absolute inset-0 z-0 pointer-events-none">
-        {/* Main hero image with mask */}
         <div className="absolute inset-0">
           <img 
             src="/assets/images/1500x500.jpg" 
@@ -84,40 +87,6 @@ const PersonalIndex = () => {
             }}
           />
         </div>
-        {/* Chromatic aberration / glitch layers */}
-        <div className="absolute inset-0 mix-blend-screen opacity-30 hidden sm:block">
-          <img 
-            src="/assets/images/1500x500.jpg" 
-            alt="" 
-            className="w-full h-[30vh] sm:h-[40vh] lg:h-[50vh] object-cover object-top"
-            style={{
-              filter: 'hue-rotate(90deg) saturate(2)',
-              maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 80%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 80%)',
-              transform: 'translateX(3px)',
-            }}
-          />
-        </div>
-        <div className="absolute inset-0 mix-blend-multiply opacity-20 hidden sm:block">
-          <img 
-            src="/assets/images/1500x500.jpg" 
-            alt="" 
-            className="w-full h-[30vh] sm:h-[40vh] lg:h-[50vh] object-cover object-top"
-            style={{
-              filter: 'hue-rotate(-60deg) saturate(1.5)',
-              maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0) 90%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0) 90%)',
-              transform: 'translateX(-3px)',
-            }}
-          />
-        </div>
-        {/* Noise overlay for texture */}
-        <div 
-          className="absolute inset-0 opacity-[0.03] mix-blend-overlay"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-          }}
-        />
       </div>
 
       {/* --- LEFT PANE: RYUKIJANO --- */}
@@ -360,19 +329,12 @@ const Pane = ({
              `}></div>
              <ProjectList items={projects.slice(0, isMobile ? 2 : 3)} theme={id === 'left' ? 'light' : id === 'center' ? 'dark' : 'neon'} isMobile={isMobile} />
              
-             {/* View All Button */}
              <button
+               type="button"
                onClick={onExpand}
-               className={`
-                 w-full py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg flex items-center justify-center gap-2 
-                 transition-all duration-300 font-medium text-xs sm:text-sm
-                 active:scale-[0.98]
-                 ${id === 'left' ? 'bg-[#1a237e]/10 hover:bg-[#1a237e]/20 text-[#1a237e] border border-[#1a237e]/20' : ''}
-                 ${id === 'center' ? 'bg-white/10 hover:bg-white/20 text-white border border-white/20' : ''}
-                 ${id === 'right' ? 'bg-[#FF2E63]/10 hover:bg-[#FF2E63]/20 text-[#FF2E63] border border-[#FF2E63]/30 hover:shadow-[0_0_15px_rgba(255,46,99,0.2)]' : ''}
-               `}
+               className="mt-6 inline-block font-serif text-[15px] text-[#1a237e] underline decoration-[#1a237e]/30 underline-offset-4 hover:decoration-[#1a237e]"
              >
-               View All Projects <ChevronRight size={isMobile ? 14 : 16} />
+               View All
              </button>
           </div>
         )}
@@ -989,20 +951,6 @@ const CyberGrid = () => {
         />
       </div>
       
-      {/* Secondary grid layer for depth */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute inset-[-50%] w-[200%] h-[200%] animate-grid-move-slow"
-             style={{
-               backgroundImage: `
-                 linear-gradient(to right, rgba(0, 255, 255, 0.3) 1px, transparent 1px),
-                 linear-gradient(to bottom, rgba(0, 255, 255, 0.3) 1px, transparent 1px)
-               `,
-               backgroundSize: '80px 80px',
-               transform: 'perspective(600px) rotateX(55deg) translateY(-100px) translateZ(-300px)',
-             }}
-        />
-      </div>
-      
       {/* Scanlines effect */}
       <div className="absolute inset-0 opacity-10"
            style={{
@@ -1013,26 +961,13 @@ const CyberGrid = () => {
       {/* Glowing Horizon Line */}
       <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-[#FF2E63]/20 to-transparent" />
       
-      {/* Floating Particles */}
-      <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-[#FF2E63] rounded-full animate-ping opacity-70" />
-      <div className="absolute top-1/2 right-1/4 w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" />
-      <div className="absolute top-3/4 right-1/3 w-1 h-1 bg-[#FF2E63] rounded-full animate-ping opacity-50" style={{ animationDelay: '0.5s' }} />
-      <div className="absolute top-1/3 left-1/3 w-1 h-1 bg-cyan-400 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
-      
       <style>{`
         @keyframes grid-move {
           0% { transform: perspective(400px) rotateX(65deg) translateY(0) translateZ(-100px); }
           100% { transform: perspective(400px) rotateX(65deg) translateY(50px) translateZ(-100px); }
         }
-        @keyframes grid-move-slow {
-          0% { transform: perspective(600px) rotateX(55deg) translateY(0) translateZ(-300px); }
-          100% { transform: perspective(600px) rotateX(55deg) translateY(80px) translateZ(-300px); }
-        }
         .animate-grid-move {
           animation: grid-move 1.5s linear infinite;
-        }
-        .animate-grid-move-slow {
-          animation: grid-move-slow 3s linear infinite;
         }
       `}</style>
     </div>
