@@ -1,29 +1,28 @@
 # Downstream Handoff
 
-This directory is the entry point for another agent continuing the portfolio work.
+This directory is the entry point for another agent continuing the complete routed portfolio rebuild.
 
 ## Provenance
 
 - Repository: `Ryukijano/Ryukijano.github.io`
-- Working branch: `feat/portfolio-rebuild`
-- Base commit at handoff: `d404d9147058885b83536c97fc4116f37bb6039b`
+- Destination branch: `feat/portfolio-rebuild`
+- Imported canonical source: `feat/site-rebuild` at `2731ce9`
 - Default branch: `main`
 - Deployment workflow: `.github/workflows/deploy.yml`
 
-The local workspace was reconstructed by cloning the GitHub branch because the previous workspace snapshot contained an empty `website_revamp` directory and did not mount the historical `H:` source path. The branch itself is complete enough to build and contains the referenced support script and assets.
+The canonical staged rebuild was imported from the verified bundle at `H:\Website revamp with personas\site-rebuild\ryukijano-site.bundle`. The destination branch now contains the routed React implementation, case-study media, Material 3 files, integrity checks, and the existing handoff documentation.
 
 ## Read First
 
-1. [ARCHITECTURE.md](ARCHITECTURE.md) for the runtime structure and interaction model.
-2. [ASSETS.md](ASSETS.md) for stable media locations and asset handling rules.
-3. [VALIDATION.md](VALIDATION.md) for verification commands and known limitations.
-4. [../plan.md](../plan.md) for the remaining product and engineering decisions.
+1. [ARCHITECTURE.md](ARCHITECTURE.md) for routes, content, and shared components.
+2. [ASSETS.md](ASSETS.md) for media paths and case-study GIFs.
+3. [VALIDATION.md](VALIDATION.md) for the full verification suite and known gaps.
+4. [../plan.md](../plan.md) for remaining product and engineering work.
 
 ## Working Rules
 
-- Keep the three persona identities distinct when changing typography, color, content, or motion.
-- Prefer assets under `public/assets/images/` for public URLs such as `/assets/images/profile-avatar.png`.
-- Keep `public/resumes/` paths aligned with the links in `src/App.jsx`.
-- Do not delete `legacy/` while comparing or migrating content without an explicit replacement plan.
-- Run lint and build before pushing changes.
-
+- Keep factual project copy aligned with `src/content/` and the checks in `fact-check.jsx`.
+- Use shared M3 components and tokens rather than introducing raw colours or one-off visual primitives.
+- Reference public media as `/assets/...` or `/resumes/...`, never as filesystem paths.
+- Keep the eleven case-study routes rendering and preserve disclosure words such as `schematic`, `illustrative`, and `tbc`.
+- Run `npm run lint`, `npm run build`, `npm run smoke`, `npm run facts`, and `npm run tokens` before pushing.

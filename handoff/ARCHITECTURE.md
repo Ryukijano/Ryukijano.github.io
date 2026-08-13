@@ -2,27 +2,30 @@
 
 ## Runtime
 
-The application is a Vite-powered React 19 SPA. `src/main.jsx` mounts `src/App.jsx` into `#root` and imports `src/index.css`, which contains the Tailwind CSS entry point and global styles.
+The application is a React 19 + Vite 7 single-page application with browser routing. `src/main.jsx` mounts `src/routes.jsx`, which owns the route table and redirects unknown paths to `/`.
 
-## Application Model
+## Routes
 
-`src/App.jsx` currently owns both content and presentation:
+- `/`: introduction and persona entry point
+- `/academic`: academic profile and selected work
+- `/work`: discipline-oriented project index
+- `/work/:slug`: eleven individual case studies
+- `/trust`: evidence/provenance index that re-sorts the same projects by how much of each claim is recorded versus inferred
 
-- `DATA` stores the three personas, social links, project descriptions, tags, icons, and media paths.
-- `Portfolio` selects the initial persona from the URL hash and renders the three-pane landing view.
-- `Pane` renders one persona's landing card and expansion control.
-- `ExpandedSection` renders the full project view for a selected persona.
-- `FluidWaves`, `EmbeddingSpace`, and `CyberGrid` provide persona-specific landing backgrounds.
-- `ExpandedFluidWaves`, `ExpandedEmbeddingSpace`, and `ExpandedCyberGrid` provide expanded-view backgrounds.
-- `src/components/SpaceBackground.jsx` contains the reusable ambient space background used by the current rebuild.
+## Source Organization
 
-The project is intentionally data-driven inside a single component file at present. A future refactor can split persona data, pane components, expanded sections, and canvas backgrounds into separate modules, but should preserve the existing public asset paths and persona IDs: `ryukijano`, `ai`, and `ryoushi`.
+- `src/content/`: structured intro, academic, work, links, trust, and case-study data.
+- `src/pages/`: route-level page shells and the case-study shell.
+- `src/pages/studies/`: eleven case-study body components.
+- `src/components/`: shared sections, media figures, data tables, pull quotes, reveal hooks, circuit lab, and M3 primitives.
+- `src/styles/`: generated M3 tokens plus component and layering styles.
+- `src/lib/qsim.js`: browser four-qubit simulator used by the interactive quantum material.
+- `src/legacy/`: previous single-file implementation retained as reference but not imported by the active app.
 
-## Navigation
+## Design System
 
-The application uses the URL hash for persona selection and expanded state rather than a router. This keeps GitHub Pages hosting simple. If route-based navigation is introduced, retain `scripts/copy-404.cjs` or configure an equivalent Pages fallback.
+The active visual system combines warm paper and near-black neutrals with Material 3 Expressive primitives. Fraunces/serif display treatment, Inter-style body text, and JetBrains Mono metadata support the editorial/technical balance. Persona accents remain distinct, while `/trust` uses shared trust-band colours so evidence categories do not change meaning between personas.
 
-## Deployment
+## Navigation and Deployment
 
-The workflow installs with `npm ci`, runs `npm run build`, uploads `dist/`, and deploys with GitHub Pages. The workflow trigger is currently `main`; feature branches require merge or a deliberate workflow change before they deploy.
-
+The app uses `BrowserRouter`. GitHub Pages has no server-side rewrite, so the Vite build creates a `404.html` fallback equivalent to the built entry page. The deployment workflow triggers on `main`; this complete work is currently on `feat/portfolio-rebuild` and must be merged before production deployment.

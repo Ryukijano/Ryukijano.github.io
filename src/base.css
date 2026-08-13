@@ -1,0 +1,61 @@
+/*
+ * Base reset.
+ *
+ * Everything here sits in @layer m3.base, which the cascade orders BELOW
+ * m3.tokens and m3.components. That ordering is the whole point: an unlayered
+ * rule beats every layered one no matter how specific the layered rule is, so
+ * while this file was unlayered its `a { color: inherit }` silently outranked
+ * every link colour in m3.css, and its hardcoded focus ring outranked
+ * .m3-state:focus-visible. Both looked like component bugs and were not.
+ */
+@layer m3.base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    /* Falls back only if no [data-theme] is mounted; every page sets one. */
+    background: var(--md-sys-color-surface, #090908);
+    color: var(--md-sys-color-on-surface, #e4e1e6);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--md-sys-typescale-plain-font);
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  /*
+   * Links inherit colour so a card or row can set it once for its whole
+   * subtree. Layered, so any component that names a colour beats this.
+   */
+  a {
+    color: inherit;
+  }
+
+  /* Themed rather than a fixed terracotta, so the ring belongs to the page. */
+  :focus-visible {
+    outline: 2px solid var(--md-sys-color-primary, #d1764f);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

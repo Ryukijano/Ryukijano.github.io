@@ -1,51 +1,69 @@
-# Ryukijano Portfolio
+# ryukijano.github.io
 
-Personal portfolio for Gyanateet Dutta, presented as three connected personas:
+Portfolio of Gyanateet Dutta: graphics and systems, surgical vision, and quantum algorithms.
 
-- **Ryukijano**: graphics and systems engineering, GPU computing, and real-time 3D.
-- **Gyanateet**: AI research, computer vision, self-supervised learning, and medical imaging.
-- **Ryoushi**: quantum algorithms, quantum machine learning, and the Quantum Buddies collective.
+Live at **https://ryukijano.github.io**
 
-The current implementation is a React 19 + Vite single-page application. The landing view uses three responsive persona panes. Each pane can expand into a project-focused view with persona-specific typography, colors, motion, and canvas/CSS backgrounds.
+## Stack
 
-## Development
+- React 19 + Vite 7
+- React Router 7 for routed pages
+- Material 3 Expressive token and component layer
+- `framer-motion`, `lucide-react`, and `three`
 
-Requirements: Node.js 20 or newer and npm.
+## Running It
 
 ```bash
 npm ci
 npm run dev
+npm run build
+npm run preview
 ```
 
-The production checks are:
+Additional verification commands:
 
 ```bash
 npm run lint
-npm run build
+npm run smoke
+npm run facts
+npm run tokens
 ```
 
-`npm run build` generates `dist/` and copies `dist/index.html` to `dist/404.html` for GitHub Pages history-fallback navigation.
+## Routes
+
+- `/`: portfolio introduction and persona entry point
+- `/academic`: academic profile and selected work
+- `/work`: project index
+- `/work/:slug`: individual case studies
+- `/trust`: evidence and provenance index for project claims
+
+GitHub Pages has no server-side rewrite. The Vite build therefore produces a compatible `dist/404.html` fallback for deep links.
 
 ## Repository Layout
 
 ```text
-src/App.jsx                  Main application, persona data, panes, and expanded views
-src/index.css                Tailwind entry point and global styles
-src/components/              Reusable visual background components
-public/assets/images/        Project, profile, diagram, and background media
-public/resumes/              Resume PDF variants linked by the application
-scripts/copy-404.cjs         GitHub Pages fallback generation
-.github/workflows/deploy.yml GitHub Pages deployment workflow
-legacy/                      Previous static portfolio implementation
-handoff/                     Downstream-agent context and validation notes
+src/routes.jsx                  Browser routing
+src/pages/                      Intro, academic, work, trust, and case-study pages
+src/content/                    Structured page and case-study content
+src/components/                 Shared layout, media, tables, circuit, and M3 primitives
+src/styles/                     Material 3 token and component styles
+public/assets/gifs/             Case-study GIFs and technical demos
+public/assets/images/           Project images, diagrams, and posters
+public/resumes/                 Resume PDF variants
+fact-check.jsx                  Content integrity checks
+ssr-smoke.jsx                   Route render checks
+tools/                          M3 token generation and verification helpers
+legacy/                         Removed from the active build; retained in Git history
+handoff/                        Downstream architecture, asset, and validation notes
 ```
 
-## GitHub
+## Facts Worth Protecting
 
-Repository: <https://github.com/Ryukijano/Ryukijano.github.io>
+- Pothole detection: precision `0.947`, recall `0.826`, from Table 3 of [arXiv:2401.08588](https://arxiv.org/abs/2401.08588).
+- Surgical phase recognition: `90.0%` porcine accuracy, `89.5%` human accuracy, and `25 ms` inference on an NVIDIA A2.
+- ORCID: `0009-0008-0480-9241`.
+- The DBLP page previously linked in the legacy site belongs to another author and is deliberately not used.
 
-The handoff work is based on `feat/portfolio-rebuild`. The default deployment workflow currently triggers on pushes to `main`; merge or cherry-pick the branch before expecting a Pages deployment from this work.
+## Branch and Handoff
 
-## Handoff
-
-Start with [handoff/README.md](handoff/README.md). It records the verified architecture, asset locations, known gaps, and the commands needed to validate a future change. The source branch already contains the rebuilt React implementation and its referenced assets; no external Claude bundle or separate source archive is required for the current branch.
+This complete rebuild is published on `feat/portfolio-rebuild`. It combines the staged `feat/site-rebuild` implementation with the existing handoff documentation under `handoff/`. The deployment workflow still triggers from `main`; merge this branch into `main` when it is ready to publish.
