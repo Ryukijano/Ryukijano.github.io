@@ -265,14 +265,33 @@ export const SIGNAL = [
   { value: '2', label: 'arXiv papers' },
 ];
 
+export function projectSlug(title) {
+  return title
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 export function allProjects() {
   return LANES.flatMap((lane) =>
     DATA[lane.id].projects.map((project) => ({
       ...project,
+      slug: projectSlug(project.title),
       laneId: lane.id,
       laneLabel: lane.label,
       laneKicker: lane.kicker,
       personaSlug: lane.slug,
     })),
   );
+}
+
+export function findProject(slug) {
+  return allProjects().find((project) => project.slug === slug) ?? null;
+}
+
+export function relatedProjects(project, limit = 3) {
+  return allProjects()
+    .filter((item) => item.slug !== project.slug && item.laneId === project.laneId)
+    .slice(0, limit);
 }

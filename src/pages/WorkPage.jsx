@@ -70,17 +70,13 @@ export default function WorkPage() {
 
       <section className="grid gap-4 px-5 pb-24 sm:grid-cols-2 sm:px-10 lg:grid-cols-3 lg:px-16">
         {projects.map((project) => {
-          const href = project.link && project.link !== '#' ? project.link : `/persona/${project.personaSlug}`;
+          const href = `/work/${project.slug}`;
           const mediaSrc = project.media?.src || project.bannerSrc;
-          const external = href.startsWith('http');
-          const CardTag = external ? 'a' : Link;
-          const extra = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
 
           return (
-            <CardTag
+            <Link
               key={`${project.laneId}-${project.title}`}
               href={href}
-              {...extra}
               className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition hover:-translate-y-1 hover:border-white/30"
             >
               {mediaSrc ? (
@@ -99,7 +95,7 @@ export default function WorkPage() {
                 <h2 className="mt-2 text-xl font-bold leading-tight">{project.title}</h2>
                 <p className="mt-2 text-sm leading-relaxed text-white/60">{project.desc}</p>
               </div>
-            </CardTag>
+            </Link>
           );
         })}
       </section>

@@ -1,5 +1,5 @@
 import SiteNav from '../components/SiteNav';
-import { LANES } from '../data/portfolio';
+import { LANES, projectSlug } from '../data/portfolio';
 import Link from '../lib/Link';
 
 export default function PersonaPage({ data }) {
@@ -51,23 +51,16 @@ export default function PersonaPage({ data }) {
           </div>
           <h2 className="mt-20 text-3xl font-bold">Selected projects</h2>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
-            {data.projects.map((project) => {
-              const href = project.link && project.link !== '#' ? project.link : '/work';
-              const external = href.startsWith('http');
-              const Tag = external ? 'a' : Link;
-              const extra = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
-              return (
-                <Tag
-                  key={project.title}
-                  href={href}
-                  {...extra}
-                  className="rounded-2xl border border-black/20 bg-white/30 p-6 transition hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                >
-                  <h3 className="text-xl font-bold">{project.title}</h3>
-                  <p className="mt-2 opacity-75">{project.desc}</p>
-                </Tag>
-              );
-            })}
+            {data.projects.map((project) => (
+              <Link
+                key={project.title}
+                href={`/work/${projectSlug(project.title)}`}
+                className="rounded-2xl border border-black/20 bg-white/30 p-6 transition hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+              >
+                <h3 className="text-xl font-bold">{project.title}</h3>
+                <p className="mt-2 opacity-75">{project.desc}</p>
+              </Link>
+            ))}
           </div>
           <div className="mt-12 flex flex-wrap gap-4">
             <Link href="/work" className="rounded-full bg-black px-5 py-3 text-white">

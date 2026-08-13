@@ -11,6 +11,10 @@ export function resolveRoute(pathname) {
   if (path === '/') return { kind: 'home' };
   if (path === '/academic') return { kind: 'academic' };
   if (path === '/work') return { kind: 'work' };
+  if (path.startsWith('/work/')) {
+    const slug = path.split('/')[2] || '';
+    return { kind: 'case-study', slug };
+  }
   if (path.startsWith('/persona/')) {
     const slug = path.split('/')[2] || '';
     return { kind: 'persona', slug, persona: PERSONA_BY_SLUG[slug] ?? null };

@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ExternalLink, Activity, X, Download, ArrowLeft, ChevronRight } from 'lucide-react';
-import { DATA, CV_URL } from './data/portfolio';
+import { DATA, CV_URL, findProject, projectSlug } from './data/portfolio';
 import { resolveRoute, navigate } from './lib/navigation';
 import { usePath } from './lib/usePath';
 import SiteNav from './components/SiteNav';
 import AcademicPage from './pages/AcademicPage';
 import WorkPage from './pages/WorkPage';
 import PersonaPage from './pages/PersonaPage';
+import CaseStudyPage from './pages/CaseStudyPage';
 
 function NotFoundPage() {
   return (
@@ -35,6 +36,10 @@ const Portfolio = () => {
       return <AcademicPage />;
     case 'work':
       return <WorkPage />;
+    case 'case-study': {
+      const project = findProject(route.slug);
+      return project ? <CaseStudyPage project={project} /> : <NotFoundPage />;
+    }
     case 'persona':
       return DATA[route.persona] ? <PersonaPage data={DATA[route.persona]} /> : <NotFoundPage />;
     case 'home':
@@ -385,9 +390,14 @@ const ProjectList = ({ items, theme, isMobile }) => {
       {items.map((project, idx) => (
         <a 
           key={idx} 
-          href={project.link}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={`/work/${projectSlug(project.title)}`}
+          onClick={(event) => {
+            if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) {
+              return;
+            }
+            event.preventDefault();
+            navigate(`/work/${projectSlug(project.title)}`);
+          }}
           className={`
             group flex items-start gap-2 sm:gap-4 p-2.5 sm:p-4 rounded-lg transition-all duration-300 cursor-pointer relative overflow-hidden
             active:scale-[0.98]
