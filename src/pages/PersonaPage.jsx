@@ -27,7 +27,7 @@ export default function PersonaPage({ data }) {
           <ul className="mt-4 space-y-3">
             {projects.map((project) => (
               <li key={project.title} className="flex gap-6">
-                {project.year ? <span className="w-12 shrink-0">{project.year}</span> : null}
+                <span className="w-12 shrink-0">{project.year ?? '—'}</span>
                 <Link
                   href={`/work/${projectSlug(project.title)}`}
                   className="underline-offset-4 hover:underline"

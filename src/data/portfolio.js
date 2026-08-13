@@ -1,4 +1,4 @@
-import { Github, Globe, Database, Cpu, Terminal, BookOpen, Box, Zap, Grid, Code, Layers, Trophy, Microscope, Flame, Activity, Linkedin, Users } from 'lucide-react';
+import { Github, Globe, Database, Cpu, Terminal, BookOpen, Box, Zap, Grid, Code, Layers, Trophy, Microscope, Flame, Activity, Linkedin, Users, Twitch, Youtube } from 'lucide-react';
 
 // --- Content Data ---
 export const DATA = {
@@ -10,8 +10,8 @@ export const DATA = {
     fullDesc: "I work on graphics and systems: photogrammetry into Unreal, CUDA C++, physics-informed nets. Sep–Dec 2024 I was with Science Museum Group and Leeds HELIX XR on Dalton Mills. That brief ended; I am not still on a heritage contract. Since Nov 2025 my paid work is medical computer vision at Leeds (NDA), which lives in the vision lane.",
     tags: ["CUDA", "C++", "Three.js", "Unreal Engine", "PyTorch"],
     socials: [
-      { icon: Globe, link: "https://www.twitch.tv/ryukijano13", label: "Twitch" },
-      { icon: Globe, link: "https://www.youtube.com/channel/UCf1XZKm0A_LoZj6Y22fIfcg", label: "YouTube" },
+      { icon: Twitch, link: "https://www.twitch.tv/ryukijano13", label: "Twitch" },
+      { icon: Youtube, link: "https://www.youtube.com/channel/UCf1XZKm0A_LoZj6Y22fIfcg", label: "YouTube" },
       { icon: Activity, link: "https://soundcloud.com/user-294342891/sets/running-wild-1", label: "SoundCloud" },
       { icon: Github, link: "https://github.com/Ryukijano", label: "GitHub" },
     ],

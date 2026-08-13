@@ -71,27 +71,23 @@ const PersonalIndex = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen lg:h-screen w-full bg-black overflow-x-hidden font-sans selection:bg-white selection:text-black">
-      <div className="absolute inset-x-0 top-0 z-50">
-        <SiteNav variant="ink" overlay />
+    <div className="relative flex min-h-screen min-[900px]:h-screen w-full flex-col overflow-x-hidden bg-black font-sans selection:bg-white selection:text-black">
+      <SiteNav variant="ink" />
+
+      {/* Hero sits behind the three rooms on wide layouts only. */}
+      <div className="hero-effects pointer-events-none absolute inset-x-0 top-12 z-0">
+        <img 
+          src="/assets/images/1500x500.jpg" 
+          alt="" 
+          className="h-[40vh] w-full object-cover object-top opacity-60 min-[900px]:h-[50vh]"
+          style={{
+            maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+          }}
+        />
       </div>
 
-      {/* Hero Background - Absolutely positioned behind everything */}
-      <div className="hero-effects absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0">
-          <img 
-            src="/assets/images/1500x500.jpg" 
-            alt="Kanagawa Wave to Digital Transformation" 
-            className="w-full h-[30vh] sm:h-[40vh] lg:h-[50vh] object-cover object-top opacity-60"
-            style={{
-              maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-            }}
-          />
-        </div>
-      </div>
-
-      <div className="flex flex-col lg:flex-row min-h-screen lg:h-screen w-full">
+      <div className="relative z-10 flex min-h-0 w-full flex-1 flex-col min-[900px]:flex-row">
       {/* --- LEFT PANE: RYUKIJANO --- */}
       <Pane 
         id="left"
@@ -165,16 +161,14 @@ const PersonalIndex = () => {
 // --- Reusable Pane Component ---
 const Pane = ({ 
   id, activePane, setActivePane, onExpand, children, 
-  baseColor: _baseColor, textColor, accentColor: _accentColor, 
+  baseColor, textColor, accentColor: _accentColor, 
   titleLines, subtitle, desc, tags, projects, socials, 
   isMobile, fontTitle, fontBody 
 }) => {
-  // On mobile/tablet, all panes are full width and stacked
-  // On desktop (lg+), use the hover expansion behavior
-  let widthClass = "lg:w-1/3";
-  if (!isMobile && typeof window !== 'undefined' && window.innerWidth >= 1024) {
-    if (activePane === id) widthClass = "lg:w-[60%]";
-    else if (activePane !== null) widthClass = "lg:w-[20%]";
+  let widthClass = "min-[900px]:w-1/3";
+  if (!isMobile && typeof window !== 'undefined' && window.innerWidth >= 900) {
+    if (activePane === id) widthClass = "min-[900px]:w-[60%]";
+    else if (activePane !== null) widthClass = "min-[900px]:w-[20%]";
   }
   
   // Determine background gradient - more transparent at top to show hero image
@@ -210,12 +204,12 @@ const Pane = ({
       onMouseLeave={() => !isMobile && setActivePane(null)}
       onClick={handlePaneClick}
       className={`
-        relative min-h-[50vh] sm:min-h-[40vh] lg:min-h-0 lg:h-full ${widthClass} ${textColor}
+        relative min-h-[50vh] sm:min-h-[40vh] min-[900px]:min-h-0 min-[900px]:h-full ${widthClass} ${baseColor} ${textColor}
         transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]
-        overflow-y-auto overflow-x-hidden border-b lg:border-b-0 lg:border-r border-white/5
+        overflow-y-auto overflow-x-hidden border-b min-[900px]:border-b-0 min-[900px]:border-r border-white/5
         group cursor-default
       `}
-      style={gradientStyle}
+      style={isMobile ? undefined : gradientStyle}
     >
       {children}
       
@@ -223,7 +217,7 @@ const Pane = ({
       {id === 'left' && (
         <div className={`absolute bottom-4 left-4 z-[100] w-[calc(100%-2rem)] sm:w-[280px] lg:w-[300px] pointer-events-auto transition-all duration-300 ${isMobile ? 'hidden sm:block' : ''}`}
              style={{ opacity: showSoundCloud ? 1 : 0, pointerEvents: showSoundCloud ? 'auto' : 'none' }}>
-           <div className="bg-white/90 backdrop-blur-xl rounded-xl overflow-hidden shadow-2xl border border-[#1a237e]/20 relative">
+           <div className="relative overflow-hidden border border-[#1a237e]/20 bg-white">
              <iframe 
                width="100%" 
                height="80" 
@@ -250,7 +244,7 @@ const Pane = ({
         </button>
       )}
 
-      <div className="relative z-10 p-4 sm:p-6 lg:p-12 h-full flex flex-col justify-between pointer-events-none">
+      <div className={`relative z-10 flex h-full flex-col justify-between p-4 pointer-events-none sm:p-6 min-[900px]:p-12 ${id === 'left' ? 'pb-28' : ''}`}>
         {/* Content wrapper - no backdrop, let background show through */}
         <div className="space-y-3 sm:space-y-4 pointer-events-auto">
           
@@ -272,7 +266,7 @@ const Pane = ({
           </h2>
 
           {/* Subtitle - always visible */}
-          <p className={`text-xs sm:text-sm lg:text-base font-medium uppercase tracking-wider opacity-70 ${fontBody}`}>
+          <p className={`text-xs sm:text-sm min-[900px]:text-base font-medium opacity-70 ${fontBody}`}>
             {subtitle}
           </p>
           
@@ -473,17 +467,11 @@ const EmbeddingSpace = () => {
              
              const colorNoise = Math.sin(flowX * 0.2 + flowY * 0.2 + time * 0.01);
              
-             if (colorNoise > 0.4) {
-               // Soft Cyan
-               r = 100; g = 220; b = 255;
-             } else if (colorNoise > 0) {
-               // Soft Blue
+             if (colorNoise > 0.2) {
                r = 120; g = 150; b = 255;
              } else if (colorNoise > -0.4) {
-               // Soft Purple
                r = 180; g = 130; b = 255;
              } else {
-               // Soft Indigo
                r = 140; g = 140; b = 220;
              }
              

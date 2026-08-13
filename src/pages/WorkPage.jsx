@@ -39,8 +39,6 @@ function byYearDesc(a, b) {
 }
 
 function byFeatured(a, b) {
-  const yearDiff = byYearDesc(a, b);
-  if (yearDiff !== 0) return yearDiff;
   return featuredOrder(a) - featuredOrder(b);
 }
 
@@ -48,7 +46,7 @@ export function WorkInkNotFound() {
   return (
     <main className="min-h-screen bg-[#11110e] text-[#E6E1D3]">
       <SiteNav variant="ink" />
-      <div className="mx-auto max-w-[42rem] px-6 pb-16 pt-24">
+      <div className="mx-auto max-w-[42rem] px-6 pb-16 pt-10">
         <p className="font-mono text-sm tabular-nums" style={{ color: MUTED }}>
           404
         </p>
@@ -93,7 +91,7 @@ export default function WorkPage() {
     <main className="min-h-screen bg-[#11110e] text-[#E6E1D3]">
       <SiteNav variant="ink" />
 
-      <div className="mx-auto max-w-5xl px-6 pb-20 pt-24">
+      <div className="mx-auto max-w-5xl px-6 pb-20 pt-10">
         <header>
           <h1 className="font-serif text-4xl leading-tight text-[#E6E1D3] sm:text-5xl">Work</h1>
           <p
@@ -135,7 +133,7 @@ export default function WorkPage() {
                         className="font-mono text-[13px] tabular-nums"
                         style={{ color: MUTED }}
                       >
-                        {year ?? ''}
+                        {year ?? '—'}
                       </span>
                       <div className="min-w-0 sm:contents">
                         <Link
@@ -151,7 +149,7 @@ export default function WorkPage() {
                           {lane}
                         </span>
                         <p
-                          className="mt-0.5 truncate font-sans text-[13px] sm:mt-0"
+                          className="mt-0.5 font-sans text-[13px] sm:mt-0 sm:truncate"
                           style={{ color: MUTED }}
                         >
                           {desc}

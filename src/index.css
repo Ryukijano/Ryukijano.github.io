@@ -101,7 +101,7 @@ body {
 }
 
 @media (max-width: 899px) {
-  .min-h-screen.lg\:h-screen {
+  .min-h-screen.min-\[900px\]\:h-screen {
     min-height: 100dvh;
   }
 }

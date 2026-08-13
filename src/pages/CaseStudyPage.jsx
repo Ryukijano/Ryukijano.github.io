@@ -78,13 +78,16 @@ export default function CaseStudyPage({ project }) {
   const src = mediaSrc(project);
   const body = project.fullDesc || project.desc || '';
   const related = relatedProjects(project);
-  const caption = year != null ? `${project.title}, ${year}` : project.title;
+  const caption =
+    year != null && !String(project.title).includes(String(year))
+      ? `${project.title}, ${year}`
+      : project.title;
 
   return (
     <main className="min-h-screen bg-[#11110e] text-[#E6E1D3]">
       <SiteNav variant="ink" />
 
-      <article className="mx-auto max-w-[42rem] px-6 py-16 pt-24">
+      <article className="mx-auto max-w-[42rem] px-6 py-16">
         <p className="mb-10 font-sans text-sm" style={{ color: MUTED }}>
           <Link href="/work" className="hover:text-[#E6E1D3] hover:underline">
             Work
