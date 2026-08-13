@@ -161,7 +161,7 @@ const PersonalIndex = () => {
 // --- Reusable Pane Component ---
 const Pane = ({ 
   id, activePane, setActivePane, onExpand, children, 
-  baseColor, textColor, accentColor: _accentColor, 
+  baseColor: _baseColor, textColor, accentColor: _accentColor, 
   titleLines, subtitle, desc, tags, projects, socials, 
   isMobile, fontTitle, fontBody 
 }) => {
@@ -171,18 +171,9 @@ const Pane = ({
     else if (activePane !== null) widthClass = "min-[900px]:w-[20%]";
   }
   
-  // Determine background gradient - more transparent at top to show hero image
-  let gradientStyle = {};
-  if (id === 'left') {
-    gradientStyle = { background: 'linear-gradient(transparent 0%, rgba(230, 225, 211, 0.4) 15%, rgba(230, 225, 211, 0.85) 35%, rgb(230, 225, 211) 50%)' };
-  }
-  if (id === 'center') {
-    gradientStyle = { background: 'linear-gradient(transparent 0%, rgba(26, 26, 26, 0.5) 15%, rgba(26, 26, 26, 0.9) 35%, rgb(26, 26, 26) 50%)' };
-  }
-  if (id === 'right') {
-    // More transparent at top to show CyberGrid wireframe
-    gradientStyle = { background: 'linear-gradient(transparent 0%, transparent 20%, rgba(5, 5, 5, 0.3) 35%, rgba(5, 5, 5, 0.6) 50%, rgba(5, 5, 5, 0.85) 65%, rgb(5, 5, 5) 80%)' };
-  }
+  let paneWash = 'pane-ryukijano';
+  if (id === 'center') paneWash = 'pane-gyanateet';
+  if (id === 'right') paneWash = 'pane-ryoushi';
 
   const [showSoundCloud, setShowSoundCloud] = useState(true);
   
@@ -204,12 +195,11 @@ const Pane = ({
       onMouseLeave={() => !isMobile && setActivePane(null)}
       onClick={handlePaneClick}
       className={`
-        relative min-h-[50vh] sm:min-h-[40vh] min-[900px]:min-h-0 min-[900px]:h-full ${widthClass} ${baseColor} ${textColor}
+        relative min-h-[50vh] sm:min-h-[40vh] min-[900px]:min-h-0 min-[900px]:h-full ${widthClass} ${paneWash} ${textColor}
         transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]
         overflow-y-auto overflow-x-hidden border-b min-[900px]:border-b-0 min-[900px]:border-r border-white/5
         group cursor-default
       `}
-      style={isMobile ? undefined : gradientStyle}
     >
       {children}
       
