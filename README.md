@@ -1,16 +1,51 @@
-# React + Vite
+# Ryukijano Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio for Gyanateet Dutta, presented as three connected personas:
 
-Currently, two official plugins are available:
+- **Ryukijano**: graphics and systems engineering, GPU computing, and real-time 3D.
+- **Gyanateet**: AI research, computer vision, self-supervised learning, and medical imaging.
+- **Ryoushi**: quantum algorithms, quantum machine learning, and the Quantum Buddies collective.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The current implementation is a React 19 + Vite single-page application. The landing view uses three responsive persona panes. Each pane can expand into a project-focused view with persona-specific typography, colors, motion, and canvas/CSS backgrounds.
 
-## React Compiler
+## Development
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Requirements: Node.js 20 or newer and npm.
 
-## Expanding the ESLint configuration
+```bash
+npm ci
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The production checks are:
+
+```bash
+npm run lint
+npm run build
+```
+
+`npm run build` generates `dist/` and copies `dist/index.html` to `dist/404.html` for GitHub Pages history-fallback navigation.
+
+## Repository Layout
+
+```text
+src/App.jsx                  Main application, persona data, panes, and expanded views
+src/index.css                Tailwind entry point and global styles
+src/components/              Reusable visual background components
+public/assets/images/        Project, profile, diagram, and background media
+public/resumes/              Resume PDF variants linked by the application
+scripts/copy-404.cjs         GitHub Pages fallback generation
+.github/workflows/deploy.yml GitHub Pages deployment workflow
+legacy/                      Previous static portfolio implementation
+handoff/                     Downstream-agent context and validation notes
+```
+
+## GitHub
+
+Repository: <https://github.com/Ryukijano/Ryukijano.github.io>
+
+The handoff work is based on `feat/portfolio-rebuild`. The default deployment workflow currently triggers on pushes to `main`; merge or cherry-pick the branch before expecting a Pages deployment from this work.
+
+## Handoff
+
+Start with [handoff/README.md](handoff/README.md). It records the verified architecture, asset locations, known gaps, and the commands needed to validate a future change. The source branch already contains the rebuilt React implementation and its referenced assets; no external Claude bundle or separate source archive is required for the current branch.
