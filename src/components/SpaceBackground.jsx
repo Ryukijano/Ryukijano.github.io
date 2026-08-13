@@ -101,7 +101,7 @@ const SpaceBackground = () => {
     const textureLoader = new THREE.TextureLoader();
     // Using simple colors/standard materials if textures fail or for style consistency with current design
     // but attempting to load textures as per original code
-    const planetTextures = [
+    const _planetTextures = [
       // Fallback or real URLs. Using placeholder colors if textures take time
        null, null, null
     ];

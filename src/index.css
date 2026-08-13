@@ -65,3 +65,22 @@ html {
 body {
   overflow-x: hidden;
 }
+
+/* The triptych becomes a linear reading order below the wide-layout breakpoint.
+   Decorative canvases are intentionally removed on touch and reduced-motion
+   contexts so essential content remains the only moving/interactive layer. */
+@media (max-width: 899px), (prefers-reduced-motion: reduce) {
+  canvas,
+  .hero-effects {
+    display: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@media (max-width: 899px) {
+  .min-h-screen.lg\:h-screen {
+    min-height: 100dvh;
+  }
+}

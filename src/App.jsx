@@ -244,20 +244,25 @@ const DATA = {
 };
 
 const Portfolio = () => {
+  const path = typeof window !== 'undefined' ? window.location.pathname.replace(/\/+$/, '') || '/' : '/';
+  const personaSlug = path.startsWith('/persona/') ? path.split('/')[2] : null;
+  const personaKey = personaSlug === 'gyanateet' ? 'ai' : personaSlug;
   const [activePane, setActivePane] = useState(null); // 'left', 'center', 'right', or null
   const [expandedSection, setExpandedSection] = useState(null); // 'ryukijano', 'ai', 'ryoushi', or null
   const [isMobile, setIsMobile] = useState(false);
-  const [isTablet, setIsTablet] = useState(false);
   
   useEffect(() => {
     const checkDevice = () => {
-      setIsMobile(window.innerWidth < 640);
-      setIsTablet(window.innerWidth >= 640 && window.innerWidth < 1024);
+      setIsMobile(window.innerWidth < 900);
     };
     window.addEventListener('resize', checkDevice);
     checkDevice();
     return () => window.removeEventListener('resize', checkDevice);
   }, []);
+
+  if (personaKey && DATA[personaKey]) {
+    return <PersonaPage data={DATA[personaKey]} />;
+  }
 
   // If a section is expanded, show the expanded view
   if (expandedSection) {
@@ -270,7 +275,7 @@ const Portfolio = () => {
     <div className="flex flex-col lg:flex-row min-h-screen lg:h-screen w-full bg-black overflow-x-hidden font-sans selection:bg-white selection:text-black">
       
       {/* Hero Background - Absolutely positioned behind everything */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      <div className="hero-effects absolute inset-0 z-0 pointer-events-none">
         {/* Main hero image with mask */}
         <div className="absolute inset-0">
           <img 
@@ -336,7 +341,7 @@ const Portfolio = () => {
         id="left"
         activePane={activePane}
         setActivePane={setActivePane}
-        onExpand={() => setExpandedSection('ryukijano')}
+        onExpand={() => { window.location.href = '/persona/ryukijano'; }}
         baseColor="bg-[#E6E1D3]" // Paper/Cream
         textColor="text-[#1a237e]" // Indigo
         accentColor="bg-[#1a237e]"
@@ -358,7 +363,7 @@ const Portfolio = () => {
         id="center"
         activePane={activePane}
         setActivePane={setActivePane}
-        onExpand={() => setExpandedSection('ai')}
+        onExpand={() => { window.location.href = '/persona/gyanateet'; }}
         baseColor="bg-[#2a2a2a]" 
         textColor="text-white"
         accentColor="bg-indigo-500"
@@ -380,7 +385,7 @@ const Portfolio = () => {
         id="right"
         activePane={activePane}
         setActivePane={setActivePane}
-        onExpand={() => setExpandedSection('ryoushi')}
+        onExpand={() => { window.location.href = '/persona/ryoushi'; }}
         baseColor="bg-[#050505]" 
         textColor="text-[#FF2E63]" 
         accentColor="bg-[#FF2E63]"
@@ -401,10 +406,31 @@ const Portfolio = () => {
   );
 };
 
+const PersonaPage = ({ data }) => (
+  <main className="min-h-screen bg-[#E6E1D3] text-[#161618] px-5 py-6 sm:px-10 lg:px-20">
+    <nav className="flex flex-wrap items-center justify-between gap-4 border-b border-black/20 pb-5" aria-label="Primary">
+      <a href="/" className="font-mono text-sm uppercase tracking-widest">Index</a>
+      <div className="flex gap-4 font-mono text-xs uppercase tracking-widest">
+        <a href="/work">Work</a><a href="/academic">Academic</a><a href="/trust">Trust</a>
+      </div>
+    </nav>
+    <section className="mx-auto max-w-5xl py-16 sm:py-24">
+      <p className="font-mono text-xs uppercase tracking-[0.25em] opacity-60">Persona / {data.id}</p>
+      <h1 className="mt-4 max-w-4xl text-6xl font-bold leading-[0.9] sm:text-8xl">{data.title}</h1>
+      <p className="mt-6 max-w-2xl text-2xl opacity-80">{data.subtitle}</p>
+      <p className="mt-8 max-w-2xl text-lg leading-relaxed">{data.fullDesc}</p>
+      <div className="mt-8 flex flex-wrap gap-2">{data.tags.map(tag => <span key={tag} className="rounded-full border border-black/30 px-3 py-1 font-mono text-xs">{tag}</span>)}</div>
+      <h2 className="mt-20 text-3xl font-bold">Selected projects</h2>
+      <div className="mt-6 grid gap-4 md:grid-cols-2">{data.projects.slice(0, 6).map(project => <a key={project.title} href={project.link === '#' ? '/work' : project.link} className="rounded-2xl border border-black/20 bg-white/30 p-6 transition hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"><h3 className="text-xl font-bold">{project.title}</h3><p className="mt-2 opacity-75">{project.desc}</p></a>)}</div>
+      <div className="mt-12 flex flex-wrap gap-4"><a className="rounded-full bg-black px-5 py-3 text-white" href="/work">View all work</a><a className="rounded-full border border-black px-5 py-3" href="/trust">Evidence and limits</a></div>
+    </section>
+  </main>
+);
+
 // --- Reusable Pane Component ---
 const Pane = ({ 
   id, activePane, setActivePane, onExpand, children, 
-  baseColor, textColor, accentColor, 
+  baseColor: _baseColor, textColor, accentColor: _accentColor, 
   titleLines, subtitle, desc, tags, projects, socials, 
   isMobile, fontTitle, fontBody 
 }) => {
