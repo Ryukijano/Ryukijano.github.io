@@ -1,14 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter Tight", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-serif: "Newsreader", ui-serif, Georgia, Cambria, "Times New Roman", serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  --color-ink: #0b0d14;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Source Serif 4", "Source Serif Pro", Palatino, "Palatino Linotype", "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --color-washi: #e6e1d3;
   --color-indigo-ink: #1a237e;
   --color-magenta: #ff2e63;
-  --color-cyan: #22d3ee;
+  --color-work-ink: #11110e;
+  --color-work-cream: #e6e1d3;
+  --color-work-muted: #9a9588;
+  --color-work-rule: rgba(230, 225, 211, 0.16);
+  --color-hall-center: #2a2a2a;
+  --color-ryoushi-bg: #050505;
+  --color-academic-ink: #16140f;
+  --color-academic-muted: rgba(26, 35, 126, 0.55);
+  --color-academic-rule: rgba(26, 35, 126, 0.18);
 }
 
 @layer base {
@@ -17,16 +24,6 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
-}
-
-.academic-page {
-  font-family: var(--font-serif);
-}
-
-.academic-page h1,
-.academic-page h2,
-.academic-page h3 {
-  font-family: var(--font-serif);
 }
 
 /* Custom xs breakpoint for very small screens */
@@ -65,11 +62,9 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -77,12 +72,10 @@
   animation: fadeIn 0.4s ease-out forwards;
 }
 
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Better touch targets for mobile */
 @media (max-width: 640px) {
   a, button {
     min-height: 44px;
@@ -90,7 +83,6 @@ html {
   }
 }
 
-/* Prevent horizontal overflow on mobile */
 body {
   overflow-x: hidden;
 }

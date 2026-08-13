@@ -1,53 +1,48 @@
 import { CV_URL } from '../data/portfolio';
 import Link from '../lib/Link';
+import { usePath } from '../lib/usePath';
 
-const LINKS = [
-  { href: '/', label: 'Personal', match: 'personal' },
-  { href: '/work', label: 'Work', match: 'work' },
-  { href: '/academic', label: 'Academic', match: 'academic' },
-];
+const VARIANT = {
+  ink: 'border-work-cream/15 bg-work-ink text-work-cream',
+  paper: 'border-indigo-ink/15 bg-washi text-indigo-ink',
+};
 
-export default function SiteNav({ tone = 'dark', current = 'personal' }) {
-  const dark = tone === 'dark';
+function navLinkClass(active) {
+  return `font-sans text-[13px] underline-offset-4 hover:underline${active ? ' underline' : ''}`;
+}
+
+export default function SiteNav({ variant = 'ink', overlay = false }) {
+  const path = usePath();
+  const workActive = path === '/work' || path.startsWith('/work/');
+  const academicActive = path === '/academic';
+  const bar = variant === 'paper' ? VARIANT.paper : VARIANT.ink;
+  const placement = overlay ? '' : 'sticky top-0';
+  const wash = overlay && variant !== 'paper' ? 'bg-work-ink/80' : '';
 
   return (
-    <nav
-      className={`fixed top-3 right-3 sm:top-4 sm:right-4 z-50 flex items-center gap-1 rounded-full px-1 py-1 font-mono text-[11px] sm:text-xs uppercase tracking-widest shadow-lg backdrop-blur-md ${
-        dark ? 'bg-white/90 text-black' : 'bg-black/90 text-white'
-      }`}
-      aria-label="Site"
-    >
-      {LINKS.map((link) => {
-        const active = current === link.match;
-        return (
-          <Link
-            key={link.href}
-            href={link.href}
-            aria-current={active ? 'page' : undefined}
-            className={`rounded-full px-3 py-1.5 transition-colors ${
-              active
-                ? dark
-                  ? 'bg-black text-white'
-                  : 'bg-white text-black'
-                : dark
-                  ? 'text-black/50 hover:text-black'
-                  : 'text-white/55 hover:text-white'
-            }`}
-          >
-            {link.label}
+    <nav aria-label="Site" className={`${placement} z-50 border-b ${bar} ${wash}`}>
+      <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-6">
+        <Link href="/" className="font-serif text-[15px] tracking-normal">
+          Gyanateet Dutta
+        </Link>
+        <div>
+          <Link href="/work" aria-current={workActive ? 'page' : undefined} className={navLinkClass(workActive)}>
+            Work
           </Link>
-        );
-      })}
-      <a
-        href={CV_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`rounded-full px-3 py-1.5 transition-colors ${
-          dark ? 'text-black/50 hover:text-black' : 'text-white/55 hover:text-white'
-        }`}
-      >
-        CV
-      </a>
+          <span aria-hidden="true"> · </span>
+          <Link
+            href="/academic"
+            aria-current={academicActive ? 'page' : undefined}
+            className={navLinkClass(academicActive)}
+          >
+            Academic
+          </Link>
+          <span aria-hidden="true"> · </span>
+          <a href={CV_URL} className="font-sans text-[13px] underline-offset-4 hover:underline">
+            CV
+          </a>
+        </div>
+      </div>
     </nav>
   );
 }

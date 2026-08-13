@@ -5,9 +5,9 @@ export const DATA = {
   ryukijano: {
     id: 'ryukijano',
     title: "Ryukijano",
-    subtitle: "Graphics & Systems Engineer",
-    desc: "Building real-time 3D pipelines, GPU-accelerated simulations, and autonomous RL agents. From heritage preservation to physics solvers.",
-    fullDesc: "Creative technologist specializing in real-time graphics, GPU computing, and interactive experiences. Currently working on cultural heritage preservation using cutting-edge AI and VR technologies at the Science Museum Group and University of Leeds HELIX XR facilities.",
+    subtitle: "Graphics & systems",
+    desc: "I build VR scenes, CUDA kernels, and the occasional RL agent. Dalton Mills, Unreal, physics notebooks — not a product studio.",
+    fullDesc: "I work on graphics and systems: photogrammetry into Unreal, CUDA C++, physics-informed nets. Sep–Dec 2024 I was with Science Museum Group and Leeds HELIX XR on Dalton Mills. That brief ended; I am not still on a heritage contract. Since Nov 2025 my paid work is medical computer vision at Leeds (NDA), which lives in the vision lane.",
     tags: ["CUDA", "C++", "Three.js", "Unreal Engine", "PyTorch"],
     socials: [
       { icon: Globe, link: "https://www.twitch.tv/ryukijano13", label: "Twitch" },
@@ -18,44 +18,50 @@ export const DATA = {
     projects: [
       { 
         title: "Dalton Mills VR Reconstruction", 
-        desc: "Real-time 3D heritage reconstruction using SfM & NeRF integrated into Unreal Engine 5.", 
-        fullDesc: "Collaborated with the Science Museum Group and University of Leeds HELIX XR facilities to reconstruct Dalton Mills, a historic building in Keighley destroyed by fire in 2022. Using deep learning techniques, we replicated 3D scanning and photogrammetry processing, generating an accurate 3D model from limited photographic data. This project highlights how virtual experiences can preserve and interpret cultural heritage.",
+        desc: "SfM / NeRF into Unreal 5 for a mill that burned in 2022. HELIX XR, Sep–Dec 2024.", 
+        fullDesc: "Sep–Dec 2024 I worked with Science Museum Group and University of Leeds HELIX XR on a VR reconstruction of Dalton Mills in Keighley, destroyed by fire in 2022. Collaborators: Alex Neish, Yuan Gao, Simon Popple. The case study went up in Jan 2025. Photogrammetry and NeRF-style reconstruction from a small photo set; geometric fidelity is limited by that set. PCVR, not a standalone headset build.",
         link: "https://digitaleducation.leeds.ac.uk/2025/01/08/reconstructing-dalton-mills-vr-and-ai-in-cultural-preservation/", 
         icon: Box,
+        year: 2024,
+        featured: true,
+        featuredOrder: 5,
+        role: 'Collaborator, Science Museum Group / Leeds HELIX XR',
+        note: 'Geometric fidelity is limited by that photo set; there is no pre-fire laser scan to check against.',
         media: { type: 'image', src: '/assets/images/Offrenda_Final_2000x1200__1_.jpg' },
         tags: ["Unreal Engine 5", "NeRF", "Photogrammetry", "VR"]
       },
       { 
         title: "AWS AI/ML Scholar", 
-        desc: "Top 15% global performance in Deep Racer reinforcement learning on AWS infrastructure.", 
-        fullDesc: "Selected as an AWS AI/ML Scholar, achieving top 15% global performance in the AWS DeepRacer competition. Developed and trained reinforcement learning agents using PPO algorithms on AWS cloud infrastructure, optimizing for autonomous racing in simulated environments.",
-        link: "#", 
+        desc: "AWS AI/ML Scholar, Jul 2022–Jun 2023. DeepRacer top 15%.", 
+        fullDesc: "I was an AWS AI/ML Scholar from Jul 2022 to Jun 2023. DeepRacer put me in the top 15% of that league. PPO agents in the AWS simulator. Limit: a scholarship-league sim, not a hardware car programme.",
+        link: "https://www.linkedin.com/in/gyanateet-dutta-386215192/", 
         icon: Trophy,
+        year: 2023,
         media: { type: 'image', src: '/assets/images/doom_ppo.gif' },
         tags: ["AWS", "DeepRacer", "PPO", "Reinforcement Learning"]
       },
       { 
         title: "Physics-Informed Neural Networks", 
-        desc: "GPU-accelerated CUDA solvers for Navier-Stokes and nonlinear PDEs.", 
-        fullDesc: "Developed GPU-accelerated solvers using CUDA for physics simulations including Navier-Stokes equations, Burgers' equation, and other nonlinear PDEs. Implemented Physics-Informed Neural Networks (PINNs) for scientific computing applications.",
+        desc: "CUDA notebooks for Navier–Stokes and Burgers-type PDEs, plus PINN experiments.", 
+        fullDesc: "I keep a repo of GPU-side PDE solvers and physics-informed nets: Navier–Stokes, Burgers, a few other nonlinear PDEs. CUDA C++ and PyTorch. Limit: a methods notebook, not a validated CFD code.",
         link: "https://github.com/Ryukijano/Physics-Based-DeepLearning", 
         icon: Flame,
-        media: { type: 'image', src: '/assets/images/Java_Hero__1_.jpg' },
+        media: { type: 'image', src: '/assets/images/neural-network-architecture.png' },
         tags: ["CUDA", "PINNs", "CFD", "Scientific Computing"]
       },
       {
         title: "B3tt3r: 3D Reconstruction",
-        desc: "Combining Mast3r and Spann3r for enhanced 3D reconstruction.",
-        fullDesc: "A novel 3D reconstruction paradigm combining Mast3r and Spann3r models to achieve better results. Implements state-of-the-art stereo matching and depth estimation for robust 3D scene reconstruction from image pairs.",
+        desc: "Mast3r + Spann3r glued together for stereo reconstruction from image pairs.",
+        fullDesc: "I combined Mast3r and Spann3r for 3D reconstruction from image pairs — stereo matching and depth, then a mesh. Limit: no reconstruction benchmark against the source papers.",
         link: "https://github.com/Ryukijano/B3tt3r",
         icon: Box,
-        media: { type: 'image', src: '/assets/images/IMG20231231141400.jpg' },
+        media: { type: 'image', src: '/assets/images/computer-vision-pipeline.png' },
         tags: ["3D Vision", "Stereo Matching", "Python", "Deep Learning"]
       },
       {
         title: "CUDA Kernel Development",
-        desc: "Daily CUDA C++ and CUDA-Q/cuQuantum kernel development.",
-        fullDesc: "QuantumVice-M25-CUDAQuest: A journey exploring accelerated computing for ML, STEM, and Quantum Computing. Daily CUDA C++ (classical) and CUDA-Q/cuQuantum (quantum) kernel development exercises.",
+        desc: "Daily CUDA C++ and CUDA-Q / cuQuantum kernel drills.",
+        fullDesc: "QuantumVice-M25-CUDAQuest is a practice log: classical CUDA C++ kernels and CUDA-Q / cuQuantum exercises. Limit: drills, not a library.",
         link: "https://github.com/Ryukijano/QuantumVice-M25-CUDAQuest",
         icon: Terminal,
         media: { type: 'image', src: '/assets/images/command-line__2_.jpg' },
@@ -66,30 +72,39 @@ export const DATA = {
   ai: {
     id: 'ai',
     title: "Gyanateet",
-    subtitle: "AI Researcher & Computer Scientist",
-    desc: "MSc CS & AI @ Leeds. Focused on self-supervised learning, vision transformers, and medical image analysis.",
-    fullDesc: "AI researcher pursuing Master's in Computer Science & AI at University of Leeds. Research interests span self-supervised learning, vision transformers, medical image analysis, and generative AI. Published researcher with work in computer vision and optimization.",
+    subtitle: "Computer vision",
+    desc: "MSc Advanced Computer Science (Artificial Intelligence), Leeds, 2023–2024. Surgical video and self-supervised transformers. Research technician at Leeds since Nov 2025 (NDA).",
+    fullDesc: "I finished the MSc Advanced Computer Science (Artificial Intelligence) at the University of Leeds in 2023–2024; I am not still enrolled. Mar–Nov 2025 I interned with AIMS (AI in Medicine and Surgery) on ESD workflow / DINOv2. Since Nov 2025 I have been a research technician at Leeds on medical computer vision under NDA. The public record is the ISBI paper and the thesis repo.",
     tags: ["PyTorch", "JAX", "Computer Vision", "Hugging Face", "TensorFlow"],
     socials: [
       { icon: BookOpen, link: "https://orcid.org/0009-0008-0480-9241", label: "ORCID" },
-      { icon: Layers, link: "https://dblp.org/pid/345/4093.html", label: "DBLP" },
+      { icon: Layers, link: "https://doi.org/10.1109/isbi61048.2026.11515812", label: "ISBI 2026" },
       { icon: Activity, link: "https://wandb.ai/ryukijano", label: "W&B" },
       { icon: Linkedin, link: "https://www.linkedin.com/in/gyanateet-dutta-386215192/", label: "LinkedIn" },
     ],
     projects: [
       { 
         title: "AIMS: Surgical Phase Detection", 
-        desc: "Self-supervised DINO & V-JEPA for surgical workflow analysis at NHS/LTHT.", 
-        fullDesc: "Research internship at AIMS Group (AI in Medical Systems), University of Leeds. Developed surgical phase detection systems using self-supervised learning with DINO, DINOv2, and V-JEPA vision transformers. Achieved >90% accuracy on surgical workflow classification with minimal annotations, enabling skill assessment and surgeon training applications at Leeds Teaching Hospitals NHS Trust (LTHT).",
+        desc: "AIMS intern, Mar–Nov 2025. DINOv2 on ESD workflow. ISBI 2026 paper.", 
+        fullDesc: "Computer Vision Research Intern, AIMS (AI in Medicine and Surgery), University of Leeds, Mar–Nov 2025. ESD phase recognition with DINOv2 (DINO-Endo). ISBI 2026 paper: “Self-Supervised Vision Transformer for Surgical Phase Recognition in Endoscopic Submucosal Dissection”, DOI 10.1109/isbi61048.2026.11515812. That paper reports 89.5% accuracy on the patient set and 90.0% on porcine. Limit: those numbers are from that paper’s test splits, not a Trust-wide clinical evaluation.",
         link: "https://github.com/Ryukijano/DINOEndo", 
         icon: Microscope,
+        year: 2025,
+        featured: true,
+        featuredOrder: 3,
+        role: 'Research intern, AIMS (AI in Medicine and Surgery)',
+        note: 'Those numbers are from the ISBI 2026 test splits, not a Trust-wide clinical evaluation.',
+        links: [
+          { href: 'https://doi.org/10.1109/isbi61048.2026.11515812', label: 'Paper' },
+          { href: 'https://github.com/Ryukijano/DINOEndo', label: 'Code' },
+        ],
         media: { type: 'image', src: '/assets/images/computer_vision.jpg' },
         tags: ["DINOv2", "V-JEPA", "Medical AI", "Self-Supervised Learning"]
       },
       { 
         title: "Gemma-Le: VLA Policy", 
-        desc: "Vision-Language-Action model for robotics with SigLIP + Gemma 3.", 
-        fullDesc: "Developed a compact Vision-Language-Action (VLA) policy for robotic manipulation using LeRobot framework. Integrates SigLIP for vision encoding, Gemma 3 for language reasoning, and ScaleDP diffusion head for action prediction. Enables imitation learning for robotic tasks.",
+        desc: "SigLIP + Gemma 3 + ScaleDP VLA in a LeRobot fork. Hub checkpoints.", 
+        fullDesc: "I wired a compact vision-language-action policy in a LeRobot fork: SigLIP for vision, Gemma 3 with LoRA for language, ScaleDP as the action head. Checkpoints trained on LeRobot-format sim data (robot_sim.PickNPlace). Limit: imitation on a simulated pick-and-place set, not a robot I deployed.",
         link: "https://huggingface.co/Ryukijano/gemma-groot", 
         icon: Cpu,
         media: { type: 'image', src: '/assets/images/gemma-groot-demo.png' },
@@ -97,44 +112,60 @@ export const DATA = {
       },
       { 
         title: "MSc Thesis: Surgical Video Prediction", 
-        desc: "VAE-Transformer hybrid achieving +2.36 dB PSNR improvement.", 
-        fullDesc: "Master's thesis on surgical video prediction using a novel VAE-Transformer hybrid architecture. Achieved +2.36 dB PSNR improvement over baselines with FP16 mixed-precision training for efficiency. Real-time inference at 22 FPS enables practical surgical workflow applications.",
+        desc: "MSc surgical video prediction. +2.36 dB PSNR, 22 FPS. Not on White Rose.", 
+        fullDesc: "MSc work on surgical video prediction: a VAE–Transformer hybrid. This site previously claimed +2.36 dB PSNR over baselines and 22 FPS with FP16 mixed precision; I am leaving those as the project’s own measurements. Not deposited in White Rose eTheses. Code is on GitHub.",
         link: "https://github.com/Ryukijano/vae-surgical-prediction", 
         icon: Layers,
+        year: 2025,
+        featured: true,
+        featuredOrder: 4,
+        role: 'MSc student, University of Leeds',
+        note: 'Not deposited in White Rose eTheses. I did not measure longer-horizon drift or a downstream workflow effect.',
         media: { type: 'image', src: '/assets/images/neural-network-architecture.png' },
         tags: ["VAE", "Transformer", "Video Prediction", "Medical AI"]
       },
       { 
         title: "JAX Diffusers Sprint", 
-        desc: "8th Place Global 2023. ControlNet on TPU v4 for anime-realism.", 
-        fullDesc: "Achieved 8th place globally in the Hugging Face JAX Diffusers community competition. Developed an advanced ControlNet model for anime-realism art style generation using the JAX framework, optimized for Google TPU v4 MXUs. Demonstrated efficient training and inference on cloud TPU infrastructure.",
+        desc: "8th globally, Hugging Face JAX Diffusers sprint 2023. ControlNet anime-realism on TPU v4.", 
+        fullDesc: "Hugging Face JAX Diffusers community sprint, 2023. I finished 8th globally with a ControlNet for anime-realism, trained on TPU v4. No FID score, no paper. Limit: a sprint checkpoint, not a methods contribution.",
         link: "https://github.com/Ryukijano/CatCon-Controlnet-WD-1-5-b2", 
         icon: Database,
+        year: 2023,
+        featured: true,
+        featuredOrder: 6,
+        role: 'Competitor, Hugging Face JAX Diffusers sprint',
+        note: 'No FID score and no paper. A sprint checkpoint, not a methods contribution.',
         media: { type: 'image', src: '/assets/images/diffusion.png' },
         tags: ["JAX", "TPU v4", "ControlNet", "Diffusion Models"]
       },
       {
         title: "Pothole Detection (arXiv)",
-        desc: "YOLOv7 + ESRGAN: 94.7% precision, 82.6% recall without LIDAR.",
-        fullDesc: "Published research proposing a novel algorithm combining YOLOv7 with ESRGAN super-resolution for improved pothole detection using low-resolution cameras. Achieves 94.7% precision and 82.6% recall without expensive LIDAR sensors, enabling practical road infrastructure monitoring applications.",
+        desc: "Co-author. YOLOv7 + ESRGAN preprint: 94.7% precision, 82.6% recall on the PNW table.",
+        fullDesc: "I am a co-author, not the sole author. Official title: “Improved Pothole Detection Using YOLOv7 and ESRGAN”, arXiv:2401.08588, submitted Nov 2023. Authors: N. K. Rout, G. Dutta, V. Sinha, A. Dey, S. Mukherjee, G. Gupta. Table 3 on the preprint: YOLOv7 tiny multi + ESRGAN, precision 0.947, recall 0.826 on PNW frames. Dashcam images, no LIDAR. Limit: a labelled-image study, not a deployed fleet evaluation.",
         link: "https://arxiv.org/abs/2401.08588",
         icon: Globe,
-        media: { type: 'image', src: '/assets/images/Feature_Community__1_.jpg' },
+        year: 2024,
+        featured: true,
+        featuredOrder: 7,
+        role: 'Co-author',
+        note: 'A labelled-image study, not a deployed fleet evaluation.',
+        media: { type: 'image', src: '/assets/images/pothole-detection-demo.png' },
         tags: ["YOLOv7", "ESRGAN", "Computer Vision", "Published"]
       },
       {
         title: "Hopfield Networks & TSP",
-        desc: "Comparative study of HNN and Simulated Annealing for optimization.",
-        fullDesc: "Published research presenting a comprehensive study on the Travelling Salesman Problem (TSP), addressing it with Hopfield Neural Networks and comparing performance to Simulated Annealing. Contributes to computational complexity research and quantum optimization algorithms.",
+        desc: "Sole-author arXiv, 2022. HNN and HNN-SA on TSP.",
+        fullDesc: "Sole author. Official title: “Solving The Travelling Salesmen Problem using HNN and HNN-SA algorithms”, arXiv:2202.13746, Feb 2022. Hopfield nets versus simulated annealing on TSP instances. Limit: a student case study, not a complexity-theory result and not a quantum paper.",
         link: "https://arxiv.org/abs/2202.13746",
         icon: Terminal,
+        year: 2022,
         media: { type: 'image', src: '/assets/images/reinforcement-learning-diagram.png' },
         tags: ["Hopfield Networks", "Optimization", "TSP", "Published"]
       },
       {
         title: "LGM: 3D Model Generation",
-        desc: "Generate 3D models from single images using Large Gaussian Model.",
-        fullDesc: "Hugging Face Space implementing LGM (Large Gaussian Model) for generating 3D models from single images. Uses Gaussian splatting techniques for high-quality 3D reconstruction from 2D inputs.",
+        desc: "Hugging Face Space wrapping LGM image-to-3D.",
+        fullDesc: "I hosted an LGM (Large Gaussian Model) demo on Hugging Face Spaces: one image in, Gaussian-splat 3D out. Limit: a wrapper around an existing model, not a new generator.",
         link: "https://huggingface.co/spaces/Ryukijano/LGM",
         icon: Box,
         media: { type: 'image', src: '/assets/images/diffusion.png' },
@@ -142,8 +173,8 @@ export const DATA = {
       },
       {
         title: "Deep RL & Hugging Face",
-        desc: "Reinforcement learning implementations with Hugging Face integration.",
-        fullDesc: "Collection of deep reinforcement learning implementations integrated with Hugging Face ecosystem. Includes PPO, DQN, and other RL algorithms applied to various environments including Doom and robotic control tasks.",
+        desc: "Hugging Face Deep RL course agents: PPO, DQN, Doom, PyBullet.",
+        fullDesc: "Implementations from the Hugging Face Deep RL course: PPO, DQN, and related algorithms, pushed to the Hub. Doom and PyBullet among the environments. Limit: course units, not an original RL paper.",
         link: "https://github.com/Ryukijano/Deep-Reinforcement-Learning-and-Hugging-Face",
         icon: Cpu,
         media: { type: 'image', src: '/assets/images/ant_bullet.gif' },
@@ -154,9 +185,9 @@ export const DATA = {
   ryoushi: {
     id: 'ryoushi',
     title: "Ryoushi",
-    subtitle: "Quantum Algorithm Researcher",
-    desc: "Hybrid quantum-classical algorithms. Hackathon winner. Co-founder of Quantum Buddies research collective.",
-    fullDesc: "Quantum computing researcher and co-founder of Quantum Buddies, a research collective dedicated to advancing quantum machine learning, quantum attention mechanisms, and hybrid quantum-classical algorithms. Multiple hackathon winner with expertise in VQE, QAOA, quantum walks, and quantum error correction.",
+    subtitle: "Quantum algorithms",
+    desc: "Hybrid quantum–classical experiments and hackathon notes. I co-run Quantum Buddies with Sid Iliyasu and Dat Chi Le.",
+    fullDesc: "I work on hybrid quantum–classical experiments in Qiskit, PennyLane, and cuQuantum. Quantum Buddies is a three-person collective, not a funded lab. Bradford, YQuantum, NQCC, and City of London were weekend-scale builds. Do not read them as clinical or industrial deployments.",
     tags: ["Qiskit", "PennyLane", "Quantum ML", "Python", "CuQuantum"],
     bannerImage: "/assets/images/nightcity.jpg",
     socials: [
@@ -167,54 +198,71 @@ export const DATA = {
     projects: [
       {
         title: "Quantum Buddies",
-        desc: "Research collective pioneering quantum ML, attention mechanisms, and QCTM.",
-        fullDesc: "Co-founded Quantum Buddies, a research organization dedicated to advancing quantum computing and its applications. Our projects include: Quasar (Quantum Attention for Scientific Discovery with Q-UDiT architecture), Quantum Continuous Thought Machines (hybrid quantum-classical recurrent networks), Quantum Breast Cancer Classification (VQA-based medical diagnosis), and contributions to multiple quantum hackathons worldwide.",
+        desc: "Small collective, 2025. Shared repos and hackathon builds.",
+        fullDesc: "I co-founded Quantum Buddies in 2025 with Sid Iliyasu (Imperial) and Dat Chi Le (Sheffield). We share repos and enter hackathons: QCTM sketches, Stim/QEC notes, Bradford genomics, City of London market simulation. Limit: a three-person collective, not an institute.",
         link: "https://quantum-buddies.github.io",
         icon: Users,
         isBanner: true,
+        year: 2025,
         bannerSrc: "/assets/images/nightcity.jpg",
         tags: ["Quantum ML", "Research", "Open Source", "Collaboration"]
       },
       { 
         title: "Bradford Quantum Hackathon 2025", 
-        desc: "Grand Prix & 1st Place Medicine. Genomic sequence prediction.", 
-        fullDesc: "Won Grand Prix Prize and 1st Place in Medicine category at the Bradford Quantum Hackathon 2025. Developed a Quantum-Enhanced Genomic Sequence Prediction pipeline combining QD-HMC (Quantum-Driven Hamiltonian Monte Carlo) with Quixer quantum transformer architecture. Achieved ~90% accuracy vs ~80% classical MCMC baseline on NCBI genomic datasets for personalized medicine applications.",
-        link: "#", 
+        desc: "Nov 2025, team Ryoushi / Quantum Buddies. lambeq + Quixer, promoter vs non-promoter on GRCh38.", 
+        fullDesc: "Bradford Quantum Hackathon, Nov 2025. Team Ryoushi / Quantum Buddies (Sid Iliyasu, Dat Chi Le, me). LinkedIn project: lambeq + Quixer, binary promoter vs non-promoter on GRCh38. Teammate posts claim Grand Prix and the healthcare / BYO track; I am repeating that as teammate-reported, not as an independent results table. Limit: hackathon-scale, not a clinical genome panel.",
+        link: "https://quantumbradford2025.com/", 
         icon: Trophy,
+        year: 2025,
+        featured: true,
+        featuredOrder: 1,
+        role: 'Competitor, team Ryoushi / Quantum Buddies',
+        note: 'Prizes are teammate-reported. Hackathon-scale, not a clinical genome panel.',
         media: { type: 'image', src: '/assets/images/CULTURE_III__2_.jpg' },
-        tags: ["Grand Prix", "Genomics", "QD-HMC", "Quixer"]
+        tags: ["Genomics", "lambeq", "Quixer"]
       },
       { 
         title: "YQuantum 2025 (Yale)", 
-        desc: "1st Place. Generalized Shor's Algorithm for Quantum Rings.", 
-        fullDesc: "Won 1st Place at the YQuantum Hackathon 2025 at Yale University. Developed a generalized implementation of Shor's Algorithm optimized for quantum ring topologies, demonstrating novel approaches to quantum factorization on near-term quantum hardware.",
-        link: "https://github.com/Quantum-Buddies/Quantum-bits-YQuantum-2025", 
+        desc: "Apr 2025, Yale. Quantum Rings virtual-track win with Alisa Petrusinskaia (Quantum Bits).", 
+        fullDesc: "YQuantum 2025 at Yale, April. Team Quantum Bits with Alisa Petrusinskaia. We won the Quantum Rings virtual track with a generalized Shor implementation on Quantum Rings — not the Yale Grand Prize. Modular exponentiation, QPE, inverse QFT on their simulator. Limit: a sponsored virtual track, not the overall event prize.",
+        link: "https://github.com/Ryukijano/Quantum-bits-YQuantum-2025", 
         icon: Trophy,
+        year: 2025,
+        featured: true,
+        featuredOrder: 2,
+        role: 'Competitor, team Quantum Bits',
+        note: 'Quantum Rings virtual track, not the Yale Grand Prize.',
         media: { type: 'image', src: '/assets/images/Feature_Github_Hero_Accessibility.jpg' },
-        tags: ["1st Place", "Shor's Algorithm", "Yale", "Quantum Rings"]
+        tags: ["Quantum Rings", "Shor's Algorithm", "Yale"]
       },
       { 
         title: "NQCC UK Quantum Hackathon", 
-        desc: "Rolls-Royce Challenge: VQE+SQD for hydrogen-nickel surface simulation.", 
-        fullDesc: "Participated in the National Quantum Computing Centre (NQCC) UK Quantum Hackathon 2025 on the Rolls-Royce industrial challenge. Developed VQE (Variational Quantum Eigensolver) combined with SQD (Sample-based Quantum Diagonalization) for simulating hydrogen adsorption on nickel surfaces. Focused on circuit depth optimization for NISQ devices and DFT comparison studies.",
+        desc: "Participant, Jul 2025 Edinburgh. Rolls-Royce hydrogen-on-nickel. Team Superposition Impossible.", 
+        fullDesc: "NQCC UK Quantum Hackathon, Edinburgh, Jul 2025. Team Superposition Impossible. Rolls-Royce challenge: VQE + SQD for hydrogen on nickel. Circuit-depth notes for NISQ, some DFT comparison talk. I was a participant. Limit: not a placed winner.",
         link: "https://github.com/Ryukijano/Team_15_NQCC_UK_Quantum_Hackathon_2025_new", 
         icon: Zap,
+        year: 2025,
+        featured: true,
+        featuredOrder: 8,
+        role: 'Competitor, Rolls-Royce challenge',
+        note: 'Participant. Not listed among the official 1st–3rd place teams.',
         media: { type: 'image', src: '/assets/images/kanagawa_latentspace_autoencoder.jpg' },
         tags: ["NQCC", "VQE", "SQD", "Rolls-Royce", "Materials Science"]
       },
       { 
         title: "City of London Quantum Hackathon", 
-        desc: "Finalist. QCBM for financial time-series forecasting.", 
-        fullDesc: "Finalist at the City of London Quantum Hackathon 2025. Developed Quantum Circuit Born Machines (QCBM) for financial time-series modeling and forecasting. Implemented Quantum Walk MCMC algorithms and compared performance against classical MCMC baselines for stock price prediction.",
-        link: "#", 
+        desc: "Finalist, Oct 2025. QCBM and quantum-walk MCMC for market simulation.", 
+        fullDesc: "City of London Lord Mayor’s Quantum Hackathon, finalist Oct 2025 (Mansion House). Team Quantum Buddies. Differentiable QCBMs and quantum-walk MCMC for market simulation. WarwiQC won the event; we were a finalist. Limit: a finance demo, not a trading system.",
+        link: "https://news.cityoflondon.gov.uk/quantum-meets-finance-hackathon-sparks-next-generation-solutions-in-the-city/", 
         icon: Grid,
+        year: 2025,
         media: { type: 'image', src: '/assets/images/quantum-variational-demo.png' },
         tags: ["Finalist", "QCBM", "Finance", "Quantum Walk MCMC"]
       },
       {
         title: "Quantum Continuous Thought Machines",
-        desc: "Hybrid quantum-classical recurrent networks for reasoning.",
-        fullDesc: "Research on Quantum Continuous Thought Machines (QCTM) - a novel architecture combining quantum computing with continuous thought processes for enhanced reasoning capabilities. Part of the Quantum Buddies research collective.",
+        desc: "Hybrid quantum–classical recurrent sketch under Quantum Buddies.",
+        fullDesc: "Early code for Quantum Continuous Thought Machines: a hybrid recurrent sketch mixing quantum circuits with a continuous-thought-style loop. Lives in the Quantum Buddies pile. Limit: a repo named after an idea, not a published architecture.",
         link: "https://github.com/Ryukijano/quantum-continuous-thought-machines",
         icon: Cpu,
         media: { type: 'image', src: '/assets/images/neural-network-architecture.png' },
@@ -222,8 +270,8 @@ export const DATA = {
       },
       {
         title: "Quantum Error Correction",
-        desc: "Surface code QEC implementations with Stim simulator.",
-        fullDesc: "Implementations of quantum error correction protocols including surface codes. Uses Stim simulator for efficient simulation of stabilizer circuits and error correction decoding strategies.",
+        desc: "Surface-code experiments in Stim.",
+        fullDesc: "Stabilizer-circuit and surface-code notes using Stim. Decoding experiments, not a new code family. Limit: simulator work, not a hardware QEC stack.",
         link: "https://github.com/Ryukijano/quantum-error-correction",
         icon: Terminal,
         media: { type: 'image', src: '/assets/images/command-line__2_.jpg' },
@@ -231,11 +279,11 @@ export const DATA = {
       },
       {
         title: "Qiskit on Qubit",
-        desc: "Quantum computing tutorials and implementations with Qiskit.",
-        fullDesc: "Collection of quantum computing implementations and tutorials using IBM Qiskit. Covers various quantum algorithms, variational circuits, and quantum machine learning applications.",
+        desc: "Qiskit notebooks: algorithms, variational circuits, a bit of QML.",
+        fullDesc: "A folder of IBM Qiskit notebooks I use for algorithms, variational circuits, and quantum ML sketches. Limit: tutorials, not a textbook.",
         link: "https://github.com/Ryukijano/Qiskit_on_Qubit",
         icon: Code,
-        media: { type: 'image', src: '/assets/images/Java_Hero__1_.jpg' },
+        media: { type: 'image', src: '/assets/images/quantum-variational-demo.png' },
         tags: ["Qiskit", "Quantum Algorithms", "IBM Quantum", "Tutorials"]
       },
     ]
@@ -254,15 +302,6 @@ export const LANES = [
   { id: 'ryukijano', slug: 'ryukijano', label: 'Systems', kicker: 'Ryukijano' },
   { id: 'ai', slug: 'gyanateet', label: 'Vision', kicker: 'Gyanateet' },
   { id: 'ryoushi', slug: 'ryoushi', label: 'Quantum', kicker: 'Ryoushi' },
-];
-
-export const SIGNAL = [
-  { value: 'Grand Prix', label: 'Bradford Quantum · Medicine' },
-  { value: '1st', label: 'YQuantum · Yale' },
-  { value: '8th', label: 'JAX Diffusers global' },
-  { value: '+2.36 dB', label: 'Thesis PSNR lift' },
-  { value: '>90%', label: 'Surgical phase accuracy' },
-  { value: '2', label: 'arXiv papers' },
 ];
 
 export function projectSlug(title) {
@@ -290,8 +329,9 @@ export function findProject(slug) {
   return allProjects().find((project) => project.slug === slug) ?? null;
 }
 
-export function relatedProjects(project, limit = 3) {
+export function relatedProjects(project, limit = 5) {
   return allProjects()
     .filter((item) => item.slug !== project.slug && item.laneId === project.laneId)
+    .sort((a, b) => (b.year ?? 0) - (a.year ?? 0) || (a.featuredOrder ?? 99) - (b.featuredOrder ?? 99))
     .slice(0, limit);
 }

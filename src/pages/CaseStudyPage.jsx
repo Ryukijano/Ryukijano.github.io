@@ -1,100 +1,212 @@
 import SiteNav from '../components/SiteNav';
 import { relatedProjects } from '../data/portfolio';
 import Link from '../lib/Link';
+import { WorkInkNotFound } from './WorkPage';
+
+const MUTED = '#9a9588';
+const RULE = 'rgba(230, 225, 211, 0.16)';
+
+function projectYear(project) {
+  if (typeof project?.year === 'number' && Number.isFinite(project.year)) {
+    return project.year;
+  }
+
+  const blob = [project?.title, project?.desc, project?.fullDesc, project?.note]
+    .filter(Boolean)
+    .join(' ');
+  const matches = blob.match(/\b(?:19|20)\d{2}\b/g);
+  if (!matches) return null;
+  return Math.max(...matches.map(Number));
+}
+
+function projectLane(project) {
+  if (typeof project?.lane === 'string' && project.lane.trim()) return project.lane;
+  if (typeof project?.laneLabel === 'string' && project.laneLabel.trim()) return project.laneLabel;
+  return '';
+}
+
+function mediaSrc(project) {
+  if (typeof project.media === 'string' && project.media) return project.media;
+  return project.media?.src || project.bannerSrc || null;
+}
+
+function labelFromHref(href) {
+  try {
+    const host = new URL(href).hostname.replace(/^www\./, '');
+    if (host.includes('github')) return 'Code';
+    if (host.includes('arxiv')) return 'Paper';
+    if (host.includes('huggingface')) return 'Hugging Face';
+    return host;
+  } catch {
+    return 'Link';
+  }
+}
+
+function collectLinks(project) {
+  const seen = new Set();
+  const links = [];
+
+  const add = (href, label) => {
+    if (!href || href === '#') return;
+    if (seen.has(href)) return;
+    seen.add(href);
+    links.push({ href, label: label || labelFromHref(href) });
+  };
+
+  if (Array.isArray(project.links)) {
+    for (const item of project.links) {
+      if (typeof item === 'string') {
+        add(item);
+      } else if (item && typeof item === 'object') {
+        add(item.href || item.url || item.link, item.label || item.title);
+      }
+    }
+  }
+
+  add(project.liveUrl, 'Live');
+  add(project.link);
+  return links;
+}
 
 export default function CaseStudyPage({ project }) {
-  const mediaSrc = project.media?.src || project.bannerSrc;
-  const external = project.link && project.link !== '#';
+  if (!project) return <WorkInkNotFound />;
+
+  const year = projectYear(project);
+  const lane = projectLane(project);
+  const tags = Array.isArray(project.tags) ? project.tags.filter(Boolean) : [];
+  const links = collectLinks(project);
+  const src = mediaSrc(project);
+  const body = project.fullDesc || project.desc || '';
   const related = relatedProjects(project);
-  const Icon = project.icon;
+  const caption = year != null ? `${project.title}, ${year}` : project.title;
 
   return (
-    <main className="min-h-screen bg-[#07070a] text-[#f4f0e6]">
-      <SiteNav tone="dark" current="work" />
+    <main className="min-h-screen bg-[#11110e] text-[#E6E1D3]">
+      <SiteNav variant="ink" />
 
-      <article className="mx-auto max-w-5xl px-5 pb-24 pt-24 sm:px-10">
-        <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-[#22d3ee]">
-          Case study · {project.laneLabel} · {project.laneKicker}
+      <article className="mx-auto max-w-[42rem] px-6 py-16 pt-24">
+        <p className="mb-10 font-sans text-sm" style={{ color: MUTED }}>
+          <Link href="/work" className="hover:text-[#E6E1D3] hover:underline">
+            Work
+          </Link>
         </p>
-        <h1 className="mt-4 max-w-4xl text-4xl font-extrabold leading-[0.95] tracking-tight sm:text-6xl">
+
+        {year != null ? (
+          <p
+            className="font-mono text-[13px] tabular-nums"
+            style={{ color: MUTED }}
+          >
+            {year}
+          </p>
+        ) : null}
+
+        <h1 className="mt-3 font-serif text-3xl leading-snug text-[#E6E1D3] sm:text-4xl">
           {project.title}
         </h1>
-        <p className="mt-5 max-w-2xl text-lg text-white/65">{project.desc}</p>
 
-        {mediaSrc ? (
-          <div className="mt-10 overflow-hidden rounded-3xl border border-white/10 bg-black">
-            <img src={mediaSrc} alt={project.title} className="max-h-[28rem] w-full object-cover" />
+        {project.role ? (
+          <p className="mt-3 font-sans italic" style={{ color: MUTED }}>
+            {project.role}
+          </p>
+        ) : null}
+
+        {src ? (
+          <figure className="mt-10">
+            <img
+              src={src}
+              alt=""
+              className="max-h-[24rem] w-full object-cover"
+            />
+            <figcaption
+              className="mt-3 font-sans text-sm italic"
+              style={{ color: MUTED }}
+            >
+              {caption}
+            </figcaption>
+          </figure>
+        ) : null}
+
+        {body ? (
+          <div
+            className="mt-10 whitespace-pre-line font-serif text-[18px] leading-[1.65] text-[#E6E1D3]"
+          >
+            {body}
           </div>
         ) : null}
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,0.7fr)]">
-          <div>
-            <h2 className="font-mono text-[11px] uppercase tracking-[0.28em] text-white/40">What this is</h2>
-            <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/80">{project.fullDesc || project.desc}</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              {external ? (
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-full bg-white px-5 py-2.5 font-mono text-xs uppercase tracking-widest text-black"
-                >
-                  {project.link.includes('arxiv.org') ? 'Paper' : project.link.includes('github.com') ? 'Code' : 'Write-up'}
-                </a>
-              ) : null}
-              <Link
-                href="/work"
-                className="rounded-full border border-white/20 px-5 py-2.5 font-mono text-xs uppercase tracking-widest text-white/80"
-              >
-                All work
-              </Link>
-              <Link
-                href={`/persona/${project.personaSlug}`}
-                className="rounded-full border border-white/20 px-5 py-2.5 font-mono text-xs uppercase tracking-widest text-white/80"
-              >
-                {project.laneKicker}
-              </Link>
-            </div>
-          </div>
+        {lane || tags.length > 0 || links.length > 0 ? (
+          <dl
+            className="mt-12 space-y-3 font-sans text-sm"
+          >
+            {lane ? (
+              <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-x-4 border-t pt-3" style={{ borderColor: RULE }}>
+                <dt style={{ color: MUTED }}>Lane</dt>
+                <dd className="text-[#E6E1D3]">{lane}</dd>
+              </div>
+            ) : null}
+            {tags.length > 0 ? (
+              <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-x-4 border-t pt-3" style={{ borderColor: RULE }}>
+                <dt style={{ color: MUTED }}>Stack</dt>
+                <dd className="text-[#E6E1D3]">{tags.join(', ')}</dd>
+              </div>
+            ) : null}
+            {links.length > 0 ? (
+              <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-x-4 border-t pt-3" style={{ borderColor: RULE }}>
+                <dt style={{ color: MUTED }}>Links</dt>
+                <dd className="text-[#E6E1D3]">
+                  {links.map((item, index) => (
+                    <span key={item.href}>
+                      {index > 0 ? ', ' : null}
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline decoration-[#E6E1D3]/40 underline-offset-2 hover:decoration-[#E6E1D3]"
+                      >
+                        {item.label}
+                      </a>
+                    </span>
+                  ))}
+                </dd>
+              </div>
+            ) : null}
+          </dl>
+        ) : null}
 
-          <aside className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-            <div className="flex items-center gap-3">
-              {Icon ? (
-                <div className="rounded-lg bg-white/10 p-2">
-                  <Icon size={18} />
-                </div>
-              ) : null}
-              <p className="font-mono text-[11px] uppercase tracking-widest text-white/45">Stack and tags</p>
-            </div>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {(project.tags || []).map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-white/15 px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-white/70"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </aside>
-        </div>
+        {project.note ? (
+          <p className="mt-8 font-sans text-sm italic" style={{ color: MUTED }}>
+            {project.note}
+          </p>
+        ) : null}
 
         {related.length > 0 ? (
-          <section className="mt-20">
-            <h2 className="font-mono text-[11px] uppercase tracking-[0.28em] text-white/40">More in {project.laneLabel}</h2>
-            <div className="mt-6 grid gap-4 sm:grid-cols-3">
-              {related.map((item) => (
-                <Link
-                  key={item.slug}
-                  href={`/work/${item.slug}`}
-                  className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:-translate-y-1 hover:border-white/30"
-                >
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-[#22d3ee]">{item.laneLabel}</p>
-                  <h3 className="mt-2 text-lg font-bold leading-tight">{item.title}</h3>
-                  <p className="mt-2 text-sm text-white/55">{item.desc}</p>
-                </Link>
-              ))}
-            </div>
+          <section className="mt-16 border-t pt-10" style={{ borderColor: RULE }}>
+            <h2 className="font-serif text-lg text-[#E6E1D3]">Also</h2>
+            <ul className="mt-4 space-y-2">
+              {related.map((item) => {
+                const itemYear = projectYear(item);
+                return (
+                  <li
+                    key={item.slug}
+                    className="font-sans text-[13px]"
+                    style={{ color: MUTED }}
+                  >
+                    {itemYear != null ? (
+                      <span
+                        className="mr-3 inline-block w-10 font-mono tabular-nums"
+                      >
+                        {itemYear}
+                      </span>
+                    ) : (
+                      <span className="mr-3 inline-block w-10" />
+                    )}
+                    <Link href={`/work/${item.slug}`} className="hover:text-[#E6E1D3] hover:underline">
+                      {item.title}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
           </section>
         ) : null}
       </article>
