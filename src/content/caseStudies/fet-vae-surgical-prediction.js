@@ -13,6 +13,12 @@ const study = {
   status: 'full',
   source: 'Case Study - FET-VAE Surgical Prediction.dc.html',
 
+  year: 2024,
+  lane: 'Vision',
+  desc: 'MSc thesis: next-frame prediction on JIGSAWS suturing — not a paper',
+  featured: true,
+  featuredOrder: 4,
+
   breadcrumb: 'AI RESEARCH',
   kicker: 'MSC THESIS · UNIVERSITY OF LEEDS',
   title: 'Predicting the next twenty frames of a suture',

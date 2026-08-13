@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Chip, Text, Theme } from '../components/m3/index.jsx';
+import SiteNav from '../components/SiteNav.jsx';
 import useReveal from '../components/useReveal.js';
 import { joinStyle, parseStyle } from '../lib/style.js';
 import trust, { bandIds } from '../content/trust.js';
@@ -55,13 +56,6 @@ const BANDS = bandIds.map((id, i) => ({
  */
 const bandToken = (id, role) => `var(--md-sys-trust-${id}${role ? `-${role}` : ''})`;
 
-/* Motion pairs, each duration travelling with its own curve. Spatial springs
- * overshoot and belong to movement, size and corner radius; effects springs do
- * not and belong to colour and opacity. base.css zeroes both under
- * prefers-reduced-motion, so nothing here re-decides that. */
-const EFFECTS =
-  'var(--md-sys-motion-duration-expressive-default-effects) var(--md-sys-motion-spring-expressive-default-effects)';
-
 /** Mono with tabular numerals: chips, counts, labels, the test lines, the foot. */
 const MONO = '--m3-font:var(--md-sys-typescale-mono-font);font-variant-numeric:tabular-nums';
 
@@ -79,19 +73,6 @@ const DIM = 'color-mix(in srgb, var(--md-sys-color-on-surface-variant) 74%, tran
  * <div>, never a router Link, so the link-cards borrow its classes directly. */
 const CARD_LINK = 'm3-card m3-card--outlined m3-state';
 const CARD_TONE = 'background:var(--md-sys-color-surface-container)';
-
-/* Three text links out, and a static marker for the page you are on. The
- * marker's words are the page's own h1, so there is one place to change it. */
-const NAV = [
-  { label: 'index', to: '/' },
-  { label: 'the work', to: '/work' },
-  { label: 'academic', to: '/academic' },
-];
-
-const NAV_LINK =
-  `${MONO};--m3-track:0.08em;display:inline-block;text-decoration:none;` +
-  'padding:4px 6px;border-radius:var(--md-sys-shape-corner-extra-small);' +
-  `color:var(--md-sys-color-on-surface-variant);transition:color ${EFFECTS}`;
 
 /** N projects, pluralised. The only string on the page that isn't in trust.js —
  *  it is a derived count rather than prose, and the prototype derives it too. */
@@ -120,30 +101,8 @@ export default function Trust() {
           'font-family:var(--md-sys-typescale-plain-font);-webkit-font-smoothing:antialiased',
       )}
     >
+      <SiteNav variant="ink" />
       <div style={parseStyle('max-width:880px;margin:0 auto;padding:0 32px 130px')}>
-        <nav
-          aria-label="site"
-          style={parseStyle(
-            'display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:30px 0 0',
-          )}
-        >
-          {NAV.map((n) => (
-            <Link key={n.to} to={n.to} className="m3-state" style={parseStyle(NAV_LINK)}>
-              <Text as="span" role="label-small">
-                {n.label}
-              </Text>
-            </Link>
-          ))}
-          <Text
-            as="span"
-            role="label-small"
-            aria-current="page"
-            style={parseStyle(`${MONO};--m3-track:0.14em;color:${DIM};margin-left:auto`)}
-          >
-            {trust.h1.toUpperCase()}
-          </Text>
-        </nav>
-
         <header style={parseStyle('padding:64px 0 0')}>
           <Text
             role="label-small"

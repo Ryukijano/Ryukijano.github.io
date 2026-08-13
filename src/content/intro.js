@@ -6,37 +6,36 @@ export const panes = [
   {
     id: 'ryukijano',
     accent: palette.ryukijano,
-    to: href('Persona - Ryukijano.dc.html'),
+    to: '/persona/ryukijano',
     tags: 'CUDA · UNREAL · THREE.JS · PHOTOGRAMMETRY',
     lines: ['Ryu', 'ki', 'jano'],
     role: 'Graphics & systems',
     desc: 'Real-time rendering, GPU work, and rebuilding things that no longer exist.',
-    font: "'Fraunces','Iowan Old Style',Georgia,serif",
+    font: 'var(--md-sys-typescale-brand-font)',
     weight: 300,
     tracking: '-0.03em',
   },
   {
     id: 'gyanateet',
     accent: palette.gyanateet,
-    // the prototype points this pane at the Ryukijano persona page too
-    to: href('Persona - Ryukijano.dc.html'),
+    to: '/persona/gyanateet',
     tags: 'PYTORCH · DINOV2 · V-JEPA2 · JAX',
     lines: ['G', 'YANA', 'TEET'],
     role: 'Vision & robotics',
     desc: 'Self-supervised video for surgery, and policies that act on what they see.',
-    font: "'Inter',-apple-system,sans-serif",
+    font: 'var(--md-sys-typescale-plain-font)',
     weight: 600,
     tracking: '-0.035em',
   },
   {
     id: 'ryoushi',
     accent: palette.ryoushi,
-    to: href('Persona - Ryoushi.dc.html'),
+    to: '/persona/ryoushi',
     tags: 'QISKIT · CUDA-Q · VQE · ERROR CORRECTION',
     lines: ['RY', 'OU', 'SHI'],
     role: 'Quantum algorithms',
     desc: 'Circuit design, error correction, and being careful about what counts as an advantage.',
-    font: "'JetBrains Mono',monospace",
+    font: 'var(--md-sys-typescale-mono-font)',
     weight: 500,
     tracking: '0.02em',
   },
@@ -45,7 +44,7 @@ export const panes = [
 export const seamLabels = ['ML FOR SCIENCES', 'ML FOR SCIENCES'];
 
 export const thesis = {
-  kicker: 'ONE PERSON, THREE HANDS',
+  kicker: 'Three rooms',
   lead: 'The overlap is where it gets interesting.',
   prose: [
     'Graphics taught me that a renderer is a physics argument you can look at. Surgical video taught me that a confident model is still just a guess. Quantum work is mostly an education in where methods give out. None of the three is decoration for the others. The things that carry between them are the actual work, and they carry both ways.',
@@ -58,19 +57,19 @@ export const strands = [
     num: '01',
     title: 'Graphics & systems',
     meta: 'CUDA · Unreal · reconstruction',
-    to: href('Persona - Ryukijano.dc.html'),
+    to: '/persona/ryukijano',
   },
   {
     num: '02',
     title: 'Vision & robotics',
     meta: 'surgical video · VLA policies',
-    to: href('Case Study - Surgical Phase Detection.dc.html'),
+    to: '/persona/gyanateet',
   },
   {
     num: '03',
     title: 'Quantum algorithms',
     meta: 'circuit design · error correction',
-    to: href('Persona - Ryoushi.dc.html'),
+    to: '/persona/ryoushi',
   },
   {
     num: '04',
@@ -82,19 +81,19 @@ export const strands = [
 
 export const doors = [
   {
-    kick: 'START HERE',
+    kick: 'Work',
     title: 'Selected work',
     desc: 'Eleven write-ups, each with a section on what it can’t do.',
     to: href('Revamp E - Method Transfer.dc.html'),
   },
   {
-    kick: 'ACADEMIC',
+    kick: 'Academic',
     title: 'Research & writing',
     desc: 'Papers, projects, and how I got here.',
     to: href('Academic.dc.html'),
   },
   {
-    kick: 'CODE',
+    kick: 'Code',
     title: 'GitHub',
     desc: 'About a hundred repos, wildly varying seriousness.',
     to: 'https://github.com/Ryukijano',
@@ -102,6 +101,6 @@ export const doors = [
 ];
 
 export const footNote =
-  'Gyanateet Dutta · MSc Advanced Computer Science, University of Leeds · Leeds, UK';
+  'Gyanateet Dutta · MSc Advanced Computer Science (Artificial Intelligence), University of Leeds · Leeds, UK';
 
 export default { panes, seamLabels, thesis, strands, doors, footNote };

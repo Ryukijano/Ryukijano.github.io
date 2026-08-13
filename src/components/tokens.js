@@ -60,12 +60,12 @@ export const workIndex = {
 };
 
 export const fonts = {
-  serif: "'Iowan Old Style','Tiempos Headline',Georgia,serif",
-  serifShort: "'Iowan Old Style',Georgia,serif",
-  display: "'Fraunces','Iowan Old Style',Georgia,serif",
-  body: "'Inter',-apple-system,BlinkMacSystemFont,sans-serif",
-  mono: "'JetBrains Mono',monospace",
-  pixel: "'Silkscreen',monospace",
+  serif: "'Source Serif 4', Georgia, serif",
+  serifShort: "'Source Serif 4', Georgia, serif",
+  display: "'Source Serif 4', Georgia, serif",
+  body: "'IBM Plex Sans', system-ui, -apple-system, sans-serif",
+  mono: "'IBM Plex Mono', ui-monospace, monospace",
+  pixel: "'IBM Plex Mono', ui-monospace, monospace",
 };
 
 /**
@@ -81,7 +81,7 @@ export const cs = {
   bodyStyleTop: `font-size:15.5px;line-height:1.65;color:var(--md-sys-color-on-surface);max-width:64ch;margin:40px 0 0`,
   caption: `font-family:var(--md-sys-typescale-mono-font);font-size:10.5px;color:var(--md-sys-color-on-surface-variant);margin:12px 0 0;line-height:1.6`,
   captionTight: `font-family:var(--md-sys-typescale-mono-font);font-size:10.5px;color:var(--md-sys-color-on-surface-variant);margin:11px 0 0;line-height:1.6`,
-  figureFrame: `border:1px solid var(--md-sys-color-outline-variant);border-radius:var(--md-sys-shape-corner-medium);overflow:hidden;background:var(--md-sys-color-surface)`,
+  figureFrame: `border:1px solid var(--md-sys-color-outline-variant);border-radius:0;overflow:hidden;background:var(--md-sys-color-surface)`,
   tableCell: `font-family:var(--md-sys-typescale-mono-font);font-size:11.5px;padding:13px 14px;color:var(--md-sys-color-on-surface);border-left:1px solid var(--md-sys-color-outline-variant);line-height:1.5`,
 };
 

@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
 import { parseStyle } from '../lib/style.js';
 import { Divider, Text, Theme } from './m3/index.jsx';
+import SiteNav from './SiteNav.jsx';
 import useReveal, { RevealContext } from './useReveal.js';
 import MediaFigure from './MediaFigure.jsx';
 
 /**
- * The case-study page shell: breadcrumb nav, hero, meta bar, the hero figure,
- * whatever numbered sections the page supplies, then the next-links footer.
+ * The case-study page shell: site nav, breadcrumb, hero, meta bar, the hero
+ * figure, whatever numbered sections the page supplies, then the next-links
+ * footer.
  *
  * `sectionCount` is the number of reveal slots the page uses. It matches
  * SECTION_COUNT in the corresponding .dc.html script block, and slot 0 is
@@ -19,9 +21,11 @@ import MediaFigure from './MediaFigure.jsx';
  */
 export default function CaseStudy({ study, sectionCount = 6, children }) {
   const reveal = useReveal(sectionCount);
+  const year = studyYear(study);
 
   return (
     <Theme name="study" style={shellStyle}>
+      <SiteNav variant="paper" />
       <article style={{ maxWidth: '940px', margin: '0 auto', padding: '0 40px' }}>
         <Nav breadcrumb={study.breadcrumb} />
 
@@ -30,9 +34,16 @@ export default function CaseStudy({ study, sectionCount = 6, children }) {
           style={parseStyle(reveal.style(0) + REVEAL_MOTION)}
         >
           <div style={{ padding: '72px 0 0' }}>
-            <Text as="p" role="label-medium" style={kickerStyle}>
-              {study.kicker}
-            </Text>
+            {year ? (
+              <Text as="p" role="label-medium" style={yearStyle}>
+                {year}
+              </Text>
+            ) : null}
+            {study.kicker ? (
+              <Text as="p" role="body-medium" style={kickerStyle}>
+                {study.kicker}
+              </Text>
+            ) : null}
             <Text as="h1" role="display-medium" emphasized style={titleStyle}>
               {study.title}
             </Text>
@@ -89,11 +100,16 @@ const shellStyle = {
   WebkitFontSmoothing: 'antialiased',
 };
 
-const kickerStyle = mono({
+const yearStyle = mono({
   color: 'var(--md-sys-color-primary)',
-  letterSpacing: '0.14em',
-  margin: '0 0 22px',
+  letterSpacing: '0.04em',
+  margin: '0 0 8px',
 });
+
+const kickerStyle = {
+  color: 'var(--md-sys-color-on-surface-variant)',
+  margin: '0 0 22px',
+};
 
 const titleStyle = { margin: '0 0 24px', maxWidth: '20ch' };
 
@@ -109,6 +125,12 @@ const leadStyle = {
   margin: 0,
 };
 
+function studyYear(study) {
+  if (study.year != null && study.year !== '') return String(study.year);
+  const hit = (study.meta ?? []).find((item) => item.k === 'YEAR');
+  return hit?.v ?? '';
+}
+
 function Nav({ breadcrumb }) {
   return (
     <nav
@@ -121,25 +143,26 @@ function Nav({ breadcrumb }) {
       }}
     >
       <Link to="/work" className="m3-state" style={backStyle}>
-        ← GYANATEET
+        Work
       </Link>
-      <Text
-        as="span"
-        role="label-small"
-        style={mono({ color: 'var(--md-sys-color-outline)' })}
-      >
-        /
-      </Text>
-      <Text
-        as="span"
-        role="label-small"
-        style={mono({
-          color: 'var(--md-sys-color-on-surface-variant)',
-          letterSpacing: '0.1em',
-        })}
-      >
-        {breadcrumb}
-      </Text>
+      {breadcrumb ? (
+        <>
+          <Text
+            as="span"
+            role="label-small"
+            style={{ color: 'var(--md-sys-color-outline)' }}
+          >
+            /
+          </Text>
+          <Text
+            as="span"
+            role="label-small"
+            style={{ color: 'var(--md-sys-color-on-surface-variant)' }}
+          >
+            {breadcrumb}
+          </Text>
+        </>
+      ) : null}
     </nav>
   );
 }
@@ -149,52 +172,51 @@ function Nav({ breadcrumb }) {
  * hover flag: a state layer works for touch and keyboard too, and the focus
  * outline is not something a page should be able to forget.
  */
-const backStyle = mono({
-  fontFamily: 'var(--md-sys-typescale-mono-font)',
-  fontSize: 'var(--md-sys-typescale-label-small-size)',
-  lineHeight: 'var(--md-sys-typescale-label-small-line-height)',
-  fontWeight: 'var(--md-sys-typescale-emphasized-label-small-weight)',
-  letterSpacing: '0.1em',
+const backStyle = {
+  fontFamily: 'var(--md-sys-typescale-plain-font)',
+  fontSize: 'var(--md-sys-typescale-label-large-size)',
+  lineHeight: 'var(--md-sys-typescale-label-large-line-height)',
+  fontWeight: 'var(--md-sys-typescale-label-large-weight)',
   color: 'var(--md-sys-color-on-surface-variant)',
   textDecoration: 'none',
   padding: '6px 10px',
   margin: '-6px -10px',
   borderRadius: 'var(--md-sys-shape-corner-small)',
-});
+};
 
 /**
- * Year, role, venue, stack. A tonal container rather than two hairlines: it
- * is a block of data, and mono + tabular numerals keeps the values on a grid
- * across the row.
+ * Year, role, venue, stack. A definition list with a hairline, not a rounded
+ * tonal slab — it is a block of data, and mono + tabular numerals keeps the
+ * values on a grid across the row.
  */
 function MetaBar({ items = [] }) {
   return (
-    <div
+    <dl
       style={{
         display: 'flex',
         flexWrap: 'wrap',
         gap: '20px 32px',
         margin: '52px 0 0',
-        padding: '20px 24px',
-        background: 'var(--md-sys-color-surface-container)',
-        borderRadius: 'var(--md-sys-shape-corner-large)',
+        padding: '20px 0 0',
+        borderTop: '1px solid var(--md-sys-color-outline-variant)',
+        borderRadius: 'var(--md-sys-shape-corner-none)',
       }}
     >
       {items.map((item) => (
         <div key={item.k} style={{ flex: '1 1 150px' }}>
           <Text
-            as="p"
+            as="dt"
             role="label-small"
             style={mono({
               color: 'var(--md-sys-color-on-surface-variant)',
-              letterSpacing: '0.12em',
+              letterSpacing: '0.04em',
               margin: '0 0 6px',
             })}
           >
             {item.k}
           </Text>
           <Text
-            as="p"
+            as="dd"
             role="body-medium"
             style={mono({ color: 'var(--md-sys-color-on-surface)', margin: 0 })}
           >
@@ -202,7 +224,7 @@ function MetaBar({ items = [] }) {
           </Text>
         </div>
       ))}
-    </div>
+    </dl>
   );
 }
 
@@ -228,7 +250,7 @@ function NextLinks({ items = [] }) {
               role="label-small"
               style={mono({
                 color: 'var(--md-sys-color-on-surface-variant)',
-                letterSpacing: '0.1em',
+                letterSpacing: '0.04em',
               })}
             >
               {item.kicker}
@@ -301,7 +323,7 @@ export function LinkList({ links = [] }) {
             role="label-small"
             style={mono({
               color: 'var(--md-sys-color-on-surface-variant)',
-              letterSpacing: '0.1em',
+              letterSpacing: '0.04em',
               flex: 'none',
               width: '64px',
             })}

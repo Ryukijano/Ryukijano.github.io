@@ -1,0 +1,88 @@
+/**
+ * Persona rooms. Statements are the honest fullDesc lines from the anti-slop
+ * pass — no invented prizes, no "CS & AI" award title, no Bradford/JAX slugs.
+ */
+export const personas = {
+  ryukijano: {
+    id: 'ryukijano',
+    title: 'Ryukijano',
+    subtitle: 'Graphics & systems',
+    statement:
+      'I work on graphics and systems: photogrammetry into Unreal, CUDA C++, physics-informed nets. Sep–Dec 2024 I was with Science Museum Group and Leeds HELIX XR on Dalton Mills. That brief ended; I am not still on a heritage contract. Since Nov 2025 my paid work is medical computer vision at Leeds (NDA), which lives in the vision lane.',
+    paneClass: 'pane-ryukijano',
+    projects: [
+      { year: 2024, title: 'Dalton Mills', to: '/work/dalton-mills' },
+      {
+        title: 'PINNs',
+        to: 'https://github.com/Ryukijano/Physics-Based-DeepLearning',
+        note: 'CUDA notebooks for Navier–Stokes and Burgers-type PDEs. Methods notes, not a validated CFD code.',
+      },
+      {
+        title: 'B3tt3r',
+        to: 'https://github.com/Ryukijano/B3tt3r',
+        note: 'Mast3r + Spann3r for stereo reconstruction from image pairs.',
+      },
+      {
+        title: 'CUDAQuest',
+        to: 'https://github.com/Ryukijano/QuantumVice-M25-CUDAQuest',
+        note: 'CUDA C++ and CUDA-Q / cuQuantum kernel drills.',
+      },
+    ],
+  },
+  gyanateet: {
+    id: 'gyanateet',
+    title: 'Gyanateet',
+    subtitle: 'Vision & robotics',
+    statement:
+      'I finished the MSc Advanced Computer Science (Artificial Intelligence) at the University of Leeds in 2023–2024; I am not still enrolled. Mar–Nov 2025 I interned with AIMS (AI in Medicine and Surgery) on ESD workflow / DINOv2. Since Nov 2025 I have been a research technician at Leeds on medical computer vision under NDA. The public record is the ISBI paper and the thesis repo.',
+    paneClass: 'pane-gyanateet',
+    projects: [
+      { year: 2026, title: 'Surgical phase detection', to: '/work/surgical-phase-detection' },
+      { year: 2024, title: 'FET-VAE surgical prediction', to: '/work/fet-vae-surgical-prediction' },
+      {
+        year: 2024,
+        title: 'Pothole detection',
+        to: '/work/pothole-detection',
+        note: 'Co-author. arXiv:2401.08588.',
+      },
+      { year: 2026, title: 'GOT-JEPA tool tracking', to: '/work/got-jepa-tool-tracking' },
+      { year: 2025, title: 'Gemma-Le', to: '/work/gemma-le-vla' },
+    ],
+  },
+  ryoushi: {
+    id: 'ryoushi',
+    title: 'Ryoushi',
+    subtitle: 'Quantum algorithms',
+    statement:
+      'I work on hybrid quantum–classical experiments in Qiskit, PennyLane, and cuQuantum. Quantum Buddies is a three-person collective, not a funded lab. Bradford, YQuantum, NQCC, and City of London were weekend-scale builds. Do not read them as clinical or industrial deployments.',
+    paneClass: 'pane-ryoushi',
+    projects: [
+      { year: 2026, title: 'Conditional-GQE', to: '/work/conditional-gqe' },
+      {
+        year: 2025,
+        title: 'YQuantum virtual track',
+        to: '/work/yquantum-shors-algorithm',
+        note: 'Quantum Rings virtual track with Alisa Petrusinskaia / Quantum Bits. Not the Yale Grand Prize.',
+      },
+      { year: 2026, title: 'Syndrome-Net', to: '/work/syndrome-net' },
+      {
+        year: 2025,
+        title: 'NQCC Rolls-Royce',
+        to: '/work/nqcc-rolls-royce',
+        note: 'Participant. Hydrogen-on-nickel, Edinburgh Jul 2025. Not a placed winner.',
+      },
+      {
+        year: 2025,
+        title: 'Bradford Quantum Hackathon',
+        to: 'https://www.linkedin.com/posts/gyanateet-dutta-386215192_quantumcomputing-quantummachinelearning-activity-7399278953322151936-ZAmz',
+        note: 'Teammate-reported prizes. Hackathon-scale, not clinical.',
+      },
+    ],
+  },
+};
+
+export function getPersona(id) {
+  return personas[id] ?? null;
+}
+
+export default personas;

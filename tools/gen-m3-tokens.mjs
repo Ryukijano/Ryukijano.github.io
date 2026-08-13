@@ -329,9 +329,9 @@ ${MOTION.map(
 ).join('\n')}
 
     /* ---- typeface roles: brand for display/headline, plain for body/label ---- */
-    --md-sys-typescale-brand-font: 'Fraunces', 'Iowan Old Style', Georgia, serif;
-    --md-sys-typescale-plain-font: 'Inter', system-ui, -apple-system, sans-serif;
-    --md-sys-typescale-mono-font: 'JetBrains Mono', ui-monospace, monospace;
+    --md-sys-typescale-brand-font: 'Source Serif 4', Georgia, serif;
+    --md-sys-typescale-plain-font: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    --md-sys-typescale-mono-font: 'IBM Plex Mono', ui-monospace, monospace;
 
     /* ---- type scale (Major Second, 1.125, anchored at 14sp body) ---- */
 ${TYPE.map(

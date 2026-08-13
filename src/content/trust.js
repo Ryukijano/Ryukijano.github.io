@@ -153,7 +153,7 @@ const trust = {
     ],
     doors: [
       { kick: 'BY SUBJECT', title: 'all eleven, sorted the usual way', to: href('Revamp E - Method Transfer.dc.html') },
-      { kick: 'START HERE', title: 'the three personas', to: href('Intro.dc.html') },
+      { kick: 'Index', title: 'the three personas', to: href('Intro.dc.html') },
       { kick: 'PAPERS, CODE, PLACEMENTS', title: 'the academic page', to: href('Academic.dc.html') },
     ],
     foot: 'eleven projects. five you could check, one you could check if you kept the original, three you’d have to wait for, and two that nobody is ever going to check.',

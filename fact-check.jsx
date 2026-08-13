@@ -18,12 +18,14 @@
  * escaped the token layer and will not retheme.
  */
 import { renderToString } from 'react-dom/server';
-import { MemoryRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import Intro from './src/pages/Intro.jsx';
 import Academic from './src/pages/Academic.jsx';
 import WorkIndex from './src/pages/WorkIndex.jsx';
 import CaseStudyPage from './src/pages/CaseStudyPage.jsx';
 import Trust from './src/pages/Trust.jsx';
+import PersonaPage from './src/pages/PersonaPage.jsx';
+import NotFound from './src/pages/NotFound.jsx';
 import { caseStudies } from './src/content/caseStudies/index.js';
 
 const tree = (
@@ -33,7 +35,8 @@ const tree = (
     <Route path="/work" element={<WorkIndex />} />
     <Route path="/work/:slug" element={<CaseStudyPage />} />
     <Route path="/trust" element={<Trust />} />
-    <Route path="*" element={<Navigate to="/" replace />} />
+    <Route path="/persona/:id" element={<PersonaPage />} />
+    <Route path="*" element={<NotFound />} />
   </Routes>
 );
 
@@ -52,6 +55,13 @@ const text = (h) => h.replace(/<[^>]+>/g, ' ').replace(/&amp;/g,'&').replace(/&#
  * necessarily a bug — but it is always something to look at.
  */
 const MUST = {
+  '/academic': [
+    'MSc Advanced Computer Science (Artificial Intelligence)',
+    '10.1109/isbi61048.2026.11515812',
+    'AI in Medicine and Surgery',
+    'I train vision models on surgical video under sparse labels and tight inference budgets.',
+    'Parallel to that I write hybrid quantum–classical algorithms with Quantum Buddies.',
+  ],
   /*
    * /trust is an index, not a case study: it re-sorts the same eleven projects
    * by how much of the output was recorded rather than supplied. Two things
@@ -142,10 +152,10 @@ const MUST_WORDS = {
   '/work/yquantum-shors-algorithm': ['schematic'],
 };
 
-const BANNED = ['pid/345/4093','undefined','NaN','[object Object]','not yet ported','NOT YET PORTED','cubic-bezier(.16,1,.3,1)'];
+const BANNED = ['pid/345/4093','undefined','NaN','[object Object]','not yet ported','NOT YET PORTED','cubic-bezier(.16,1,.3,1)',"Master's student in CS & AI"];
 const CLICHE = ['revolutionary','cutting-edge','seamless','game-changing','at the intersection of','passionate about'];
 
-const routes = ['/','/academic','/work','/trust', ...caseStudies.map(s=>`/work/${s.slug}`)];
+const routes = ['/','/academic','/work','/trust', ...caseStudies.map(s=>`/work/${s.slug}`), '/persona/ryukijano', '/persona/gyanateet', '/persona/ryoushi'];
 let fail = 0, hexTotal = 0;
 for (const r of routes) {
   const html = render(r);

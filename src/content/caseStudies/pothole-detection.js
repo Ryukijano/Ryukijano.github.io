@@ -12,6 +12,12 @@ const study = {
   status: 'full',
   source: 'Case Study - Pothole Detection.dc.html',
 
+  year: 2024,
+  lane: 'Vision',
+  desc: 'ESRGAN restoration in front of YOLOv7 for dashcam road defects',
+  featured: true,
+  featuredOrder: 7,
+
   breadcrumb: 'AI RESEARCH',
   kicker: 'ARXIV 2401.08588 · PUBLISHED JANUARY 2024',
   title: 'Improved pothole detection using YOLOv7 and ESRGAN',

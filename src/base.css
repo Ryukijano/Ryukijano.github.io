@@ -58,4 +58,22 @@
       scroll-behavior: auto !important;
     }
   }
+
+  /*
+   * Persona rooms. Solid fills so paper never sits on the site's black
+   * fallback. Intro panes override with an inline transparent wash so the
+   * dusk canvas still shows through.
+   */
+  .pane-ryukijano {
+    background-color: #e6e1d3;
+    color: #1a237e;
+  }
+  .pane-gyanateet {
+    background-color: #e4e8dc;
+    color: #1a237e;
+  }
+  .pane-ryoushi {
+    background-color: #e8dce4;
+    color: #1a237e;
+  }
 }

@@ -9,6 +9,11 @@ const study = {
   status: 'full',
   source: 'Case Study - Cosmos Sentinel.dc.html',
 
+  year: 2026,
+  lane: 'Video',
+  desc: 'Near-miss clips from dashcam footage, then an invented alternative',
+  featured: false,
+
   breadcrumb: 'VIDEO REASONING',
   kicker: 'DEMO PIPELINE · BADAS + COSMOS · ZEROGPU',
   title: 'Three models, and only one of them is asked to be right',

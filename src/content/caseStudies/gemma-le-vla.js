@@ -12,6 +12,11 @@ const study = {
   status: 'full',
   source: 'Case Study - Gemma-Le VLA.dc.html',
 
+  year: 2025,
+  lane: 'Robotics',
+  desc: 'SigLIP, Gemma 3 and a diffusion action head in LeRobot',
+  featured: false,
+
   breadcrumb: 'ROBOTICS',
   kicker: 'GEMMA-LE / GEMMA-GR00T · OPEN WEIGHTS, 5B',
   title: 'A compact vision-language-action policy for manipulation',
@@ -84,7 +89,7 @@ const study = {
         {
           stage: 'ACTION',
           name: 'ScaleDP · 12L · d=320 · h=8 · ff=1280',
-          role: 'A scalable diffusion transformer that denoises action noise over 50 steps with a temporal context of 8. Predicts a chunk, not one step. This is where the embodiment-specific learning happens.',
+          role: 'A diffusion transformer that denoises action noise over 50 steps with a temporal context of 8. Predicts a chunk, not one step. This is where the embodiment-specific learning happens.',
         },
         {
           stage: 'HARNESS',

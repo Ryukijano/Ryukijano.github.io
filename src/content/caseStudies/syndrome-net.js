@@ -9,6 +9,12 @@ const study = {
   status: 'full',
   source: 'Case Study - Syndrome-Net.dc.html',
 
+  year: 2026,
+  lane: 'Quantum',
+  desc: 'Workbench for designing and testing quantum error-correction schemes',
+  featured: true,
+  featuredOrder: 6,
+
   breadcrumb: 'QUANTUM ERROR CORRECTION',
   kicker: 'SURFACE · COLOUR · qLDPC · BOSONIC',
   title: 'Catching the errors you are never allowed to look at',

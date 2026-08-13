@@ -12,6 +12,12 @@ const study = {
   status: 'full',
   source: 'Case Study - Surgical Phase Detection.dc.html',
 
+  year: 2026,
+  lane: 'Vision',
+  desc: 'Frozen self-supervised encoders for endoscopic phase recognition',
+  featured: true,
+  featuredOrder: 3,
+
   breadcrumb: 'AI RESEARCH',
   kicker: 'DINO-ENDO · PUBLISHED AT ISBI 2026',
   title: 'A self-supervised vision transformer for surgical phase recognition',

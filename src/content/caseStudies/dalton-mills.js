@@ -9,6 +9,12 @@ const study = {
   status: 'full',
   source: 'Case Study - Dalton Mills.dc.html',
 
+  year: 2024,
+  lane: 'Graphics',
+  desc: 'Walkable reconstruction of a burned mill from ten photographs',
+  featured: true,
+  featuredOrder: 5,
+
   breadcrumb: 'HERITAGE & XR',
   kicker: 'HELIX XR · UNIVERSITY OF LEEDS · SCIENCE MUSEUM GROUP',
   title: 'Ten photographs of a building that burned down',

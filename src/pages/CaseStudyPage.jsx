@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import CaseStudy from '../components/CaseStudy.jsx';
 import Section, { Body, H2 } from '../components/Section.jsx';
 import PullQuote from '../components/PullQuote.jsx';
 import MediaFigure from '../components/MediaFigure.jsx';
-import { Text, Theme } from '../components/m3/index.jsx';
 import { getStudy } from '../content/caseStudies/index.js';
+import NotFound from './NotFound.jsx';
 import ConditionalGqe from './studies/ConditionalGqe.jsx';
 import CosmosSentinel from './studies/CosmosSentinel.jsx';
 import DaltonMills from './studies/DaltonMills.jsx';
@@ -50,7 +50,7 @@ export default function CaseStudyPage() {
     if (study) document.title = `${study.title} — Gyanateet Dutta`;
   }, [study, slug]);
 
-  if (!study) return <NotFound slug={slug} />;
+  if (!study) return <NotFound />;
 
   const ported = bodies[slug];
   const BodyComponent = ported ? ported.Body : null;
@@ -113,58 +113,4 @@ const noticeStyle = {
   background: 'var(--md-sys-color-surface-container)',
   borderLeft: '3px solid var(--md-sys-color-outline)',
   borderRadius: 'var(--md-sys-shape-corner-large-increased)',
-};
-
-function NotFound({ slug }) {
-  return (
-    <Theme
-      name="study"
-      style={{
-        minHeight: '100vh',
-        background: 'var(--md-sys-color-surface)',
-        color: 'var(--md-sys-color-on-surface)',
-        fontFamily: 'var(--md-sys-typescale-plain-font)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <div style={{ textAlign: 'center', padding: '0 40px' }}>
-        <Text
-          as="p"
-          role="label-medium"
-          style={{
-            '--m3-font': 'var(--md-sys-typescale-mono-font)',
-            color: 'var(--md-sys-color-primary)',
-            letterSpacing: '0.14em',
-            margin: '0 0 16px',
-          }}
-        >
-          NO SUCH CASE STUDY
-        </Text>
-        <Text
-          as="h1"
-          role="display-small"
-          emphasized
-          style={{ margin: '0 0 20px', wordBreak: 'break-word' }}
-        >
-          {slug}
-        </Text>
-        <Link to="/work" className="m3-button m3-button--text m3-state" style={backStyle}>
-          ← ALL PROJECTS
-        </Link>
-      </div>
-    </Theme>
-  );
-}
-
-/* Colour comes from .m3-button--text (primary); only the face and the
- * tracking are the page's. */
-const backStyle = {
-  fontFamily: 'var(--md-sys-typescale-mono-font)',
-  fontSize: 'var(--md-sys-typescale-label-small-size)',
-  letterSpacing: '0.1em',
-  /* base.css carries an unlayered `a { color: inherit }`, which outranks the
-   * layered .m3-button--text rule, so the role colour is set here. */
-  color: 'var(--md-sys-color-primary)',
 };

@@ -27,11 +27,9 @@ export const routeFor = {
   'Case Study - Syndrome-Net.dc.html': '/work/syndrome-net',
   'Case Study - YQuantum Shors Algorithm.dc.html': '/work/yquantum-shors-algorithm',
 
-  // TODO: the two persona pages have prototypes but no route yet. They fall
-  // through to /work so no link dead-ends; give them their own routes when
-  // "Persona - Ryukijano.dc.html" and "Persona - Ryoushi.dc.html" are ported.
-  'Persona - Ryukijano.dc.html': '/work',
-  'Persona - Ryoushi.dc.html': '/work',
+  'Persona - Ryukijano.dc.html': '/persona/ryukijano',
+  'Persona - Gyanateet.dc.html': '/persona/gyanateet',
+  'Persona - Ryoushi.dc.html': '/persona/ryoushi',
 };
 
 /** Resolve a prototype filename or an absolute URL to something linkable. */

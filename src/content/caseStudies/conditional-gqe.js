@@ -9,6 +9,12 @@ const study = {
   status: 'full',
   source: 'Case Study - Conditional GQE.dc.html',
 
+  year: 2026,
+  lane: 'Quantum',
+  desc: 'Learns circuit shape from the molecule, then a classical optimiser fine-tunes',
+  featured: true,
+  featuredOrder: 1,
+
   breadcrumb: 'QUANTUM ALGORITHMS',
   kicker: 'GIC 2026 · MITSUBISHI CHEMICAL GROUP & AIST',
   title: 'A transformer that designs the circuit, not the chemistry',

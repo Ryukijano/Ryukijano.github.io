@@ -9,6 +9,11 @@ const study = {
   status: 'full',
   source: 'Case Study - GOT-JEPA Tool Tracking.dc.html',
 
+  year: 2026,
+  lane: 'Vision',
+  desc: 'Instrument tracking that keeps identity through smoke and occlusion',
+  featured: false,
+
   breadcrumb: 'SURGICAL VISION',
   kicker: 'IN PROGRESS · DGX SPARK · CHOLECTRACK20',
   title: 'Teaching a tracker that the instrument still exists behind the smoke',

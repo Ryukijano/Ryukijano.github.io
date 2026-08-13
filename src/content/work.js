@@ -10,7 +10,7 @@
 import { href } from './links.js';
 
 export const hero = {
-  kicker: 'MSC COMPUTER SCIENCE & AI — UNIVERSITY OF LEEDS',
+  kicker: 'MSC ADVANCED COMPUTER SCIENCE (ARTIFICIAL INTELLIGENCE) — UNIVERSITY OF LEEDS',
   name: ['Gyanateet', 'Dutta'],
   roles: [
     'GRAPHICS & SYSTEMS',
@@ -22,9 +22,9 @@ export const hero = {
   quote:
     'I don’t spaghetti mumbo these areas — I think of them as tools to learn ideas from to use in each other.',
   affiliations: [
-    'VISION RESEARCH INTERN · UNIVERSITY OF LEEDS',
-    'QISKIT ADVOCATE',
-    'QUANTUM BUDDIES, CO-FOUNDER',
+    'Research technician · University of Leeds',
+    'Qiskit Advocate',
+    'Quantum Buddies, co-founder',
   ],
 };
 
@@ -140,7 +140,7 @@ export const strands = [
     subtitle: 'Self-supervised video, VLA policies',
     accentIndex: 1,
     page: null,
-    desc: 'MSc Computer Science & AI at Leeds. Self-supervised vision transformers for surgical video, and vision-language-action policies for robotic manipulation. Moving to self-supervised temporal encoders is the point of the work, which is why both DINOv2 and V-JEPA2 are in it.',
+    desc: 'MSc Advanced Computer Science (Artificial Intelligence) at Leeds. Self-supervised vision transformers for surgical video, and vision-language-action policies for robotic manipulation. Moving to self-supervised temporal encoders is the point of the work, which is why both DINOv2 and V-JEPA2 are in it.',
     limit:
       'Limits: the 4-stage MS-TCN head drops 12.5 points porcine → human, the 8-stage drops 17.0. More temporal capacity overfits the source domain instead of generalising across it.',
     tags: ['PYTORCH', 'DINOV2', 'V-JEPA2', 'SIGLIP', 'SCALEDP'],
@@ -183,14 +183,14 @@ export const strands = [
     subtitle: 'VQE, QAOA, error correction',
     accentIndex: 2,
     page: href('Persona - Ryoushi.dc.html'),
-    desc: 'Co-founder of Quantum Buddies. VQE, QAOA, quantum walks and error correction. First overall at YQuantum 2025 (Yale), Grand Prix and first in the Medicine track at Bradford 2025, finalist at City of London 2025, Team 15 on the NQCC UK Rolls-Royce challenge.',
+    desc: 'Co-founder of Quantum Buddies. VQE, QAOA, quantum walks and error correction. YQuantum 2025 Quantum Rings virtual track with Quantum Bits. Bradford prizes are teammate-reported. NQCC participant. Finalist at City of London 2025.',
     limit:
       'Limits: none of this beats a classical solver at useful scale. VQE on the Rolls-Royce challenge is a method demonstration on a small active space — the claim is that the ansatz converges, not that it wins.',
     tags: ['QISKIT', 'PENNYLANE', 'CUDA-Q', 'TKET', 'VQE / QAOA'],
     projects: [
       {
         title: 'YQuantum 2025 (Yale)',
-        desc: "1st overall — generalized Shor's",
+        desc: "Quantum Rings virtual track — generalized Shor's",
         to: href('Case Study - YQuantum Shors Algorithm.dc.html'),
         media: '/assets/gifs/shor-algorithm.gif',
         isGif: true,

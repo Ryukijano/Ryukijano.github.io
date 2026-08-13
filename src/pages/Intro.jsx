@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { parseStyle } from '../lib/style.js';
-import { Chip, Divider, Text, Theme } from '../components/m3/index.jsx';
+import { Divider, Text, Theme } from '../components/m3/index.jsx';
+import SiteNav from '../components/SiteNav.jsx';
 import useReveal from '../components/useReveal.js';
 import content from '../content/intro.js';
 
@@ -138,6 +139,7 @@ export default function Intro() {
             'color-mix(in srgb, var(--md-sys-color-scrim) 90%, transparent) 100%)',
         )}
       />
+      <SiteNav variant="ink" overlay />
 
       <section
         style={parseStyle(
@@ -154,7 +156,7 @@ export default function Intro() {
               as={Link}
               to={pane.to}
               data-pane-field={i}
-              className="m3-state"
+              className={`m3-state pane-${pane.id}`}
               onMouseEnter={() => setActive(i)}
               onMouseLeave={() => setActive(null)}
               onFocus={() => setActive(i)}
@@ -162,6 +164,7 @@ export default function Intro() {
               style={parseStyle(
                 `flex:${weights[i]} 1 0;position:relative;display:block;overflow:hidden;` +
                   'text-decoration:none;color:var(--md-sys-color-on-surface);' +
+                  'background:transparent;' +
                   `transition:flex-grow ${SPATIAL_SLOW}`,
               )}
             >
@@ -199,9 +202,8 @@ export default function Intro() {
                   {pane.tags}
                 </Text>
 
-                {/* Persona names: display scale in the brand face for all three.
-                    They are one person, so they get one voice; the second weight
-                    axis and the pane's own primary carry the difference. */}
+                {/* Persona names: display scale, each pane in its own type
+                    role (brand / plain / mono) from the content module. */}
                 <h2 style={parseStyle('margin:0;display:flex;flex-direction:column')}>
                   {pane.lines.map((line) => (
                     <Text
@@ -210,7 +212,8 @@ export default function Intro() {
                       role="display-large"
                       emphasized={on}
                       style={parseStyle(
-                        '--m3-size:clamp(30px,4.4vw,var(--md-sys-typescale-display-large-size));' +
+                        `--m3-font:${pane.font};` +
+                          '--m3-size:clamp(30px,4.4vw,var(--md-sys-typescale-display-large-size));' +
                           '--m3-lh:0.88;' +
                           `color:var(--md-sys-color-${on ? 'on-surface' : 'on-surface-variant'});` +
                           `transition:color ${EFFECTS},font-weight ${EFFECTS}`,
@@ -243,19 +246,6 @@ export default function Intro() {
                   {pane.desc}
                 </Text>
 
-                <Text
-                  as="span"
-                  role="label-small"
-                  emphasized
-                  style={parseStyle(
-                    `${MONO};--m3-track:0.16em;display:inline-block;` +
-                      'color:var(--md-sys-color-primary);margin:18px 0 0;' +
-                      `opacity:${on ? 1 : 0};transform:translateX(${on ? 0 : -8}px);` +
-                      `transition:opacity ${EFFECTS},transform ${SPATIAL}`,
-                  )}
-                >
-                  ENTER →
-                </Text>
               </div>
             </Theme>
           );
@@ -299,18 +289,10 @@ export default function Intro() {
               `z-index:3;opacity:${active === null ? 1 : 0};transition:opacity ${EFFECTS}`,
           )}
         >
-          <Text
-            as="span"
-            role="label-small"
-            style={parseStyle(
-              `${MONO};--m3-track:0.2em;color:var(--md-sys-color-on-surface-variant)`,
-            )}
-          >
-            SCROLL
-          </Text>
           <div
+            aria-hidden="true"
             style={parseStyle(
-              'width:1px;height:26px;margin:9px auto 0;' +
+              'width:1px;height:26px;margin:0 auto;' +
                 'background:linear-gradient(var(--md-sys-color-outline),transparent)',
             )}
           />
@@ -356,7 +338,7 @@ export default function Intro() {
             'position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:96px 40px 0',
           )}
         >
-          <Kicker>WHERE THE WORK LIVES</Kicker>
+          <Kicker>Rooms</Kicker>
           <div
             style={parseStyle(
               'margin:26px 0 0;border-top:1px solid var(--md-sys-color-outline-variant)',
@@ -433,15 +415,13 @@ export default function Intro() {
             'position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:96px 40px 130px',
           )}
         >
-          <Kicker>WAYS IN</Kicker>
+          <Kicker>Doors</Kicker>
           <div style={parseStyle('display:flex;gap:18px;flex-wrap:wrap;margin:26px 0 0')}>
             {content.doors.map((d) => {
               /*
                * The house card: outlined surface, state layer, and the hover
                * shape-morph and lift that m3.css already owns. The card rests
-               * at extra-large (28px) with 20px of padding, so the chip nested
-               * inside sits at small (8px) — inner = outer − padding, never
-               * equal.
+               * at extra-large (28px) with 20px of padding.
                */
               const cls = 'm3-card m3-card--outlined m3-state';
               const style = parseStyle(
@@ -449,7 +429,15 @@ export default function Intro() {
               );
               const inner = (
                 <>
-                  <Chip style={parseStyle('align-self:flex-start')}>{d.kick}</Chip>
+                  <Text
+                    as="span"
+                    role="label-small"
+                    style={parseStyle(
+                      `${MONO};--m3-track:0.12em;color:var(--md-sys-color-on-surface-variant)`,
+                    )}
+                  >
+                    {d.kick}
+                  </Text>
                   <Text
                     as="span"
                     role="headline-small"

@@ -12,6 +12,12 @@ const study = {
   status: 'full',
   source: 'Case Study - NQCC Rolls-Royce Challenge.dc.html',
 
+  year: 2025,
+  lane: 'Quantum',
+  desc: 'VQE and sample-based diagonalisation on hydrogen–nickel adsorption',
+  featured: true,
+  featuredOrder: 8,
+
   breadcrumb: 'QUANTUM',
   kicker: 'NQCC UK QUANTUM HACKATHON 2025 · TEAM 15',
   title: 'Hydrogen on nickel, on a device that is still noisy',
@@ -20,7 +26,7 @@ const study = {
   meta: [
     { k: 'YEAR', v: '2025' },
     { k: 'EVENT', v: 'NQCC UK Quantum Hackathon' },
-    { k: 'TEAM', v: 'Team 15' },
+    { k: 'TEAM', v: 'Team 15 / participant' },
     { k: 'PARTNER', v: 'Rolls-Royce' },
     { k: 'STACK', v: 'Qiskit · VQE · SQD' },
   ],
@@ -108,12 +114,12 @@ const study = {
         {
           place: '1ST',
           event: 'YQuantum 2025, Yale',
-          desc: "A generalized Shor's-algorithm implementation for quantum ring topologies. First place overall.",
+          desc: "A generalized Shor's-algorithm implementation for quantum ring topologies. Quantum Rings virtual track, not the Yale Grand Prize.",
         },
         {
           place: 'GRAND PRIX',
           event: 'Bradford Quantum Hackathon 2025',
-          desc: 'Grand Prix and first in the Medicine track — QD-HMC with a Quixer quantum transformer for genomic sequence prediction, around 90% against a ~80% classical MCMC baseline.',
+          desc: 'Teammate-reported Grand Prix and first in the Medicine track — hackathon-scale. QD-HMC with a Quixer quantum transformer for genomic sequence prediction, around 90% against a ~80% classical MCMC baseline.',
         },
         {
           place: 'FINALIST',

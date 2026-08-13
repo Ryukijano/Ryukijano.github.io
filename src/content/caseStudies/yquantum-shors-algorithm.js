@@ -12,8 +12,14 @@ const study = {
   status: 'full',
   source: 'Case Study - YQuantum Shors Algorithm.dc.html',
 
+  year: 2025,
+  lane: 'Quantum',
+  desc: "Period-finding from basic gates on the Quantum Rings SDK",
+  featured: true,
+  featuredOrder: 2,
+
   breadcrumb: 'QUANTUM',
-  kicker: 'YQUANTUM 2025 · YALE · TEAM QUANTUM BITS',
+  kicker: 'YQuantum 2025 · Yale · Team Quantum Bits',
   title: "Shor's algorithm, built from basic gates",
   lead: 'A from-scratch period-finding implementation on the Quantum Rings SDK — quantum phase estimation, a hand-built modular adder and multiplier, and the exact qubit count where an account permission wall stopped the scaling attempt.',
 
@@ -97,7 +103,7 @@ const study = {
         {
           place: '1ST',
           event: 'YQuantum 2025, Yale',
-          desc: "This entry — a generalized Shor's-algorithm implementation on the Quantum Rings SDK. First place overall, Virtual Participants.",
+          desc: "This entry — a generalized Shor's-algorithm implementation on the Quantum Rings SDK. Quantum Rings virtual track, not the Yale Grand Prize.",
         },
         {
           place: 'TEAM 15',
@@ -107,7 +113,7 @@ const study = {
         {
           place: 'GRAND PRIX',
           event: 'Bradford Quantum Hackathon 2025',
-          desc: 'Grand Prix and first in the Medicine track — QD-HMC with a Quixer quantum transformer for genomic sequence prediction.',
+          desc: 'Teammate-reported Grand Prix and first in the Medicine track — hackathon-scale. QD-HMC with a Quixer quantum transformer for genomic sequence prediction.',
         },
       ],
     },
