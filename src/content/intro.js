@@ -1,106 +1,123 @@
-/** Extracted from "Intro.dc.html". */
-import { href } from './links.js';
-import { intro as palette } from '../components/tokens.js';
+/**
+ * Home is a Distill article, not the dusk triptych. Copy that still earns
+ * its keep comes from the old intro thesis, the academic bio, and Revamp E.
+ */
+import academic from './academic.js';
+import { hero as workHero, method, matrix } from './work.js';
+import trust, { bandIds } from './trust.js';
+import fetVae from './caseStudies/fet-vae-surgical-prediction.js';
+import shor from './caseStudies/yquantum-shors-algorithm.js';
+import cosmos from './caseStudies/cosmos-sentinel.js';
+import pothole from './caseStudies/pothole-detection.js';
 
-export const panes = [
-  {
-    id: 'ryukijano',
-    accent: palette.ryukijano,
-    to: '/persona/ryukijano',
-    tags: 'CUDA · UNREAL · THREE.JS · PHOTOGRAMMETRY',
-    lines: ['Ryu', 'ki', 'jano'],
-    role: 'Graphics & systems',
-    desc: 'Real-time rendering, GPU work, and rebuilding things that no longer exist.',
-    font: 'var(--md-sys-typescale-brand-font)',
-    weight: 300,
-    tracking: '-0.03em',
-  },
-  {
-    id: 'gyanateet',
-    accent: palette.gyanateet,
-    to: '/persona/gyanateet',
-    tags: 'PYTORCH · DINOV2 · V-JEPA2 · JAX',
-    lines: ['G', 'YANA', 'TEET'],
-    role: 'Vision & robotics',
-    desc: 'Self-supervised video for surgery, and policies that act on what they see.',
-    font: 'var(--md-sys-typescale-plain-font)',
-    weight: 600,
-    tracking: '-0.035em',
-  },
-  {
-    id: 'ryoushi',
-    accent: palette.ryoushi,
-    to: '/persona/ryoushi',
-    tags: 'QISKIT · CUDA-Q · VQE · ERROR CORRECTION',
-    lines: ['RY', 'OU', 'SHI'],
-    role: 'Quantum algorithms',
-    desc: 'Circuit design, error correction, and being careful about what counts as an advantage.',
-    font: 'var(--md-sys-typescale-mono-font)',
-    weight: 500,
-    tracking: '0.02em',
-  },
-];
+export const bio = academic.bio;
+export const degree = academic.education[0];
 
-export const seamLabels = ['ML FOR SCIENCES', 'ML FOR SCIENCES'];
+export const question =
+  'What did the sensor actually record, and what did the model add?';
 
 export const thesis = {
-  kicker: 'Three rooms',
-  lead: 'The overlap is where it gets interesting.',
+  kicker: '00 / METHOD',
+  title: method.title,
+  lead: method.lead,
   prose: [
     'Graphics taught me that a renderer is a physics argument you can look at. Surgical video taught me that a confident model is still just a guess. Quantum work is mostly an education in where methods give out. None of the three is decoration for the others. The things that carry between them are the actual work, and they carry both ways.',
-    'One question runs through most of it. What did the sensor actually record, and what did the model add? A super-resolved road, a mill rebuilt from ten photos, a crash that never happened, tissue inferred behind smoke. Different projects, same problem, and you usually can’t tell by looking.',
   ],
+  quote: workHero.quote,
+  caveat: method.caveat,
+  hint: method.hint,
 };
 
-export const strands = [
-  {
-    num: '01',
-    title: 'Graphics & systems',
-    meta: 'CUDA · Unreal · reconstruction',
-    to: '/persona/ryukijano',
+export const fig1 = {
+  caption:
+    "Figure 1. Hokusai reconstructed in a latent autoencoder — painted, dithered, wireframed. This is a schematic of a representation, not a measurement. Waves / dots / lattice are the three canvas languages from the old triptych, now readings of one picture. Hover a column in Figure 2 to lock a reading.",
+  highlight: 'schematic',
+};
+
+export const fig2 = {
+  caption:
+    'Figure 2. Five techniques, four fields. Framing, not measured results. Transfer generates hypotheses; it does not guarantee them. A decoder that handles Gaussian sensor noise does not handle correlated, non-Markovian noise on real hardware, and a frozen encoder that crosses porcine and human tissue will not cross imaging modalities.',
+  highlight: 'Framing, not measured',
+  columns: ['GRAPHICS', 'VISION', 'QUANTUM', 'SCIENCES'],
+  defaultRow: 1,
+};
+
+export const clips = {
+  graphics: {
+    src: '/assets/gifs/wave-transfer.gif',
+    alt: 'Painted wave becoming a dithered field, then a neon wireframe',
+    caption:
+      'Figure 3. Painted → dithered → wireframe. An invented transfer, not a measured result from the studies.',
+    highlight: 'invented',
+    mode: 'waves',
   },
-  {
-    num: '02',
-    title: 'Vision & robotics',
-    meta: 'surgical video · VLA policies',
-    to: '/persona/gyanateet',
+  vision: {
+    src: fetVae.hero.src,
+    alt: fetVae.hero.alt,
+    caption: fetVae.hero.caption,
+    highlight: fetVae.hero.highlight,
+    poster: fetVae.hero.poster,
+    mode: 'dots',
   },
-  {
-    num: '03',
-    title: 'Quantum algorithms',
-    meta: 'circuit design · error correction',
-    to: '/persona/ryoushi',
+  quantum: {
+    src: shor.hero.src,
+    alt: shor.hero.alt,
+    caption: shor.hero.caption,
+    highlight: shor.hero.highlight,
+    poster: shor.hero.poster,
+    mode: 'lattice',
   },
-  {
-    num: '04',
-    title: 'Machine learning for sciences',
-    meta: 'where the other three overlap',
-    to: href('Revamp E - Method Transfer.dc.html'),
+  sciences: {
+    src: cosmos.hero.src,
+    alt: cosmos.hero.alt,
+    caption: cosmos.hero.caption,
+    highlight: cosmos.hero.highlight,
+    mode: null,
   },
+  restored: {
+    src: pothole.hero.src,
+    alt: pothole.hero.alt,
+    caption: pothole.hero.caption,
+    highlight: pothole.hero.highlight,
+    mode: 'dots',
+  },
+};
+
+export const matrixRows = matrix;
+export const methodMeta = method;
+
+export const ramp = bandIds.map((id, i) => ({
+  id,
+  name: trust.bands.find((b) => b.id === id)?.name ?? id.toUpperCase(),
+  gloss: trust.rampGloss[i],
+}));
+
+export const index = [
+  { label: 'Work', to: '/work', note: 'Eleven dated notes' },
+  { label: 'Academic', to: '/academic', note: 'Papers and the record' },
+  { label: 'Ryukijano', to: '/persona/ryukijano', note: 'Graphics & systems' },
+  { label: 'Gyanateet', to: '/persona/gyanateet', note: 'Vision & robotics' },
+  { label: 'Ryoushi', to: '/persona/ryoushi', note: 'Quantum algorithms' },
+  { label: 'GitHub', to: 'https://github.com/Ryukijano', note: 'Code', external: true },
 ];
 
-export const doors = [
-  {
-    kick: 'Work',
-    title: 'Selected work',
-    desc: 'Eleven write-ups, each with a section on what it can’t do.',
-    to: href('Revamp E - Method Transfer.dc.html'),
-  },
-  {
-    kick: 'Academic',
-    title: 'Research & writing',
-    desc: 'Papers, projects, and how I got here.',
-    to: href('Academic.dc.html'),
-  },
-  {
-    kick: 'Code',
-    title: 'GitHub',
-    desc: 'About a hundred repos, wildly varying seriousness.',
-    to: 'https://github.com/Ryukijano',
-  },
-];
+export const affiliations = workHero.affiliations.join(' · ');
 
 export const footNote =
   'Gyanateet Dutta · MSc Advanced Computer Science (Artificial Intelligence), University of Leeds · Leeds, UK';
 
-export default { panes, seamLabels, thesis, strands, doors, footNote };
+export default {
+  bio,
+  degree,
+  question,
+  thesis,
+  fig1,
+  fig2,
+  clips,
+  matrixRows,
+  methodMeta,
+  ramp,
+  index,
+  affiliations,
+  footNote,
+};

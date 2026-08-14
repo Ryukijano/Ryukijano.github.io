@@ -1,5 +1,5 @@
 import Section, { Body, H2 } from '../../components/Section.jsx';
-import MediaFigure, { Caption } from '../../components/MediaFigure.jsx';
+import MediaFigure, { Caption, FigurePair } from '../../components/MediaFigure.jsx';
 import DataTable from '../../components/DataTable.jsx';
 import BuildList from '../../components/BuildList.jsx';
 import CircuitLab from '../../components/CircuitLab.jsx';
@@ -23,14 +23,8 @@ export default function ConditionalGqe() {
         <H2>{s.constraint.h2}</H2>
         <Body>{s.constraint.body[0]}</Body>
         <Body spacing="spaced">{s.constraint.body[1]}</Body>
-        <MediaFigure
-          src={s.constraint.figure.src}
-          alt={s.constraint.figure.alt}
-          caption={s.constraint.figure.caption}
-          style="margin:32px 0 0"
-          tight
-        />
       </Section>
+      <FigurePair figures={s.constraint.pair} />
 
       <Section num={s.method.num} kicker={s.method.kicker} reveal={2}>
         <H2>{s.method.h2}</H2>
@@ -38,26 +32,13 @@ export default function ConditionalGqe() {
           <Emphasise text={s.method.body} word={s.method.emphasis} />
         </Body>
         <BuildList items={s.method.buildList} />
-        <MediaFigure
-          src={s.method.figure.src}
-          alt={s.method.figure.alt}
-          caption={s.method.figure.caption}
-          style="margin:30px 0 0"
-          tight
-        />
         <Body spacing="top">{s.method.closing}</Body>
       </Section>
+      <FigurePair figures={s.method.pair} />
 
       <Section num={s.learning.num} kicker={s.learning.kicker}>
         <H2>{s.learning.h2}</H2>
         <Body>{s.learning.body}</Body>
-        <MediaFigure
-          src={s.learning.figure.src}
-          alt={s.learning.figure.alt}
-          caption={s.learning.figure.caption}
-          style="margin:30px 0 0"
-          tight
-        />
         <Body spacing="top">{s.learning.closing}</Body>
       </Section>
 

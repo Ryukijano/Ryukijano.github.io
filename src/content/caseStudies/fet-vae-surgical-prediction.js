@@ -39,6 +39,8 @@ const study = {
       "The architecture as described in the repository — a Swin Transformer content encoder and a RAFT-Small motion encoder feed a ternary latent (content, motion, gesture), which an autoregressive transformer rolls forward and a ViT-based decoder renders back to pixels. PSNR 28.13 dB, SSIM 0.927, LPIPS 0.062 and 22 FPS at a 20-frame rollout on the JIGSAWS test set are the repository's reported numbers; the per-frame quality-decay curve shown is illustrative, not plotted from real per-frame data — only the t=20 endpoint is real. A separate record (this project's MSc thesis listing) reports +2.36 dB PSNR as an improvement over a baseline, which is a different framing than the 28.13 dB absolute figure here — I haven't been able to confirm the baseline value that connects the two, so both are stated separately rather than merged.",
     highlight:
       "PSNR 28.13 dB, SSIM 0.927, LPIPS 0.062 and 22 FPS at a 20-frame rollout on the JIGSAWS test set are the repository's reported numbers; the per-frame quality-decay curve shown is illustrative, not plotted from real per-frame data — only the t=20 endpoint is real. A separate record (this project's MSc thesis listing) reports +2.36 dB PSNR as an improvement over a baseline, which is a different framing than the 28.13 dB absolute figure here — I haven't been able to confirm the baseline value that connects the two, so both are stated separately rather than merged.",
+    gutter: true,
+    poster: '/assets/images/fetvae-prediction-poster.png',
   },
 
   sections: {

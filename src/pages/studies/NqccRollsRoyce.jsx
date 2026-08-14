@@ -1,5 +1,4 @@
 import Section, { Body, H2 } from '../../components/Section.jsx';
-import MediaFigure from '../../components/MediaFigure.jsx';
 import { LinkList } from '../../components/CaseStudy.jsx';
 import { Text } from '../../components/m3/index.jsx';
 import study from '../../content/caseStudies/nqcc-rolls-royce.js';
@@ -7,27 +6,15 @@ import study from '../../content/caseStudies/nqcc-rolls-royce.js';
 const s = study.sections;
 
 /**
- * Body of /work/nqcc-rolls-royce. The shell (nav, hero, meta, next link) is
- * CaseStudy.jsx; everything below is the second lead figure and then the
- * numbered sections in page order.
+ * Body of /work/nqcc-rolls-royce. The shell (nav, hero pair, meta, next link)
+ * is CaseStudy.jsx; everything below is the numbered sections in page order.
  *
  * Reveal indices match SECTION_COUNT = 6 in the prototype: 0 is the hero,
- * 1..5 are the numbered sections. The second figure has no ref of its own —
- * it sits inside the hero's block, which the shell already reveals — so it
- * renders static here.
+ * 1..5 are the numbered sections. The two SQD GIFs are the shell's heroPair.
  */
 export default function NqccRollsRoyce() {
   return (
     <>
-      <section style={{ padding: '40px 0 0' }}>
-        <MediaFigure
-          src={study.secondFigure.src}
-          alt={study.secondFigure.alt}
-          caption={study.secondFigure.caption}
-          highlight={study.secondFigure.highlight}
-        />
-      </section>
-
       <Section num={s.problem.num} kicker={s.problem.kicker} reveal={1}>
         <H2>{s.problem.h2}</H2>
         <Body>{s.problem.body[0]}</Body>

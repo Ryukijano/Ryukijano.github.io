@@ -206,8 +206,8 @@ export const strands = [
         title: 'NQCC UK Quantum Hackathon',
         desc: 'Rolls-Royce challenge: VQE + SQD',
         to: href('Case Study - NQCC Rolls-Royce Challenge.dc.html'),
-        media: '/assets/images/kanagawa_latentspace_autoencoder.jpg',
-        isGif: false,
+        media: '/assets/gifs/sqd-krylov.gif',
+        isGif: true,
       },
       {
         title: 'Syndrome-Net',

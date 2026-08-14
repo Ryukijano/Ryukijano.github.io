@@ -39,6 +39,23 @@ const study = {
     highlight: 'schematic of the pipeline on procedural road texture',
   },
 
+  heroPair: [
+    {
+      src: '/assets/gifs/pothole-sr.gif',
+      alt: 'Pipeline schematic: a low-resolution road frame is degraded, upscaled by ESRGAN, then a YOLOv7 detection box appears over the pothole',
+      caption:
+        'The pipeline in order: a dashcam frame is decimated to a fraction of its resolution, ESRGAN restores it ×4, then YOLOv7 runs detection on the restored frame. This is a schematic of the pipeline on procedural road texture — not a figure from the paper and not measured output.',
+      highlight: 'schematic of the pipeline on procedural road texture',
+    },
+    {
+      src: '/assets/images/pothole-detection-demo.png',
+      alt: 'A restored dashcam still with a detection box on a road defect',
+      caption:
+        "A restored frame from the project's own demo still. Illustrative of what the restored input looks like, not a measured mAP figure from the paper.",
+      highlight: 'Illustrative',
+    },
+  ],
+
   sections: {
     constraint: {
       num: '01',

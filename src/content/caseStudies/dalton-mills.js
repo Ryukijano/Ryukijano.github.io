@@ -34,6 +34,7 @@ const study = {
     caption:
       "Ten camera positions, and a facade rebuilt from them. What the photographs actually cover is one thing; the far side of the chimney and the receding flank are another. This is a schematic — camera placement and coverage are illustrative, not the project's own capture data.",
     highlight: 'schematic',
+    gutter: true,
   },
 
   // Rendered by PullQuote; sits between sections 02 and 03 in the prototype.

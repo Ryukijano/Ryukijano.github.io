@@ -38,6 +38,8 @@ const study = {
       "The pipeline as it runs in the team's own notebook — classical GCD pre-check, QPE via controlled modular exponentiation (repeated squaring on hand-built quantum arithmetic), inverse QFT, then continued fractions to recover the period. N=15, a=7, 2048 shots and the 21-qubit register split (8 phase + 4 target + 9 ancilla) are the repository's reported run, and 15 = 3 × 5 is the actual reported result; the phase-clock spikes are a schematic of where QPE concentrates probability, not a plotted measurement histogram. The N=143 attempt (41 qubits) is real and reported as unresolved — a Quantum Rings backend permission error, not a completed result.",
     highlight:
       "N=15, a=7, 2048 shots and the 21-qubit register split (8 phase + 4 target + 9 ancilla) are the repository's reported run, and 15 = 3 × 5 is the actual reported result; the phase-clock spikes are a schematic of where QPE concentrates probability, not a plotted measurement histogram. The N=143 attempt (41 qubits) is real and reported as unresolved — a Quantum Rings backend permission error, not a completed result.",
+    gutter: true,
+    poster: '/assets/images/shor-algorithm-poster.png',
   },
 
   sections: {

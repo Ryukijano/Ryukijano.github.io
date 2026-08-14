@@ -1,5 +1,5 @@
 import Section, { Body, H2 } from '../../components/Section.jsx';
-import MediaFigure from '../../components/MediaFigure.jsx';
+import { FigurePair } from '../../components/MediaFigure.jsx';
 import BuildList from '../../components/BuildList.jsx';
 import { LinkList } from '../../components/CaseStudy.jsx';
 import { Text } from '../../components/m3/index.jsx';
@@ -55,28 +55,6 @@ export default function GemmaLeVla() {
         <LinkList links={s.resources.links} />
       </Section>
     </>
-  );
-}
-
-/**
- * The two stills under the hero. Two equal columns, 16px apart — a step on the
- * 4dp grid, and the prototype's own gap. Its stylesheet carries no media query
- * beyond prefers-reduced-motion, so there is no stacking breakpoint to port.
- */
-function FigurePair({ figures = [] }) {
-  return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: '16px',
-        margin: '40px 0 0',
-      }}
-    >
-      {figures.map((figure) => (
-        <MediaFigure key={figure.src} src={figure.src} alt={figure.alt} />
-      ))}
-    </div>
   );
 }
 

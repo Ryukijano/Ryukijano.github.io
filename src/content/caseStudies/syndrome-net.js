@@ -34,6 +34,7 @@ const study = {
     caption:
       'The error itself is never observed. Only the detectors at its ends fire, and the repair is inferred from those two points alone. This is a schematic — the fault positions and the machine it settles on are illustrative, not a real run.',
     highlight: 'schematic',
+    gutter: true,
   },
 
   sections: {

@@ -3,7 +3,7 @@ import { parseStyle } from '../lib/style.js';
 import { Divider, Text, Theme } from './m3/index.jsx';
 import SiteNav from './SiteNav.jsx';
 import useReveal, { RevealContext } from './useReveal.js';
-import MediaFigure from './MediaFigure.jsx';
+import MediaFigure, { FigurePair } from './MediaFigure.jsx';
 
 /**
  * The case-study page shell: site nav, breadcrumb, hero, meta bar, the hero
@@ -54,13 +54,19 @@ export default function CaseStudy({ study, sectionCount = 6, children }) {
           <MetaBar items={study.meta} />
         </section>
 
-        {study.hero ? (
+        {study.heroPair ? (
+          <section style={{ padding: '56px 0 0' }}>
+            <FigurePair figures={study.heroPair} style={{ margin: 0 }} />
+          </section>
+        ) : study.hero ? (
           <section style={{ padding: '56px 0 0' }}>
             <MediaFigure
               src={study.hero.src}
               alt={study.hero.alt}
               caption={study.hero.caption}
               highlight={study.hero.highlight}
+              gutter={study.hero.gutter}
+              poster={study.hero.poster}
               lazy={false}
             />
           </section>

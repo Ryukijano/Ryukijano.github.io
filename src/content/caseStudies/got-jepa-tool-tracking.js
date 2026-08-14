@@ -33,6 +33,7 @@ const study = {
     caption:
       'One copy watches clearly, the other watches through smoke, and both must describe the same instrument the same way. When the view goes, the identity is carried rather than re-detected. This is a schematic — the scene, the obscuration and the values are illustrative, not model output.',
     highlight: 'schematic',
+    gutter: true,
   },
 
   sections: {

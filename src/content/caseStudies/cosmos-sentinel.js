@@ -33,6 +33,7 @@ const study = {
     caption:
       'The risk trace decides which seconds get read; only those seconds reach the model that explains them; and the explanation is what the final scene is built from. This is a schematic — the curve, the findings and the frames are illustrative, not model output.',
     highlight: 'schematic',
+    gutter: true,
   },
 
   sections: {

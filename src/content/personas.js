@@ -1,7 +1,12 @@
 /**
  * Persona rooms. Statements are the honest fullDesc lines from the anti-slop
  * pass — no invented prizes, no "CS & AI" award title, no Bradford/JAX slugs.
+ * One locked still plus the small GIF that belongs to that lane — not a triptych.
  */
+import dalton from './caseStudies/dalton-mills.js';
+import fetVae from './caseStudies/fet-vae-surgical-prediction.js';
+import shor from './caseStudies/yquantum-shors-algorithm.js';
+
 export const personas = {
   ryukijano: {
     id: 'ryukijano',
@@ -10,6 +15,20 @@ export const personas = {
     statement:
       'I work on graphics and systems: photogrammetry into Unreal, CUDA C++, physics-informed nets. Sep–Dec 2024 I was with Science Museum Group and Leeds HELIX XR on Dalton Mills. That brief ended; I am not still on a heritage contract. Since Nov 2025 my paid work is medical computer vision at Leeds (NDA), which lives in the vision lane.',
     paneClass: 'pane-ryukijano',
+    figures: [
+      {
+        src: '/assets/images/kanagawa_latentspace_autoencoder.jpg',
+        alt: "Hokusai's wave reconstructed by a latent autoencoder: painted, dithered, wireframed",
+        caption: 'Hokusai reconstructed in a latent autoencoder. A schematic of a representation, not a measurement.',
+        highlight: 'schematic',
+      },
+      {
+        src: dalton.hero.src,
+        alt: dalton.hero.alt,
+        caption: dalton.hero.caption,
+        highlight: dalton.hero.highlight,
+      },
+    ],
     projects: [
       { year: 2024, title: 'Dalton Mills', to: '/work/dalton-mills' },
       {
@@ -27,6 +46,11 @@ export const personas = {
         to: 'https://github.com/Ryukijano/QuantumVice-M25-CUDAQuest',
         note: 'CUDA C++ and CUDA-Q / cuQuantum kernel drills.',
       },
+      {
+        title: 'Multiview diffusion',
+        to: 'https://huggingface.co/spaces/Ryukijano/Multiview_diffusion_3d',
+        note: '2024 Gradio space. No write-up on this site.',
+      },
     ],
   },
   gyanateet: {
@@ -36,6 +60,20 @@ export const personas = {
     statement:
       'I finished the MSc Advanced Computer Science (Artificial Intelligence) at the University of Leeds in 2023–2024; I am not still enrolled. Mar–Nov 2025 I interned with AIMS (AI in Medicine and Surgery) on ESD workflow / DINOv2. Since Nov 2025 I have been a research technician at Leeds on medical computer vision under NDA. The public record is the ISBI paper and the thesis repo.',
     paneClass: 'pane-gyanateet',
+    figures: [
+      {
+        src: '/assets/images/computer_vision.jpg',
+        alt: 'Endoscopic still from the vision lane',
+        caption: 'A still from the vision lane — not a figure from the ISBI paper.',
+      },
+      {
+        src: fetVae.hero.src,
+        alt: fetVae.hero.alt,
+        caption: fetVae.hero.caption,
+        highlight: fetVae.hero.highlight,
+        poster: fetVae.hero.poster,
+      },
+    ],
     projects: [
       { year: 2026, title: 'Surgical phase detection', to: '/work/surgical-phase-detection' },
       { year: 2024, title: 'FET-VAE surgical prediction', to: '/work/fet-vae-surgical-prediction' },
@@ -56,6 +94,20 @@ export const personas = {
     statement:
       'I work on hybrid quantum–classical experiments in Qiskit, PennyLane, and cuQuantum. Quantum Buddies is a three-person collective, not a funded lab. Bradford, YQuantum, NQCC, and City of London were weekend-scale builds. Do not read them as clinical or industrial deployments.',
     paneClass: 'pane-ryoushi',
+    figures: [
+      {
+        src: '/assets/images/nightcity.jpg',
+        alt: 'Night city still used as the quantum-lane lock',
+        caption: 'A lock still for this lane, not a circuit diagram and not a hardware result.',
+      },
+      {
+        src: shor.hero.src,
+        alt: shor.hero.alt,
+        caption: shor.hero.caption,
+        highlight: shor.hero.highlight,
+        poster: shor.hero.poster,
+      },
+    ],
     projects: [
       { year: 2026, title: 'Conditional-GQE', to: '/work/conditional-gqe' },
       {

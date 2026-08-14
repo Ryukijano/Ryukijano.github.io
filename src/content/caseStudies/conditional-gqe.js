@@ -51,6 +51,21 @@ const study = {
         caption:
           "The failure this is built against: on larger molecules the conventional approach stalls at the energy it started from and stays there. The absolute values shown are the project's own; the slide does not name which molecule they belong to, so they are not repeated as a claim elsewhere on this page.",
       },
+      pair: [
+        {
+          src: '/assets/gifs/vqe_vs_gqe.gif',
+          alt: 'Two approaches side by side. The conventional method stalls at the starting energy and never improves. The learned method descends past the chemical-accuracy threshold toward the exact reference',
+          caption:
+            "The failure this is built against: on larger molecules the conventional approach stalls at the energy it started from and stays there. The absolute values shown are the project's own; the slide does not name which molecule they belong to, so they are not repeated as a claim elsewhere on this page.",
+        },
+        {
+          src: '/assets/gifs/gqe-diagonal-collapse.gif',
+          alt: 'A circuit of diagonal operators that leaves the energy unchanged',
+          caption:
+            'When every operator is diagonal the energy never moves and training looks healthy while doing nothing. This is a schematic of that collapse, not a measured loss curve.',
+          highlight: 'schematic',
+        },
+      ],
     },
 
     method: {
@@ -68,6 +83,20 @@ const study = {
         'A library of structurally different working circuits is kept, so finding one answer does not stop the search',
         'A classical optimiser then dials in the continuous settings — roughly during training, precisely at the end',
         'A batch whose candidates all score the same is thrown away rather than learned from, since there is nothing in it to learn',
+      ],
+      pair: [
+        {
+          src: '/assets/gifs/transformer_architecture.gif',
+          alt: 'A decoder emits an operator sequence one token at a time, each generated token feeding back in to condition the next',
+          caption:
+            'Circuits are written the way a sentence is — one operator at a time, each choice conditioning the next. Sixteen candidate circuits are drawn per molecule, and the sampler is prevented from producing an all-diagonal one.',
+        },
+        {
+          src: '/assets/gifs/rl_training_loop.gif',
+          alt: 'Candidate circuits scored above and below the batch mean, then fed through a replay buffer that mixes older samples back into training and decays that mixture over time',
+          caption:
+            'Scores are normalised against the batch, and a buffer keeps good circuits in rotation — heavily at first, then tapering to nothing as the policy improves on its own.',
+        },
       ],
       figure: {
         src: '/assets/gifs/transformer_architecture.gif',

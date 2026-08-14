@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { parseStyle } from '../lib/style.js';
 import { cs } from './tokens.js';
 
@@ -17,23 +18,86 @@ export default function MediaFigure({
   highlight,
   lazy = true,
   tight = false,
+  gutter = false,
+  poster,
   style,
 }) {
   const frame = style ? `${cs.figureFrame};${style}` : cs.figureFrame;
+  const shown = useStillSrc(src, poster);
+  const img = (
+    <div style={parseStyle(frame)}>
+      <img
+        src={shown}
+        alt={alt}
+        loading={lazy ? 'lazy' : undefined}
+        style={{ width: '100%', display: 'block' }}
+      />
+    </div>
+  );
+  const cap = caption ? (
+    <Caption text={caption} highlight={highlight} tight={gutter || tight} />
+  ) : null;
+
+  if (gutter && cap) {
+    return (
+      <figure style={{ margin: 0 }}>
+        <div
+          style={parseStyle(
+            'display:grid;grid-template-columns:160px 1fr;gap:48px;align-items:start',
+          )}
+        >
+          <div>{cap}</div>
+          {img}
+        </div>
+      </figure>
+    );
+  }
+
   return (
     <figure style={{ margin: 0 }}>
-      <div style={parseStyle(frame)}>
-        <img
-          src={src}
-          alt={alt}
-          loading={lazy ? 'lazy' : undefined}
-          style={{ width: '100%', display: 'block' }}
-        />
-      </div>
-      {caption ? (
-        <Caption text={caption} highlight={highlight} tight={tight} />
-      ) : null}
+      {img}
+      {cap}
     </figure>
+  );
+}
+
+/**
+ * Distill l-page pair: two figures, hairline gap, captions required when the
+ * content module supplies them. No radius language — the frame already has none.
+ */
+export function FigurePair({ figures = [], style }) {
+  return (
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gap: '1px',
+        background: 'var(--md-sys-color-outline-variant)',
+        border: '1px solid var(--md-sys-color-outline-variant)',
+        margin: '40px 0 0',
+        ...style,
+      }}
+    >
+      {figures.map((figure) => (
+        <div
+          key={figure.src}
+          style={{
+            background: 'var(--md-sys-color-surface)',
+            padding: '0 0 12px',
+          }}
+        >
+          <MediaFigure
+            src={figure.src}
+            alt={figure.alt}
+            caption={figure.caption}
+            highlight={figure.highlight}
+            poster={figure.poster}
+            style="border:0;border-radius:0"
+            tight
+          />
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -52,6 +116,21 @@ export function Caption({ text, highlight, tight = false }) {
       )}
     </figcaption>
   );
+}
+
+function useStillSrc(src, poster) {
+  const [still, setStill] = useState(false);
+  useEffect(() => {
+    if (!poster || typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return undefined;
+    }
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const apply = () => setStill(mq.matches);
+    apply();
+    mq.addEventListener?.('change', apply);
+    return () => mq.removeEventListener?.('change', apply);
+  }, [poster]);
+  return still && poster ? poster : src;
 }
 
 function splitOnHighlights(text, highlight) {

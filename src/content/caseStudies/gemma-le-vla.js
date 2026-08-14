@@ -39,17 +39,19 @@ const study = {
     highlight: "Architecture diagram is the project's own; the denoising curve is illustrative.",
   },
 
-  // Two stills side by side, directly under the hero figure and inside the
-  // same (already-revealed) block in the prototype. Neither carries a caption
-  // there, only alt text.
   figurePair: [
     {
       src: '/assets/images/gemma-groot-arch.png',
       alt: 'Gemma-GR00T block diagram',
+      caption: "Block diagram of SigLIP, Gemma 3 and the ScaleDP head. Architecture diagram is the project's own.",
+      highlight: "Architecture diagram is the project's own",
     },
     {
       src: '/assets/images/gemma-groot-demo.png',
       alt: 'Gemma-Le policy rollout on a manipulation task',
+      caption:
+        'A policy rollout still on a manipulation task. The pose is illustrative of the embodiment, not a published success rate.',
+      highlight: 'illustrative',
     },
   ],
 

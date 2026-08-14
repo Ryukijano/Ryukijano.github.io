@@ -104,8 +104,26 @@ const study = {
         {
           kind: 'CODE',
           label: 'DINOEndo',
-          meta: 'github.com',
+          meta: 'GitHub README only',
           url: 'https://github.com/Ryukijano/DINOEndo',
+        },
+        {
+          kind: 'WEIGHTS',
+          label: 'dino-endo-phase-models',
+          meta: 'Hugging Face',
+          url: 'https://huggingface.co/Ryukijano/dino-endo-phase-models',
+        },
+        {
+          kind: 'WEIGHTS',
+          label: 'ai-endo-phase-models',
+          meta: 'Hugging Face',
+          url: 'https://huggingface.co/Ryukijano/ai-endo-phase-models',
+        },
+        {
+          kind: 'WEIGHTS',
+          label: 'vjepa2-phase-models',
+          meta: 'Hugging Face',
+          url: 'https://huggingface.co/Ryukijano/vjepa2-phase-models',
         },
         {
           kind: 'PROFILE',

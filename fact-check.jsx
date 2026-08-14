@@ -55,6 +55,11 @@ const text = (h) => h.replace(/<[^>]+>/g, ' ').replace(/&amp;/g,'&').replace(/&#
  * necessarily a bug — but it is always something to look at.
  */
 const MUST = {
+  '/': [
+    'I train vision models on surgical video under sparse labels and tight inference budgets.',
+    'Parallel to that I write hybrid quantum–classical algorithms with Quantum Buddies.',
+    'MSc Advanced Computer Science (Artificial Intelligence)',
+  ],
   '/academic': [
     'MSc Advanced Computer Science (Artificial Intelligence)',
     '10.1109/isbi61048.2026.11515812',
@@ -137,6 +142,7 @@ const countOf = (hay, needle) => hay.split(needle).length - 1;
 
 // words that MUST appear (disclosure language)
 const MUST_WORDS = {
+  '/': ['schematic', 'framing, not measured'],
   /* The four bands are this page's disclosure vocabulary: they are the words
    * that say how much of an output was recorded. Checked here rather than in
    * MUST because MUST_WORDS is case-insensitive, and the prototype sets them
@@ -173,6 +179,11 @@ for (const r of routes) {
   for (const w of (MUST_WORDS[r] || [])) if (!t.toLowerCase().includes(w)) problems.push(`MISSING WORD ${JSON.stringify(w)}`);
   for (const b of BANNED) if (html.includes(b)) problems.push(`BANNED ${JSON.stringify(b)}`);
   for (const c of CLICHE) if (t.toLowerCase().includes(c)) problems.push(`CLICHE ${JSON.stringify(c)}`);
+  if (r === '/') {
+    for (const b of ['esd-comparison.gif', 'doom_ppo.gif', 'ant_bullet.gif']) {
+      if (html.includes(b)) problems.push(`BANNED ON HOME ${JSON.stringify(b)}`);
+    }
+  }
   const hex = [...html.matchAll(/#[0-9a-fA-F]{6}\b/g)].map(m=>m[0]);
   hexTotal += hex.length;
   if (hex.length) problems.push(`RAW HEX x${hex.length}: ${[...new Set(hex)].join(',')}`);

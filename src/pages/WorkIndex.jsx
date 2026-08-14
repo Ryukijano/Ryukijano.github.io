@@ -52,6 +52,13 @@ export default function WorkIndex() {
           <Text as="p" role="title-large" style={leadStyle}>
             Dated notes on things I built. The academic record is separate.
           </Text>
+          <Text as="p" role="body-medium" style={{ ...leadStyle, margin: '12px 0 0' }}>
+            The method map is on the{' '}
+            <Link to="/#matrix" className="m3-state" style={footLinkStyle}>
+              home page
+            </Link>
+            .
+          </Text>
           <dl style={factsStyle}>
             {FACTS.map((fact) => (
               <div key={fact.dt}>

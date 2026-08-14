@@ -38,19 +38,29 @@ const study = {
       "The SQD pipeline as it runs in the team's own code — Krylov states built by Trotterized time evolution, sampled in the computational basis, filtered by Hamming weight to keep configurations covering >95% of the probability mass, then diagonalised in that subspace. Ground-state energy (−2.15 eV) and the DFT/depth figures are the repository's reported results; the bitstring histogram and excited-state levels are illustrative, not the team's raw sample counts.",
     highlight:
       "Ground-state energy (−2.15 eV) and the DFT/depth figures are the repository's reported results; the bitstring histogram and excited-state levels are illustrative, not the team's raw sample counts.",
+    poster: '/assets/images/sqd-pipeline-poster.png',
   },
 
-  // Second figure, directly under the hero and inside the same already-
-  // revealed block in the prototype, so NqccRollsRoyce.jsx renders it static
-  // rather than as a reveal slot of its own.
-  secondFigure: {
-    src: '/assets/gifs/sqd-vqe-dft-energy.gif',
-    alt: 'SQD versus DFT ground-state energy across the four adsorption sites: fcc, hcp, bridge, atop',
-    caption:
-      "Site-by-site comparison, all four numbers real: fcc −2.18 eV vs DFT −2.20 eV (0.9% error), hcp −2.06 vs −2.09 (1.4%), bridge −1.94 vs −1.98 (2.0%), atop −1.71 vs −1.76 (2.8%) — from the team's SQD_vs_SVD_Summary.md, which runs about 0.03 eV lower than the headline fcc figure above (a different sampling run of the same stochastic algorithm — the repo reports both).",
-    highlight:
-      'fcc −2.18 eV vs DFT −2.20 eV (0.9% error), hcp −2.06 vs −2.09 (1.4%), bridge −1.94 vs −1.98 (2.0%), atop −1.71 vs −1.76 (2.8%)',
-  },
+  heroPair: [
+    {
+      src: '/assets/gifs/sqd-krylov.gif',
+      alt: 'Animated schematic of the SQD pipeline: initial reference state, Krylov subspace via Trotterized time evolution, bitstring sampling, Hamming-weight configuration recovery, subspace diagonalisation',
+      caption:
+        "The SQD pipeline as it runs in the team's own code — Krylov states built by Trotterized time evolution, sampled in the computational basis, filtered by Hamming weight to keep configurations covering >95% of the probability mass, then diagonalised in that subspace. Ground-state energy (−2.15 eV) and the DFT/depth figures are the repository's reported results; the bitstring histogram and excited-state levels are illustrative, not the team's raw sample counts.",
+      highlight:
+        "Ground-state energy (−2.15 eV) and the DFT/depth figures are the repository's reported results; the bitstring histogram and excited-state levels are illustrative, not the team's raw sample counts.",
+      poster: '/assets/images/sqd-pipeline-poster.png',
+    },
+    {
+      src: '/assets/gifs/sqd-vqe-dft-energy.gif',
+      alt: 'SQD versus DFT ground-state energy across the four adsorption sites: fcc, hcp, bridge, atop',
+      caption:
+        "Site-by-site comparison, all four numbers real: fcc −2.18 eV vs DFT −2.20 eV (0.9% error), hcp −2.06 vs −2.09 (1.4%), bridge −1.94 vs −1.98 (2.0%), atop −1.71 vs −1.76 (2.8%) — from the team's SQD_vs_SVD_Summary.md, which runs about 0.03 eV lower than the headline fcc figure above (a different sampling run of the same stochastic algorithm — the repo reports both).",
+      highlight:
+        'fcc −2.18 eV vs DFT −2.20 eV (0.9% error), hcp −2.06 vs −2.09 (1.4%), bridge −1.94 vs −1.98 (2.0%), atop −1.71 vs −1.76 (2.8%)',
+      poster: '/assets/images/sqd-vqe-dft-energy-poster.png',
+    },
+  ],
 
   sections: {
     problem: {

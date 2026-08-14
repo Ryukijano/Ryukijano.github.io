@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { parseStyle } from '../lib/style.js';
 import { Text, Theme } from '../components/m3/index.jsx';
 import SiteNav from '../components/SiteNav.jsx';
+import { FigurePair } from '../components/MediaFigure.jsx';
 import { getPersona } from '../content/personas.js';
 import NotFound from './NotFound.jsx';
 
@@ -66,6 +67,10 @@ export default function PersonaPage() {
         <Text as="p" role="body-large" style={parseStyle(`${SERIF};${INK};margin:1.5rem 0 0;line-height:1.65`)}>
           {data.statement}
         </Text>
+
+        {data.figures?.length ? (
+          <FigurePair figures={data.figures} style={{ margin: '2.5rem 0 0' }} />
+        ) : null}
 
         <ul style={parseStyle('list-style:none;margin:3rem 0 0;padding:0')}>
           {data.projects.map((project) => (
