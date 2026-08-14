@@ -37,6 +37,7 @@ const study = {
     caption:
       'The pipeline in order: a dashcam frame is decimated to a fraction of its resolution, ESRGAN restores it ×4, then YOLOv7 runs detection on the restored frame. This is a schematic of the pipeline on procedural road texture — not a figure from the paper and not measured output.',
     highlight: 'schematic of the pipeline on procedural road texture',
+    poster: '/assets/images/pothole-sr-poster.png',
   },
 
   heroPair: [
@@ -46,12 +47,13 @@ const study = {
       caption:
         'The pipeline in order: a dashcam frame is decimated to a fraction of its resolution, ESRGAN restores it ×4, then YOLOv7 runs detection on the restored frame. This is a schematic of the pipeline on procedural road texture — not a figure from the paper and not measured output.',
       highlight: 'schematic of the pipeline on procedural road texture',
+      poster: '/assets/images/pothole-sr-poster.png',
     },
     {
-      src: '/assets/images/pothole-detection-demo.png',
-      alt: 'A restored dashcam still with a detection box on a road defect',
+      src: '/assets/images/pothole-sr-restored.png',
+      alt: 'Restored schematic frame with a YOLOv7 box labelled pothole',
       caption:
-        "A restored frame from the project's own demo still. Illustrative of what the restored input looks like, not a measured mAP figure from the paper.",
+        'Last frame of the same schematic after ESRGAN restore and a YOLOv7 box. Illustrative of the restored input on procedural texture — not a paper figure and not a measured mAP.',
       highlight: 'Illustrative',
     },
   ],

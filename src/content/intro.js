@@ -79,6 +79,7 @@ export const clips = {
     alt: pothole.hero.alt,
     caption: pothole.hero.caption,
     highlight: pothole.hero.highlight,
+    poster: pothole.hero.poster,
     mode: 'dots',
   },
 };
