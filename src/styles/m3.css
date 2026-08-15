@@ -266,7 +266,7 @@
     color: var(--md-sys-color-on-surface);
     font-family: var(--md-sys-typescale-brand-font);
     -webkit-font-smoothing: antialiased;
-    --folio-plate: min(100%, calc((100dvh - 13rem) * 3923 / 2160));
+    --folio-plate: min(100%, calc((100dvh - 10rem) * 3923 / 2160));
   }
 
   .folio .site-nav--overlay {
@@ -290,7 +290,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     background: var(--md-sys-color-surface-container-lowest);
   }
 
@@ -366,6 +366,7 @@
   }
 
   .folio__slip {
+    position: relative;
     width: var(--folio-plate);
     padding: 0.55rem 0.15rem 0.85rem;
     display: flex;
@@ -373,8 +374,17 @@
     gap: 0.28rem;
   }
 
-  .folio__slip h1 {
-    margin: 0;
+  .folio__slip h1.folio__name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
   }
 
   .folio__degree {

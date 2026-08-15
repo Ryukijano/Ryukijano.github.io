@@ -59,9 +59,7 @@ export default function Intro() {
             </div>
           </KanagawaPlate>
           <figcaption className="folio__slip">
-            <Text as="h1" role="title-small">
-              {content.bio.name}
-            </Text>
+            <h1 className="folio__name">{content.bio.name}</h1>
             <p className="folio__degree">{content.degree.title}</p>
             <Text as="p" role="body-medium">
               {content.bio.statement}
