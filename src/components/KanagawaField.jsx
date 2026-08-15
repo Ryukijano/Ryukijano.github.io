@@ -48,8 +48,7 @@ export default function KanagawaField({
       <div
         ref={wrapRef}
         style={parseStyle(
-          'position:relative;overflow:hidden;' +
-            'height:min(52vh, 480px);' +
+          'position:relative;overflow:hidden;width:100%;aspect-ratio:3923/2160;' +
             'background:var(--md-sys-color-surface);' +
             'border:1px solid var(--md-sys-color-on-surface)',
         )}

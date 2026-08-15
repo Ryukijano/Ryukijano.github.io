@@ -248,6 +248,17 @@
     isolation: isolate;
   }
 
+  /* Opening plate: zoom so a short band can crop painted → wireframe. */
+  .kanagawa-cartouche {
+    --cartouche-zoom: 1.22;
+  }
+
+  @media (min-width: 900px) {
+    .kanagawa-cartouche {
+      --cartouche-zoom: 1.58;
+    }
+  }
+
   .site-nav--ink,
   .site-nav--paper {
     color: var(--md-sys-color-on-surface);

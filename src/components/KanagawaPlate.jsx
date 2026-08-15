@@ -2,14 +2,14 @@ import { useEffect, useRef } from 'react';
 import { parseStyle } from '../lib/style.js';
 
 const SRC = '/assets/images/kanagawa_latentspace_autoencoder.jpg';
-const FROZEN = '20% 50%';
+const FROZEN = '20% 48%';
 const EASE = 0.12;
 
 /**
  * Page ground: the Kanagawa latent jpg as ink multiplied onto washi.
  *
  * Not a figure and not a 100vh hero. A fixed viewport layer sits behind
- * the article; object-position pans left (painted) → right (wireframe)
+ * the article; transform-origin pans left (painted) → right (wireframe)
  * with scroll, or eases toward a mode lock. Narrow viewports and reduced
  * motion freeze the crop and never start a frame loop.
  *
@@ -24,7 +24,10 @@ const wrapStyle = parseStyle(
 
 const imgStyle = parseStyle(
   'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;' +
-    'object-position:var(--plate-pos, 20% 50%);opacity:0.38',
+    'max-width:none;' +
+    'transform-origin:var(--plate-pos, 20% 48%);' +
+    'transform:scale(var(--plate-zoom, 1.58));' +
+    'opacity:0.42',
 );
 
 export default function KanagawaPlate({ mode = null }) {
@@ -46,8 +49,10 @@ export default function KanagawaPlate({ mode = null }) {
       kickRef.current = () => {};
       if (motion.matches || narrow.matches) {
         img.style.setProperty('--plate-pos', FROZEN);
+        img.style.setProperty('--plate-zoom', '1.12');
         return;
       }
+      img.style.setProperty('--plate-zoom', '1.58');
       const ctl = runPlate(img, modeRef);
       stop = ctl.stop;
       kickRef.current = ctl.kick;
@@ -106,7 +111,7 @@ function runPlate(img, modeRef) {
   let raf = 0;
 
   const paint = () => {
-    img.style.setProperty('--plate-pos', `${x}% 50%`);
+    img.style.setProperty('--plate-pos', `${x}% 48%`);
   };
 
   const tick = () => {

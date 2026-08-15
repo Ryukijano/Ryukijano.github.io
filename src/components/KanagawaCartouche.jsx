@@ -17,16 +17,17 @@ const WAVE = '/assets/images/kanagawa_latentspace_autoencoder.jpg';
  */
 
 const BAND = parseStyle(
-  'position:relative;display:flex;align-items:flex-start;justify-content:flex-start;' +
+  'position:relative;display:flex;align-items:flex-end;justify-content:flex-start;' +
     'box-sizing:border-box;overflow:hidden;isolation:isolate;width:100%;' +
-    'min-height:min(70vh, 36rem);margin-top:-3rem;' +
-    'padding:calc(3rem + clamp(1.15rem,3.5vw,2.25rem)) clamp(1.25rem,4vw,3rem) clamp(2.75rem,8vw,5rem)',
+    'min-height:min(52vh, 32rem);margin-top:-3rem;' +
+    'padding:calc(3rem + min(22vh, 8rem)) clamp(1.25rem,4vw,3rem) clamp(2.25rem,6vw,3.75rem)',
 );
 
 const PLATE = parseStyle(
   'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;' +
-    'pointer-events:none;' +
-    'transition:object-position var(--md-sys-motion-duration-expressive-slow-spatial) ' +
+    'pointer-events:none;max-width:none;' +
+    'transform:scale(var(--cartouche-zoom, 1.55));' +
+    'transition:transform-origin var(--md-sys-motion-duration-expressive-slow-spatial) ' +
     'var(--md-sys-motion-spring-expressive-slow-spatial)',
 );
 
@@ -60,15 +61,16 @@ export default function KanagawaCartouche({ children, pan = 0 }) {
   const t = Math.min(1, Math.max(0, Number(pan) || 0));
 
   return (
-    <header style={BAND}>
+    <header className="kanagawa-cartouche" style={BAND}>
       <img
         src={WAVE}
         alt=""
         fetchPriority="high"
         decoding="async"
+        className="kanagawa-cartouche__plate"
         style={{
           ...PLATE,
-          objectPosition: `${t * 100}% 40%`,
+          transformOrigin: `${t * 100}% 42%`,
         }}
       />
       <div aria-hidden="true" style={BOKASHI} />
