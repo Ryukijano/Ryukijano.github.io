@@ -268,11 +268,11 @@
     color: var(--md-sys-color-on-surface);
     font-family: var(--md-sys-typescale-brand-font);
     -webkit-font-smoothing: antialiased;
-    --folio-gutter: 0.75rem;
-    --folio-gutter-bottom: 2.4rem;
+    --folio-gutter: 1rem;
+    --folio-gutter-bottom: 2.55rem;
     --folio-plate: min(
       100%,
-      calc((100dvh - 12.5rem) * 3923 / 2160 + 2 * var(--folio-gutter))
+      calc((100dvh - 13rem) * 3923 / 2160 + 2 * var(--folio-gutter))
     );
   }
 
@@ -315,8 +315,7 @@
     width: 100%;
     aspect-ratio: 3923 / 2160;
     background: var(--md-sys-color-surface-container);
-    outline: 1px solid var(--md-sys-color-outline);
-    overflow: visible;
+    box-shadow: 0 0 0 1px var(--md-sys-color-outline);
   }
 
   .folio__sheet img {
@@ -331,37 +330,43 @@
 
   /*
    * Registration: 1px hikitsuke along the print's bottom edge, 2px L-shaped
-   * kagi at the lower-right of the paper margin. Rules, not stickers.
+   * kagi at the lower-right of the paper margin. content-box so the 1px/2px
+   * rules survive the global border-box reset. Rules, not stickers.
    */
   .folio__kento {
     position: absolute;
     pointer-events: none;
+    z-index: 2;
+    box-sizing: content-box;
     color: currentColor;
+    background: currentColor;
   }
 
   .folio__kento--hikitsuke {
-    left: calc(var(--folio-gutter) + 0.35rem);
-    bottom: var(--folio-gutter-bottom);
-    width: 1.15rem;
-    height: 0;
-    border-bottom: 1px solid currentColor;
+    left: calc(var(--folio-gutter) + 0.4rem);
+    bottom: calc(var(--folio-gutter-bottom) - 4px);
+    width: 1.2rem;
+    height: 1px;
   }
 
   .folio__kento--kagi {
-    right: calc(var(--folio-gutter) - 0.65rem);
-    bottom: calc(var(--folio-gutter-bottom) - 0.65rem);
-    width: 0.65rem;
-    height: 0.65rem;
+    right: calc(var(--folio-gutter) - 12px);
+    bottom: calc(var(--folio-gutter-bottom) - 12px);
+    width: 10px;
+    height: 10px;
+    background: transparent;
     border-right: 2px solid currentColor;
     border-bottom: 2px solid currentColor;
   }
 
   .folio__thirds {
     position: absolute;
-    inset: 0;
+    top: var(--folio-gutter);
+    left: var(--folio-gutter);
+    right: var(--folio-gutter);
+    bottom: 0;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    overflow: visible;
   }
 
   .folio__thirds .folio__lane {
@@ -371,28 +376,33 @@
     color: inherit;
     min-height: 0;
     min-width: 0;
-    overflow: visible;
-    box-shadow: inset 0 0 0 0 transparent;
-    transition: box-shadow var(--md-sys-motion-duration-expressive-fast-effects)
-      var(--md-sys-motion-spring-expressive-fast-effects);
   }
 
-  .folio__thirds .folio__lane.is-on,
-  .folio__thirds .folio__lane:hover,
-  .folio__thirds .folio__lane:focus-visible {
+  .folio__thirds .folio__lane.is-on::after,
+  .folio__thirds .folio__lane:hover::after,
+  .folio__thirds .folio__lane:focus-visible::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: var(--folio-gutter-bottom);
     box-shadow: inset 0 0 0 1px currentColor;
+    pointer-events: none;
   }
 
   .folio__chip {
     position: absolute;
     left: 0;
     right: 0;
-    top: 100%;
+    bottom: 0;
+    height: var(--folio-gutter-bottom);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.12rem;
-    padding: 0.4rem 0.15rem 0;
+    justify-content: flex-start;
+    gap: 0.1rem;
+    padding: 0.32rem 0.15rem 0;
     background: none;
     color: inherit;
     font-family: var(--md-sys-typescale-mono-font);
@@ -404,9 +414,9 @@
 
   .folio__chip::before {
     content: '';
-    width: 0;
-    height: 0.35rem;
-    border-left: 1px solid currentColor;
+    width: 1px;
+    height: 0.32rem;
+    background: currentColor;
   }
 
   .folio__chip-who {
@@ -501,12 +511,6 @@
 
     .folio__sheet {
       width: 100%;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .folio__thirds .folio__lane {
-      transition: none;
     }
   }
 
