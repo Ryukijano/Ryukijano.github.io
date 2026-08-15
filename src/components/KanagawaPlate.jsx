@@ -40,14 +40,14 @@ const ghostStyle = parseStyle(
 );
 
 const hikitsukeStyle = parseStyle(
-  'position:absolute;left:0.65rem;bottom:0.65rem;width:18px;height:0;' +
-    'border-bottom:1px solid color-mix(in srgb, var(--md-sys-color-on-surface) 42%, transparent)',
+  'position:absolute;left:0.5rem;bottom:0.5rem;width:22px;height:0;z-index:2;' +
+    'border-bottom:1px solid color-mix(in srgb, var(--md-sys-color-on-surface) 72%, transparent)',
 );
 
 const kagiStyle = parseStyle(
-  'position:absolute;right:0.65rem;bottom:0.65rem;width:10px;height:10px;' +
-    'border-right:1px solid color-mix(in srgb, var(--md-sys-color-on-surface) 42%, transparent);' +
-    'border-bottom:1px solid color-mix(in srgb, var(--md-sys-color-on-surface) 42%, transparent)',
+  'position:absolute;right:0.5rem;bottom:0.5rem;width:12px;height:12px;z-index:2;' +
+    'border-right:1px solid color-mix(in srgb, var(--md-sys-color-on-surface) 72%, transparent);' +
+    'border-bottom:1px solid color-mix(in srgb, var(--md-sys-color-on-surface) 72%, transparent)',
 );
 
 export default function KanagawaPlate({ mode = null }) {

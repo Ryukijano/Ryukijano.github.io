@@ -166,29 +166,28 @@ export default function Intro() {
             onRow={(i) => lock(i, null, null)}
             onCell={(i, j) => lock(i, j, null)}
           />
+          <div style={clipSlot}>
+            {clip ? (
+              <MediaFigure
+                src={clip.src}
+                alt={clip.alt}
+                caption={clip.caption}
+                highlight={clip.highlight}
+                poster={clip.poster}
+                lazy={false}
+              />
+            ) : (
+              <Caption
+                text={
+                  rowNote
+                    ? `${rowNote} Framing, not measured results.`
+                    : 'Hover a column in Figure 2 for a coupled clip. Framing, not measured results.'
+                }
+                highlight="Framing, not measured"
+              />
+            )}
+          </div>
           <Caption text={content.fig2.caption} highlight={content.fig2.highlight} />
-        </div>
-
-        <div style={clipFlow}>
-          {clip ? (
-            <MediaFigure
-              src={clip.src}
-              alt={clip.alt}
-              caption={clip.caption}
-              highlight={clip.highlight}
-              poster={clip.poster}
-              lazy={false}
-            />
-          ) : (
-            <Caption
-              text={
-                rowNote
-                  ? `${rowNote} Framing, not measured results.`
-                  : 'Hover a column in Figure 2 for a coupled clip. Framing, not measured results.'
-              }
-              highlight="Framing, not measured"
-            />
-          )}
         </div>
 
         <div style={wideFlow}>
@@ -266,7 +265,7 @@ const bodyFlowFirst = parseStyle('max-width:42rem;width:100%;margin:0');
 const bodyFlow = parseStyle('max-width:42rem;width:100%;margin:2.5rem 0 0');
 const lPage = parseStyle('width:100%;margin:2.5rem 0 0');
 const wideFlow = parseStyle('max-width:940px;width:100%;margin:3rem 0 0');
-const clipFlow = parseStyle('max-width:52rem;width:100%;margin:3rem 0 0');
+const clipSlot = parseStyle('margin:1rem 0 0');
 
 const WAVE = '/assets/images/kanagawa_latentspace_autoencoder.jpg';
 const COL_CROP = ['0% 48%', '50% 48%', '100% 48%'];
