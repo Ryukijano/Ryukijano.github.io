@@ -65,52 +65,63 @@ export default function Intro() {
 
       <main style={parseStyle('position:relative;z-index:1')}>
         <KanagawaCartouche pan={panForMode(fieldMode)}>
-          <Text as="h1" role="headline-large" style={parseStyle(`${INK};margin:0`)}>
+          <Text as="h1" role="title-large" style={parseStyle(`${INK};margin:0`)}>
             {content.bio.name}
-          </Text>
-          <Text as="p" role="title-medium" style={parseStyle(`${SERIF};${INK};margin:0.75rem 0 0`)}>
-            {content.bio.role}
-          </Text>
-          {content.degree ? (
-            <Text as="p" role="body-large" style={parseStyle(`${SERIF};${MUTED};margin:0.35rem 0 0`)}>
-              {content.degree.title}, {content.degree.org}, {content.degree.years}
-            </Text>
-          ) : null}
-          <Text
-            as="p"
-            role="body-large"
-            style={parseStyle(`${SERIF};${INK};margin:1.5rem 0 0;line-height:1.65`)}
-          >
-            {content.bio.statement}
-          </Text>
-          <Text
-            as="p"
-            role="title-medium"
-            style={parseStyle(`${SERIF};${INK};margin:1.25rem 0 0;max-width:36ch`)}
-          >
-            {content.question}
           </Text>
           <Text
             as="p"
             role="label-small"
-            style={parseStyle(`${MONO};${MUTED};margin:1rem 0 0;--m3-track:0.04em`)}
+            title={content.bio.role}
+            style={parseStyle(
+              `${MUTED};margin:0.45rem 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis`,
+            )}
           >
-            {content.affiliations}
+            {content.bio.role}
           </Text>
         </KanagawaCartouche>
 
-        <div style={insetPad}>
-          <KanagawaField
-            mode={fieldMode}
-            onMode={(id) => {
-              const nextCol = MODES_TO_COL[id];
-              lock(row, nextCol, null);
-            }}
-          />
-          <Caption text={content.fig1.caption} highlight={content.fig1.highlight} />
-        </div>
+        <article style={articleSheet}>
+          <div style={bodyFlowFirst}>
+            {content.degree ? (
+              <Text as="p" role="body-large" style={parseStyle(`${SERIF};${MUTED};margin:0`)}>
+                {content.degree.title}, {content.degree.org}, {content.degree.years}
+              </Text>
+            ) : null}
+            <Text
+              as="p"
+              role="body-large"
+              style={parseStyle(`${SERIF};${INK};margin:1.25rem 0 0;line-height:1.65`)}
+            >
+              {content.bio.statement}
+            </Text>
+            <Text
+              as="p"
+              role="title-medium"
+              style={parseStyle(`${SERIF};${INK};margin:1.25rem 0 0;max-width:36ch`)}
+            >
+              {content.question}
+            </Text>
+            <Text
+              as="p"
+              role="label-small"
+              style={parseStyle(`${MONO};${MUTED};margin:1rem 0 0;--m3-track:0.04em`)}
+            >
+              {content.affiliations}
+            </Text>
+          </div>
 
-        <div style={bodyPad}>
+          <div style={lPage}>
+            <KanagawaField
+              mode={fieldMode}
+              onMode={(id) => {
+                const nextCol = MODES_TO_COL[id];
+                lock(row, nextCol, null);
+              }}
+            />
+            <Caption text={content.fig1.caption} highlight={content.fig1.highlight} />
+          </div>
+
+          <div style={bodyFlow}>
           <Text
             as="p"
             role="label-small"
@@ -144,11 +155,11 @@ export default function Intro() {
           ))}
         </div>
 
-        <div style={pagePad}>
+        <div style={wideFlow}>
           <PullQuote quote={content.thesis.quote} />
         </div>
 
-        <div style={pagePad} id="matrix">
+        <div style={wideFlow} id="matrix">
           <MethodMatrix
             row={row}
             col={col}
@@ -158,7 +169,7 @@ export default function Intro() {
           <Caption text={content.fig2.caption} highlight={content.fig2.highlight} />
         </div>
 
-        <div style={outsetPad}>
+        <div style={clipFlow}>
           {clip ? (
             <MediaFigure
               src={clip.src}
@@ -180,14 +191,14 @@ export default function Intro() {
           )}
         </div>
 
-        <div style={pagePad}>
+        <div style={wideFlow}>
           <TrustRamp
             active={band}
             onBand={(id) => lock(row, null, id)}
           />
         </div>
 
-        <div style={{ ...bodyPad, paddingBottom: '6rem' }}>
+        <div style={bodyFlow}>
           <dl style={parseStyle(`margin:0;padding:0;border-top:${HAIRLINE}`)}>
             {content.index.map((item) => (
               <div
@@ -221,6 +232,7 @@ export default function Intro() {
             {content.footNote}
           </Text>
         </div>
+        </article>
       </main>
     </Theme>
   );
@@ -246,15 +258,29 @@ function panForMode(mode) {
   }
 }
 
-const SHEET =
-  'background:var(--md-sys-color-surface);isolation:isolate;position:relative';
-
-const bodyPad = parseStyle(`max-width:42rem;margin:0 auto;padding:3.5rem 1.5rem 0;${SHEET}`);
-const pagePad = parseStyle(`max-width:940px;margin:0 auto;padding:3rem 1.5rem 0;${SHEET}`);
-const insetPad = parseStyle(
-  `max-width:min(100%, 72rem);margin:0 auto;padding:2.5rem 1.5rem 0;${SHEET}`,
+const articleSheet = parseStyle(
+  'max-width:min(100%, 72rem);margin:0 auto;padding:2rem 1.5rem 6rem;' +
+    'background:var(--md-sys-color-surface);isolation:isolate;position:relative',
 );
-const outsetPad = parseStyle(`max-width:52rem;margin:0 auto;padding:2.5rem 1.5rem 0;${SHEET}`);
+const bodyFlowFirst = parseStyle('max-width:42rem;width:100%;margin:0');
+const bodyFlow = parseStyle('max-width:42rem;width:100%;margin:2.5rem 0 0');
+const lPage = parseStyle('width:100%;margin:2.5rem 0 0');
+const wideFlow = parseStyle('max-width:940px;width:100%;margin:3rem 0 0');
+const clipFlow = parseStyle('max-width:52rem;width:100%;margin:3rem 0 0');
+
+const WAVE = '/assets/images/kanagawa_latentspace_autoencoder.jpg';
+const COL_CROP = ['0% 48%', '50% 48%', '100% 48%'];
+
+const stripBox = parseStyle(
+  'height:8px;overflow:hidden;pointer-events:none;line-height:0',
+);
+
+function stripImg(pos) {
+  return parseStyle(
+    'display:block;width:100%;height:8px;object-fit:cover;max-width:none;' +
+      `object-position:${pos};transform:scale(1.55);transform-origin:${pos}`,
+  );
+}
 
 function MethodMatrix({ row, col, onRow, onCell }) {
   const cols = content.fig2.columns;
@@ -282,18 +308,34 @@ function MethodMatrix({ row, col, onRow, onCell }) {
         >
           {content.methodMeta.headLabel}
         </Text>
-        {cols.map((label) => (
-          <Text
+        {cols.map((label, j) => (
+          <button
             key={label}
-            as="div"
-            role="label-small"
+            type="button"
+            onMouseEnter={() => onCell(row, j)}
+            onFocus={() => onCell(row, j)}
             style={parseStyle(
-              `${MONO};${MUTED};--m3-track:0.1em;padding:11px 14px;border-bottom:${HAIRLINE};` +
-                `border-left:${HAIRLINE}`,
+              `display:block;width:100%;text-align:left;padding:0;margin:0;` +
+                `border:0;border-left:${HAIRLINE};border-bottom:${HAIRLINE};` +
+                'background:none;cursor:pointer;font:inherit',
             )}
           >
-            {label}
-          </Text>
+            {j < 3 ? (
+              <div aria-hidden="true" style={stripBox}>
+                <img src={WAVE} alt="" style={stripImg(COL_CROP[j])} />
+              </div>
+            ) : null}
+            <Text
+              as="span"
+              role="label-small"
+              emphasized={col === j}
+              style={parseStyle(
+                `${MONO};${col === j ? INK : MUTED};--m3-track:0.1em;padding:11px 14px;display:block`,
+              )}
+            >
+              {label}
+            </Text>
+          </button>
         ))}
       </div>
       {content.matrixRows.map((entry, i) => {

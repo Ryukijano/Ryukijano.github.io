@@ -248,14 +248,71 @@
     isolation: isolate;
   }
 
-  /* Opening plate: zoom so a short band can crop painted → wireframe. */
+  /*
+   * Opening plate: crop the painted hollow so the claw frames a Fuji-sized
+   * slip. Zoom is higher on wide screens; origin Y is the sky pocket.
+   */
   .kanagawa-cartouche {
-    --cartouche-zoom: 1.22;
+    --cartouche-zoom: 1.14;
+    --cartouche-origin-y: 42%;
+    min-height: min(40vh, 22rem);
+    padding: calc(3rem + min(10vh, 3rem)) clamp(1.25rem, 4vw, 3rem) clamp(1.5rem, 4vw, 2.25rem);
+  }
+
+  .kanagawa-cartouche__slip {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    top: 18%;
+    transform: translate(-50%, 0);
+    max-width: 10rem;
+    width: min(10rem, 72vw);
+  }
+
+  .kanagawa-cartouche__tab {
+    position: absolute;
+    z-index: 2;
+    left: clamp(0.75rem, 2.5vw, 1.5rem);
+    top: calc(3rem + 0.5rem);
+    margin: 0;
+    max-height: min(28vh, 8rem);
+    overflow: hidden;
+    font-size: 0.65rem;
+    line-height: 1.2;
+  }
+
+  .kanagawa-cartouche__tab-full {
+    display: none;
+  }
+
+  .kanagawa-cartouche__tab-short {
+    display: inline;
   }
 
   @media (min-width: 900px) {
     .kanagawa-cartouche {
-      --cartouche-zoom: 1.58;
+      --cartouche-zoom: 1.78;
+      --cartouche-origin-y: 38%;
+      min-height: min(48vh, 30rem);
+    }
+
+    .kanagawa-cartouche__slip {
+      left: 40%;
+      top: 22%;
+      max-width: 12.5rem;
+      width: min(12.5rem, 36vw);
+    }
+
+    .kanagawa-cartouche__tab {
+      max-height: min(36vh, 10.5rem);
+    }
+
+    .kanagawa-cartouche__tab-full {
+      display: inline;
+    }
+
+    .kanagawa-cartouche__tab-short {
+      display: none;
     }
   }
 

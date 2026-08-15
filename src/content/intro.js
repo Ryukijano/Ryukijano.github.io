@@ -42,6 +42,10 @@ export const fig2 = {
   defaultRow: 1,
 };
 
+function asFig3(caption) {
+  return caption.startsWith('Figure 3.') ? caption : `Figure 3. ${caption}`;
+}
+
 export const clips = {
   graphics: {
     src: '/assets/gifs/wave-transfer.gif',
@@ -54,7 +58,7 @@ export const clips = {
   vision: {
     src: fetVae.hero.src,
     alt: fetVae.hero.alt,
-    caption: fetVae.hero.caption,
+    caption: asFig3(fetVae.hero.caption),
     highlight: fetVae.hero.highlight,
     poster: fetVae.hero.poster,
     mode: 'dots',
@@ -62,7 +66,7 @@ export const clips = {
   quantum: {
     src: shor.hero.src,
     alt: shor.hero.alt,
-    caption: shor.hero.caption,
+    caption: asFig3(shor.hero.caption),
     highlight: shor.hero.highlight,
     poster: shor.hero.poster,
     mode: 'lattice',
@@ -70,14 +74,14 @@ export const clips = {
   sciences: {
     src: cosmos.hero.src,
     alt: cosmos.hero.alt,
-    caption: cosmos.hero.caption,
+    caption: asFig3(cosmos.hero.caption),
     highlight: cosmos.hero.highlight,
     mode: null,
   },
   restored: {
     src: pothole.hero.src,
     alt: pothole.hero.alt,
-    caption: pothole.hero.caption,
+    caption: asFig3(pothole.hero.caption),
     highlight: pothole.hero.highlight,
     poster: pothole.hero.poster,
     mode: 'dots',
