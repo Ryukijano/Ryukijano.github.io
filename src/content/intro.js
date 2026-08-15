@@ -1,6 +1,9 @@
 /**
- * Home is one hung plate. Left / centre / right of the image are
- * Engineer / AI / Quantum. Type lives on a slip under the print.
+ * Home is a silent key visual — 21_21 DESIGN SIGHT. The plate is almost
+ * the whole first screen. At rest there are no chips and no catalog;
+ * left / centre / right are still Engineer / AI / Quantum. Type lives
+ * on a tight slip under the print: degree kicker, both bio sentences,
+ * caption.
  */
 import academic from './academic.js';
 import { personas } from './personas.js';

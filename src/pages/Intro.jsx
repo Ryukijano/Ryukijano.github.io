@@ -23,7 +23,11 @@ function Marked({ text, highlight }) {
   );
 }
 
-/** / — plate owns the viewport; bio lives on one slip under the print. */
+function bioSentences(statement) {
+  return statement.split(/(?<=\.)\s+/).filter(Boolean);
+}
+
+/** / — silent key visual. The plate is the first screen; chips wait. */
 export default function Intro() {
   const [lane, setLane] = useState(null);
 
@@ -50,9 +54,8 @@ export default function Intro() {
                   onFocus={() => setLane(room.id)}
                   onBlur={() => setLane(null)}
                 >
-                  <span className="folio__chip">
+                  <span className="folio__chip" aria-hidden="true">
                     {room.lane}
-                    <span className="folio__chip-who">{room.title}</span>
                   </span>
                 </Link>
               ))}
@@ -61,9 +64,11 @@ export default function Intro() {
           <figcaption className="folio__slip">
             <h1 className="folio__name">{content.bio.name}</h1>
             <p className="folio__degree">{content.degree.title}</p>
-            <Text as="p" role="body-medium">
-              {content.bio.statement}
-            </Text>
+            {bioSentences(content.bio.statement).map((line) => (
+              <Text key={line} as="p" role="body-small">
+                {line}
+              </Text>
+            ))}
             <p className="folio__caption">
               <Marked text={content.plate.caption} highlight={content.plate.highlight} />
             </p>
