@@ -6,7 +6,7 @@
 export default function KanagawaPlate({ src, alt, children }) {
   return (
     <div className="folio__sheet">
-      <img src={src} alt={alt} fetchPriority="high" decoding="async" />
+      <img src={src} alt={alt} fetchPriority="high" decoding="sync" />
       {children}
     </div>
   );
