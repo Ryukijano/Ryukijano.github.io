@@ -249,70 +249,240 @@
   }
 
   /*
-   * Opening plate: crop the painted hollow so the claw frames a Fuji-sized
-   * slip. Zoom is higher on wide screens; origin Y is the sky pocket.
+   * Home hall: one Kanagawa plate as the page ground, three rooms over it.
+   * Washes are translucent so the plate reads through the whole first page.
    */
-  .kanagawa-cartouche {
-    --cartouche-zoom: 1.14;
-    --cartouche-origin-y: 42%;
-    min-height: min(40vh, 22rem);
-    padding: calc(3rem + min(10vh, 3rem)) clamp(1.25rem, 4vw, 3rem) clamp(1.5rem, 4vw, 2.25rem);
+  .hall {
+    position: relative;
+    min-height: 100dvh;
+    color: var(--md-sys-color-on-surface);
+    font-family: var(--md-sys-typescale-brand-font);
+    -webkit-font-smoothing: antialiased;
   }
 
-  .kanagawa-cartouche__slip {
-    position: absolute;
-    z-index: 2;
-    left: 50%;
-    top: 18%;
-    transform: translate(-50%, 0);
-    max-width: 10rem;
-    width: min(10rem, 72vw);
-  }
-
-  .kanagawa-cartouche__tab {
-    position: absolute;
-    z-index: 2;
-    left: clamp(0.75rem, 2.5vw, 1.5rem);
-    top: calc(3rem + 0.5rem);
-    margin: 0;
-    max-height: min(28vh, 8rem);
+  .hall__ground {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
     overflow: hidden;
-    font-size: 0.65rem;
-    line-height: 1.2;
   }
 
-  .kanagawa-cartouche__tab-full {
-    display: none;
+  .hall__ground img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 18% 42%;
+    max-width: none;
+    display: block;
   }
 
-  .kanagawa-cartouche__tab-short {
-    display: inline;
+  .hall__ground::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--md-sys-color-surface) 14%, transparent);
+  }
+
+  .hall__stage {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+  }
+
+  .hall__mast {
+    padding: 4.25rem 1.5rem 1.15rem;
+    max-width: 46rem;
+    background: color-mix(in srgb, var(--md-sys-color-surface) 58%, transparent);
+  }
+
+  .hall__mast p {
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  .hall__mast p + p {
+    margin-top: 0.85rem;
+  }
+
+  .hall__mast p:first-child {
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  .hall__meta {
+    margin: 0.85rem 0 0;
+    font-family: var(--md-sys-typescale-mono-font);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  .hall__rooms {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 0;
+    border-top: 1px solid color-mix(in srgb, var(--md-sys-color-outline) 42%, transparent);
+  }
+
+  .hall__room {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 1.35rem 1.25rem 1.5rem;
+    background: color-mix(in srgb, var(--md-sys-color-surface) 48%, transparent);
+    color: var(--md-sys-color-on-surface);
+    border-right: 1px solid color-mix(in srgb, var(--md-sys-color-outline) 42%, transparent);
+    transition: flex-grow var(--md-sys-motion-duration-expressive-slow-spatial)
+      var(--md-sys-motion-spring-expressive-slow-spatial);
+  }
+
+  .hall__room:last-child {
+    border-right: 0;
+  }
+
+  .hall__lane {
+    margin: 0;
+    font-family: var(--md-sys-typescale-mono-font);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--md-sys-color-primary);
+  }
+
+  .hall__name {
+    margin: 0.55rem 0 0;
+    font-size: clamp(2.15rem, 5.4vw, 4.35rem);
+    line-height: 0.86;
+    letter-spacing: -0.045em;
+    font-weight: 600;
+  }
+
+  .hall__name a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .hall__name span {
+    display: block;
+  }
+
+  .hall__room--ryukijano .hall__name {
+    font-family: var(--md-sys-typescale-brand-font);
+  }
+
+  .hall__room--gyanateet .hall__name {
+    font-family: var(--md-sys-typescale-plain-font);
+  }
+
+  .hall__room--ryoushi .hall__name {
+    font-family: var(--md-sys-typescale-mono-font);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+
+  .hall__name + .m3-type {
+    margin-top: 0.85rem;
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  .hall__projects {
+    list-style: none;
+    margin: auto 0 0;
+    padding: 1.15rem 0 0;
+    border-top: 1px solid color-mix(in srgb, var(--md-sys-color-outline) 38%, transparent);
+  }
+
+  .hall__projects li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: baseline;
+    margin: 0.45rem 0 0;
+    font-family: var(--md-sys-typescale-brand-font);
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+  .hall__projects li:first-child {
+    margin-top: 0;
+  }
+
+  .hall__year {
+    flex: none;
+    width: 2.6rem;
+    font-family: var(--md-sys-typescale-mono-font);
+    font-size: 0.72rem;
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  .hall__projects a {
+    color: var(--md-sys-color-on-surface);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--md-sys-color-primary) 35%, transparent);
+  }
+
+  .hall__open {
+    margin: 1rem 0 0;
+    font-family: var(--md-sys-typescale-mono-font);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--md-sys-color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--md-sys-color-primary) 35%, transparent);
+    align-self: flex-start;
+  }
+
+  .hall__foot {
+    padding: 0.7rem 1.5rem 1.1rem;
+    background: color-mix(in srgb, var(--md-sys-color-surface) 64%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--md-sys-color-outline) 42%, transparent);
+  }
+
+  .hall__foot figure {
+    margin: 0;
   }
 
   @media (min-width: 900px) {
-    .kanagawa-cartouche {
-      --cartouche-zoom: 1.78;
-      --cartouche-origin-y: 38%;
-      min-height: min(48vh, 30rem);
+    .hall__ground img {
+      object-position: 50% 42%;
     }
 
-    .kanagawa-cartouche__slip {
-      left: 40%;
-      top: 22%;
-      max-width: 12.5rem;
-      width: min(12.5rem, 36vw);
+    .hall__rooms:is(:hover, :focus-within) .hall__room {
+      flex-grow: 0.62;
     }
 
-    .kanagawa-cartouche__tab {
-      max-height: min(36vh, 10.5rem);
+    .hall__rooms:is(:hover, :focus-within) .hall__room:is(:hover, :focus-within) {
+      flex-grow: 1.9;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .hall__rooms {
+      flex-direction: column;
     }
 
-    .kanagawa-cartouche__tab-full {
-      display: inline;
+    .hall__room {
+      flex: none;
+      min-height: 22rem;
+      border-right: 0;
+      border-bottom: 1px solid color-mix(in srgb, var(--md-sys-color-outline) 42%, transparent);
     }
 
-    .kanagawa-cartouche__tab-short {
-      display: none;
+    .hall__room:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hall__room {
+      transition: none;
+    }
+
+    .hall__rooms:is(:hover, :focus-within) .hall__room,
+    .hall__rooms:is(:hover, :focus-within) .hall__room:is(:hover, :focus-within) {
+      flex-grow: 1;
     }
   }
 
