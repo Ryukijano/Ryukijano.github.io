@@ -1,0 +1,518 @@
+/*
+ * Material 3 Expressive component layer.
+ *
+ * Everything here reads from src/styles/m3-tokens.css. No literal colours, no
+ * literal radii, no literal easing curves. If a value appears here that isn't a
+ * var(), that's a bug.
+ */
+
+@layer m3.components {
+  /* ---------------------------------------------------------------- type */
+
+  .m3-type {
+    font-family: var(--m3-font, var(--md-sys-typescale-plain-font));
+    font-size: var(--m3-size);
+    line-height: var(--m3-lh);
+    letter-spacing: var(--m3-track);
+    font-weight: var(--m3-weight);
+    margin: 0;
+  }
+
+  /* ------------------------------------------------------- state layers */
+
+  /*
+   * A state layer is a translucent wash of the element's OWN content colour,
+   * not a different background. That's what keeps hover feedback consistent
+   * across every surface tone without hand-picking a hover colour per context.
+   */
+  .m3-state {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .m3-state::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: currentColor;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--md-sys-motion-duration-expressive-fast-effects)
+      var(--md-sys-motion-spring-expressive-fast-effects);
+  }
+
+  .m3-state:hover::after {
+    opacity: var(--md-sys-state-hover-opacity);
+  }
+
+  .m3-state:active::after {
+    opacity: var(--md-sys-state-pressed-opacity);
+  }
+
+  /*
+   * Focus is deliberately NOT folded into the state layer. A focus ring has to
+   * survive on every surface tone, so it's an outline rather than a wash.
+   */
+  .m3-state:focus-visible {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+  }
+
+  /* ------------------------------------------------------------ surface */
+
+  .m3-surface {
+    background: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .m3-surface-container-lowest { background: var(--md-sys-color-surface-container-lowest); color: var(--md-sys-color-on-surface); }
+  .m3-surface-container-low    { background: var(--md-sys-color-surface-container-low);    color: var(--md-sys-color-on-surface); }
+  .m3-surface-container        { background: var(--md-sys-color-surface-container);        color: var(--md-sys-color-on-surface); }
+  .m3-surface-container-high   { background: var(--md-sys-color-surface-container-high);   color: var(--md-sys-color-on-surface); }
+  .m3-surface-container-highest{ background: var(--md-sys-color-surface-container-highest);color: var(--md-sys-color-on-surface); }
+
+  /* --------------------------------------------------------------- card */
+
+  .m3-card {
+    display: block;
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid transparent;
+    transition:
+      transform var(--md-sys-motion-duration-expressive-default-spatial)
+        var(--md-sys-motion-spring-expressive-default-spatial),
+      border-radius var(--md-sys-motion-duration-expressive-default-spatial)
+        var(--md-sys-motion-spring-expressive-default-spatial),
+      box-shadow var(--md-sys-motion-duration-expressive-default-effects)
+        var(--md-sys-motion-spring-expressive-default-effects),
+      border-color var(--md-sys-motion-duration-expressive-default-effects)
+        var(--md-sys-motion-spring-expressive-default-effects);
+  }
+
+  .m3-card--outlined {
+    background: var(--md-sys-color-surface);
+    border-color: var(--md-sys-color-outline-variant);
+  }
+
+  .m3-card--filled {
+    background: var(--md-sys-color-surface-container-highest);
+  }
+
+  .m3-card--elevated {
+    background: var(--md-sys-color-surface-container-low);
+    box-shadow: var(--md-sys-elevation-1);
+  }
+
+  /*
+   * Shape as state: the corner radius grows on hover. M3 Expressive treats
+   * shape morphing as a legitimate feedback channel, and on a card it reads as
+   * the surface physically lifting rather than just changing colour.
+   */
+  a.m3-card:hover,
+  button.m3-card:hover {
+    transform: translateY(-2px);
+    border-radius: var(--md-sys-shape-corner-extra-large-increased);
+  }
+
+  a.m3-card--elevated:hover,
+  button.m3-card--elevated:hover {
+    box-shadow: var(--md-sys-elevation-3);
+  }
+
+  a.m3-card--outlined:hover,
+  button.m3-card--outlined:hover {
+    border-color: var(--md-sys-color-outline);
+  }
+
+  /* ------------------------------------------------------------- button */
+
+  .m3-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 24px;
+    border: 1px solid transparent;
+    border-radius: var(--md-sys-shape-corner-large);
+    cursor: pointer;
+    text-decoration: none;
+    font-family: var(--md-sys-typescale-label-large-font);
+    font-size: var(--md-sys-typescale-label-large-size);
+    letter-spacing: var(--md-sys-typescale-label-large-tracking);
+    /* label-large carries the EMPHASIZED weight: M3 recommends it for primary actions */
+    font-weight: var(--md-sys-typescale-emphasized-label-large-weight);
+    transition:
+      border-radius var(--md-sys-motion-duration-expressive-fast-spatial)
+        var(--md-sys-motion-spring-expressive-fast-spatial),
+      box-shadow var(--md-sys-motion-duration-expressive-fast-effects)
+        var(--md-sys-motion-spring-expressive-fast-effects);
+  }
+
+  /* Pressing tightens the corner. */
+  .m3-button:active {
+    border-radius: var(--md-sys-shape-corner-medium);
+  }
+
+  .m3-button--filled   { background: var(--md-sys-color-primary);            color: var(--md-sys-color-on-primary); }
+  .m3-button--tonal    { background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); }
+  .m3-button--outlined { background: transparent; color: var(--md-sys-color-primary); border-color: var(--md-sys-color-outline); }
+  .m3-button--text     { background: transparent; color: var(--md-sys-color-primary); padding: 0 12px; }
+
+  .m3-button--elevated {
+    background: var(--md-sys-color-surface-container-low);
+    color: var(--md-sys-color-primary);
+    box-shadow: var(--md-sys-elevation-1);
+  }
+
+  .m3-button:disabled {
+    cursor: not-allowed;
+    opacity: var(--md-sys-state-disabled-content-opacity);
+  }
+
+  /* --------------------------------------------------------------- chip */
+
+  .m3-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 32px;
+    padding: 0 14px;
+    border-radius: var(--md-sys-shape-corner-small);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    background: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-sys-typescale-mono-font);
+    font-size: var(--md-sys-typescale-label-medium-size);
+    letter-spacing: var(--md-sys-typescale-label-medium-tracking);
+    text-decoration: none;
+    cursor: default;
+    transition:
+      background-color var(--md-sys-motion-duration-expressive-fast-effects)
+        var(--md-sys-motion-spring-expressive-fast-effects),
+      color var(--md-sys-motion-duration-expressive-fast-effects)
+        var(--md-sys-motion-spring-expressive-fast-effects);
+  }
+
+  .m3-chip--selected {
+    background: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+    border-color: transparent;
+    font-weight: var(--md-sys-typescale-emphasized-label-medium-weight);
+  }
+
+  /* -------------------------------------------------------------- rules */
+
+  .m3-divider {
+    border: 0;
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    margin: 0;
+  }
+
+  /* ------------------------------------------------------------- site nav */
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 3rem;
+    padding-inline: 1.5rem;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    z-index: 50;
+  }
+
+  .site-nav--overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--md-sys-color-surface);
+  }
+
+  .site-nav--sticky {
+    position: sticky;
+    top: 0;
+    background: var(--md-sys-color-surface);
+  }
+
+  /*
+   * Home only: washi veil so the opening plate shows through the bar.
+   * Not glass — no blur. Isolation keeps the multiply plate from dyeing
+   * the wordmark.
+   */
+  .site-nav--veil {
+    background: color-mix(in srgb, var(--md-sys-color-surface) 72%, transparent);
+    isolation: isolate;
+  }
+
+  /*
+   * Home: the plate fills the viewport under the overlay nav. Bio is one
+   * opaque paper title-slip pasted on the print at bottom-left — solid
+   * surface, 1px outline-variant, no blur, no color-mix wash.
+   * Left / centre / right of the plate are Engineer / AI / Quantum.
+   *
+   * Sheet width is min(viewport, height-budget × 3923/2160) so the plate
+   * can fill without object-fit:cover cropping a lane, and without the
+   * circular max-height trap that collapsed the box to zero.
+   */
+  .folio {
+    position: relative;
+    min-height: 100dvh;
+    height: 100dvh;
+    overflow: hidden;
+    background: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    font-family: var(--md-sys-typescale-brand-font);
+    -webkit-font-smoothing: antialiased;
+    --folio-plate: min(100%, calc((100dvh - 3.5rem) * 3923 / 2160));
+  }
+
+  .folio .site-nav--overlay {
+    background: var(--md-sys-color-surface);
+  }
+
+  .folio__stage {
+    box-sizing: border-box;
+    min-height: 100dvh;
+    height: 100dvh;
+    padding-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .folio__print {
+    position: relative;
+    width: var(--folio-plate);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    min-width: 0;
+  }
+
+  .folio__sheet {
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    aspect-ratio: 3923 / 2160;
+    background: var(--md-sys-color-surface-container);
+  }
+
+  .folio__sheet img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: block;
+    max-width: none;
+  }
+
+  .folio__thirds {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .folio__thirds .folio__lane {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    min-height: 0;
+    min-width: 0;
+    box-shadow: inset 0 0 0 0 transparent;
+    transition: box-shadow var(--md-sys-motion-duration-expressive-fast-effects)
+      var(--md-sys-motion-spring-expressive-fast-effects);
+  }
+
+  .folio__thirds .folio__lane:hover,
+  .folio__thirds .folio__lane.is-on,
+  .folio__thirds .folio__lane:focus-visible {
+    box-shadow: inset 0 0 0 1px var(--md-sys-color-on-surface);
+  }
+
+  .folio__chip {
+    position: absolute;
+    top: 0.55rem;
+    left: 0.55rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.28rem 0.4rem 0.32rem;
+    background: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    font-family: var(--md-sys-typescale-mono-font);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .folio__chip-who {
+    display: none;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  .folio__thirds .folio__lane:hover .folio__chip-who,
+  .folio__thirds .folio__lane.is-on .folio__chip-who,
+  .folio__thirds .folio__lane:focus-visible .folio__chip-who {
+    display: block;
+  }
+
+  .folio__slip {
+    position: absolute;
+    z-index: 2;
+    left: 0.7rem;
+    bottom: 0.7rem;
+    box-sizing: border-box;
+    width: min(22rem, calc(100% - 1.4rem));
+    padding: 0.7rem 0.8rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+    background: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-corner-none);
+  }
+
+  .folio__slip h1.folio__name {
+    margin: 0;
+    font-family: var(--md-sys-typescale-brand-font);
+    font-size: var(--md-sys-typescale-title-small-size);
+    line-height: var(--md-sys-typescale-title-small-line-height);
+    letter-spacing: var(--md-sys-typescale-title-small-tracking);
+    font-weight: var(--md-sys-typescale-emphasized-title-small-weight);
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .folio__degree {
+    margin: 0;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: var(--md-sys-typescale-body-small-size);
+    line-height: var(--md-sys-typescale-body-small-line-height);
+    letter-spacing: var(--md-sys-typescale-body-small-tracking);
+  }
+
+  .folio__slip > p.m3-type {
+    max-width: none;
+  }
+
+  .folio__caption {
+    margin: 0.15rem 0 0;
+    max-width: none;
+    font-family: var(--md-sys-typescale-mono-font);
+    font-size: var(--md-sys-typescale-label-small-size);
+    letter-spacing: 0.02em;
+    line-height: 1.45;
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  .folio__mark {
+    color: var(--md-sys-color-primary);
+  }
+
+  @media (max-width: 899px) {
+    .folio {
+      height: auto;
+      overflow: visible;
+    }
+
+    .folio__stage {
+      height: auto;
+      min-height: 0;
+      align-items: stretch;
+      justify-content: flex-start;
+    }
+
+    .folio__print {
+      width: 100%;
+    }
+
+    .folio__slip {
+      position: relative;
+      inset: auto;
+      left: auto;
+      bottom: auto;
+      z-index: auto;
+      order: -1;
+      width: 100%;
+      max-width: none;
+      padding: 0.85rem 1rem 1rem;
+    }
+
+    .folio__sheet {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .folio__thirds .folio__lane {
+      transition: none;
+    }
+  }
+
+  .site-nav--ink,
+  .site-nav--paper {
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .site-nav a {
+    color: inherit;
+    text-decoration: none;
+    min-height: 0;
+    min-width: 0;
+  }
+
+  .site-nav__wordmark {
+    font-family: var(--md-sys-typescale-brand-font);
+    font-size: 15px;
+    letter-spacing: 0;
+    text-transform: none;
+    line-height: 1.2;
+  }
+
+  .site-nav__links {
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+    font-family: var(--md-sys-typescale-plain-font);
+    font-size: 13px;
+  }
+
+  .site-nav__links a {
+    letter-spacing: 0;
+    text-transform: none;
+    line-height: 1.2;
+  }
+
+  .site-nav__links a:hover,
+  .site-nav__links a.is-active {
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  /* --------------------------------------------------------- reduced motion */
+
+  @media (prefers-reduced-motion: reduce) {
+    .m3-card,
+    .m3-button,
+    .m3-chip,
+    .m3-state::after {
+      transition-duration: 1ms;
+    }
+    a.m3-card:hover,
+    button.m3-card:hover {
+      transform: none;
+    }
+  }
+}
