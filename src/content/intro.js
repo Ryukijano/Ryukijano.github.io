@@ -30,7 +30,7 @@ export const thesis = {
 
 export const fig1 = {
   caption:
-    "Figure 1. Hokusai reconstructed in a latent autoencoder — painted, dithered, wireframed. This is a schematic of a representation, not a measurement. Waves / dots / lattice are the three canvas languages from the old triptych, now readings of one picture. Hover a column in Figure 2 to lock a reading.",
+    "Figure 1. The same plate, pulled. Painted, dithered, wireframed. This is a schematic of a representation, not a measurement. Waves / dots / lattice lock the crop of the page ground. Hover a column in Figure 2 to lock a reading.",
   highlight: 'schematic',
 };
 

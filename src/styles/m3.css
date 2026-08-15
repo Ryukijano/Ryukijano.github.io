@@ -238,6 +238,16 @@
     background: var(--md-sys-color-surface);
   }
 
+  /*
+   * Home only: washi veil so the opening plate shows through the bar.
+   * Not glass — no blur. Isolation keeps the multiply plate from dyeing
+   * the wordmark.
+   */
+  .site-nav--veil {
+    background: color-mix(in srgb, var(--md-sys-color-surface) 72%, transparent);
+    isolation: isolate;
+  }
+
   .site-nav--ink,
   .site-nav--paper {
     color: var(--md-sys-color-on-surface);

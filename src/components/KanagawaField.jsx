@@ -50,8 +50,8 @@ export default function KanagawaField({
         style={parseStyle(
           'position:relative;overflow:hidden;' +
             'height:min(52vh, 480px);' +
-            'background:var(--md-sys-color-surface-container-lowest);' +
-            'border:1px solid var(--md-sys-color-outline-variant)',
+            'background:var(--md-sys-color-surface);' +
+            'border:1px solid var(--md-sys-color-on-surface)',
         )}
       >
         <img

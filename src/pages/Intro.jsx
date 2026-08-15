@@ -6,6 +6,8 @@ import SiteNav from '../components/SiteNav.jsx';
 import PullQuote from '../components/PullQuote.jsx';
 import MediaFigure, { Caption } from '../components/MediaFigure.jsx';
 import KanagawaField from '../components/KanagawaField.jsx';
+import KanagawaPlate from '../components/KanagawaPlate.jsx';
+import KanagawaCartouche from '../components/KanagawaCartouche.jsx';
 import content from '../content/intro.js';
 
 const SERIF = '--m3-font:var(--md-sys-typescale-brand-font)';
@@ -28,7 +30,7 @@ const linkStyle = parseStyle(
 
 const HAIRLINE = '1px solid var(--md-sys-color-outline-variant)';
 
-/** / — Distill article. The triptych is gone; Figure 1 is the woodblock. */
+/** / — Distill article. The plate is the page ground; Figure 1 is the pull. */
 export default function Intro() {
   const [row, setRow] = useState(content.fig2.defaultRow);
   const [col, setCol] = useState(null);
@@ -58,10 +60,11 @@ export default function Intro() {
           'font-family:var(--md-sys-typescale-brand-font);-webkit-font-smoothing:antialiased',
       )}
     >
-      <SiteNav variant="paper" />
+      <KanagawaPlate mode={fieldMode} />
+      <SiteNav variant="veil" />
 
-      <main>
-        <div style={bodyPad}>
+      <main style={parseStyle('position:relative;z-index:1')}>
+        <KanagawaCartouche pan={panForMode(fieldMode)}>
           <Text as="h1" role="headline-large" style={parseStyle(`${INK};margin:0`)}>
             {content.bio.name}
           </Text>
@@ -94,23 +97,16 @@ export default function Intro() {
           >
             {content.affiliations}
           </Text>
-        </div>
+        </KanagawaCartouche>
 
         <div style={insetPad}>
-          <Theme
-            name="study-dark"
-            style={parseStyle(
-              'background:var(--md-sys-color-surface-container-lowest);padding:1.25rem',
-            )}
-          >
-            <KanagawaField
-              mode={fieldMode}
-              onMode={(id) => {
-                const nextCol = MODES_TO_COL[id];
-                lock(row, nextCol, null);
-              }}
-            />
-          </Theme>
+          <KanagawaField
+            mode={fieldMode}
+            onMode={(id) => {
+              const nextCol = MODES_TO_COL[id];
+              lock(row, nextCol, null);
+            }}
+          />
           <Caption text={content.fig1.caption} highlight={content.fig1.highlight} />
         </div>
 
@@ -232,10 +228,33 @@ export default function Intro() {
 
 const MODES_TO_COL = { waves: 0, dots: 1, lattice: 2 };
 
-const bodyPad = parseStyle('max-width:42rem;margin:0 auto;padding:4rem 1.5rem 0');
-const pagePad = parseStyle('max-width:940px;margin:0 auto;padding:3rem 1.5rem 0');
-const insetPad = parseStyle('max-width:min(100%, 72rem);margin:0 auto;padding:2.5rem 1.5rem 0');
-const outsetPad = parseStyle('max-width:52rem;margin:0 auto;padding:2.5rem 1.5rem 0');
+function panForMode(mode) {
+  switch (mode) {
+    case 'waves':
+      return 0;
+    case 'dots':
+      return 0.5;
+    case 'lattice':
+      return 1;
+    case null:
+      return 0;
+    default: {
+      const _exhaustive = mode;
+      void _exhaustive;
+      return 0;
+    }
+  }
+}
+
+const SHEET =
+  'background:var(--md-sys-color-surface);isolation:isolate;position:relative';
+
+const bodyPad = parseStyle(`max-width:42rem;margin:0 auto;padding:3.5rem 1.5rem 0;${SHEET}`);
+const pagePad = parseStyle(`max-width:940px;margin:0 auto;padding:3rem 1.5rem 0;${SHEET}`);
+const insetPad = parseStyle(
+  `max-width:min(100%, 72rem);margin:0 auto;padding:2.5rem 1.5rem 0;${SHEET}`,
+);
+const outsetPad = parseStyle(`max-width:52rem;margin:0 auto;padding:2.5rem 1.5rem 0;${SHEET}`);
 
 function MethodMatrix({ row, col, onRow, onCell }) {
   const cols = content.fig2.columns;

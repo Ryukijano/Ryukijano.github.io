@@ -7,6 +7,8 @@ function variantClass(variant) {
       return 'site-nav--paper';
     case 'ink':
       return 'site-nav--ink';
+    case 'veil':
+      return 'site-nav--paper site-nav--veil';
     default: {
       const _exhaustive = variant;
       void _exhaustive;
