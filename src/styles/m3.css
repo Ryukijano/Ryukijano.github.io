@@ -249,240 +249,275 @@
   }
 
   /*
-   * Home hall: one Kanagawa plate as the page ground, three rooms over it.
-   * Washes are translucent so the plate reads through the whole first page.
+   * Home folio: the Kanagawa plate is hung as a print. Type lives in the mat
+   * (left colophon + label rail), never as a milky wash over the image.
+   * The three panels of the plate are Engineer / AI / Quantum.
    */
-  .hall {
-    position: relative;
+  .folio {
     min-height: 100dvh;
+    background: var(--md-sys-color-surface);
     color: var(--md-sys-color-on-surface);
     font-family: var(--md-sys-typescale-brand-font);
     -webkit-font-smoothing: antialiased;
   }
 
-  .hall__ground {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
+  .folio__stage {
+    display: grid;
+    grid-template-columns: minmax(16.5rem, 21rem) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto auto;
+    min-height: calc(100dvh - 3rem);
   }
 
-  .hall__ground img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 18% 42%;
-    max-width: none;
-    display: block;
-  }
-
-  .hall__ground::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: color-mix(in srgb, var(--md-sys-color-surface) 14%, transparent);
-  }
-
-  .hall__stage {
-    position: relative;
-    z-index: 1;
+  .folio__colophon {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    padding: 1.35rem 1.35rem 2rem;
+    border-right: 1px solid var(--md-sys-color-outline-variant);
     display: flex;
     flex-direction: column;
-    min-height: 100dvh;
+    gap: 0.85rem;
   }
 
-  .hall__mast {
-    padding: 4.25rem 1.5rem 1.15rem;
-    max-width: 46rem;
-    background: color-mix(in srgb, var(--md-sys-color-surface) 58%, transparent);
-  }
-
-  .hall__mast p {
+  .folio__colophon h1 {
     margin: 0;
+  }
+
+  .folio__colophon p {
+    margin: 0;
+    max-width: 36ch;
     line-height: 1.55;
   }
 
-  .hall__mast p + p {
-    margin-top: 0.85rem;
-  }
-
-  .hall__mast p:first-child {
+  .folio__colophon p:nth-of-type(1),
+  .folio__colophon p:nth-of-type(2) {
     color: var(--md-sys-color-on-surface-variant);
   }
 
-  .hall__meta {
-    margin: 0.85rem 0 0;
+  .folio__meta {
+    margin-top: auto;
+    padding-top: 1.5rem;
     font-family: var(--md-sys-typescale-mono-font);
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     letter-spacing: 0.04em;
+    line-height: 1.55;
     color: var(--md-sys-color-on-surface-variant);
+    max-width: 36ch;
   }
 
-  .hall__rooms {
-    display: flex;
-    flex: 1 1 auto;
+  .folio__print {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
     min-height: 0;
-    border-top: 1px solid color-mix(in srgb, var(--md-sys-color-outline) 42%, transparent);
+    display: grid;
+    place-items: center;
+    padding: 0.75rem 1rem 0;
+    background: var(--md-sys-color-surface-container-lowest);
   }
 
-  .hall__room {
-    flex: 1 1 0;
+  .folio__sheet {
+    position: relative;
+    width: min(100%, calc((100dvh - 14rem) * 3923 / 2160));
+    aspect-ratio: 3923 / 2160;
+    max-height: 100%;
+  }
+
+  .folio__sheet img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: block;
+    max-width: none;
+  }
+
+  .folio__thirds {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .folio__thirds .folio__lane {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    min-height: 0;
     min-width: 0;
+    box-shadow: inset 0 0 0 0 transparent;
+    transition: box-shadow var(--md-sys-motion-duration-expressive-fast-effects)
+      var(--md-sys-motion-spring-expressive-fast-effects);
+  }
+
+  .folio__thirds .folio__lane.is-on,
+  .folio__thirds .folio__lane:focus-visible {
+    box-shadow: inset 0 0 0 1px var(--md-sys-color-on-surface);
+  }
+
+  .folio__chip {
+    position: absolute;
+    left: 0.55rem;
+    bottom: 0.55rem;
     display: flex;
     flex-direction: column;
-    padding: 1.35rem 1.25rem 1.5rem;
-    background: color-mix(in srgb, var(--md-sys-color-surface) 48%, transparent);
+    gap: 0.1rem;
+    padding: 0.28rem 0.4rem 0.32rem;
+    background: var(--md-sys-color-surface);
     color: var(--md-sys-color-on-surface);
-    border-right: 1px solid color-mix(in srgb, var(--md-sys-color-outline) 42%, transparent);
-    transition: flex-grow var(--md-sys-motion-duration-expressive-slow-spatial)
-      var(--md-sys-motion-spring-expressive-slow-spatial);
+    font-family: var(--md-sys-typescale-mono-font);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.2;
   }
 
-  .hall__room:last-child {
+  .folio__chip-panel {
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  .folio__rail {
+    grid-column: 2;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  .folio__rail .folio__lane {
+    padding: 0.9rem 1rem 1.1rem;
+    border-right: 1px solid var(--md-sys-color-outline-variant);
+    background: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .folio__rail .folio__lane:last-child {
     border-right: 0;
   }
 
-  .hall__lane {
+  .folio__rail .folio__lane.is-on {
+    background: var(--md-sys-color-surface-container);
+  }
+
+  .folio__kicker {
     margin: 0;
     font-family: var(--md-sys-typescale-mono-font);
-    font-size: 0.68rem;
-    letter-spacing: 0.16em;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--md-sys-color-primary);
   }
 
-  .hall__name {
-    margin: 0.55rem 0 0;
-    font-size: clamp(2.15rem, 5.4vw, 4.35rem);
-    line-height: 0.86;
-    letter-spacing: -0.045em;
-    font-weight: 600;
+  .folio__rail h2 {
+    margin: 0.35rem 0 0;
   }
 
-  .hall__name a {
+  .folio__rail h2 a {
     color: inherit;
     text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--md-sys-color-primary) 35%, transparent);
   }
 
-  .hall__name span {
-    display: block;
-  }
-
-  .hall__room--ryukijano .hall__name {
-    font-family: var(--md-sys-typescale-brand-font);
-  }
-
-  .hall__room--gyanateet .hall__name {
-    font-family: var(--md-sys-typescale-plain-font);
-  }
-
-  .hall__room--ryoushi .hall__name {
-    font-family: var(--md-sys-typescale-mono-font);
-    text-transform: uppercase;
-    letter-spacing: -0.02em;
-  }
-
-  .hall__name + .m3-type {
-    margin-top: 0.85rem;
+  .folio__rail h2 + .m3-type {
+    margin: 0.35rem 0 0;
     color: var(--md-sys-color-on-surface-variant);
   }
 
-  .hall__projects {
+  .folio__projects {
     list-style: none;
-    margin: auto 0 0;
-    padding: 1.15rem 0 0;
-    border-top: 1px solid color-mix(in srgb, var(--md-sys-color-outline) 38%, transparent);
+    margin: 0.75rem 0 0;
+    padding: 0.65rem 0 0;
+    border-top: 1px solid var(--md-sys-color-outline-variant);
   }
 
-  .hall__projects li {
+  .folio__projects li {
     display: flex;
-    gap: 0.75rem;
+    gap: 0.65rem;
     align-items: baseline;
-    margin: 0.45rem 0 0;
-    font-family: var(--md-sys-typescale-brand-font);
-    font-size: 0.95rem;
+    margin: 0.35rem 0 0;
+    font-size: 0.88rem;
     line-height: 1.35;
   }
 
-  .hall__projects li:first-child {
+  .folio__projects li:first-child {
     margin-top: 0;
   }
 
-  .hall__year {
+  .folio__year {
     flex: none;
-    width: 2.6rem;
+    width: 2.5rem;
     font-family: var(--md-sys-typescale-mono-font);
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     color: var(--md-sys-color-on-surface-variant);
   }
 
-  .hall__projects a {
+  .folio__projects a {
     color: var(--md-sys-color-on-surface);
     text-decoration: none;
     border-bottom: 1px solid color-mix(in srgb, var(--md-sys-color-primary) 35%, transparent);
   }
 
-  .hall__open {
-    margin: 1rem 0 0;
-    font-family: var(--md-sys-typescale-mono-font);
-    font-size: 0.72rem;
-    letter-spacing: 0.04em;
-    color: var(--md-sys-color-primary);
-    text-decoration: none;
-    border-bottom: 1px solid color-mix(in srgb, var(--md-sys-color-primary) 35%, transparent);
-    align-self: flex-start;
+  .folio__note {
+    grid-column: 2;
+    grid-row: 3;
+    padding: 0.65rem 1rem 1.1rem;
+    border-top: 1px solid var(--md-sys-color-outline-variant);
   }
 
-  .hall__foot {
-    padding: 0.7rem 1.5rem 1.1rem;
-    background: color-mix(in srgb, var(--md-sys-color-surface) 64%, transparent);
-    border-top: 1px solid color-mix(in srgb, var(--md-sys-color-outline) 42%, transparent);
-  }
-
-  .hall__foot figure {
+  .folio__note figure {
     margin: 0;
   }
 
-  @media (min-width: 900px) {
-    .hall__ground img {
-      object-position: 50% 42%;
-    }
-
-    .hall__rooms:is(:hover, :focus-within) .hall__room {
-      flex-grow: 0.62;
-    }
-
-    .hall__rooms:is(:hover, :focus-within) .hall__room:is(:hover, :focus-within) {
-      flex-grow: 1.9;
-    }
-  }
-
   @media (max-width: 899px) {
-    .hall__rooms {
-      flex-direction: column;
+    .folio__stage {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto auto;
+      min-height: 0;
     }
 
-    .hall__room {
-      flex: none;
-      min-height: 22rem;
+    .folio__colophon {
+      grid-column: 1;
+      grid-row: 1;
       border-right: 0;
-      border-bottom: 1px solid color-mix(in srgb, var(--md-sys-color-outline) 42%, transparent);
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
     }
 
-    .hall__room:last-child {
-      border-bottom: 0;
+    .folio__meta {
+      margin-top: 0.5rem;
+      padding-top: 0;
+    }
+
+    .folio__print {
+      grid-column: 1;
+      grid-row: 2;
+      padding: 0;
+    }
+
+    .folio__sheet {
+      width: 100%;
+    }
+
+    .folio__rail {
+      grid-column: 1;
+      grid-row: 3;
+      grid-template-columns: 1fr;
+    }
+
+    .folio__rail .folio__lane {
+      border-right: 0;
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    }
+
+    .folio__note {
+      grid-column: 1;
+      grid-row: 4;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hall__room {
+    .folio__thirds .folio__lane {
       transition: none;
-    }
-
-    .hall__rooms:is(:hover, :focus-within) .hall__room,
-    .hall__rooms:is(:hover, :focus-within) .hall__room:is(:hover, :focus-within) {
-      flex-grow: 1;
     }
   }
 

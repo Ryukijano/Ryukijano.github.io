@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Text, Theme } from '../components/m3/index.jsx';
 import SiteNav from '../components/SiteNav.jsx';
@@ -21,66 +21,96 @@ function ProjectLink({ project }) {
   return <Link to={project.to}>{project.title}</Link>;
 }
 
-function Room({ room }) {
-  return (
-    <Theme name={room.theme} as="article" className={`hall__room hall__room--${room.id}`}>
-      <p className="hall__lane">{room.lane}</p>
-      <h2 className="hall__name">
-        <Link to={room.to} aria-label={room.title}>
-          {room.titleLines.map((line) => (
-            <span key={line}>{line}</span>
-          ))}
-        </Link>
-      </h2>
-      <Text as="p" role="title-medium">
-        {room.subtitle}
-      </Text>
-      <ul className="hall__projects">
-        {room.projects.map((project) => (
-          <li key={project.title}>
-            {project.year ? <span className="hall__year">{project.year}</span> : null}
-            <ProjectLink project={project} />
-          </li>
-        ))}
-      </ul>
-      <Link to={room.to} className="hall__open">
-        Open {room.title}
-      </Link>
-    </Theme>
-  );
+function laneClass(id, active) {
+  return ['folio__lane', `folio__lane--${id}`, active === id ? 'is-on' : '']
+    .filter(Boolean)
+    .join(' ');
 }
 
-/** / — three-lane hall over one Kanagawa plate. */
+/** / — exhibition hang: print intact, Engineer / AI / Quantum in the mat. */
 export default function Intro() {
+  const [lane, setLane] = useState(null);
+
   useEffect(() => {
     document.title = 'Gyanateet Dutta';
   }, []);
 
   return (
-    <Theme name="study" className="hall">
-      <KanagawaPlate />
-      <SiteNav variant="veil" overlay />
+    <Theme name="study" className="folio">
+      <SiteNav variant="paper" />
 
-      <main className="hall__stage">
-        <header className="hall__mast">
+      <main className="folio__stage">
+        <header className="folio__colophon">
+          <Text as="h1" role="headline-medium">
+            {content.bio.name}
+          </Text>
+          <Text as="p" role="title-small">
+            {content.bio.role}
+          </Text>
           {content.degree ? (
-            <Text as="p" role="body-large">
+            <Text as="p" role="body-medium">
               {content.degree.title}, {content.degree.org}, {content.degree.years}
             </Text>
           ) : null}
           <Text as="p" role="body-large">
             {content.bio.statement}
           </Text>
-          <p className="hall__meta">{content.affiliations}</p>
+          <p className="folio__meta">{content.affiliations}</p>
         </header>
 
-        <div className="hall__rooms">
-          {content.rooms.map((room) => (
-            <Room key={room.id} room={room} />
-          ))}
-        </div>
+        <figure className="folio__print">
+          <KanagawaPlate src={content.plate.src} alt={content.plate.alt}>
+            <div className="folio__thirds">
+              {content.rooms.map((room) => (
+                <Link
+                  key={room.id}
+                  to={room.to}
+                  className={laneClass(room.id, lane)}
+                  onMouseEnter={() => setLane(room.id)}
+                  onMouseLeave={() => setLane(null)}
+                  onFocus={() => setLane(room.id)}
+                  onBlur={() => setLane(null)}
+                >
+                  <span className="folio__chip">
+                    {room.lane}
+                    <span className="folio__chip-panel">{room.panel}</span>
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </KanagawaPlate>
+        </figure>
 
-        <footer className="hall__foot">
+        <nav className="folio__rail" aria-label="Lanes">
+          {content.rooms.map((room) => (
+            <Theme
+              key={room.id}
+              name={room.theme}
+              as="article"
+              className={laneClass(room.id, lane)}
+              onMouseEnter={() => setLane(room.id)}
+              onMouseLeave={() => setLane(null)}
+            >
+              <p className="folio__kicker">{room.lane}</p>
+              <Text as="h2" role="title-large">
+                <Link to={room.to}>{room.title}</Link>
+              </Text>
+              <Text as="p" role="body-medium">
+                {room.subtitle}
+              </Text>
+              <ul className="folio__projects">
+                {room.projects.map((project) => (
+                  <li key={project.title}>
+                    {project.year ? <span className="folio__year">{project.year}</span> : null}
+                    <ProjectLink project={project} />
+                  </li>
+                ))}
+              </ul>
+            </Theme>
+          ))}
+        </nav>
+
+        <footer className="folio__note">
           <figure>
             <Caption text={content.plate.caption} highlight={content.plate.highlight} />
           </figure>

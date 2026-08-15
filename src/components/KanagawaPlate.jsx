@@ -1,14 +1,13 @@
 /**
- * Home ground: one full-viewport pull of the Kanagawa latent plate.
- * No second copy, no kento, no crop-pan. The three rooms sit on top.
+ * The plate as a hung print, not a wallpaper. Overlay children (hit thirds)
+ * share the image box so labels sit on the object, not the page.
  */
 
-const SRC = '/assets/images/kanagawa_latentspace_autoencoder.jpg';
-
-export default function KanagawaPlate() {
+export default function KanagawaPlate({ src, alt, children }) {
   return (
-    <div className="hall__ground" aria-hidden="true">
-      <img src={SRC} alt="" fetchPriority="high" decoding="async" />
+    <div className="folio__sheet">
+      <img src={src} alt={alt} fetchPriority="high" decoding="async" />
+      {children}
     </div>
   );
 }

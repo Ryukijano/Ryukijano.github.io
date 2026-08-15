@@ -1,7 +1,6 @@
 /**
- * Home is the three-lane hall: Engineer / AI / Quantum over one Kanagawa plate.
- * The plate is the page ground once. It is not also a cartouche, a figure, or a
- * header strip.
+ * Home is an exhibition hang: the Kanagawa plate is the object, type lives
+ * in the mat. Left/centre/right of the plate are Engineer / AI / Quantum.
  */
 import academic from './academic.js';
 import { hero as workHero } from './work.js';
@@ -13,9 +12,9 @@ export const affiliations = workHero.affiliations.join(' · ');
 
 export const plate = {
   src: '/assets/images/kanagawa_latentspace_autoencoder.jpg',
-  alt: '',
+  alt: 'Kanagawa plate in three states: painted woodblock, RGB dither, neon wireframe',
   caption:
-    'The plate behind this page is a schematic of a representation, not a measurement. The three lanes are framing, not measured results.',
+    'The plate is a schematic of a representation, not a measurement. Painted, dithered, wireframed. The three lanes are framing, not measured results.',
   highlight: 'schematic',
 };
 
@@ -24,8 +23,8 @@ export const rooms = [
     id: 'ryukijano',
     theme: 'ryukijano',
     lane: 'Engineer',
+    panel: 'Painted',
     title: personas.ryukijano.title,
-    titleLines: ['Ryu', 'ki', 'jano'],
     subtitle: personas.ryukijano.subtitle,
     to: '/persona/ryukijano',
     projects: personas.ryukijano.projects.slice(0, 3),
@@ -34,8 +33,8 @@ export const rooms = [
     id: 'gyanateet',
     theme: 'study',
     lane: 'AI',
+    panel: 'Dithered',
     title: personas.gyanateet.title,
-    titleLines: ['G', 'YANA', 'TEET'],
     subtitle: personas.gyanateet.subtitle,
     to: '/persona/gyanateet',
     projects: personas.gyanateet.projects.slice(0, 3),
@@ -44,8 +43,8 @@ export const rooms = [
     id: 'ryoushi',
     theme: 'ryoushi',
     lane: 'Quantum',
+    panel: 'Wireframe',
     title: personas.ryoushi.title,
-    titleLines: ['RY', 'OU', 'SHI'],
     subtitle: personas.ryoushi.subtitle,
     to: '/persona/ryoushi',
     projects: personas.ryoushi.projects.slice(0, 3),
