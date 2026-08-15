@@ -249,13 +249,9 @@
   }
 
   /*
-   * Home: the plate is the first screen. Nav overlays the mat, not a
-   * translucent wash on the print. Bio is one slip under the object.
-   * Left / centre / right of the plate are Engineer / AI / Quantum.
-   *
-   * Sheet width is min(viewport, height-budget × 3923/2160) so the 16:9
-   * plate can fill without object-fit:cover cropping a lane, and without
-   * the circular max-height trap that collapsed the box to zero.
+   * Washi-veil hang: the plate bleeds under a paper-thin nav. The bio is a
+   * label clipped to the bottom of the frame, half on the print, half on
+   * the mat — not a column, not a catalog, not a milky wash.
    */
   .folio {
     position: relative;
@@ -266,18 +262,24 @@
     color: var(--md-sys-color-on-surface);
     font-family: var(--md-sys-typescale-brand-font);
     -webkit-font-smoothing: antialiased;
-    --folio-plate: min(100%, calc((100dvh - 10rem) * 3923 / 2160));
+    --folio-plate: min(100%, calc((100dvh - 7.5rem) * 3923 / 2160));
   }
 
-  .folio .site-nav--overlay {
-    background: var(--md-sys-color-surface);
+  .folio .site-nav--overlay,
+  .folio .site-nav--veil {
+    background: color-mix(in srgb, var(--md-sys-color-surface) 58%, transparent);
+    border-bottom-color: color-mix(
+      in srgb,
+      var(--md-sys-color-outline-variant) 35%,
+      transparent
+    );
   }
 
   .folio__stage {
     box-sizing: border-box;
     min-height: 100dvh;
     height: 100dvh;
-    padding-top: 3rem;
+    padding-top: 0;
     display: flex;
     flex-direction: column;
   }
@@ -290,13 +292,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     background: var(--md-sys-color-surface-container-lowest);
+  }
+
+  .folio__hang {
+    position: relative;
+    width: var(--folio-plate);
+    margin-bottom: 4.75rem;
   }
 
   .folio__sheet {
     position: relative;
-    width: var(--folio-plate);
+    width: 100%;
     aspect-ratio: 3923 / 2160;
     background: var(--md-sys-color-surface-container);
   }
@@ -338,7 +346,8 @@
   .folio__chip {
     position: absolute;
     left: 0.55rem;
-    bottom: 0.55rem;
+    top: 0.55rem;
+    bottom: auto;
     display: flex;
     flex-direction: column;
     gap: 0.1rem;
@@ -366,12 +375,19 @@
   }
 
   .folio__slip {
-    position: relative;
-    width: var(--folio-plate);
-    padding: 0.55rem 0.15rem 0.85rem;
+    position: absolute;
+    left: 0.5rem;
+    bottom: 0;
+    z-index: 3;
+    width: min(32rem, calc(100% - 1rem));
+    transform: translateY(68%);
+    padding: 0.55rem 0.7rem 0.7rem;
     display: flex;
     flex-direction: column;
     gap: 0.28rem;
+    background: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    box-shadow: 0 0 0 1px var(--md-sys-color-outline-variant);
   }
 
   .folio__slip h1.folio__name {
@@ -431,11 +447,23 @@
       flex: none;
     }
 
+    .folio__hang {
+      width: 100%;
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
     .folio__slip {
+      position: relative;
+      left: auto;
+      bottom: auto;
       order: -1;
       width: 100%;
       max-width: none;
-      padding: 0.85rem 1rem 1rem;
+      transform: none;
+      padding: 3.4rem 1rem 1rem;
+      box-shadow: none;
     }
 
     .folio__sheet {

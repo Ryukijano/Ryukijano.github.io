@@ -23,7 +23,7 @@ function Marked({ text, highlight }) {
   );
 }
 
-/** / — plate owns the viewport; bio lives on one slip under the print. */
+/** / — plate under a washi veil; the slip hangs off the frame. */
 export default function Intro() {
   const [lane, setLane] = useState(null);
 
@@ -32,42 +32,44 @@ export default function Intro() {
   }, []);
 
   return (
-    <Theme name="study" className="folio">
-      <SiteNav variant="paper" overlay />
+    <Theme name="study" className="folio folio--veil">
+      <SiteNav variant="veil" overlay />
 
       <main className="folio__stage">
         <figure className="folio__print">
-          <KanagawaPlate src={content.plate.src} alt={content.plate.alt}>
-            <div className="folio__thirds">
-              {content.rooms.map((room) => (
-                <Link
-                  key={room.id}
-                  to={room.to}
-                  className={laneClass(room.id, lane)}
-                  aria-label={`${room.lane}: ${room.title}`}
-                  onMouseEnter={() => setLane(room.id)}
-                  onMouseLeave={() => setLane(null)}
-                  onFocus={() => setLane(room.id)}
-                  onBlur={() => setLane(null)}
-                >
-                  <span className="folio__chip">
-                    {room.lane}
-                    <span className="folio__chip-who">{room.title}</span>
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </KanagawaPlate>
-          <figcaption className="folio__slip">
-            <h1 className="folio__name">{content.bio.name}</h1>
-            <p className="folio__degree">{content.degree.title}</p>
-            <Text as="p" role="body-medium">
-              {content.bio.statement}
-            </Text>
-            <p className="folio__caption">
-              <Marked text={content.plate.caption} highlight={content.plate.highlight} />
-            </p>
-          </figcaption>
+          <div className="folio__hang">
+            <KanagawaPlate src={content.plate.src} alt={content.plate.alt}>
+              <div className="folio__thirds">
+                {content.rooms.map((room) => (
+                  <Link
+                    key={room.id}
+                    to={room.to}
+                    className={laneClass(room.id, lane)}
+                    aria-label={`${room.lane}: ${room.title}`}
+                    onMouseEnter={() => setLane(room.id)}
+                    onMouseLeave={() => setLane(null)}
+                    onFocus={() => setLane(room.id)}
+                    onBlur={() => setLane(null)}
+                  >
+                    <span className="folio__chip">
+                      {room.lane}
+                      <span className="folio__chip-who">{room.title}</span>
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </KanagawaPlate>
+            <figcaption className="folio__slip">
+              <h1 className="folio__name">{content.bio.name}</h1>
+              <p className="folio__degree">{content.degree.title}</p>
+              <Text as="p" role="body-medium">
+                {content.bio.statement}
+              </Text>
+              <p className="folio__caption">
+                <Marked text={content.plate.caption} highlight={content.plate.highlight} />
+              </p>
+            </figcaption>
+          </div>
         </figure>
       </main>
     </Theme>
