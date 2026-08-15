@@ -13,24 +13,16 @@ import pothole from './caseStudies/pothole-detection.js';
 export const bio = academic.bio;
 export const degree = academic.education[0];
 
-export const question =
-  'What did the sensor actually record, and what did the model add?';
-
 export const thesis = {
-  kicker: '00 / METHOD',
-  title: method.title,
+  title: ['Methods'],
   lead: method.lead,
-  prose: [
-    'Graphics taught me that a renderer is a physics argument you can look at. Surgical video taught me that a confident model is still just a guess. Quantum work is mostly an education in where methods give out. None of the three is decoration for the others. The things that carry between them are the actual work, and they carry both ways.',
-  ],
-  quote: workHero.quote,
   caveat: method.caveat,
   hint: method.hint,
 };
 
 export const fig1 = {
   caption:
-    "Figure 1. The same plate, pulled. Painted, dithered, wireframed. This is a schematic of a representation, not a measurement. Waves / dots / lattice lock the crop of the page ground. Hover a column in Figure 2 to lock a reading.",
+    'Figure 1. One plate, three renderings: painted, dithered, wireframed. Schematic, not a measurement. Hover a column in Figure 2 to pan the crop.',
   highlight: 'schematic',
 };
 
@@ -98,8 +90,8 @@ export const ramp = bandIds.map((id, i) => ({
 }));
 
 export const index = [
-  { label: 'Work', to: '/work', note: 'Eleven dated notes' },
-  { label: 'Academic', to: '/academic', note: 'Papers and the record' },
+  { label: 'Work', to: '/work', note: 'Eleven notes' },
+  { label: 'Academic', to: '/academic', note: 'Papers' },
   { label: 'Ryukijano', to: '/persona/ryukijano', note: 'Graphics & systems' },
   { label: 'Gyanateet', to: '/persona/gyanateet', note: 'Vision & robotics' },
   { label: 'Ryoushi', to: '/persona/ryoushi', note: 'Quantum algorithms' },
@@ -114,7 +106,6 @@ export const footNote =
 export default {
   bio,
   degree,
-  question,
   thesis,
   fig1,
   fig2,

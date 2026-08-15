@@ -17,7 +17,7 @@ const study = {
 
   breadcrumb: 'QUANTUM ALGORITHMS',
   kicker: 'GIC 2026 · MITSUBISHI CHEMICAL GROUP & AIST',
-  title: 'A transformer that designs the circuit, not the chemistry',
+  title: 'Conditional GQE: a transformer proposes the ansatz',
   lead:
     "To work out a molecule's energy on a quantum computer you first have to guess the shape of the circuit — and someone has to guess it by hand, per molecule. This learns to propose the shape from the molecule itself, and leaves the fine-tuning to a classical optimiser that is better at it.",
 

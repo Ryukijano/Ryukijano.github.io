@@ -50,7 +50,7 @@ export default function WorkIndex() {
             Work
           </Text>
           <Text as="p" role="title-large" style={leadStyle}>
-            Dated notes on things I built. The academic record is separate.
+            Eleven notes. Papers are on Academic.
           </Text>
           <Text as="p" role="body-medium" style={{ ...leadStyle, margin: '12px 0 0' }}>
             The method map is on the{' '}

@@ -16,7 +16,7 @@ const study = {
 
   breadcrumb: 'SURGICAL VISION',
   kicker: 'IN PROGRESS · DGX SPARK · CHOLECTRACK20',
-  title: 'Teaching a tracker that the instrument still exists behind the smoke',
+  title: 'Instrument tracking through smoke and occlusion',
   lead: 'Keyhole surgery is watched through one camera in a cavity full of smoke and blood. Software that follows the instruments loses them constantly — and a system that forgets which grasper is which the moment the view clouds is no use to anyone in theatre.',
 
   meta: [

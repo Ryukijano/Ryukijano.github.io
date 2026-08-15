@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { parseStyle } from '../lib/style.js';
 import { Text, Theme } from '../components/m3/index.jsx';
 import SiteNav from '../components/SiteNav.jsx';
-import PullQuote from '../components/PullQuote.jsx';
 import MediaFigure, { Caption } from '../components/MediaFigure.jsx';
 import KanagawaField from '../components/KanagawaField.jsx';
 import KanagawaPlate from '../components/KanagawaPlate.jsx';
@@ -96,13 +95,6 @@ export default function Intro() {
             </Text>
             <Text
               as="p"
-              role="title-medium"
-              style={parseStyle(`${SERIF};${INK};margin:1.25rem 0 0;max-width:36ch`)}
-            >
-              {content.question}
-            </Text>
-            <Text
-              as="p"
               role="label-small"
               style={parseStyle(`${MONO};${MUTED};margin:1rem 0 0;--m3-track:0.04em`)}
             >
@@ -123,16 +115,9 @@ export default function Intro() {
 
           <div style={bodyFlow}>
           <Text
-            as="p"
-            role="label-small"
-            style={parseStyle(`${MONO};${MUTED};--m3-track:0.16em;margin:0`)}
-          >
-            {content.thesis.kicker}
-          </Text>
-          <Text
             as="h2"
             role="headline-medium"
-            style={parseStyle(`${INK};margin:0.75rem 0 0`)}
+            style={parseStyle(`${INK};margin:0`)}
           >
             {content.thesis.title.join(' ')}
           </Text>
@@ -143,20 +128,6 @@ export default function Intro() {
           >
             {content.thesis.lead}
           </Text>
-          {content.thesis.prose.map((p) => (
-            <Text
-              key={p.slice(0, 24)}
-              as="p"
-              role="body-large"
-              style={parseStyle(`${SERIF};${INK};margin:1.25rem 0 0;line-height:1.65`)}
-            >
-              {p}
-            </Text>
-          ))}
-        </div>
-
-        <div style={wideFlow}>
-          <PullQuote quote={content.thesis.quote} />
         </div>
 
         <div style={wideFlow} id="matrix">

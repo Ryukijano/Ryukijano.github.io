@@ -18,9 +18,7 @@ export const hero = {
     'QUANTUM ALGORITHMS',
     'ML FOR SCIENCES',
   ],
-  lead: 'Quantum computing, machine learning for sciences, computer vision and robotics. Four fields, one method set — the five techniques below carry across all of them.',
-  quote:
-    'I don’t spaghetti mumbo these areas — I think of them as tools to learn ideas from to use in each other.',
+  lead: 'Quantum computing, machine learning for sciences, computer vision and robotics.',
   affiliations: [
     'Research technician · University of Leeds',
     'Qiskit Advocate',

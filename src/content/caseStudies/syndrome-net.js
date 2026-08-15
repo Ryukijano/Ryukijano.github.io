@@ -17,7 +17,7 @@ const study = {
 
   breadcrumb: 'QUANTUM ERROR CORRECTION',
   kicker: 'SURFACE · COLOUR · qLDPC · BOSONIC',
-  title: 'Catching the errors you are never allowed to look at',
+  title: 'A decoder workbench for quantum error correction',
   lead: 'A quantum computer cannot be checked for mistakes directly — reading a qubit destroys what it was holding. Error correction works from fingerprints instead. This is a workbench for designing those schemes, testing how well they hold, and being honest about what the test actually ran on.',
 
   meta: [

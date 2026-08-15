@@ -78,10 +78,8 @@ export default function KanagawaCartouche({ children, pan = 0 }) {
       />
       <div aria-hidden="true" style={BOKASHI} />
       <p className="kanagawa-cartouche__tab" style={TAB}>
-        <span className="kanagawa-cartouche__tab-full">
-          LATENT PLATE — PAINTED · DITHER · WIREFRAME
-        </span>
-        <span className="kanagawa-cartouche__tab-short">LATENT PLATE</span>
+        <span className="kanagawa-cartouche__tab-full">PLATE</span>
+        <span className="kanagawa-cartouche__tab-short">PLATE</span>
       </p>
       <div className="kanagawa-cartouche__slip" style={SLIP}>
         <span aria-hidden="true" style={HANKO} />
