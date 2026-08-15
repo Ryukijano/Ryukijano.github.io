@@ -23,7 +23,11 @@ function Marked({ text, highlight }) {
   );
 }
 
-/** / — plate owns the viewport; bio lives on one slip under the print. */
+function bioGrafs(statement) {
+  return statement.split(/(?<=\.)\s+/).filter(Boolean);
+}
+
+/** / — 16:9 plate as the left/center object; type in a narrow right gutter. */
 export default function Intro() {
   const [lane, setLane] = useState(null);
 
@@ -58,12 +62,14 @@ export default function Intro() {
               ))}
             </div>
           </KanagawaPlate>
-          <figcaption className="folio__slip">
+          <figcaption className="folio__gutter">
             <h1 className="folio__name">{content.bio.name}</h1>
             <p className="folio__degree">{content.degree.title}</p>
-            <Text as="p" role="body-medium">
-              {content.bio.statement}
-            </Text>
+            {bioGrafs(content.bio.statement).map((graf) => (
+              <Text key={graf} as="p" role="body-medium">
+                {graf}
+              </Text>
+            ))}
             <p className="folio__caption">
               <Marked text={content.plate.caption} highlight={content.plate.highlight} />
             </p>

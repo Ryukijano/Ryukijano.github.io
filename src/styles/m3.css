@@ -249,13 +249,15 @@
   }
 
   /*
-   * Home: the plate is the first screen. Nav overlays the mat, not a
-   * translucent wash on the print. Bio is one slip under the object.
-   * Left / centre / right of the plate are Engineer / AI / Quantum.
+   * Home, gutter-folio: editorial magazine (figure + caption column).
+   * The 16:9 plate is the left/center object. Type lives in a 14.5rem
+   * right gutter — a caption column, not a fat left colophon, not three
+   * equal columns, not a project rail.
    *
-   * Sheet width is min(viewport, height-budget × 3923/2160) so the 16:9
-   * plate can fill without object-fit:cover cropping a lane, and without
-   * the circular max-height trap that collapsed the box to zero.
+   * Grid is on .folio__stage, below the overlay nav. Sheet width is
+   * min(column, height-budget × 3923/2160) so the plate fills without
+   * object-fit:cover cropping a lane, and without max-height: 100%
+   * collapsing the box to zero.
    */
   .folio {
     position: relative;
@@ -266,7 +268,8 @@
     color: var(--md-sys-color-on-surface);
     font-family: var(--md-sys-typescale-brand-font);
     -webkit-font-smoothing: antialiased;
-    --folio-plate: min(100%, calc((100dvh - 10rem) * 3923 / 2160));
+    --folio-plate: min(100%, calc((100dvh - 3.5rem) * 3923 / 2160));
+    --folio-gutter: 14.5rem;
   }
 
   .folio .site-nav--overlay {
@@ -278,25 +281,22 @@
     min-height: 100dvh;
     height: 100dvh;
     padding-top: 3rem;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--folio-gutter);
+    background: var(--md-sys-color-surface-container-lowest);
   }
 
   .folio__print {
-    flex: 1;
-    min-height: 0;
-    min-width: 0;
+    display: contents;
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    background: var(--md-sys-color-surface-container-lowest);
   }
 
   .folio__sheet {
     position: relative;
+    justify-self: center;
+    align-self: center;
     width: var(--folio-plate);
+    min-width: 0;
     aspect-ratio: 3923 / 2160;
     background: var(--md-sys-color-surface-container);
   }
@@ -330,6 +330,7 @@
       var(--md-sys-motion-spring-expressive-fast-effects);
   }
 
+  .folio__thirds .folio__lane:hover,
   .folio__thirds .folio__lane.is-on,
   .folio__thirds .folio__lane:focus-visible {
     box-shadow: inset 0 0 0 1px var(--md-sys-color-on-surface);
@@ -337,19 +338,19 @@
 
   .folio__chip {
     position: absolute;
-    left: 0.55rem;
-    bottom: 0.55rem;
+    left: 0.4rem;
+    bottom: 0.4rem;
     display: flex;
     flex-direction: column;
-    gap: 0.1rem;
-    padding: 0.28rem 0.4rem 0.32rem;
+    gap: 0.08rem;
+    padding: 0.18rem 0.32rem 0.2rem;
     background: var(--md-sys-color-surface);
     color: var(--md-sys-color-on-surface);
     font-family: var(--md-sys-typescale-mono-font);
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
+    font-size: 0.55rem;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    line-height: 1.2;
+    line-height: 1.15;
   }
 
   .folio__chip-who {
@@ -365,16 +366,19 @@
     display: block;
   }
 
-  .folio__slip {
+  .folio__gutter {
     position: relative;
-    width: var(--folio-plate);
-    padding: 0.55rem 0.15rem 0.85rem;
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 0;
+    padding: 0.75rem 1rem 0.85rem 0.85rem;
     display: flex;
     flex-direction: column;
-    gap: 0.28rem;
+    gap: 0.55rem;
+    border-left: 1px solid var(--md-sys-color-outline-variant);
   }
 
-  .folio__slip h1.folio__name {
+  .folio__gutter h1.folio__name {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -390,17 +394,14 @@
   .folio__degree {
     margin: 0;
     color: var(--md-sys-color-on-surface-variant);
-    font-size: 0.82rem;
+    font-size: 0.72rem;
     line-height: 1.35;
   }
 
-  .folio__slip > p.m3-type {
-    max-width: 62ch;
-  }
-
   .folio__caption {
-    margin: 0.25rem 0 0;
-    max-width: 72ch;
+    margin: auto 0 0;
+    padding-top: 0.55rem;
+    border-top: 1px solid var(--md-sys-color-outline-variant);
     font-family: var(--md-sys-typescale-mono-font);
     font-size: 0.68rem;
     letter-spacing: 0.02em;
@@ -418,28 +419,25 @@
       overflow: visible;
     }
 
-    .folio__caption {
-      max-width: none;
-    }
-
     .folio__stage {
       height: auto;
       min-height: 0;
+      grid-template-columns: minmax(0, 1fr);
     }
 
-    .folio__print {
-      flex: none;
-    }
-
-    .folio__slip {
+    .folio__gutter {
       order: -1;
-      width: 100%;
-      max-width: none;
+      border-left: 0;
       padding: 0.85rem 1rem 1rem;
+    }
+
+    .folio__caption {
+      margin-top: 0.25rem;
     }
 
     .folio__sheet {
       width: 100%;
+      justify-self: stretch;
     }
   }
 

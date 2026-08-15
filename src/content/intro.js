@@ -1,6 +1,8 @@
 /**
  * Home is one hung plate. Left / centre / right of the image are
- * Engineer / AI / Quantum. Type lives on a slip under the print.
+ * Engineer / AI / Quantum. Type lives in a narrow right gutter —
+ * a caption column, not a colophon. On a phone the gutter is the slip
+ * above the print.
  */
 import academic from './academic.js';
 import { personas } from './personas.js';
