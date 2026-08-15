@@ -5,7 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'src/legacy/**']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [
@@ -23,7 +23,14 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]', argsIgnorePattern: '^_' }],
     },
+  },
+  {
+    // Tooling that runs in Node, not the browser: the Vite config, the SSR
+    // smoke harness, and the token generator. They legitimately reach for
+    // `process` and `__dirname`, which globals.browser does not define.
+    files: ['vite.config.js', 'ssr-smoke.jsx', 'fact-check.jsx', 'tools/**/*.mjs'],
+    languageOptions: { globals: globals.node },
   },
 ])
