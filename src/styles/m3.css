@@ -415,7 +415,6 @@
   @media (max-width: 899px) {
     .folio {
       height: auto;
-      min-height: 0;
       overflow: visible;
     }
 
