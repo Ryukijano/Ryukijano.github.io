@@ -249,13 +249,14 @@
   }
 
   /*
-   * Home: the plate is the first screen. Nav overlays the mat, not a
-   * translucent wash on the print. Bio is one slip under the object.
+   * Home: the plate fills the viewport under the overlay nav. Bio is one
+   * opaque paper title-slip pasted on the print at bottom-left — solid
+   * surface, 1px outline-variant, no blur, no color-mix wash.
    * Left / centre / right of the plate are Engineer / AI / Quantum.
    *
-   * Sheet width is min(viewport, height-budget × 3923/2160) so the 16:9
-   * plate can fill without object-fit:cover cropping a lane, and without
-   * the circular max-height trap that collapsed the box to zero.
+   * Sheet width is min(viewport, height-budget × 3923/2160) so the plate
+   * can fill without object-fit:cover cropping a lane, and without the
+   * circular max-height trap that collapsed the box to zero.
    */
   .folio {
     position: relative;
@@ -266,7 +267,7 @@
     color: var(--md-sys-color-on-surface);
     font-family: var(--md-sys-typescale-brand-font);
     -webkit-font-smoothing: antialiased;
-    --folio-plate: min(100%, calc((100dvh - 10rem) * 3923 / 2160));
+    --folio-plate: min(100%, calc((100dvh - 3.5rem) * 3923 / 2160));
   }
 
   .folio .site-nav--overlay {
@@ -280,23 +281,24 @@
     padding-top: 3rem;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .folio__print {
-    flex: 1;
-    min-height: 0;
-    min-width: 0;
+    position: relative;
+    width: var(--folio-plate);
     margin: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    background: var(--md-sys-color-surface-container-lowest);
+    flex: 0 0 auto;
+    min-width: 0;
   }
 
   .folio__sheet {
     position: relative;
-    width: var(--folio-plate);
+    z-index: 0;
+    width: 100%;
     aspect-ratio: 3923 / 2160;
     background: var(--md-sys-color-surface-container);
   }
@@ -330,6 +332,7 @@
       var(--md-sys-motion-spring-expressive-fast-effects);
   }
 
+  .folio__thirds .folio__lane:hover,
   .folio__thirds .folio__lane.is-on,
   .folio__thirds .folio__lane:focus-visible {
     box-shadow: inset 0 0 0 1px var(--md-sys-color-on-surface);
@@ -337,8 +340,8 @@
 
   .folio__chip {
     position: absolute;
+    top: 0.55rem;
     left: 0.55rem;
-    bottom: 0.55rem;
     display: flex;
     flex-direction: column;
     gap: 0.1rem;
@@ -366,45 +369,51 @@
   }
 
   .folio__slip {
-    position: relative;
-    width: var(--folio-plate);
-    padding: 0.55rem 0.15rem 0.85rem;
+    position: absolute;
+    z-index: 2;
+    left: 0.7rem;
+    bottom: 0.7rem;
+    box-sizing: border-box;
+    width: min(22rem, calc(100% - 1.4rem));
+    padding: 0.7rem 0.8rem 0.75rem;
     display: flex;
     flex-direction: column;
     gap: 0.28rem;
+    background: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-corner-none);
   }
 
   .folio__slip h1.folio__name {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    white-space: nowrap;
-    border: 0;
+    margin: 0;
+    font-family: var(--md-sys-typescale-brand-font);
+    font-size: var(--md-sys-typescale-title-small-size);
+    line-height: var(--md-sys-typescale-title-small-line-height);
+    letter-spacing: var(--md-sys-typescale-title-small-tracking);
+    font-weight: var(--md-sys-typescale-emphasized-title-small-weight);
+    color: var(--md-sys-color-on-surface);
   }
 
   .folio__degree {
     margin: 0;
     color: var(--md-sys-color-on-surface-variant);
-    font-size: 0.82rem;
-    line-height: 1.35;
+    font-size: var(--md-sys-typescale-body-small-size);
+    line-height: var(--md-sys-typescale-body-small-line-height);
+    letter-spacing: var(--md-sys-typescale-body-small-tracking);
   }
 
   .folio__slip > p.m3-type {
-    max-width: 62ch;
+    max-width: none;
   }
 
   .folio__caption {
-    margin: 0.25rem 0 0;
-    max-width: 72ch;
+    margin: 0.15rem 0 0;
+    max-width: none;
     font-family: var(--md-sys-typescale-mono-font);
-    font-size: 0.68rem;
+    font-size: var(--md-sys-typescale-label-small-size);
     letter-spacing: 0.02em;
-    line-height: 1.55;
+    line-height: 1.45;
     color: var(--md-sys-color-on-surface-variant);
   }
 
@@ -418,20 +427,23 @@
       overflow: visible;
     }
 
-    .folio__caption {
-      max-width: none;
-    }
-
     .folio__stage {
       height: auto;
       min-height: 0;
+      align-items: stretch;
+      justify-content: flex-start;
     }
 
     .folio__print {
-      flex: none;
+      width: 100%;
     }
 
     .folio__slip {
+      position: relative;
+      inset: auto;
+      left: auto;
+      bottom: auto;
+      z-index: auto;
       order: -1;
       width: 100%;
       max-width: none;

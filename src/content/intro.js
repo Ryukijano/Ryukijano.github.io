@@ -1,6 +1,8 @@
 /**
  * Home is one hung plate. Left / centre / right of the image are
- * Engineer / AI / Quantum. Type lives on a slip under the print.
+ * Engineer / AI / Quantum. Type lives on a paper title-slip pasted
+ * at the bottom-left of the print — a Hokusai daisen / AIC wall label,
+ * not a column and not a wash.
  */
 import academic from './academic.js';
 import { personas } from './personas.js';

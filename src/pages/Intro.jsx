@@ -23,7 +23,7 @@ function Marked({ text, highlight }) {
   );
 }
 
-/** / — plate owns the viewport; bio lives on one slip under the print. */
+/** / — plate owns the viewport; bio lives on one paper title-slip at bottom-left. */
 export default function Intro() {
   const [lane, setLane] = useState(null);
 
