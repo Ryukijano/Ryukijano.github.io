@@ -28,7 +28,6 @@ export default function KanagawaPlate({ mode = null }) {
   const imgRef = useRef(null);
   const modeRef = useRef(mode);
   const kickRef = useRef(() => {});
-  modeRef.current = mode;
 
   useEffect(() => {
     const img = imgRef.current;
@@ -64,6 +63,7 @@ export default function KanagawaPlate({ mode = null }) {
   }, []);
 
   useEffect(() => {
+    modeRef.current = mode;
     kickRef.current();
   }, [mode]);
 
