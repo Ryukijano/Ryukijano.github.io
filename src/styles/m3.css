@@ -249,13 +249,15 @@
   }
 
   /*
-   * Home: the plate is the first screen. Nav overlays the mat, not a
-   * translucent wash on the print. Bio is one slip under the object.
-   * Left / centre / right of the plate are Engineer / AI / Quantum.
+   * Home: ukiyo-e registration. The plate sits on an untrimmed paper
+   * block; kagi and hikitsuke live in that margin, not on the art.
+   * Bio is one slip under the object. Left / centre / right of the
+   * plate are Engineer / AI / Quantum.
    *
-   * Sheet width is min(viewport, height-budget × 3923/2160) so the 16:9
-   * plate can fill without object-fit:cover cropping a lane, and without
-   * the circular max-height trap that collapsed the box to zero.
+   * Block width is min(viewport, height-budget × 3923/2160 + gutters) so
+   * the 16:9 plate can fill without object-fit:cover cropping a lane,
+   * and without the circular max-height trap that collapsed the box to
+   * zero. Never max-height: 100% on the sheet.
    */
   .folio {
     position: relative;
@@ -266,7 +268,12 @@
     color: var(--md-sys-color-on-surface);
     font-family: var(--md-sys-typescale-brand-font);
     -webkit-font-smoothing: antialiased;
-    --folio-plate: min(100%, calc((100dvh - 10rem) * 3923 / 2160));
+    --folio-gutter: 0.75rem;
+    --folio-gutter-bottom: 2.4rem;
+    --folio-plate: min(
+      100%,
+      calc((100dvh - 12.5rem) * 3923 / 2160 + 2 * var(--folio-gutter))
+    );
   }
 
   .folio .site-nav--overlay {
@@ -294,11 +301,22 @@
     background: var(--md-sys-color-surface-container-lowest);
   }
 
+  .folio__block {
+    position: relative;
+    box-sizing: border-box;
+    width: var(--folio-plate);
+    padding: var(--folio-gutter) var(--folio-gutter) var(--folio-gutter-bottom);
+    color: inherit;
+    overflow: visible;
+  }
+
   .folio__sheet {
     position: relative;
-    width: var(--folio-plate);
+    width: 100%;
     aspect-ratio: 3923 / 2160;
     background: var(--md-sys-color-surface-container);
+    outline: 1px solid var(--md-sys-color-outline);
+    overflow: visible;
   }
 
   .folio__sheet img {
@@ -311,11 +329,39 @@
     max-width: none;
   }
 
+  /*
+   * Registration: 1px hikitsuke along the print's bottom edge, 2px L-shaped
+   * kagi at the lower-right of the paper margin. Rules, not stickers.
+   */
+  .folio__kento {
+    position: absolute;
+    pointer-events: none;
+    color: currentColor;
+  }
+
+  .folio__kento--hikitsuke {
+    left: calc(var(--folio-gutter) + 0.35rem);
+    bottom: var(--folio-gutter-bottom);
+    width: 1.15rem;
+    height: 0;
+    border-bottom: 1px solid currentColor;
+  }
+
+  .folio__kento--kagi {
+    right: calc(var(--folio-gutter) - 0.65rem);
+    bottom: calc(var(--folio-gutter-bottom) - 0.65rem);
+    width: 0.65rem;
+    height: 0.65rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+  }
+
   .folio__thirds {
     position: absolute;
     inset: 0;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    overflow: visible;
   }
 
   .folio__thirds .folio__lane {
@@ -325,31 +371,42 @@
     color: inherit;
     min-height: 0;
     min-width: 0;
+    overflow: visible;
     box-shadow: inset 0 0 0 0 transparent;
     transition: box-shadow var(--md-sys-motion-duration-expressive-fast-effects)
       var(--md-sys-motion-spring-expressive-fast-effects);
   }
 
   .folio__thirds .folio__lane.is-on,
+  .folio__thirds .folio__lane:hover,
   .folio__thirds .folio__lane:focus-visible {
-    box-shadow: inset 0 0 0 1px var(--md-sys-color-on-surface);
+    box-shadow: inset 0 0 0 1px currentColor;
   }
 
   .folio__chip {
     position: absolute;
-    left: 0.55rem;
-    bottom: 0.55rem;
+    left: 0;
+    right: 0;
+    top: 100%;
     display: flex;
     flex-direction: column;
-    gap: 0.1rem;
-    padding: 0.28rem 0.4rem 0.32rem;
-    background: var(--md-sys-color-surface);
-    color: var(--md-sys-color-on-surface);
+    align-items: center;
+    gap: 0.12rem;
+    padding: 0.4rem 0.15rem 0;
+    background: none;
+    color: inherit;
     font-family: var(--md-sys-typescale-mono-font);
-    font-size: 0.62rem;
+    font-size: 0.58rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     line-height: 1.2;
+  }
+
+  .folio__chip::before {
+    content: '';
+    width: 0;
+    height: 0.35rem;
+    border-left: 1px solid currentColor;
   }
 
   .folio__chip-who {
@@ -436,6 +493,10 @@
       width: 100%;
       max-width: none;
       padding: 0.85rem 1rem 1rem;
+    }
+
+    .folio__block {
+      width: 100%;
     }
 
     .folio__sheet {
