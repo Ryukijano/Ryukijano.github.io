@@ -1,0 +1,13 @@
+/*
+ * Cascade layer order. This file must be imported FIRST, before any stylesheet
+ * that uses a layer, because layer precedence is fixed by order of first
+ * appearance — a later @layer statement cannot reorder layers already seen.
+ *
+ * Later wins. So: base < tokens < components.
+ *
+ * This exists because base.css was originally unlayered, and an unlayered rule
+ * beats every layered rule regardless of specificity. Its `a { color: inherit }`
+ * was quietly defeating every link colour in m3.css, and its hardcoded focus
+ * ring was defeating .m3-state:focus-visible. Both read as component bugs.
+ */
+@layer m3.base, m3.tokens, m3.components;
