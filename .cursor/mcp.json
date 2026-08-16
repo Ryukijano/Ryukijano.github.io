@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "relume-library": {
+      "url": "https://relume-library-mcp.relume.io/mcp"
+    }
+  }
+}

@@ -12,6 +12,7 @@ This mix keeps the rebuild house — the dusk triptych, long-form case studies w
 - React Router 7 for routed pages
 - Material 3 Expressive token and component layer
 - Source Serif 4 (brand), IBM Plex Sans (plain), IBM Plex Mono (figures and labels)
+- Optional Relume Library MCP ([July 2026](https://www.relume.ai/whats-new/july-2026-release)): Cursor config in `.cursor/mcp.json`. Sign in with a paid Relume account. It vendors Relume React + Tailwind primitives; it does not replace this site’s type or M3 tokens.
 
 ## Running It
 
