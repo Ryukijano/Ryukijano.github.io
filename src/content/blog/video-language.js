@@ -33,7 +33,7 @@ export default {
       kicker: 'MECHANICS',
       heading: 'One backbone versus a pipe of specialists',
       body: [
-        'A unified VLM encodes video tokens and text tokens in one transformer. A composed system hands a cheap watcher a long tape, then a few seconds to a model that can explain them, then optionally a world model that invents an alternative.',
+        'A unified VLM puts visual tokens into a language model, often through a frozen encoder and a projector. A composed system hands a cheap watcher a long tape, then a few seconds to a model that can explain them, then optionally a world model that invents an alternative.',
         'A VLA is not a VLM with a USB arm. The action stream is its own learning problem: tokenised actions under next-token loss, or a diffusion or flow-matching head on chunks. If you only SFT the language tower, you have a talker. If you only train the action head, you have a policy that may not listen.',
       ],
     },

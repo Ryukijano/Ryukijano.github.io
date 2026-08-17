@@ -5,7 +5,7 @@ export default {
   title: 'What should be here',
   desc: 'Three different fill-in jobs: reconstruct pixels, predict latents, learn a stochastic code.',
   lead:
-    'Not every pretext is “these two observations correspond.” A predictive pretext asks what should occupy a hole. Fill that hole in pixels, in a representation, or through a generative latent, and you have three contracts, not one method with three logos.',
+    'Not every pretext is “these two observations correspond.” A predictive pretext asks what should occupy a hole: the next frames of a suture, a tool behind smoke. Fill that hole in pixels, in a representation, or through a generative latent, and you have three contracts, not one method with three logos.',
   concept: {
     src: '/assets/gifs/notes/latent-predict.gif',
     poster: '/assets/images/notes/latent-predict-poster.png',
@@ -26,7 +26,7 @@ export default {
   equations: [
     {
       label: 'Latent prediction (JEPA-shaped)',
-      expr: 'z_c = f(x_context),   ẑ_t = g(z_c, pos_target),   L ≈ ||ẑ_t − f̄(x_target)||²',
+      expr: 'z_c = f(x_context),   ẑ_t = g(z_c, pos_target),   L ≈ ||ẑ_t − f̄(x_target)||_p',
     },
   ],
   sections: [
@@ -42,8 +42,8 @@ export default {
       kicker: 'MECHANICS',
       heading: 'The target decides what the model may ignore',
       body: [
-        'If the target is RGB, the loss sees lighting, compression, and specular glare. If it is an EMA target encoder, you predict that latent. I-JEPA did that on stills; V-JEPA does it on video. A frozen off-the-shelf ViT as target is a different recipe. Meta’s V-JEPA 2 later post-trains an action-conditioned world model for planning. I did not train Meta’s V-JEPA 2 run.',
-        'A VAE’s extra axis is a KL bottleneck so the code is a distribution you can sample, plus a decoder back to pixels. Mixing it into “the JEPA family” hides both. In a reconstructive VAE the KL is often a regulariser, not the primary objective; it is still what makes the model a VAE rather than masked pixel reconstruction or latent prediction.',
+        'If the target is RGB, the loss sees lighting, compression, and specular glare. If it is an EMA target encoder, you predict that latent. I-JEPA did that on stills with an L2; V-JEPA does it on video with an L1. A frozen off-the-shelf ViT as target is a different recipe. Meta’s V-JEPA 2 later post-trains an action-conditioned world model for planning. I did not train Meta’s V-JEPA 2 run.',
+        'A VAE’s extra axis is a KL bottleneck so the code is a distribution you can sample, plus a decoder back to pixels. Mixing it into “the JEPA family” hides both. In a reconstructive VAE the KL is the variational term in the ELBO; in practice it is often downweighted, but it is still what makes the code a distribution rather than masked pixels or a JEPA latent.',
       ],
     },
     {

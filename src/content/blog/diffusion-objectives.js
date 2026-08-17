@@ -20,7 +20,7 @@ export default {
     branches: [
       { name: 'Score matching', items: ['∇ log p_t', 'continuous density'] },
       { name: 'DDPM / epsilon', items: ['predict noise', 'fixed Gaussian schedule'] },
-      { name: 'Flow matching', items: ['velocity / transport', 'straight paths'] },
+      { name: 'Flow matching', items: ['velocity / transport', 'optional straight (OT) paths'] },
       { name: 'Discrete diffusion', items: ['mask or replace tokens', 'LLaDA-shaped'] },
     ],
   },
@@ -36,7 +36,7 @@ export default {
       heading: 'Undo a corruption of a whole object',
       body: [
         'Autoregression predicts the next token. Diffusion-shaped models predict a cleaner version of a whole object. They fit when the object is a continuous trajectory, a picture, or a set of tokens you want to revise rather than emit left to right.',
-        'Sampler tricks — DDIM, guidance, few-step distillation — change the walk, not the contract. If your training loss is still a next-token log-prob, you are not in this family no matter how much noise you overlay in a figure.',
+        'DDIM changes the walk. Classifier-free guidance tilts the distribution. Few-step distillation often changes the training loss. None of that turns a next-token log-prob into this family.',
       ],
     },
     {
@@ -44,7 +44,7 @@ export default {
       heading: 'The medium is whoever owns the forward process',
       body: [
         'On pixels, the object is an image. On actions, the object is a horizon of controls: diffusion policy, ScaleDP-style heads, flow matching on trajectories. The conditioner is whatever you still have — a visual encoder, a language token, proprioception. On language, masked diffusion (LLaDA and cousins) replaces tokens with a mask and learns to unmask them.',
-        'Score matching and DDPM epsilon-prediction are two readings of the same Gaussian reverse process. Flow matching instead regresses a velocity along a chosen path. Discrete diffusion changes the state space.',
+        'Denoising score matching and DDPM ε-prediction are two parameterisations of a Gaussian reverse process. Flow matching instead regresses a velocity along a chosen path. Discrete diffusion changes the state space.',
       ],
     },
     {

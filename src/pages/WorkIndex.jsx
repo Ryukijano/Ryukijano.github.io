@@ -5,7 +5,7 @@ import SiteNav from '../components/SiteNav.jsx';
 import { alsoStudies, caseStudies, featuredStudies } from '../content/caseStudies/index.js';
 
 /**
- * /work — a Distill-like dated index of notes, not a landing page.
+ * /work — a Distill-like dated index of projects, not a landing page.
  *
  * Featured rows are the eight studies worth leading with. Everything else
  * sits under Also. The four GIF strand sections, the fake terminal, the

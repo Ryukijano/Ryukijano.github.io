@@ -32,7 +32,7 @@ export default {
       kicker: 'THE JOB',
       heading: 'Three jobs that share a camera',
       body: [
-        'Video is at least three jobs that happen to share a camera. A phase label is a coarse narrative: what step of a procedure is this. A track is an identity through occlusion. A future frame is a physical guess. The same footage can host all three. The losses cannot.',
+        'Video is at least three jobs that happen to share a camera. A phase label is a coarse narrative: what step of a procedure is this. A track is an identity through occlusion. A future frame is a guess about upcoming pixels, not a phase name and not a physics engine. The same footage can host all three. The losses cannot.',
         'A bag-of-frames baseline encodes each still, then pools. It can work when the label is visible in a single good frame. It fails when the label is an order of events, a tool that left the image, or a motion that never appears in one still.',
       ],
     },
@@ -59,7 +59,7 @@ export default {
     attribution: 'ONE CAMERA, THREE OBJECTIVES',
     workSlug: 'surgical-phase-detection',
     workLabel: 'Phase recognition',
-    also: { workSlug: 'fet-vae-surgical-prediction', workLabel: 'Next-frame (FET-VAE)' },
+    also: { workSlug: 'got-jepa-tool-tracking', workLabel: 'GOT-JEPA tool tracking' },
     gif: {
       src: '/assets/gifs/gotjepa-occlusion.gif',
       alt: 'Tool tracks continuing through occlusion in laparoscopic video',

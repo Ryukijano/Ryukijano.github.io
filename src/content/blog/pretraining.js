@@ -41,7 +41,7 @@ export default {
       heading: 'Where labels are sparse and the camera is not ImageNet',
       body: [
         'Web-image pretraining is built on objects that sit still enough to crop. Endoscopic submucosal dissection is a different camera: wet mucosa, specular glare, smoke, a tool occupying the same pixels as tissue. The phase you care about is a rounding error in a long tape. Nothing in that list is an ImageNet class.',
-        'The labelled set is a few dozen procedures, marked by people whose other job is the operation. On the porcine tape, marking is 0.57% of frames. That is enough to train a head. It is not enough to train a visual system. So the domain arrives after an encoder already exists, and the question that gets asked in the lab is how much of that encoder a hospital GPU is allowed to touch.',
+        'The labelled set is marked by people whose other job is the operation. On the porcine tape, marking is 0.57% of frames. That is enough to train a head. It is not enough to train a visual system. So the domain arrives after an encoder already exists, and the question that gets asked in the lab is how much of that encoder a hospital GPU is allowed to touch.',
       ],
     },
   ],

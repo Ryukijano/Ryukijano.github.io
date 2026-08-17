@@ -38,7 +38,7 @@ export default function BlogIndex() {
           <Text as="p" role="title-large" style={leadStyle}>
             How the learning areas work. Projects are domains, not the plot. I met
             them as theatre video, then robot actions, then a state I could not look
-            at.
+            at, then a score instead of a demonstration.
           </Text>
           <dl style={factsStyle}>
             {FACTS.map((fact) => (

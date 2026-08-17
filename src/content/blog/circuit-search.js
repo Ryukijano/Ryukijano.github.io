@@ -5,7 +5,7 @@ export default {
   title: 'Energy as a reward',
   desc: 'Hybrid search and RL on circuits: a prior proposes, a score keeps or kills.',
   lead:
-    'Some domains do not hand you a demonstration of the right circuit. They hand you a score — an energy, a residual — and a generator that can propose another candidate. Same clone-versus-search cut as post-training, with a Hamiltonian instead of a preference model.',
+    'Some domains do not hand you a demonstration of the right circuit. They hand you a score — an energy, a residual — and a generator that can propose another candidate. After cloning actions on a small VLA, this is how I actually spent a prior on molecules: propose a structure, read an energy, keep or kill. Same clone-versus-search cut as post-training, with a Hamiltonian instead of a preference model.',
   concept: {
     src: '/assets/gifs/notes/sft-then-rl.gif',
     poster: '/assets/images/notes/sft-then-rl-poster.png',
@@ -51,7 +51,7 @@ export default {
   ],
   instance: {
     quote:
-      'Conditional GQE is search under an energy. NQCC was a hydrogen-on-nickel score I ran as a participant. Shor was a period-finding circuit at N=15, 2048 shots. That is how I spent a prior when there was no demonstration to clone.',
+      'Conditional GQE is search under an energy. NQCC was a hydrogen-on-nickel score I ran as a participant. Shor was hand-built period-finding at N=15, 2048 shots — a constructed circuit, not a search loop.',
     attribution: 'SEARCH, NOT A LEADERBOARD',
     workSlug: 'conditional-gqe',
     workLabel: 'Conditional GQE',
