@@ -26,6 +26,7 @@ Additional verification commands:
 
 ```bash
 npm run lint
+npm run notes
 npm run smoke
 npm run facts
 npm run tokens
@@ -38,7 +39,7 @@ npm run tokens
 - `/work`: dated project table
 - `/work/:slug`: individual long-form case studies
 - `/blog`: field notes on how the learning areas work
-- `/blog/:slug`: individual notes (pretraining, SSL, video, post-training, diffusion)
+- `/blog/:slug`: individual notes (pretraining, SSL, video, post-training, diffusion, QEC, search)
 - `/trust`: evidence and provenance index for project claims
 - `/persona/ryukijano`, `/persona/gyanateet`, `/persona/ryoushi`: persona rooms
 - unknown paths: a real 404 page (not a silent redirect to `/`)

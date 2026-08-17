@@ -6,6 +6,20 @@ export default {
   desc: 'Captioning, video-language models, and vision-language-action as different contracts.',
   lead:
     'Video-language is the problem of putting a sequence of frames and a sequence of tokens into one space so that a sentence can retrieve a clip, a clip can produce a sentence, or both can condition a motor command. Those are not the same product.',
+  taxonomy: {
+    title: 'WHAT THE MODEL MUST PRODUCE',
+    caption: 'A VLA is not a VLM with a USB arm. The action distribution is its own learning problem.',
+    branches: [
+      { name: 'Caption / retrieve', items: ['pixels → words', 'clip ↔ sentence'] },
+      { name: 'VLM', items: ['video + text → text'] },
+      { name: 'VLA', items: ['video + text → action'] },
+      { name: 'Composed pipe', items: ['perception → world model → LLM → text or action'] },
+    ],
+  },
+  equations: [
+    { label: 'VLM', expr: 'video + text  →  text' },
+    { label: 'VLA', expr: 'video + text  →  action' },
+  ],
   sections: [
     {
       kicker: 'THE JOB',
@@ -47,4 +61,5 @@ export default {
       highlight: 'schematic',
     },
   },
+  next: { slug: 'post-training', label: 'Post-training' },
 };

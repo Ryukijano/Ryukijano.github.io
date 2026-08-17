@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Text, Theme } from '../components/m3/index.jsx';
 import SiteNav from '../components/SiteNav.jsx';
-import { notes } from '../content/blog/index.js';
+import { curriculum, notes } from '../content/blog/index.js';
 
 const HAIRLINE = '1px solid var(--md-sys-color-outline-variant)';
 
@@ -15,8 +15,6 @@ const SERIF = {
   '--m3-font': 'var(--md-sys-typescale-brand-font)',
   '--m3-lh': 1.3,
 };
-
-const AREAS = [...new Set(notes.map((note) => note.area))].join(' · ');
 
 const FACTS = [
   { dt: 'Notes', dd: String(notes.length) },
@@ -38,7 +36,7 @@ export default function BlogIndex() {
             Notes
           </Text>
           <Text as="p" role="title-large" style={leadStyle}>
-            How the learning areas work. Projects are domains, not the plot. {AREAS}.
+            How the learning areas work. Projects are domains, not the plot.
           </Text>
           <dl style={factsStyle}>
             {FACTS.map((fact) => (
@@ -57,6 +55,29 @@ export default function BlogIndex() {
             ))}
           </dl>
         </header>
+
+        <section style={mapStyle} aria-labelledby="curriculum-heading">
+          <Text as="h2" role="title-small" style={{ margin: 0 }} id="curriculum-heading">
+            Where intelligence lives
+          </Text>
+          <Text as="p" role="body-small" style={mapCaptionStyle}>
+            Schematic of the stack: the learning problem is the protagonist. Framing, not a survey.
+          </Text>
+          <ol style={listStyle}>
+            {curriculum.map((row) => (
+              <li key={row.slug} style={mapRowStyle}>
+                <Link to={`/blog/${row.slug}`} className="m3-state" style={titleLinkStyle}>
+                  <Text as="span" role="title-small" style={SERIF}>
+                    {row.layer}
+                  </Text>
+                </Link>
+                <Text as="span" role="body-small" style={{ color: 'var(--md-sys-color-on-surface-variant)' }}>
+                  {row.changes}
+                </Text>
+              </li>
+            ))}
+          </ol>
+        </section>
 
         <ul aria-label="Field notes" style={listStyle}>
           {notes.map((note) => (
@@ -134,10 +155,29 @@ const factsStyle = {
   borderBottom: HAIRLINE,
 };
 
+const mapStyle = {
+  margin: '40px 0 0',
+};
+
+const mapCaptionStyle = {
+  color: 'var(--md-sys-color-on-surface-variant)',
+  margin: '8px 0 16px',
+  maxWidth: '36em',
+};
+
 const listStyle = {
   listStyle: 'none',
   margin: 0,
   padding: 0,
+};
+
+const mapRowStyle = {
+  display: 'grid',
+  gridTemplateColumns: '13rem 1fr',
+  gap: '12px 20px',
+  alignItems: 'baseline',
+  padding: '8px 0',
+  borderBottom: HAIRLINE,
 };
 
 const rowStyle = {

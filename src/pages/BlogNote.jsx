@@ -4,6 +4,8 @@ import { parseStyle } from '../lib/style.js';
 import { Text, Theme } from '../components/m3/index.jsx';
 import SiteNav from '../components/SiteNav.jsx';
 import MediaFigure from '../components/MediaFigure.jsx';
+import NoteEquations from '../components/NoteEquations.jsx';
+import NoteTaxonomy from '../components/NoteTaxonomy.jsx';
 
 const SERIF = '--m3-font:var(--md-sys-typescale-brand-font)';
 const MONO = '--m3-font:var(--md-sys-typescale-mono-font);font-variant-numeric:tabular-nums';
@@ -67,6 +69,16 @@ export default function BlogNote({ note }) {
           </div>
         ) : null}
 
+        {note.taxonomy ? (
+          <NoteTaxonomy
+            title={note.taxonomy.title}
+            branches={note.taxonomy.branches}
+            caption={note.taxonomy.caption}
+          />
+        ) : null}
+
+        {note.equations ? <NoteEquations items={note.equations} /> : null}
+
         {note.sections.map((section) => (
           <section
             key={section.heading}
@@ -82,9 +94,9 @@ export default function BlogNote({ note }) {
             <Text as="h2" role="headline-small" style={parseStyle(`${INK};margin:0.75rem 0 0`)}>
               {section.heading}
             </Text>
-            {section.body.map((paragraph) => (
+            {section.body.map((paragraph, i) => (
               <Text
-                key={paragraph.slice(0, 48)}
+                key={`${section.kicker}-${i}`}
                 as="p"
                 role="body-large"
                 style={parseStyle(`${SERIF};${MUTED};margin:1.15rem 0 0;line-height:1.65`)}
@@ -98,6 +110,14 @@ export default function BlogNote({ note }) {
         <Instance instance={note.instance} />
 
         <p style={parseStyle(`${SERIF};margin:4rem 0 0`)}>
+          {note.next ? (
+            <>
+              <Link to={`/blog/${note.next.slug}`} style={linkStyle}>
+                Next: {note.next.label}
+              </Link>
+              <span aria-hidden="true"> · </span>
+            </>
+          ) : null}
           <Link to="/blog" style={linkStyle}>
             All notes
           </Link>

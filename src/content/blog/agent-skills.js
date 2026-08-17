@@ -6,6 +6,14 @@ export default {
   desc: 'Procedures you hand an agent are a different object from weights.',
   lead:
     'Post-training changes weights. A skill file changes the procedure the agent is allowed to follow this turn. Mixing those up is how people convince themselves they finetuned a model when they wrote a README.',
+  taxonomy: {
+    title: 'WHERE THE CAPABILITY LIVES',
+    caption: 'Weights encode generalised behaviour. Skills encode procedures you can edit without a checkpoint.',
+    branches: [
+      { name: 'Weights', items: ['SFT', 'RL', 'learned behaviour'] },
+      { name: 'Procedure', items: ['skill', 'MCP tool', 'runbook'] },
+    ],
+  },
   sections: [
     {
       kicker: 'THE JOB',
@@ -41,4 +49,5 @@ export default {
       label: 'Ryukijano/agent-skills',
     },
   },
+  next: { slug: 'qec-learning', label: 'QEC as a learning problem' },
 };

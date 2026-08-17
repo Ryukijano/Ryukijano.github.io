@@ -15,6 +15,7 @@ import concurrent.futures
 import io
 import math
 import threading
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -824,6 +825,225 @@ def draw_denoise(i: int) -> Image.Image:
 
 
 # ===========================================================================
+# 6. ssl-family  (contrastive vs self-distillation)
+# ===========================================================================
+def draw_ssl_family(i: int) -> Image.Image:
+    t = i / (N_FRAMES - 1)
+    pull = phase(t, 0.12, 0.88)
+    fig = new_figure()
+    ax = deco_axes(fig)
+    schematic_stamp(ax)
+    panel_title(ax, 0.045, 0.955, "Two SSL families")
+    txt(
+        ax,
+        0.045,
+        0.915,
+        "Same job: a geometry without y. Different anti-collapse device.",
+        size=8,
+        color=MUTED,
+        weight="normal",
+        ha="left",
+    )
+
+    rounded(ax, (0.035, 0.08), 0.45, 0.80, fc=PAPER, ec=HAIRLINE, lw=0.9, r=0.014, z=1)
+    txt(ax, 0.26, 0.82, "Contrastive", size=11, color=INK, weight="bold")
+    txt(ax, 0.26, 0.785, "InfoNCE  ·  SimCLR  ·  MoCo", size=7.5, color=MUTED, weight="normal")
+
+    z1 = np.array([0.13, 0.58])
+    z2 = np.array([0.39, 0.58])
+    meet = np.array([0.26, 0.52])
+    zneg = np.array([0.26, 0.22])
+    p1 = lerp(z1, meet + np.array([-0.045, 0.02]), pull)
+    p2 = lerp(z2, meet + np.array([0.045, -0.02]), pull)
+    npos = lerp(zneg, np.array([0.26, 0.18]), pull)
+
+    ax.annotate(
+        "",
+        xy=p2,
+        xytext=p1,
+        arrowprops=dict(arrowstyle="<->", color=TERRACOTTA, lw=1.35, mutation_scale=11),
+        zorder=3,
+    )
+    ax.plot([p1[0], npos[0]], [p1[1], npos[1]], color=SLATE, lw=0.9, ls="--", zorder=2)
+    ax.plot([p2[0], npos[0]], [p2[1], npos[1]], color=SLATE, lw=0.9, ls="--", zorder=2)
+    ax.scatter(*p1, s=110, c=TERRACOTTA, edgecolors=INK, linewidths=0.6, zorder=5)
+    ax.scatter(*p2, s=110, c=TERRACOTTA, edgecolors=INK, linewidths=0.6, zorder=5)
+    ax.scatter(*npos, s=110, c=SLATE, edgecolors=INK, linewidths=0.6, zorder=5)
+    txt(ax, p1[0], p1[1] + 0.055, r"$z_A$", size=8, color=INK, weight="bold")
+    txt(ax, p2[0], p2[1] + 0.055, r"$z_B$", size=8, color=INK, weight="bold")
+    txt(ax, npos[0], npos[1] - 0.05, r"$z^{-}$", size=8, color=INK, weight="bold")
+    txt(ax, 0.26, 0.12, "negatives keep the space from a point", size=7.5, color=MUTED, weight="normal")
+
+    rounded(ax, (0.515, 0.08), 0.45, 0.80, fc=PAPER, ec=HAIRLINE, lw=0.9, r=0.014, z=1)
+    txt(ax, 0.74, 0.82, "Self-distillation", size=11, color=INK, weight="bold")
+    txt(ax, 0.74, 0.785, "BYOL  ·  SimSiam  ·  DINO", size=7.5, color=MUTED, weight="normal")
+
+    rounded(ax, (0.56, 0.58), 0.16, 0.12, fc=SLATE_SOFT, ec=SLATE, lw=1.0, r=0.012, z=4)
+    txt(ax, 0.64, 0.655, r"teacher  $f_{\bar\theta}$", size=8, color=INK, weight="bold")
+    txt(ax, 0.64, 0.615, "momentum", size=7, color=MUTED, weight="normal")
+    rounded(ax, (0.76, 0.58), 0.16, 0.12, fc=TERR_SOFT, ec=TERRACOTTA, lw=1.0, r=0.012, z=4)
+    txt(ax, 0.84, 0.655, r"student  $f_\theta$", size=8, color=INK, weight="bold")
+    txt(ax, 0.84, 0.615, "online", size=7, color=MUTED, weight="normal")
+    arrow(ax, (0.72, 0.64), (0.76, 0.64), color=TERRACOTTA, lw=1.2, ms=10)
+
+    n_bar = 6
+    teacher = np.array([0.08, 0.18, 0.42, 0.12, 0.09, 0.11])
+    teacher = teacher / teacher.sum()
+    student0 = np.full(n_bar, 1.0 / n_bar)
+    student = lerp(student0, teacher, pull)
+    bx0, bw, gap = 0.58, 0.028, 0.018
+    for k in range(n_bar):
+        x = bx0 + k * (bw + gap)
+        ax.add_patch(Rectangle((x, 0.28), bw, 0.22 * teacher[k] / teacher.max(), facecolor=SLATE, edgecolor=INK, lw=0.3, zorder=4))
+        ax.add_patch(
+            Rectangle(
+                (x + 0.19, 0.28),
+                bw,
+                0.22 * student[k] / teacher.max(),
+                facecolor=TERRACOTTA,
+                edgecolor=INK,
+                lw=0.3,
+                zorder=4,
+            )
+        )
+    txt(ax, 0.64, 0.24, "teacher p", size=7.5, color=MUTED, weight="bold")
+    txt(ax, 0.83, 0.24, "student p", size=7.5, color=MUTED, weight="bold")
+    txt(ax, 0.74, 0.12, "no negative batch  ·  match the teacher", size=7.5, color=MUTED, weight="normal")
+    handles = [
+        Line2D([0], [0], marker="o", color="none", markerfacecolor=TERRACOTTA, markeredgecolor=INK, markersize=8, label="positive pair / student"),
+        Line2D([0], [0], marker="o", color="none", markerfacecolor=SLATE, markeredgecolor=INK, markersize=8, label="negative / teacher"),
+    ]
+    leg = ax.legend(
+        handles=handles,
+        loc="upper right",
+        bbox_to_anchor=(0.985, 0.905),
+        frameon=True,
+        fancybox=False,
+        borderpad=0.4,
+        prop={"weight": "bold", "size": 7.5},
+    )
+    frame = leg.get_frame()
+    frame.set_facecolor(PAPER)
+    frame.set_edgecolor(HAIRLINE)
+    frame.set_linewidth(0.8)
+    for t_ in leg.get_texts():
+        t_.set_color(INK)
+        t_.set_fontweight("bold")
+    return fig_to_image(fig)
+
+
+# ===========================================================================
+# 7. qec-pipeline  (hidden error → syndrome → recovery)
+# ===========================================================================
+def draw_qec_pipeline(i: int) -> Image.Image:
+    t = i / (N_FRAMES - 1)
+    hide = phase(t, 0.00, 0.18)
+    fire = phase(t, 0.16, 0.42)
+    infer = phase(t, 0.38, 0.62)
+    act = phase(t, 0.52, 0.80)
+    fig = new_figure()
+    ax = deco_axes(fig)
+    schematic_stamp(ax)
+    panel_title(ax, 0.045, 0.955, "Hidden error  →  syndrome  →  recovery")
+    txt(
+        ax,
+        0.045,
+        0.915,
+        "The decoder never sees the state. It sees detector clicks.",
+        size=8,
+        color=MUTED,
+        weight="normal",
+        ha="left",
+    )
+
+    n = 5
+    xs = np.linspace(0.12, 0.88, n)
+    yq = 0.70
+    fault = 2
+    for k, x in enumerate(xs):
+        on = k == fault and hide > 0.4
+        ax.add_patch(Circle((x, yq), 0.042, facecolor=TERR_SOFT if on else PANEL, edgecolor=INK, lw=0.9, zorder=4))
+        txt(ax, x, yq, rf"$q_{k}$", size=8, color=INK, weight="bold")
+        if on:
+            ax.add_patch(
+                Rectangle((x - 0.038, yq - 0.038), 0.076, 0.076, facecolor="none", edgecolor=MUTED, hatch="////", lw=0, zorder=5, alpha=0.55)
+            )
+            txt(ax, x, yq + 0.07, "fault (hidden)", size=7, color=TERRACOTTA, weight="bold")
+
+    txt(ax, 0.045, 0.78, "physical qubits", size=8, color=MUTED, weight="bold", ha="left")
+
+    yd = 0.48
+    clicks = {1, 2}
+    for k in range(n - 1):
+        x = 0.5 * (xs[k] + xs[k + 1])
+        lit = k in clicks and fire > 0.35
+        ax.add_patch(
+            RegularPolygon(
+                (x, yd),
+                4,
+                radius=0.032,
+                orientation=0.785,
+                facecolor=TERRACOTTA if lit else PAPER,
+                edgecolor=TERRACOTTA if lit else INK,
+                lw=0.9,
+                zorder=4,
+            )
+        )
+        if lit:
+            ax.add_patch(Circle((x, yd), 0.006 + 0.01 * fire, facecolor=TERRACOTTA, edgecolor="none", zorder=6, alpha=0.35))
+        arrow(ax, (x, yq - 0.055), (x, yd + 0.04), color=MUTED if not lit else TERRACOTTA, lw=0.85, ms=8)
+    txt(ax, 0.045, 0.48, "syndrome s", size=8, color=MUTED, weight="bold", ha="left")
+
+    rounded(ax, (0.33, 0.22), 0.34, 0.14, fc=SLATE_SOFT if infer > 0.4 else PAPER, ec=SLATE if infer > 0.4 else INK, lw=1.05, r=0.012, z=4)
+    txt(ax, 0.50, 0.31, "decoder", size=10, color=INK, weight="bold")
+    txt(ax, 0.50, 0.265, r"$s \;\rightarrow\;$ recovery", size=8, color=MUTED, weight="normal")
+    arrow(ax, (0.50, 0.445), (0.50, 0.36), color=SLATE, lw=1.2, ms=10)
+
+    yr = 0.10
+    for k, x in enumerate(xs):
+        recovered = k == fault and act > 0.45
+        rounded(
+            ax,
+            (x - 0.04, yr),
+            0.08,
+            0.07,
+            fc=TERR_SOFT if recovered else PAPER,
+            ec=TERRACOTTA if recovered else HAIRLINE,
+            lw=0.9 if recovered else 0.7,
+            r=0.01,
+            z=4,
+        )
+        lab = "X" if recovered else "I"
+        txt(ax, x, yr + 0.035, lab, size=8, color=TERRACOTTA if recovered else MUTED, weight="bold")
+    txt(ax, 0.045, 0.135, "recovery", size=8, color=MUTED, weight="bold", ha="left")
+    if act > 0.45:
+        arrow(ax, (0.50, 0.22), (xs[fault], yr + 0.07), color=TERRACOTTA, lw=1.15, ms=9)
+    handles = [
+        Line2D([0], [0], marker="o", color="none", markerfacecolor=TERR_SOFT, markeredgecolor=INK, markersize=8, label="hidden fault"),
+        Line2D([0], [0], marker="D", color="none", markerfacecolor=TERRACOTTA, markeredgecolor=INK, markersize=7, label="detector click"),
+        Line2D([0], [0], marker="s", color="none", markerfacecolor=TERR_SOFT, markeredgecolor=TERRACOTTA, markersize=7, label="recovery"),
+    ]
+    leg = ax.legend(
+        handles=handles,
+        loc="upper right",
+        bbox_to_anchor=(0.985, 0.905),
+        frameon=True,
+        fancybox=False,
+        borderpad=0.4,
+        ncol=3,
+        prop={"weight": "bold", "size": 7.5},
+    )
+    frame = leg.get_frame()
+    frame.set_facecolor(PAPER)
+    frame.set_edgecolor(HAIRLINE)
+    frame.set_linewidth(0.8)
+    for t_ in leg.get_texts():
+        t_.set_color(INK)
+        t_.set_fontweight("bold")
+    return fig_to_image(fig)
+
+
+# ===========================================================================
 # GIF assembly
 # ===========================================================================
 SPECS = [
@@ -832,6 +1052,8 @@ SPECS = [
     ("video-temporal", draw_video_temporal),
     ("sft-then-rl", draw_sft_then_rl),
     ("denoise-trajectory", draw_denoise),
+    ("ssl-family", draw_ssl_family),
+    ("qec-pipeline", draw_qec_pipeline),
 ]
 
 
@@ -886,7 +1108,12 @@ def main() -> None:
     _configure_rc()
     GIF_DIR.mkdir(parents=True, exist_ok=True)
     POSTER_DIR.mkdir(parents=True, exist_ok=True)
-    names = [n for n, _ in SPECS]
+    requested = [a for a in sys.argv[1:] if not a.startswith("-")]
+    names = [n for n, _ in SPECS if not requested or n in requested]
+    if requested:
+        missing = [n for n in requested if n not in dict(SPECS)]
+        if missing:
+            raise SystemExit(f"unknown schematic(s): {', '.join(missing)}")
     print(f"Rendering {len(names)} schematics × {N_FRAMES} frames @ {DPI} dpi…")
 
     results = []

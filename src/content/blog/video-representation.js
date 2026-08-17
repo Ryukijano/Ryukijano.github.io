@@ -14,6 +14,19 @@ export default {
       'Schematic: a bag of shuffled frames against an ordered stream through a temporal encoder. Framing, not measured.',
     highlight: ['Schematic', 'Framing, not measured'],
   },
+  taxonomy: {
+    title: 'SAME CAMERA',
+    caption: 'Three objectives. One stream. The losses cannot be shared just because the pixels can.',
+    branches: [
+      { name: 'Phase', items: ['what stage?', 'coarse narrative'] },
+      { name: 'Tracking', items: ['where is this entity?', 'identity through occlusion'] },
+      { name: 'Prediction', items: ['what happens next?', 'dynamics'] },
+    ],
+  },
+  equations: [
+    { label: 'Bag of frames', expr: 'f(x_t)  →  pool { f(x_t) }' },
+    { label: 'Temporal encoder', expr: 'f(x_1:T)  →  z_1:T  →  h_temporal' },
+  ],
   sections: [
     {
       kicker: 'THE JOB',
@@ -55,4 +68,5 @@ export default {
       highlight: 'schematic',
     },
   },
+  next: { slug: 'video-language', label: 'Video-language' },
 };

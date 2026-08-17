@@ -6,6 +6,19 @@ export default {
   desc: 'A pretext at scale is not the same job as a small labelled set.',
   lead:
     'A labelled dataset answers a question you already know how to ask. Pretraining answers a cheaper question, at a scale the labelled set will never reach, and hopes the resulting weights are useful for questions you have not asked yet.',
+  taxonomy: {
+    title: 'HOW THE CHECKPOINT IS USED',
+    caption: 'Three jobs that share a filename. Not a quality ranking.',
+    branches: [
+      { name: 'Frozen', items: ['encoder as features', 'only the head sees y'] },
+      { name: 'Continued', items: ['keep a pretext on in-domain x', 'then a head'] },
+      { name: 'From scratch', items: ['no useful pretext', 'labels teach appearance too'] },
+    ],
+  },
+  equations: [
+    { label: 'Supervised', expr: '(x, y)  →  f_θ' },
+    { label: 'Pretraining', expr: 'x  →  pretext signal  →  f_θ' },
+  ],
   sections: [
     {
       kicker: 'THE JOB',
@@ -46,4 +59,5 @@ export default {
       highlight: 'schematic',
     },
   },
+  next: { slug: 'contrastive-ssl', label: 'Contrastive SSL' },
 };

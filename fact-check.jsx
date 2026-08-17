@@ -148,17 +148,22 @@ const MUST = {
     'Skills are not SFT',
   ],
   '/blog/pretraining': ['pretext', 'Frozen', 'Continued pretraining', 'From scratch'],
-  '/blog/contrastive-ssl': ['collapse', 'InfoNCE', 'Two views'],
-  '/blog/predictive-ssl': ['latent', 'JEPA', 'we published JEPA'],
+  '/blog/contrastive-ssl': ['collapse', 'InfoNCE', 'Two views', 'self-distillation'],
+  '/blog/predictive-ssl': ['latent', 'JEPA', 'we published JEPA', 'Three contracts'],
   '/blog/video-representation': ['temporal', 'bag of frames', 'Video is not a bag of frames'],
-  '/blog/video-language': ['Vision-language-action', 'VLA', 'composed'],
-  '/blog/post-training': ['reward', 'SFT is cloning', 'RL is search'],
+  '/blog/video-language': ['Vision-language-action', 'VLA', 'composed', 'USB arm'],
+  '/blog/post-training': ['reward', 'SFT is cloning', 'RL is search', 'mental model, not a theorem', 'DPO', 'GRPO'],
   '/blog/diffusion-objectives': [
     'Denoising',
     'I have not trained a diffusion language model',
     'I have not trained LLaDA',
+    'flow matching',
+    'score matching',
   ],
   '/blog/agent-skills': ['Skills are not SFT', 'MCP', 'Ryukijano/agent-skills'],
+  '/blog/qec-learning': ['syndrome', 'recovery', 'Error correction is a learning problem'],
+  '/blog/qec-supervision': ['What the decoder is allowed to know', 'Supervised', 'Stim'],
+  '/blog/circuit-search': ['Energy as a reward', 'N=15', '2048 shots', 'participant'],
 };
 
 const countOf = (hay, needle) => hay.split(needle).length - 1;
@@ -179,6 +184,7 @@ const MUST_WORDS = {
   '/work/nqcc-rolls-royce': ['illustrative'],
   '/work/gemma-le-vla': ['illustrative'],
   '/work/yquantum-shors-algorithm': ['schematic'],
+  '/blog': ['schematic'],
   '/blog/pretraining': ['schematic'],
   '/blog/contrastive-ssl': ['schematic', 'framing, not measured'],
   '/blog/predictive-ssl': ['schematic', 'framing, not measured'],
@@ -186,12 +192,15 @@ const MUST_WORDS = {
   '/blog/video-language': ['schematic'],
   '/blog/post-training': ['schematic', 'framing, not measured'],
   '/blog/diffusion-objectives': ['schematic', 'framing, not measured'],
+  '/blog/qec-learning': ['schematic', 'framing, not measured'],
+  '/blog/qec-supervision': ['schematic'],
+  '/blog/circuit-search': ['schematic', 'framing, not measured'],
 };
 
 const BANNED = [
   'pid/345/4093','undefined','NaN','[object Object]','not yet ported','NOT YET PORTED',
   'cubic-bezier(.16,1,.3,1)',"Master's student in CS & AI",
-  'I introduced V-JEPA', 'I published V-JEPA', 'I trained LLaDA',
+  'I introduced V-JEPA', 'I published V-JEPA', 'I trained LLaDA', 'I introduced DINO',
 ];
 const CLICHE = ['revolutionary','cutting-edge','seamless','game-changing','at the intersection of','passionate about'];
 
