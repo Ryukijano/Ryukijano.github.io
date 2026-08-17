@@ -44,6 +44,10 @@ export default function NotFound() {
             Academic
           </Link>
           <span aria-hidden="true"> · </span>
+          <Link to="/blog" style={linkStyle}>
+            Notes
+          </Link>
+          <span aria-hidden="true"> · </span>
           <Link to="/" style={linkStyle}>
             Home
           </Link>

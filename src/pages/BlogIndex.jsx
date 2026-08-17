@@ -2,28 +2,9 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Text, Theme } from '../components/m3/index.jsx';
 import SiteNav from '../components/SiteNav.jsx';
-import { alsoStudies, caseStudies, featuredStudies } from '../content/caseStudies/index.js';
-
-/**
- * /work — a Distill-like dated index of notes, not a landing page.
- *
- * Featured rows are the eight studies worth leading with. Everything else
- * sits under Also. The four GIF strand sections, the fake terminal, the
- * affiliation chips and the method-transfer matrix are not on this page.
- */
-const THEME = 'study-dark';
+import { notes } from '../content/blog/index.js';
 
 const HAIRLINE = '1px solid var(--md-sys-color-outline-variant)';
-
-const YEARS = caseStudies.map((s) => s.year).filter((y) => y != null);
-const YEAR_SPAN = YEARS.length ? `${Math.min(...YEARS)}–${Math.max(...YEARS)}` : '';
-const LANES = [...new Set(caseStudies.map((s) => s.lane).filter(Boolean))].sort().join(' · ');
-
-const FACTS = [
-  { dt: 'Notes', dd: String(caseStudies.length) },
-  { dt: 'Span', dd: YEAR_SPAN },
-  { dt: 'Lanes', dd: LANES },
-];
 
 const MONO = {
   '--m3-font': 'var(--md-sys-typescale-mono-font)',
@@ -35,22 +16,29 @@ const SERIF = {
   '--m3-lh': 1.3,
 };
 
-export default function WorkIndex() {
+const AREAS = [...new Set(notes.map((note) => note.area))].join(' · ');
+
+const FACTS = [
+  { dt: 'Notes', dd: String(notes.length) },
+  { dt: 'Written', dd: '2026' },
+  { dt: 'Areas', dd: String(new Set(notes.map((note) => note.area)).size) },
+];
+
+export default function BlogIndex() {
   useEffect(() => {
-    document.title = 'Selected work — Gyanateet Dutta';
+    document.title = 'Notes — Gyanateet Dutta';
   }, []);
 
   return (
-    <Theme name={THEME} style={rootStyle}>
-      <SiteNav variant="ink" />
-
+    <Theme name="study" style={rootStyle}>
+      <SiteNav variant="paper" />
       <main style={mainStyle}>
         <header style={headerStyle}>
           <Text as="h1" role="display-small" style={{ margin: 0 }}>
-            Work
+            Notes
           </Text>
           <Text as="p" role="title-large" style={leadStyle}>
-            Eleven notes. Papers are on Academic.
+            How the learning areas work. Projects are domains, not the plot. {AREAS}.
           </Text>
           <dl style={factsStyle}>
             {FACTS.map((fact) => (
@@ -70,57 +58,39 @@ export default function WorkIndex() {
           </dl>
         </header>
 
-        <ul aria-label="Featured notes" style={listStyle}>
-          {featuredStudies.map((study) => (
-            <li key={study.slug} style={featuredRowStyle}>
-              <Text as="span" role="label-medium" style={{ ...MONO, color: 'var(--md-sys-color-on-surface-variant)' }}>
-                {study.year}
+        <ul aria-label="Field notes" style={listStyle}>
+          {notes.map((note) => (
+            <li key={note.slug} style={rowStyle}>
+              <Text
+                as="span"
+                role="label-medium"
+                style={{ ...MONO, color: 'var(--md-sys-color-on-surface-variant)' }}
+              >
+                {note.written}
               </Text>
-              <Link to={`/work/${study.slug}`} className="m3-state" style={titleLinkStyle}>
+              <Link to={`/blog/${note.slug}`} className="m3-state" style={titleLinkStyle}>
                 <Text as="span" role="title-medium" style={SERIF}>
-                  {study.name}
+                  {note.title}
                 </Text>
               </Link>
               <Text as="span" role="label-medium" style={{ color: 'var(--md-sys-color-on-surface-variant)' }}>
-                {study.lane}
+                {note.area}
               </Text>
               <Text as="span" role="body-small" style={{ color: 'var(--md-sys-color-on-surface-variant)' }}>
-                {study.desc}
+                {note.desc}
               </Text>
-            </li>
-          ))}
-        </ul>
-
-        <Text as="h2" role="headline-small" style={alsoHeadingStyle}>
-          Also
-        </Text>
-        <ul aria-label="Also" style={listStyle}>
-          {alsoStudies.map((study) => (
-            <li key={study.slug} style={alsoRowStyle}>
-              <Text as="span" role="label-medium" style={{ ...MONO, color: 'var(--md-sys-color-on-surface-variant)' }}>
-                {study.year}
-              </Text>
-              <Link to={`/work/${study.slug}`} className="m3-state" style={titleLinkStyle}>
-                <Text as="span" role="title-medium" style={SERIF}>
-                  {study.name}
-                </Text>
-              </Link>
             </li>
           ))}
         </ul>
 
         <footer style={footerStyle}>
           <Text as="p" role="body-small" style={{ color: 'var(--md-sys-color-on-surface-variant)', margin: 0 }}>
+            <Link to="/work" className="m3-state" style={footLinkStyle}>
+              Work
+            </Link>
+            {' · '}
             <Link to="/academic" className="m3-state" style={footLinkStyle}>
-              Academic record
-            </Link>
-            {' · '}
-            <Link to="/blog" className="m3-state" style={footLinkStyle}>
-              Notes
-            </Link>
-            {' · '}
-            <Link to="/trust" className="m3-state" style={footLinkStyle}>
-              What we trust
+              Academic
             </Link>
           </Text>
         </footer>
@@ -170,26 +140,13 @@ const listStyle = {
   padding: 0,
 };
 
-const featuredRowStyle = {
+const rowStyle = {
   display: 'grid',
-  gridTemplateColumns: '4.25rem minmax(8rem, 1.15fr) 5.75rem minmax(8rem, 1.4fr)',
+  gridTemplateColumns: '6.5rem minmax(8rem, 1.2fr) 7.5rem minmax(8rem, 1.35fr)',
   gap: '12px 20px',
   alignItems: 'baseline',
   padding: '14px 0',
   borderBottom: HAIRLINE,
-};
-
-const alsoRowStyle = {
-  display: 'grid',
-  gridTemplateColumns: '4.25rem 1fr',
-  gap: '12px 20px',
-  alignItems: 'baseline',
-  padding: '12px 0',
-  borderBottom: HAIRLINE,
-};
-
-const alsoHeadingStyle = {
-  margin: '56px 0 8px',
 };
 
 const titleLinkStyle = {
