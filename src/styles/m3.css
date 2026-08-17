@@ -503,4 +503,73 @@
       transform: none;
     }
   }
+
+  .notes-index {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 0 40px 120px;
+  }
+
+  .notes-index__row,
+  .notes-index__map-row,
+  .note-taxonomy__row {
+    display: grid;
+    gap: 12px 20px;
+    align-items: baseline;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  .notes-index__row {
+    grid-template-columns: 6.5rem minmax(8rem, 1.2fr) 7.5rem minmax(8rem, 1.35fr);
+    padding: 14px 0;
+  }
+
+  .notes-index__map-row {
+    grid-template-columns: 13rem 1fr;
+    padding: 8px 0;
+  }
+
+  .note-taxonomy__row {
+    grid-template-columns: 11rem 1fr;
+    padding: 0.7rem 0;
+  }
+
+  @media (max-width: 899px) {
+    .notes-index {
+      padding: 0 20px 96px;
+    }
+
+    .notes-index__row {
+      grid-template-columns: 5.5rem 1fr;
+      grid-template-areas:
+        "date title"
+        ". area"
+        ". desc";
+      gap: 4px 12px;
+      padding: 16px 0;
+    }
+
+    .notes-index__row > :nth-child(1) {
+      grid-area: date;
+    }
+
+    .notes-index__row > :nth-child(2) {
+      grid-area: title;
+      min-width: 0;
+    }
+
+    .notes-index__row > :nth-child(3) {
+      grid-area: area;
+    }
+
+    .notes-index__row > :nth-child(4) {
+      grid-area: desc;
+    }
+
+    .notes-index__map-row,
+    .note-taxonomy__row {
+      grid-template-columns: 1fr;
+      gap: 2px 0;
+    }
+  }
 }

@@ -30,7 +30,7 @@ export default function BlogIndex() {
   return (
     <Theme name="study" style={rootStyle}>
       <SiteNav variant="paper" />
-      <main style={mainStyle}>
+      <main className="notes-index">
         <header style={headerStyle}>
           <Text as="h1" role="display-small" style={{ margin: 0 }}>
             Notes
@@ -65,7 +65,7 @@ export default function BlogIndex() {
           </Text>
           <ol style={listStyle}>
             {curriculum.map((row) => (
-              <li key={row.slug} style={mapRowStyle}>
+              <li key={row.slug} className="notes-index__map-row">
                 <Link to={`/blog/${row.slug}`} className="m3-state" style={titleLinkStyle}>
                   <Text as="span" role="title-small" style={SERIF}>
                     {row.layer}
@@ -81,7 +81,7 @@ export default function BlogIndex() {
 
         <ul aria-label="Field notes" style={listStyle}>
           {notes.map((note) => (
-            <li key={note.slug} style={rowStyle}>
+            <li key={note.slug} className="notes-index__row">
               <Text
                 as="span"
                 role="label-medium"
@@ -128,12 +128,6 @@ const rootStyle = {
   WebkitFontSmoothing: 'antialiased',
 };
 
-const mainStyle = {
-  maxWidth: '940px',
-  margin: '0 auto',
-  padding: '0 40px 120px',
-};
-
 const headerStyle = {
   padding: '56px 0 0',
 };
@@ -169,24 +163,6 @@ const listStyle = {
   listStyle: 'none',
   margin: 0,
   padding: 0,
-};
-
-const mapRowStyle = {
-  display: 'grid',
-  gridTemplateColumns: '13rem 1fr',
-  gap: '12px 20px',
-  alignItems: 'baseline',
-  padding: '8px 0',
-  borderBottom: HAIRLINE,
-};
-
-const rowStyle = {
-  display: 'grid',
-  gridTemplateColumns: '6.5rem minmax(8rem, 1.2fr) 7.5rem minmax(8rem, 1.35fr)',
-  gap: '12px 20px',
-  alignItems: 'baseline',
-  padding: '14px 0',
-  borderBottom: HAIRLINE,
 };
 
 const titleLinkStyle = {

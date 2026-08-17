@@ -26,9 +26,7 @@ export default function NoteTaxonomy({ title, branches, caption }) {
         {branches.map((branch) => (
           <li
             key={branch.name}
-            style={parseStyle(
-              `display:grid;grid-template-columns:11rem 1fr;gap:1rem;padding:0.7rem 0;border-bottom:${HAIR};align-items:baseline`,
-            )}
+            className="note-taxonomy__row"
           >
             <Text as="span" role="title-small" style={parseStyle(`${INK};margin:0`)}>
               {branch.name}
