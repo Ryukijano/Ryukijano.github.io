@@ -5,7 +5,7 @@ export default {
   title: 'Energy as a reward',
   desc: 'Hybrid search and RL on circuits: a prior proposes, a score keeps or kills.',
   lead:
-    'Some domains do not hand you a demonstration of the right circuit. They hand you a score — an energy, a residual, a logical error rate — and a generator that can propose another candidate. That is the same clone-versus-search cut as post-training, with a Hamiltonian instead of a preference model.',
+    'Some domains do not hand you a demonstration of the right circuit. They hand you a score — an energy, a residual — and a generator that can propose another candidate. Same clone-versus-search cut as post-training, with a Hamiltonian instead of a preference model.',
   concept: {
     src: '/assets/gifs/notes/sft-then-rl.gif',
     poster: '/assets/images/notes/sft-then-rl-poster.png',
@@ -29,7 +29,7 @@ export default {
       heading: 'Propose structure, then read physics',
       body: [
         'A variational circuit family is a prior over programs. Measuring an energy is a score. The learning problem is: update the generator so later proposals score better. That can be gradient on continuous parameters (VQE), or a discrete search over gate strings (GQE-shaped generators, RL, evolutionary strategies).',
-        'The clone-versus-search slogan still holds as a map. You almost never have a dataset of “correct” circuits for a new molecule. You have a Hamiltonian. So you search.',
+        'The clone-versus-search cut still holds. You almost never have a dataset of “correct” circuits for a new molecule. You have a Hamiltonian. So you search.',
       ],
     },
     {
@@ -37,21 +37,21 @@ export default {
       heading: 'The score is expensive and noisy',
       body: [
         'Each candidate may be a quantum circuit on a simulator or a device, or a classical surrogate. Shot noise, barren plateaus, and compiler rewrites are the environment. Reward shaping — energy versus residual versus a classification of “this looks like a known ansatz” — changes which circuits survive.',
-        'Hybrid loops mix a cheap classical proposal with an expensive quantum or DFT read. That is not a product category. It is a statement about which part of the score you can afford per step.',
+        'Hybrid loops mix a cheap classical proposal with an expensive quantum or DFT read. Which part of the score you can afford per step is the constraint.',
       ],
     },
     {
       kicker: 'THE DOMAIN',
-      heading: 'Challenges are domains, not trophies',
+      heading: 'The scores I actually ran',
       body: [
-        'Conditional generation of circuits for materials, hydrogen on a surface, factoring N=15: those are different scores and different priors. They share the pipe. They do not share a prize. Phase 3 of a challenge is not coauthorship of the paper the challenge cites. A hackathon is participation unless a specific track placing is documented.',
-        'Shor at N=15 is a domain where the “score” is whether the period-finding circuit did what the textbook said, on a simulator, at a stated shot count. It is not cryptographically relevant factoring.',
+        'Conditional GQE proposes an ansatz because there is no dataset of correct circuits for a new molecule — only an energy. I am not a coauthor of Nakaji et al., or of the GQE papers that challenge sits on. NQCC was hydrogen-on-nickel, VQE and sample-based diagonalisation, run as a participant.',
+        'Shor was period-finding at N=15, 2048 shots, on a simulator. That score is whether the hand-built arithmetic factored 15, not a Hamiltonian. It is not cryptographically relevant factoring.',
       ],
     },
   ],
   instance: {
     quote:
-      'Conditional GQE is search under an energy. NQCC was a hydrogen-on-nickel score I ran as a participant. Shor was a period-finding circuit at N=15, 2048 shots. Three domains. One pipe.',
+      'Conditional GQE is search under an energy. NQCC was a hydrogen-on-nickel score I ran as a participant. Shor was a period-finding circuit at N=15, 2048 shots. That is how I spent a prior when there was no demonstration to clone.',
     attribution: 'SEARCH, NOT A LEADERBOARD',
     workSlug: 'conditional-gqe',
     workLabel: 'Conditional GQE',

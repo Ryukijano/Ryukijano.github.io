@@ -5,7 +5,7 @@ export default {
   title: 'What should be here',
   desc: 'Three different fill-in jobs: reconstruct pixels, predict latents, learn a stochastic code.',
   lead:
-    'Not every pretext is “these two observations correspond.” A second staircase asks what should occupy a hole: a missing patch, a future clip, a occluded tool. The hole can be filled in pixels, in a representation, or through a generative latent. Those are not one family with three logos.',
+    'Not every pretext is “these two observations correspond.” A predictive pretext asks what should occupy a hole. Fill that hole in pixels, in a representation, or through a generative latent, and you have three contracts, not one method with three logos.',
   concept: {
     src: '/assets/gifs/notes/latent-predict.gif',
     poster: '/assets/images/notes/latent-predict-poster.png',
@@ -26,7 +26,7 @@ export default {
   equations: [
     {
       label: 'Latent prediction (JEPA-shaped)',
-      expr: 'z_c = f(x_context),   ẑ_t = g(z_c),   L ≈ ||ẑ_t − f̄(x_target)||²',
+      expr: 'z_c = f(x_context),   ẑ_t = g(z_c, pos_target),   L ≈ ||ẑ_t − f̄(x_target)||²',
     },
   ],
   sections: [
@@ -42,22 +42,22 @@ export default {
       kicker: 'MECHANICS',
       heading: 'The target decides what the model may ignore',
       body: [
-        'If the target is RGB, the loss sees lighting, compression, and specular glare. If the target is a frozen vision transformer, you predict that geometry. If the target is another video encoder, you predict time. I-JEPA made the representation-as-target move on stills. V-JEPA takes it into video: a world representation you can later condition for prediction and, in other labs, planning. I have used the idea as a tracking and prediction domain. I did not train Meta’s V-JEPA 2 run.',
-        'A VAE’s extra axis is sampling. That is useful when the domain is generation or when you want a compact sequence code. Mixing it into “the JEPA family” hides the KL term, which is the whole point of the model.',
+        'If the target is RGB, the loss sees lighting, compression, and specular glare. If it is an EMA target encoder, you predict that latent. I-JEPA did that on stills; V-JEPA does it on video. A frozen off-the-shelf ViT as target is a different recipe. Meta’s V-JEPA 2 later post-trains an action-conditioned world model for planning. I did not train Meta’s V-JEPA 2 run.',
+        'A VAE’s extra axis is a KL bottleneck so the code is a distribution you can sample, plus a decoder back to pixels. Mixing it into “the JEPA family” hides both. In a reconstructive VAE the KL is often a regulariser, not the primary objective; it is still what makes the model a VAE rather than masked pixel reconstruction or latent prediction.',
       ],
     },
     {
       kicker: 'THE DOMAIN',
       heading: 'Occlusion and the next twenty frames',
       body: [
-        'Surgical video is a natural hole-filling domain: the camera is already a time series, and tools disappear behind tissue. Next-frame RGB asks whether the present is enough to paint the near future. Occlusion tracking asks whether a latent predictor can hold an identity when the pixels go away. Those are different contracts on similar footage.',
-        'They are not phase recognition, and they are not a claim that a lab notebook is a JEPA paper.',
+        'Suturing video is a hole in time: close camera, a needle, a background that barely moves, twenty frames to paint. Next-frame RGB asks whether a stochastic code can reconstruct that near future in pixels. That is a VAE-shaped contract. It is not latent prediction.',
+        'Keyhole surgery is a different hole. Tools disappear behind smoke and blood, and the labelled frames are the easy ones: an annotator watching the plume cannot tell either. Holding an identity when the pixels go away is closer to predicting a representation of the missing piece. Two contracts, similar theatres. They are not phase recognition.',
       ],
     },
   ],
   instance: {
     quote:
-      'Next-frame work I ran goes through a VAE-style bottleneck — reconstruct, with a stochastic code. Occlusion tracking is closer to latent prediction. Neither is “we published JEPA.”',
+      'Next-frame work I ran on suturing goes through a VAE-style bottleneck: reconstruct, with a stochastic code, decode to pixels. Occlusion tracking on laparoscopic tools is closer to latent prediction. Neither is “we published JEPA.”',
     attribution: 'TWO CONTRACTS ON ONE CAMERA',
     workSlug: 'fet-vae-surgical-prediction',
     workLabel: 'FET-VAE surgical prediction',

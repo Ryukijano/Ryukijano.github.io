@@ -5,9 +5,9 @@ export default {
   title: 'Skills are not SFT',
   desc: 'Procedures you hand an agent are a different object from weights.',
   lead:
-    'Post-training changes weights. A skill file changes the procedure the agent is allowed to follow this turn. Mixing those up is how people convince themselves they finetuned a model when they wrote a README.',
+    'Post-training changes weights. A skill file changes the procedure the agent is allowed to follow this turn.',
   taxonomy: {
-    title: 'WHERE THE CAPABILITY LIVES',
+    title: 'WEIGHTS OR A FILE',
     caption: 'Weights encode generalised behaviour. Skills encode procedures you can edit without a checkpoint.',
     branches: [
       { name: 'Weights', items: ['SFT', 'RL', 'learned behaviour'] },
@@ -33,16 +33,16 @@ export default {
     },
     {
       kicker: 'THE DOMAIN',
-      heading: 'A lab that is mostly queues and video',
+      heading: 'The procedures change faster than a checkpoint should',
       body: [
-        'Surgical MOT, HPC jobs, and a desktop that has to screenshot a plate are domains where the costly mistake is procedural: wrong split, wrong GPU, wrong asset path. A personal skill pack is a way to keep those procedures next to the repo. It is not a claim that I invented Agent Skills, MCP, or Cursor.',
-        'The honest test is whether a cold agent, given the skill, can run the eval you meant. If it still has to guess the dataset root, you wrote prose, not a skill.',
+        'Surgical MOT, HPC jobs, and Gemma-Le’s queue — LeRobot, three L40s — are where the costly mistake is procedural: wrong split, wrong GPU, wrong path. You can SFT that knowledge into weights. I wrote it down as a skill instead.',
+        'The test is whether an agent that has not seen the repo can run the eval you meant. If it still has to guess the dataset root, you wrote prose, not a skill.',
       ],
     },
   ],
   instance: {
     quote:
-      'I keep a skill library for MOT and HPC so the agent does not forget the lab. That is a runbook. It is not post-training, and it is not a paper.',
+      'I keep a skill library for MOT and HPC so the agent does not have to relearn the lab every turn. That is a runbook. Skills are not SFT.',
     attribution: 'PROCEDURES, NOT WEIGHTS',
     external: {
       href: 'https://github.com/Ryukijano/agent-skills',

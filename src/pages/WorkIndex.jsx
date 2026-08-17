@@ -20,7 +20,7 @@ const YEAR_SPAN = YEARS.length ? `${Math.min(...YEARS)}–${Math.max(...YEARS)}`
 const LANES = [...new Set(caseStudies.map((s) => s.lane).filter(Boolean))].sort().join(' · ');
 
 const FACTS = [
-  { dt: 'Notes', dd: String(caseStudies.length) },
+  { dt: 'Projects', dd: String(caseStudies.length) },
   { dt: 'Span', dd: YEAR_SPAN },
   { dt: 'Lanes', dd: LANES },
 ];
@@ -50,7 +50,7 @@ export default function WorkIndex() {
             Work
           </Text>
           <Text as="p" role="title-large" style={leadStyle}>
-            Eleven notes. Papers are on Academic.
+            Selected work. Notes are the jobs. Papers are on Academic.
           </Text>
           <dl style={factsStyle}>
             {FACTS.map((fact) => (
@@ -70,7 +70,7 @@ export default function WorkIndex() {
           </dl>
         </header>
 
-        <ul aria-label="Featured notes" style={listStyle}>
+        <ul aria-label="Featured projects" style={listStyle}>
           {featuredStudies.map((study) => (
             <li key={study.slug} style={featuredRowStyle}>
               <Text as="span" role="label-medium" style={{ ...MONO, color: 'var(--md-sys-color-on-surface-variant)' }}>

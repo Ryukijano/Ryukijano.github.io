@@ -36,7 +36,9 @@ export default function BlogIndex() {
             Notes
           </Text>
           <Text as="p" role="title-large" style={leadStyle}>
-            How the learning areas work. Projects are domains, not the plot.
+            How the learning areas work. Projects are domains, not the plot. I met
+            them as theatre video, then robot actions, then a state I could not look
+            at.
           </Text>
           <dl style={factsStyle}>
             {FACTS.map((fact) => (
@@ -58,10 +60,12 @@ export default function BlogIndex() {
 
         <section style={mapStyle} aria-labelledby="curriculum-heading">
           <Text as="h2" role="title-small" style={{ margin: 0 }} id="curriculum-heading">
-            Where intelligence lives
+            How the object changed
           </Text>
           <Text as="p" role="body-small" style={mapCaptionStyle}>
-            Schematic of the stack: the learning problem is the protagonist. Framing, not a survey.
+            Theatre video, then action chunks, then a state I could not look at, then
+            an energy instead of a demonstration. Schematic of that path. Framing, not
+            a survey.
           </Text>
           <ol style={listStyle}>
             {curriculum.map((row) => (

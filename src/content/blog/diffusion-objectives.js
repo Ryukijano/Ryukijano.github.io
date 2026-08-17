@@ -5,7 +5,7 @@ export default {
   title: 'Denoising is a family, not a medium',
   desc: 'The object being noised can be pixels, actions, or tokens. The reverse losses are cousins, not identical.',
   lead:
-    'People hear diffusion and see an image sampler. The useful cut is: a forward process corrupts a structured object, a network learns a reverse step, and at sample time you walk back from noise. The object can be an image, a robot trajectory, or — in papers I have read and not trained — language tokens. The reverse losses are a family: score matching, DDPM epsilon-prediction, flow matching, discrete corruption. They are not one equation with four logos.',
+    'A forward process corrupts a structured object, a network learns a reverse step, and at sample time you walk back from noise. The object can be an image, a robot trajectory, or — in papers I have read and not trained — language tokens. The reverse losses are a family: score matching, DDPM epsilon-prediction, flow matching, discrete corruption.',
   concept: {
     src: '/assets/gifs/notes/denoise-trajectory.gif',
     poster: '/assets/images/notes/denoise-trajectory-poster.png',
@@ -16,7 +16,7 @@ export default {
   },
   taxonomy: {
     title: 'REVERSE LOSSES',
-    caption: 'Same cartoon (corrupt, then undo). Different mathematics.',
+    caption: 'Corrupt, then undo. Different mathematics.',
     branches: [
       { name: 'Score matching', items: ['∇ log p_t', 'continuous density'] },
       { name: 'DDPM / epsilon', items: ['predict noise', 'fixed Gaussian schedule'] },
@@ -26,7 +26,7 @@ export default {
   },
   equations: [
     {
-      label: 'Forward corruption (cartoon)',
+      label: 'Forward corruption',
       expr: 'x_0  →  x_t  →  noise',
     },
   ],
@@ -35,7 +35,7 @@ export default {
       kicker: 'THE JOB',
       heading: 'Undo a corruption of a whole object',
       body: [
-        'Autoregression predicts the next token. Diffusion-shaped models predict a cleaner version of a whole object. That is why people reach for them when the object is a continuous trajectory, a picture, or a set of tokens they want to revise rather than emit left to right.',
+        'Autoregression predicts the next token. Diffusion-shaped models predict a cleaner version of a whole object. They fit when the object is a continuous trajectory, a picture, or a set of tokens you want to revise rather than emit left to right.',
         'Sampler tricks — DDIM, guidance, few-step distillation — change the walk, not the contract. If your training loss is still a next-token log-prob, you are not in this family no matter how much noise you overlay in a figure.',
       ],
     },
@@ -43,16 +43,16 @@ export default {
       kicker: 'MECHANICS',
       heading: 'The medium is whoever owns the forward process',
       body: [
-        'On pixels, the object is an image. On actions, the object is a horizon of controls: diffusion policy, ScaleDP-style heads, flow matching on trajectories. The conditioner is whatever you still have — a visual encoder, a language token, proprioception. On language, discrete diffusion (LLaDA, Dream, and cousins) corrupts tokens and learns to denoise them. I have not trained a diffusion language model. I have read the objective and recognised the shape.',
-        'Score matching, epsilon-prediction, and flow matching share the cartoon and disagree about the vector the network should emit. Discrete diffusion disagrees about the state space. Keep the family; keep the seams.',
+        'On pixels, the object is an image. On actions, the object is a horizon of controls: diffusion policy, ScaleDP-style heads, flow matching on trajectories. The conditioner is whatever you still have — a visual encoder, a language token, proprioception. On language, masked diffusion (LLaDA and cousins) replaces tokens with a mask and learns to unmask them.',
+        'Score matching and DDPM epsilon-prediction are two readings of the same Gaussian reverse process. Flow matching instead regresses a velocity along a chosen path. Discrete diffusion changes the state space.',
       ],
     },
     {
       kicker: 'THE DOMAIN',
-      heading: 'When a trajectory is a better object than a word',
+      heading: 'The object was frames. Then it was a chunk of controls.',
       body: [
-        'Robot action chunks are continuous and multimodal: two ways to grasp can both be right. A denoiser on that space is a natural density. Language is discrete and already has a strong autoregressive prior, which is why token diffusion is still an experiment for most labs rather than a default.',
-        'The domain error is to see a diffusion head on a VLA and conclude that the system is a generative image model, or to see a blog post about diffusion LMs and conclude that a LoRA on Gemma was one.',
+        'Before the small VLA, the object I trained on was theatre video: frames for phase, tracks, next-frame. On Gemma-Le the object is an eight-step action chunk. Two grasps can both be right; the mean of them is not. ScaleDP denoises that chunk, conditioned on SigLIP and Gemma. A reverse process on that space can represent several ways to grasp. Diffusion Policy and ScaleDP do it by denoising; flow matching does it with a velocity field.',
+        'Language tokens are a different object — discrete, already owned by autoregression. Discrete diffusion (LLaDA, Dream, and cousins) is that reverse process on text. I have not trained a diffusion language model. A LoRA on Gemma with a diffusion action head is not one.',
       ],
     },
   ],
