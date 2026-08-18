@@ -55,6 +55,7 @@ export default {
     also: { workSlug: 'gemma-le-vla', workLabel: 'Gemma-Le VLA' },
     gif: {
       src: '/assets/gifs/cosmos-sentinel-pipeline.gif',
+      poster: '/assets/images/cosmos-sentinel-pipeline-poster.png',
       alt: 'Schematic pipeline chaining perception, a video model, and language',
       caption:
         'An instance of composed video-language: specialist models in a pipe. The diagram is schematic of the contract, not a measured VLM benchmark.',

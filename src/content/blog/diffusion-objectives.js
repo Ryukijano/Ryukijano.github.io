@@ -64,6 +64,7 @@ export default {
     workLabel: 'Gemma-Le VLA',
     gif: {
       src: '/assets/gifs/vla-diffusion.gif',
+      poster: '/assets/images/vla-diffusion-poster.png',
       alt: 'Diffusion-style action generation on a small vision-language-action policy',
       caption:
         'An instance of a reverse process on actions. Illustrative of the family on a tabletop policy, not a diffusion-language result.',

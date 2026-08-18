@@ -58,6 +58,7 @@ export default {
     also: { workSlug: 'nqcc-rolls-royce', workLabel: 'NQCC / Rolls-Royce' },
     gif: {
       src: '/assets/gifs/rl_training_loop.gif',
+      poster: '/assets/images/rl_training_loop-poster.png',
       alt: 'Generator reading a reward in a training loop',
       caption:
         'An instance of a search loop on circuit generation. Schematic of the job, not a challenge win.',

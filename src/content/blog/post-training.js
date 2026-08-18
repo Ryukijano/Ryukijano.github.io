@@ -64,6 +64,7 @@ export default {
     also: { workSlug: 'conditional-gqe', workLabel: 'Conditional GQE' },
     gif: {
       src: '/assets/gifs/rl_training_loop.gif',
+      poster: '/assets/images/rl_training_loop-poster.png',
       alt: 'Training loop diagram for a generator reading a reward',
       caption:
         'An instance of a search-shaped post-training loop on circuit generation. Schematic of the job (policy, score, update), not a measured language-model result.',

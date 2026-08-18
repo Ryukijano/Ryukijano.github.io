@@ -66,21 +66,13 @@ export default function MediaFigure({
  * content module supplies them. No radius language — the frame already has none.
  */
 export function FigurePair({ figures = [], style }) {
+  const customStyle = typeof style === 'string' ? parseStyle(style) : style;
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: '1px',
-        background: 'var(--md-sys-color-outline-variant)',
-        border: '1px solid var(--md-sys-color-outline-variant)',
-        margin: '40px 0 0',
-        ...style,
-      }}
-    >
+    <div className="figure-pair" style={customStyle}>
       {figures.map((figure) => (
         <div
           key={figure.src}
+          className="figure-pair__item"
           style={{
             background: 'var(--md-sys-color-surface)',
             padding: '0 0 12px',

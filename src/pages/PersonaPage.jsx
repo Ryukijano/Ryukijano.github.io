@@ -49,7 +49,7 @@ export default function PersonaPage() {
 
   return (
     <Theme
-      name="study"
+      name={data.id === 'gyanateet' ? 'study' : data.id}
       className={data.paneClass}
       style={parseStyle(
         'min-height:100vh;' +

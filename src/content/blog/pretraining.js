@@ -53,6 +53,7 @@ export default {
     workLabel: 'Surgical phase recognition',
     gif: {
       src: '/assets/images/esd-comparison.gif',
+      poster: '/assets/images/esd-comparison-poster.png',
       alt: 'Endoscopic frames beside self-supervised attention maps along a sequence',
       caption:
         'An instance of the domain, not a pretext recipe: frames from endoscopic submucosal dissection beside encoder diagnostics. The maps are schematic of where a frozen visual encoder looks, not a measured clinical result.',

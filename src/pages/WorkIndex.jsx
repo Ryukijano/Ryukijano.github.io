@@ -13,8 +13,6 @@ import { alsoStudies, caseStudies, featuredStudies } from '../content/caseStudie
  */
 const THEME = 'study-dark';
 
-const HAIRLINE = '1px solid var(--md-sys-color-outline-variant)';
-
 const YEARS = caseStudies.map((s) => s.year).filter((y) => y != null);
 const YEAR_SPAN = YEARS.length ? `${Math.min(...YEARS)}–${Math.max(...YEARS)}` : '';
 const LANES = [...new Set(caseStudies.map((s) => s.lane).filter(Boolean))].sort().join(' · ');
@@ -44,7 +42,7 @@ export default function WorkIndex() {
     <Theme name={THEME} style={rootStyle}>
       <SiteNav variant="ink" />
 
-      <main style={mainStyle}>
+      <main className="work-index">
         <header style={headerStyle}>
           <Text as="h1" role="display-small" style={{ margin: 0 }}>
             Work
@@ -52,7 +50,7 @@ export default function WorkIndex() {
           <Text as="p" role="title-large" style={leadStyle}>
             Selected work. Notes are the jobs. Papers are on Academic.
           </Text>
-          <dl style={factsStyle}>
+          <dl className="work-index__facts">
             {FACTS.map((fact) => (
               <div key={fact.dt}>
                 <Text
@@ -72,7 +70,7 @@ export default function WorkIndex() {
 
         <ul aria-label="Featured projects" style={listStyle}>
           {featuredStudies.map((study) => (
-            <li key={study.slug} style={featuredRowStyle}>
+            <li key={study.slug} className="work-index__row">
               <Text as="span" role="label-medium" style={{ ...MONO, color: 'var(--md-sys-color-on-surface-variant)' }}>
                 {study.year}
               </Text>
@@ -96,7 +94,7 @@ export default function WorkIndex() {
         </Text>
         <ul aria-label="Also" style={listStyle}>
           {alsoStudies.map((study) => (
-            <li key={study.slug} style={alsoRowStyle}>
+            <li key={study.slug} className="work-index__also-row">
               <Text as="span" role="label-medium" style={{ ...MONO, color: 'var(--md-sys-color-on-surface-variant)' }}>
                 {study.year}
               </Text>
@@ -137,12 +135,6 @@ const rootStyle = {
   WebkitFontSmoothing: 'antialiased',
 };
 
-const mainStyle = {
-  maxWidth: '940px',
-  margin: '0 auto',
-  padding: '0 40px 120px',
-};
-
 const headerStyle = {
   padding: '56px 0 0',
 };
@@ -154,38 +146,10 @@ const leadStyle = {
   lineHeight: 1.45,
 };
 
-const factsStyle = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-  gap: '20px',
-  margin: '40px 0 0',
-  padding: '18px 0',
-  borderTop: HAIRLINE,
-  borderBottom: HAIRLINE,
-};
-
 const listStyle = {
   listStyle: 'none',
   margin: 0,
   padding: 0,
-};
-
-const featuredRowStyle = {
-  display: 'grid',
-  gridTemplateColumns: '4.25rem minmax(8rem, 1.15fr) 5.75rem minmax(8rem, 1.4fr)',
-  gap: '12px 20px',
-  alignItems: 'baseline',
-  padding: '14px 0',
-  borderBottom: HAIRLINE,
-};
-
-const alsoRowStyle = {
-  display: 'grid',
-  gridTemplateColumns: '4.25rem 1fr',
-  gap: '12px 20px',
-  alignItems: 'baseline',
-  padding: '12px 0',
-  borderBottom: HAIRLINE,
 };
 
 const alsoHeadingStyle = {
@@ -208,3 +172,4 @@ const footLinkStyle = {
 const footerStyle = {
   margin: '64px 0 0',
 };
+

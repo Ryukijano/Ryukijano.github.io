@@ -34,6 +34,7 @@ const study = {
   hero: {
     // note: this asset lives under images/, not gifs/, in the prototype
     src: '/assets/images/esd-comparison.gif',
+    poster: '/assets/images/esd-comparison-poster.png',
     alt: 'Per-frame DINOv2 patch-norm and centre-similarity attention maps across an ESD sequence',
     caption:
       'Backbone diagnostics across an ESD sequence — the raw endoscopic frame beside its DINOv2 patch-norm and centre-similarity maps, at increasing patch resolution. The attention concentrates on the instrument and dissection plane without any phase labels.',

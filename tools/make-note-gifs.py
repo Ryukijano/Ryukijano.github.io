@@ -767,15 +767,24 @@ def draw_denoise(i: int) -> Image.Image:
         pts = _blob_to_structure(np.random.RandomState(9 + si), 48, targets_a, local)
         px = sx + pts[:, 0] * 0.10
         py = 0.66 + pts[:, 1] * 0.14
-        col = TERRACOTTA if local > 0.55 else MUTED
-        ax.scatter(px, py, s=7, c=col, edgecolors="none", alpha=0.88 * (1.0 - 0.82 * local), zorder=4, clip_on=False)
-        if local > 0.62:
-            bar_a = (local - 0.62) / 0.38
+        col = TERRACOTTA if local > 0.45 else MUTED
+        ax.scatter(
+            px,
+            py,
+            s=8,
+            c=col,
+            edgecolors="none",
+            alpha=0.95 * (1.0 - 0.35 * local),
+            zorder=4,
+            clip_on=False,
+        )
+        if local > 0.28:
+            bar_a = min(1.0, (local - 0.28) / 0.45)
             for k in range(n_act):
                 bx = sx - 0.072 + k * 0.018
                 bh = (0.035 + 0.075 * (0.25 + 0.75 * ((k * 3 + 1) % 5) / 5)) * bar_a
                 ax.add_patch(
-                    Rectangle((bx, 0.575), 0.014, bh, facecolor=TERRACOTTA, edgecolor=INK, lw=0.25, zorder=5, alpha=bar_a)
+                    Rectangle((bx, 0.575), 0.014, bh, facecolor=TERRACOTTA, edgecolor=INK, lw=0.25, zorder=5, alpha=max(bar_a, 0.35))
                 )
         txt(ax, sx, 0.525, station_t[si], size=7, color=MUTED, weight="normal")
 
@@ -793,10 +802,19 @@ def draw_denoise(i: int) -> Image.Image:
         pts = _blob_to_structure(np.random.RandomState(21 + si), 40, targets_b, local)
         px = sx + pts[:, 0] * 0.10
         py = 0.28 + pts[:, 1] * 0.13
-        col = SLATE if local > 0.55 else MUTED
-        ax.scatter(px, py, s=7, c=col, edgecolors="none", alpha=0.88 * (1.0 - 0.82 * local), zorder=4, clip_on=False)
-        if local > 0.78:
-            bar_a = (local - 0.78) / 0.22
+        col = SLATE if local > 0.45 else MUTED
+        ax.scatter(
+            px,
+            py,
+            s=8,
+            c=col,
+            edgecolors="none",
+            alpha=0.95 * (1.0 - 0.35 * local),
+            zorder=4,
+            clip_on=False,
+        )
+        if local > 0.32:
+            bar_a = min(1.0, (local - 0.32) / 0.40)
             bx0 = sx - row_w / 2
             for k, lab in enumerate(token_labels):
                 bx = bx0 + k * (tw + gap_t)

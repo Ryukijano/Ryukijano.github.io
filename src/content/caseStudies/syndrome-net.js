@@ -30,6 +30,7 @@ const study = {
 
   hero: {
     src: '/assets/gifs/syndrome-net-decode.gif',
+    poster: '/assets/images/syndrome-net-decode-poster.png',
     alt: 'A grid of qubits where an error travels invisibly along several links, the detectors at either end light up in response, and the decoder draws its best guess at what connected them — while alongside, each accelerator is tried in turn and rejected until one actually runs',
     caption:
       'The error itself is never observed. Only the detectors at its ends fire, and the repair is inferred from those two points alone. This is a schematic — the fault positions and the machine it settles on are illustrative, not a real run.',

@@ -64,6 +64,7 @@ export default {
     also: { workSlug: 'got-jepa-tool-tracking', workLabel: 'GOT-JEPA tool tracking' },
     gif: {
       src: '/assets/gifs/fetvae-prediction.gif',
+      poster: '/assets/images/fetvae-prediction-poster.png',
       alt: 'Predicted future frames of a suturing sequence from a video model',
       caption:
         'An instance of next-frame reconstruction on suturing video. Schematic of a reconstructive job, not a latent-JEPA result and not a leaderboard.',

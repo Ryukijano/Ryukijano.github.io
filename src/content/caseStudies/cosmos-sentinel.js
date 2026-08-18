@@ -29,6 +29,7 @@ const study = {
 
   hero: {
     src: '/assets/gifs/cosmos-sentinel-pipeline.gif',
+    poster: '/assets/images/cosmos-sentinel-pipeline-poster.png',
     alt: 'A risk trace runs across a dashcam clip and spikes; those few seconds are cut out and sent onward, a larger model fills in what happened, and two short film strips play out the ending that was recorded and the one that was invented',
     caption:
       'The risk trace decides which seconds get read; only those seconds reach the model that explains them; and the explanation is what the final scene is built from. This is a schematic — the curve, the findings and the frames are illustrative, not model output.',

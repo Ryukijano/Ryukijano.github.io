@@ -62,6 +62,7 @@ export default {
     also: { workSlug: 'got-jepa-tool-tracking', workLabel: 'GOT-JEPA tool tracking' },
     gif: {
       src: '/assets/gifs/gotjepa-occlusion.gif',
+      poster: '/assets/images/gotjepa-occlusion-poster.png',
       alt: 'Tool tracks continuing through occlusion in laparoscopic video',
       caption:
         'An instance of identity through occlusion — a tracking job, not a phase label. The motion is an example of the domain, schematic of the objective rather than a published leaderboard.',

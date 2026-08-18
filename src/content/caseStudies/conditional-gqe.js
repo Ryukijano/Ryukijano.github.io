@@ -31,6 +31,7 @@ const study = {
 
   hero: {
     src: '/assets/gifs/gic2026_journey_loop.gif',
+    poster: '/assets/images/gic2026_journey_loop-poster.png',
     alt: 'The full pipeline in sequence: a molecule becomes a graph, features are extracted, a policy proposes circuits, collapse is avoided, and the energy descends toward the exact reference before hardware validation',
     caption:
       "The whole loop end to end — molecule to graph, graph to proposed circuit, circuit to energy, and back again as a learning signal. Diagrams on this page are the project's own.",
@@ -47,6 +48,7 @@ const study = {
       ],
       figure: {
         src: '/assets/gifs/vqe_vs_gqe.gif',
+        poster: '/assets/images/vqe_vs_gqe-poster.png',
         alt: 'Two approaches side by side. The conventional method stalls at the starting energy and never improves. The learned method descends past the chemical-accuracy threshold toward the exact reference',
         caption:
           "The failure this is built against: on larger molecules the conventional approach stalls at the energy it started from and stays there. The absolute values shown are the project's own; the slide does not name which molecule they belong to, so they are not repeated as a claim elsewhere on this page.",
@@ -54,12 +56,14 @@ const study = {
       pair: [
         {
           src: '/assets/gifs/vqe_vs_gqe.gif',
+          poster: '/assets/images/vqe_vs_gqe-poster.png',
           alt: 'Two approaches side by side. The conventional method stalls at the starting energy and never improves. The learned method descends past the chemical-accuracy threshold toward the exact reference',
           caption:
             "The failure this is built against: on larger molecules the conventional approach stalls at the energy it started from and stays there. The absolute values shown are the project's own; the slide does not name which molecule they belong to, so they are not repeated as a claim elsewhere on this page.",
         },
         {
           src: '/assets/gifs/gqe-diagonal-collapse.gif',
+          poster: '/assets/images/gqe-diagonal-collapse-poster.png',
           alt: 'A circuit of diagonal operators that leaves the energy unchanged',
           caption:
             'When every operator is diagonal the energy never moves and training looks healthy while doing nothing. This is a schematic of that collapse, not a measured loss curve.',
@@ -87,12 +91,14 @@ const study = {
       pair: [
         {
           src: '/assets/gifs/transformer_architecture.gif',
+          poster: '/assets/images/transformer_architecture-poster.png',
           alt: 'A decoder emits an operator sequence one token at a time, each generated token feeding back in to condition the next',
           caption:
             'Circuits are written the way a sentence is — one operator at a time, each choice conditioning the next. Sixteen candidate circuits are drawn per molecule, and the sampler is prevented from producing an all-diagonal one.',
         },
         {
           src: '/assets/gifs/rl_training_loop.gif',
+          poster: '/assets/images/rl_training_loop-poster.png',
           alt: 'Candidate circuits scored above and below the batch mean, then fed through a replay buffer that mixes older samples back into training and decays that mixture over time',
           caption:
             'Scores are normalised against the batch, and a buffer keeps good circuits in rotation — heavily at first, then tapering to nothing as the policy improves on its own.',
@@ -100,6 +106,7 @@ const study = {
       ],
       figure: {
         src: '/assets/gifs/transformer_architecture.gif',
+        poster: '/assets/images/transformer_architecture-poster.png',
         alt: 'A decoder emits an operator sequence one token at a time, each generated token feeding back in to condition the next',
         caption:
           'Circuits are written the way a sentence is — one operator at a time, each choice conditioning the next. Sixteen candidate circuits are drawn per molecule, and the sampler is prevented from producing an all-diagonal one.',
@@ -115,6 +122,7 @@ const study = {
       body: 'There is no correct circuit to copy, so the model cannot be shown answers. Instead it produces a batch of candidates for the same molecule and they are scored relative to each other — better than the batch average is rewarded, worse is discouraged. Learning comes from the spread within the batch rather than from any external target.',
       figure: {
         src: '/assets/gifs/rl_training_loop.gif',
+        poster: '/assets/images/rl_training_loop-poster.png',
         alt: 'Candidate circuits scored above and below the batch mean, then fed through a replay buffer that mixes older samples back into training and decays that mixture over time',
         caption:
           'Scores are normalised against the batch, and a buffer keeps good circuits in rotation — heavily at first, then tapering to nothing as the policy improves on its own.',
@@ -184,6 +192,7 @@ const study = {
       tableCaptionHighlight: 'within the simplified system being modelled',
       figure: {
         src: '/assets/gifs/hpc_qpu_workflow.gif',
+        poster: '/assets/images/hpc_qpu_workflow-poster.png',
         alt: 'Jobs dispatched to several quantum processors, their results retrieved asynchronously and merged into a single energy rather than blocking on any one queue',
         caption:
           'Hardware runs are fired off and collected later rather than waited on. Real quantum processors sit behind queues measured in hours, so anything that blocks on one is a pipeline that mostly does nothing.',

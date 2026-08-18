@@ -64,6 +64,7 @@ export default {
     workLabel: 'Syndrome-Net',
     gif: {
       src: '/assets/gifs/syndrome-net-decode.gif',
+      poster: '/assets/images/syndrome-net-decode-poster.png',
       alt: 'Detectors lighting and a decoder guessing a path between them',
       caption:
         'An instance of syndrome-to-recovery. The fault positions are schematic, not a real run.',
