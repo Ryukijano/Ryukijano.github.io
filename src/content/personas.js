@@ -27,6 +27,7 @@ export const personas = {
         alt: dalton.hero.alt,
         caption: dalton.hero.caption,
         highlight: dalton.hero.highlight,
+        poster: dalton.hero.poster,
       },
     ],
     projects: [

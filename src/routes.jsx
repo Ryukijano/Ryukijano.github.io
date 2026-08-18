@@ -5,6 +5,8 @@ import WorkIndex from './pages/WorkIndex.jsx';
 import CaseStudyPage from './pages/CaseStudyPage.jsx';
 import Trust from './pages/Trust.jsx';
 import PersonaPage from './pages/PersonaPage.jsx';
+import BlogIndex from './pages/BlogIndex.jsx';
+import BlogPage from './pages/BlogPage.jsx';
 import NotFound from './pages/NotFound.jsx';
 
 export default function App() {
@@ -15,6 +17,8 @@ export default function App() {
         <Route path="/academic" element={<Academic />} />
         <Route path="/work" element={<WorkIndex />} />
         <Route path="/work/:slug" element={<CaseStudyPage />} />
+        <Route path="/blog" element={<BlogIndex />} />
+        <Route path="/blog/:slug" element={<BlogPage />} />
         <Route path="/trust" element={<Trust />} />
         <Route path="/persona/:id" element={<PersonaPage />} />
         <Route path="*" element={<NotFound />} />

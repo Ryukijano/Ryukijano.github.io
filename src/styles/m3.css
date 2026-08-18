@@ -249,13 +249,15 @@
   }
 
   /*
-   * Home: the plate is the first screen. Nav overlays the mat, not a
-   * translucent wash on the print. Bio is one slip under the object.
-   * Left / centre / right of the plate are Engineer / AI / Quantum.
+   * Home: ukiyo-e registration. The plate sits on an untrimmed paper
+   * block; kagi and hikitsuke live in that margin, not on the art.
+   * Bio is one slip under the object. Left / centre / right of the
+   * plate are Engineer / AI / Quantum.
    *
-   * Sheet width is min(viewport, height-budget × 3923/2160) so the 16:9
-   * plate can fill without object-fit:cover cropping a lane, and without
-   * the circular max-height trap that collapsed the box to zero.
+   * Block width is min(viewport, height-budget × 3923/2160 + gutters) so
+   * the 16:9 plate can fill without object-fit:cover cropping a lane,
+   * and without the circular max-height trap that collapsed the box to
+   * zero. Never max-height: 100% on the sheet.
    */
   .folio {
     position: relative;
@@ -266,7 +268,12 @@
     color: var(--md-sys-color-on-surface);
     font-family: var(--md-sys-typescale-brand-font);
     -webkit-font-smoothing: antialiased;
-    --folio-plate: min(100%, calc((100dvh - 10rem) * 3923 / 2160));
+    --folio-gutter: 1rem;
+    --folio-gutter-bottom: 2.55rem;
+    --folio-plate: min(
+      100%,
+      calc((100dvh - 13rem) * 3923 / 2160 + 2 * var(--folio-gutter))
+    );
   }
 
   .folio .site-nav--overlay {
@@ -294,11 +301,21 @@
     background: var(--md-sys-color-surface-container-lowest);
   }
 
+  .folio__block {
+    position: relative;
+    box-sizing: border-box;
+    width: var(--folio-plate);
+    padding: var(--folio-gutter) var(--folio-gutter) var(--folio-gutter-bottom);
+    color: inherit;
+    overflow: visible;
+  }
+
   .folio__sheet {
     position: relative;
-    width: var(--folio-plate);
+    width: 100%;
     aspect-ratio: 3923 / 2160;
     background: var(--md-sys-color-surface-container);
+    box-shadow: 0 0 0 1px var(--md-sys-color-outline);
   }
 
   .folio__sheet img {
@@ -311,9 +328,43 @@
     max-width: none;
   }
 
+  /*
+   * Registration: 1px hikitsuke along the print's bottom edge, 2px L-shaped
+   * kagi at the lower-right of the paper margin. content-box so the 1px/2px
+   * rules survive the global border-box reset. Rules, not stickers.
+   */
+  .folio__kento {
+    position: absolute;
+    pointer-events: none;
+    z-index: 2;
+    box-sizing: content-box;
+    color: currentColor;
+    background: currentColor;
+  }
+
+  .folio__kento--hikitsuke {
+    left: calc(var(--folio-gutter) + 0.4rem);
+    bottom: calc(var(--folio-gutter-bottom) - 4px);
+    width: 1.2rem;
+    height: 1px;
+  }
+
+  .folio__kento--kagi {
+    right: calc(var(--folio-gutter) - 12px);
+    bottom: calc(var(--folio-gutter-bottom) - 12px);
+    width: 10px;
+    height: 10px;
+    background: transparent;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+  }
+
   .folio__thirds {
     position: absolute;
-    inset: 0;
+    top: var(--folio-gutter);
+    left: var(--folio-gutter);
+    right: var(--folio-gutter);
+    bottom: 0;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -325,31 +376,47 @@
     color: inherit;
     min-height: 0;
     min-width: 0;
-    box-shadow: inset 0 0 0 0 transparent;
-    transition: box-shadow var(--md-sys-motion-duration-expressive-fast-effects)
-      var(--md-sys-motion-spring-expressive-fast-effects);
   }
 
-  .folio__thirds .folio__lane.is-on,
-  .folio__thirds .folio__lane:focus-visible {
-    box-shadow: inset 0 0 0 1px var(--md-sys-color-on-surface);
+  .folio__thirds .folio__lane.is-on::after,
+  .folio__thirds .folio__lane:hover::after,
+  .folio__thirds .folio__lane:focus-visible::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: var(--folio-gutter-bottom);
+    box-shadow: inset 0 0 0 1px currentColor;
+    pointer-events: none;
   }
 
   .folio__chip {
     position: absolute;
-    left: 0.55rem;
-    bottom: 0.55rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--folio-gutter-bottom);
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
     gap: 0.1rem;
-    padding: 0.28rem 0.4rem 0.32rem;
-    background: var(--md-sys-color-surface);
-    color: var(--md-sys-color-on-surface);
+    padding: 0.32rem 0.15rem 0;
+    background: none;
+    color: inherit;
     font-family: var(--md-sys-typescale-mono-font);
-    font-size: 0.62rem;
+    font-size: 0.58rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     line-height: 1.2;
+  }
+
+  .folio__chip::before {
+    content: '';
+    width: 1px;
+    height: 0.32rem;
+    background: currentColor;
   }
 
   .folio__chip-who {
@@ -365,13 +432,24 @@
     display: block;
   }
 
+  /*
+   * Daisen (題籤) title-slip: authentic Japanese paper title-slip container
+   * mounted below the plate, using warm paper-toned surface container tokens,
+   * subtle hairline outline, and tactile M3 elevation.
+   */
   .folio__slip {
     position: relative;
     width: var(--folio-plate);
-    padding: 0.55rem 0.15rem 0.85rem;
+    box-sizing: border-box;
+    padding: 0.75rem 1.15rem 0.85rem;
+    margin-top: 0.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.28rem;
+    gap: 0.35rem;
+    background: var(--md-sys-color-surface-container-low);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-corner-extra-small);
+    box-shadow: var(--md-sys-elevation-1);
   }
 
   .folio__slip h1.folio__name {
@@ -390,22 +468,28 @@
   .folio__degree {
     margin: 0;
     color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-sys-typescale-mono-font);
     font-size: 0.82rem;
+    letter-spacing: 0.02em;
     line-height: 1.35;
   }
 
   .folio__slip > p.m3-type {
-    max-width: 62ch;
+    max-width: 68ch;
+    margin: 0;
+    line-height: 1.5;
   }
 
   .folio__caption {
-    margin: 0.25rem 0 0;
+    margin: 0.15rem 0 0;
     max-width: 72ch;
     font-family: var(--md-sys-typescale-mono-font);
     font-size: 0.68rem;
     letter-spacing: 0.02em;
     line-height: 1.55;
     color: var(--md-sys-color-on-surface-variant);
+    border-top: 1px dashed var(--md-sys-color-outline-variant);
+    padding-top: 0.35rem;
   }
 
   .folio__mark {
@@ -425,27 +509,29 @@
     .folio__stage {
       height: auto;
       min-height: 0;
+      padding-top: 3.5rem;
     }
 
     .folio__print {
       flex: none;
+      padding: 0 1rem 2rem;
     }
 
     .folio__slip {
       order: -1;
       width: 100%;
       max-width: none;
-      padding: 0.85rem 1rem 1rem;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      padding: 1rem 1.15rem;
+    }
+
+    .folio__block {
+      width: 100%;
     }
 
     .folio__sheet {
       width: 100%;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .folio__thirds .folio__lane {
-      transition: none;
     }
   }
 
@@ -501,6 +587,166 @@
     a.m3-card:hover,
     button.m3-card:hover {
       transform: none;
+    }
+  }
+
+  .figure-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--md-sys-color-outline-variant);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    margin: 40px 0 0;
+  }
+
+  .work-index {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 0 40px 120px;
+  }
+
+  .work-index__facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin: 40px 0 0;
+    padding: 18px 0;
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  .work-index__row,
+  .work-index__also-row {
+    display: grid;
+    gap: 12px 20px;
+    align-items: baseline;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  .work-index__row {
+    grid-template-columns: 4.25rem minmax(8rem, 1.15fr) 5.75rem minmax(8rem, 1.4fr);
+    padding: 14px 0;
+  }
+
+  .work-index__also-row {
+    grid-template-columns: 4.25rem 1fr;
+    padding: 12px 0;
+  }
+
+  .notes-index {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 0 40px 120px;
+  }
+
+  .notes-index__row,
+  .notes-index__map-row,
+  .note-taxonomy__row {
+    display: grid;
+    gap: 12px 20px;
+    align-items: baseline;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  .notes-index__row {
+    grid-template-columns: 6.5rem minmax(8rem, 1.2fr) 7.5rem minmax(8rem, 1.35fr);
+    padding: 14px 0;
+  }
+
+  .notes-index__map-row {
+    grid-template-columns: 13rem 1fr;
+    padding: 8px 0;
+  }
+
+  .note-taxonomy__row {
+    grid-template-columns: 11rem 1fr;
+    padding: 0.7rem 0;
+  }
+
+  @media (max-width: 899px) {
+    .work-index {
+      padding: 0 20px 96px;
+    }
+
+    .work-index__row {
+      grid-template-columns: 4.25rem 1fr;
+      grid-template-areas:
+        "year title"
+        ". lane"
+        ". desc";
+      gap: 4px 12px;
+      padding: 16px 0;
+    }
+
+    .work-index__row > :nth-child(1) {
+      grid-area: year;
+    }
+
+    .work-index__row > :nth-child(2) {
+      grid-area: title;
+      min-width: 0;
+    }
+
+    .work-index__row > :nth-child(3) {
+      grid-area: lane;
+    }
+
+    .work-index__row > :nth-child(4) {
+      grid-area: desc;
+    }
+
+    .work-index__also-row {
+      grid-template-columns: 4.25rem 1fr;
+      gap: 4px 12px;
+      padding: 12px 0;
+    }
+
+    .notes-index {
+      padding: 0 20px 96px;
+    }
+
+    .notes-index__row {
+      grid-template-columns: 5.5rem 1fr;
+      grid-template-areas:
+        "date title"
+        ". area"
+        ". desc";
+      gap: 4px 12px;
+      padding: 16px 0;
+    }
+
+    .notes-index__row > :nth-child(1) {
+      grid-area: date;
+    }
+
+    .notes-index__row > :nth-child(2) {
+      grid-area: title;
+      min-width: 0;
+    }
+
+    .notes-index__row > :nth-child(3) {
+      grid-area: area;
+    }
+
+    .notes-index__row > :nth-child(4) {
+      grid-area: desc;
+    }
+
+    .notes-index__map-row,
+    .note-taxonomy__row {
+      grid-template-columns: 1fr;
+      gap: 2px 0;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .figure-pair {
+      grid-template-columns: 1fr;
+    }
+
+    .work-index__facts {
+      grid-template-columns: 1fr;
+      gap: 12px;
     }
   }
 }

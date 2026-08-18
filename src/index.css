@@ -91,19 +91,11 @@ body {
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 
-.pane-ryukijano {
-  background-color: #e6e1d3;
-  color: #1a237e;
-}
-
-.pane-gyanateet {
-  background-color: #e4e8dc;
-  color: #1a237e;
-}
-
+.pane-ryukijano,
+.pane-gyanateet,
 .pane-ryoushi {
-  background-color: #e8dce4;
-  color: #1a237e;
+  background-color: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
 }
 
 @media (min-width: 900px) {

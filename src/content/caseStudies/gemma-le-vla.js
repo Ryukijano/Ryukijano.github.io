@@ -33,6 +33,7 @@ const study = {
 
   hero: {
     src: '/assets/gifs/vla-diffusion.gif',
+    poster: '/assets/images/vla-diffusion-poster.png',
     alt: 'Gemma-Le architecture with the action head denoising across 50 diffusion steps',
     caption:
       "Signal path and the action head's denoising schedule. Multimodal inputs reach the transformer core, the fused 768-dim conditioning vector reaches the diffusion head, and the head walks an action chunk from noise to trajectory over 50 steps. Architecture diagram is the project's own; the denoising curve is illustrative.",

@@ -30,6 +30,7 @@ const study = {
 
   hero: {
     src: '/assets/gifs/dalton-mills-reconstruction.gif',
+    poster: '/assets/images/dalton-mills-reconstruction-poster.png',
     alt: "A mill facade rebuilt as a cloud of points. Ten camera positions sit along the base. Surfaces the photographs covered fill in one colour; the chimney's far side and the receding flank fill in another, marked as never photographed",
     caption:
       "Ten camera positions, and a facade rebuilt from them. What the photographs actually cover is one thing; the far side of the chimney and the receding flank are another. This is a schematic — camera placement and coverage are illustrative, not the project's own capture data.",

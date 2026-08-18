@@ -29,6 +29,7 @@ const study = {
 
   hero: {
     src: '/assets/gifs/gotjepa-occlusion.gif',
+    poster: '/assets/images/gotjepa-occlusion-poster.png',
     alt: 'Two views of the same instrument sweeping across the field. One stays clear; smoke rolls across the other until the tool is barely visible. The box on the obscured view turns dashed but keeps the same track number, while a bar below shows the two descriptions drifting apart and then locking back together',
     caption:
       'One copy watches clearly, the other watches through smoke, and both must describe the same instrument the same way. When the view goes, the identity is carried rather than re-detected. This is a schematic — the scene, the obscuration and the values are illustrative, not model output.',
