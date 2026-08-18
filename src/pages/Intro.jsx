@@ -23,7 +23,7 @@ function Marked({ text, highlight }) {
   );
 }
 
-/** / — plate owns the viewport; bio lives on one slip under the print. */
+/** / — untrimmed block with kento in the margin; bio on a slip under the object. */
 export default function Intro() {
   const [lane, setLane] = useState(null);
 
