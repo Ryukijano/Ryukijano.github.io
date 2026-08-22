@@ -46,11 +46,13 @@ ported by hand onto this branch so it would not wipe the daisen slip:
 ## Test gates
 
 ```bash
-npm run lint && npm run notes && npm run facts && npm run smoke && npm run tokens && npm run build
+npm run lint && npm run notes && npm run voice && npm run facts && npm run smoke && npm run tokens && npm run build
 ```
 
 `fact-check.jsx` checks **exact occurrence counts**, not presence. Do not
-“fix” a failing fact by deleting the assertion.
+“fix” a failing fact by deleting the assertion. `tools/check-voice.mjs`
+(additive, 2026-08-22) extends the anti-slop vocabulary to all content
+modules; extend its list rather than loosening it.
 
 ## Facts that must not be inflated
 

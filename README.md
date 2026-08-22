@@ -27,6 +27,7 @@ Additional verification commands:
 ```bash
 npm run lint
 npm run notes
+npm run voice
 npm run smoke
 npm run facts
 npm run tokens
