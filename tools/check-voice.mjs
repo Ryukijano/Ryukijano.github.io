@@ -46,6 +46,15 @@ function stripComments(source) {
     .replace(/(?<![:'"])\/\/[^\n]*/g, ' ');
 }
 
+/*
+ * Em-dash ceiling. The deslop pass of 2026-08-22 cut rendered prose from
+ * ~235 dashes to under ten; the survivors are table-cell placeholders and
+ * short structural labels, not sentence punctuation. The ceiling exists so a
+ * future edit cannot quietly re-thicken the cadence — the tell is density,
+ * and per-file is where it accumulates.
+ */
+const EM_DASH_CEILING = 4;
+
 function jsFiles(dir) {
   const out = [];
   for (const name of readdirSync(dir, { withFileTypes: true })) {
@@ -73,6 +82,13 @@ for (const dir of DIRS) {
         fail += 1;
         console.log(`FAIL  ${path.slice(ROOT.length + 1)}  banned voice: ${label}`);
       }
+    }
+    const dashes = (text.match(/—/g) || []).length;
+    if (dashes > EM_DASH_CEILING) {
+      fail += 1;
+      console.log(
+        `FAIL  ${path.slice(ROOT.length + 1)}  em-dash density: ${dashes} > ${EM_DASH_CEILING}`,
+      );
     }
   }
 }

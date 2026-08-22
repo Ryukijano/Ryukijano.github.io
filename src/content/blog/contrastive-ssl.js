@@ -16,7 +16,7 @@ export default {
   },
   taxonomy: {
     title: 'FAMILY',
-    caption: 'DINO is self-distillation without labels, with a momentum teacher — not InfoNCE with extra crops.',
+    caption: 'DINO is self-distillation without labels, with a momentum teacher; not InfoNCE with extra crops.',
     branches: [
       { name: 'Contrastive', items: ['InfoNCE', 'SimCLR', 'MoCo'] },
       { name: 'Self-distillation', items: ['BYOL', 'SimSiam', 'DINO'] },
@@ -33,15 +33,15 @@ export default {
       kicker: 'THE JOB',
       heading: 'Arrange points so views of one instance sit together',
       body: [
-        'A classifier outputs a name. A representation outputs a vector you can reuse: retrieval, a linear probe, a detection head, a temporal model. You manufacture positives — crops, colour jitter, adjacent frames — and you ask the encoder to treat those as the same object.',
-        'Contrastive methods identify the positive among negatives with InfoNCE — SimCLR on the batch, MoCo on a queue. BYOL and SimSiam drop negatives and predict a teacher representation; DINO matches a student softmax to a centred, sharpened teacher. The job is still a geometry. The anti-collapse device is not.',
+        'A classifier outputs a name. A representation outputs a vector you can reuse: retrieval, a linear probe, a detection head, a temporal model. You manufacture positives (crops, colour jitter, adjacent frames) and you ask the encoder to treat those as the same object.',
+        'Contrastive methods identify the positive among negatives with InfoNCE: SimCLR on the batch, MoCo on a queue. BYOL and SimSiam drop negatives and predict a teacher representation; DINO matches a student softmax to a centred, sharpened teacher. The job is still a geometry. The anti-collapse device is not.',
       ],
     },
     {
       kicker: 'MECHANICS',
       heading: 'Collapse is the default',
       body: [
-        'If every vector is the same constant, agreement is free. In DINO the same cheap trick is a uniform softmax, or one prototype that wins every image. Collapse is the encoder discovering that the cheapest way to make two views agree is to ignore the image. Contrastive methods fight it with negatives — a large batch (SimCLR) or a queue (MoCo) — and a projection head you throw away at probe time. SimSiam needs a stop-gradient and a predictor; BYOL adds a momentum teacher, still with a predictor; DINO uses a momentum teacher plus centring and sharpening, and does not need a predictor.',
+        'If every vector is the same constant, agreement is free. In DINO the same cheap trick is a uniform softmax, or one prototype that wins every image. Collapse is the encoder discovering that the cheapest way to make two views agree is to ignore the image. Contrastive methods fight it with negatives, a large batch (SimCLR) or a queue (MoCo), plus a projection head you throw away at probe time. SimSiam needs a stop-gradient and a predictor; BYOL adds a momentum teacher, still with a predictor; DINO uses a momentum teacher plus centring and sharpening, and does not need a predictor.',
         'Augmentations define the invariance you are buying. Crop hard and you buy object-ish features. Blur and colour-jitter and you buy shape over palette.',
       ],
     },

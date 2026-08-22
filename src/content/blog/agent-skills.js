@@ -5,7 +5,7 @@ export default {
   title: 'Skills are not SFT',
   desc: 'Procedures you hand an agent are a different object from weights.',
   lead:
-    'Post-training changes weights. A skill file changes the procedure the agent is allowed to follow this turn. I started writing skills because the MOT eval, the SLURM queue, and the asset paths keep moving — not because a README is a fine-tune.',
+    'Post-training changes weights. A skill file changes the procedure the agent is allowed to follow this turn. I started writing skills because the MOT eval, the SLURM queue, and the asset paths keep moving; it is not because a README is a fine-tune.',
   taxonomy: {
     title: 'WEIGHTS OR A FILE',
     caption: 'Weights encode generalised behaviour. Skills encode procedures you can edit without a checkpoint.',
@@ -35,7 +35,7 @@ export default {
       kicker: 'THE DOMAIN',
       heading: 'The procedures change faster than a checkpoint should',
       body: [
-        'Surgical MOT, HPC jobs, and Gemma-Le’s queue — LeRobot, three L40s — are where the costly mistake is procedural: wrong split, wrong GPU, wrong path. You can SFT that knowledge into weights. I wrote it down as a skill instead.',
+        'Surgical MOT, HPC jobs, and Gemma-Le’s queue on LeRobot across three L40s are where the costly mistake is procedural: wrong split, wrong GPU, wrong path. You can SFT that knowledge into weights. I wrote it down as a skill instead.',
         'The test is whether an agent that has not seen the repo can run the eval you meant. If it still has to guess the dataset root, you wrote prose, not a skill.',
       ],
     },

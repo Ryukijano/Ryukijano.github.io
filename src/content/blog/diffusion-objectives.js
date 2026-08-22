@@ -5,7 +5,7 @@ export default {
   title: 'Denoising is a family, not a medium',
   desc: 'The object being noised can be pixels, actions, or tokens. The reverse losses are cousins, not identical.',
   lead:
-    'A forward process corrupts a structured object, a network learns a reverse step, and at sample time you walk back from noise. The object can be an image, a robot trajectory, or — in papers I have read and not trained — language tokens. The reverse losses are a family: score matching, DDPM epsilon-prediction, flow matching, discrete corruption.',
+    'A forward process corrupts a structured object, a network learns a reverse step, and at sample time you walk back from noise. The object can be an image, a robot trajectory, or, in papers I have read and not trained, language tokens. The reverse losses are a family: score matching, DDPM epsilon-prediction, flow matching, discrete corruption.',
   concept: {
     src: '/assets/gifs/notes/denoise-trajectory.gif',
     poster: '/assets/images/notes/denoise-trajectory-poster.png',
@@ -43,7 +43,7 @@ export default {
       kicker: 'MECHANICS',
       heading: 'The medium is whoever owns the forward process',
       body: [
-        'On pixels, the object is an image. On actions, the object is a horizon of controls: diffusion policy, ScaleDP-style heads, flow matching on trajectories. The conditioner is whatever you still have — a visual encoder, a language token, proprioception. On language, masked diffusion (LLaDA and cousins) replaces tokens with a mask and learns to unmask them.',
+        'On pixels, the object is an image. On actions, the object is a horizon of controls: diffusion policy, ScaleDP-style heads, flow matching on trajectories. The conditioner is whatever you still have: a visual encoder, a language token, proprioception. On language, masked diffusion (LLaDA and cousins) replaces tokens with a mask and learns to unmask them.',
         'Denoising score matching and DDPM ε-prediction are two parameterisations of a Gaussian reverse process. Flow matching instead regresses a velocity along a chosen path. Discrete diffusion changes the state space.',
       ],
     },
@@ -52,7 +52,7 @@ export default {
       heading: 'The object was frames. Then it was a chunk of controls.',
       body: [
         'Before the small VLA, the object I trained on was theatre video: frames for phase, tracks, next-frame. On Gemma-Le the object is an eight-step action chunk. Two grasps can both be right; the mean of them is not. ScaleDP denoises that chunk, conditioned on SigLIP and Gemma. A reverse process on that space can represent several ways to grasp. Diffusion Policy and ScaleDP do it by denoising; flow matching does it with a velocity field.',
-        'Language tokens are a different object — discrete, already owned by autoregression. Discrete diffusion (LLaDA, Dream, and cousins) is that reverse process on text. I have not trained a diffusion language model. A LoRA on Gemma with a diffusion action head is not one.',
+        'Language tokens are a different object: discrete, already owned by autoregression. Discrete diffusion (LLaDA, Dream, and cousins) is that reverse process on text. I have not trained a diffusion language model. A LoRA on Gemma with a diffusion action head is not one.',
       ],
     },
   ],

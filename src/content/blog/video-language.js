@@ -25,7 +25,7 @@ export default {
       kicker: 'THE JOB',
       heading: 'Alignment is a contract about what may be said',
       body: [
-        'Captioning asks for words given pixels. Retrieval asks that a clip embedding and a sentence embedding sit close. A generative video-language model (VLM) answers a prompt about a clip. Those are different contracts that share a name. Vision-language-action (VLA) adds a third stream — actions — so the output is not only language.',
+        'Captioning asks for words given pixels. Retrieval asks that a clip embedding and a sentence embedding sit close. A generative video-language model (VLM) answers a prompt about a clip. Those are different contracts that share a name. Vision-language-action (VLA) adds a third stream of actions, so the output is not only language.',
         'Name the contract you actually implemented: a captioner, a composed pipeline of specialist models, or a policy that emits actions.',
       ],
     },

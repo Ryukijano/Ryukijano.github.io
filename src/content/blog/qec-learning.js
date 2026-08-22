@@ -5,13 +5,13 @@ export default {
   title: 'Error correction is a learning problem',
   desc: 'Syndromes in, a recovery out: structured prediction you cannot look at the state to grade.',
   lead:
-    'A quantum memory cannot be inspected without destroying it. Error correction therefore never sees the error. It sees a syndrome — a pattern of detector clicks — and has to emit a recovery. That is structured prediction with the state hidden: the label you care about is not in the input, and the score arrives only after you have already acted.',
+    'A quantum memory cannot be inspected without destroying it. Error correction therefore never sees the error. It sees a syndrome, a pattern of detector clicks, and has to emit a recovery. That is structured prediction with the state hidden: the label you care about is not in the input, and the score arrives only after you have already acted.',
   concept: {
     src: '/assets/gifs/notes/qec-pipeline.gif',
     poster: '/assets/images/notes/qec-pipeline-poster.png',
     alt: 'Schematic pipeline from hidden error through syndrome to inferred recovery',
     caption:
-      'Schematic: observation stays hidden; detectors fire; a decoder infers a recovery. Framing, not measured — not a device run.',
+      'Schematic: observation stays hidden; detectors fire; a decoder infers a recovery. Framing, not measured; not a device run.',
     highlight: ['Schematic', 'Framing, not measured'],
   },
   taxonomy: {
@@ -35,7 +35,7 @@ export default {
       kicker: 'THE JOB',
       heading: 'Guess the fault from the alarms',
       body: [
-        'Classical bits can be copied and measured in place. A quantum memory cannot: you measure stabilisers that commute with the logicals, never the data in the computational basis. Those alarms are the syndrome. The decoder maps detectors to a recovery. Logical failure is a residual that is invisible to the stabilisers but flips a logical observable — not every wrong physical guess.',
+        'Classical bits can be copied and measured in place. A quantum memory cannot: you measure stabilisers that commute with the logicals, never the data in the computational basis. Those alarms are the syndrome. The decoder maps detectors to a recovery. Logical failure is a residual that is invisible to the stabilisers but flips a logical observable, not every wrong physical guess.',
         'That mapping is a learning problem whether or not you put a neural net on it. Matching graphs, tensor networks, and lookup tables are decoders. So are convolutional nets and transformers. The objective is: given s, emit a recovery whose residual error is trivial on the code space.',
       ],
     },
@@ -43,7 +43,7 @@ export default {
       kicker: 'MECHANICS',
       heading: 'The label is delayed and partial',
       body: [
-        'Supervised decoding needs a ground-truth error or a paired recovery, usually from simulation: you sampled the noise, so you know what happened. On hardware you see detectors, then a logical measurement at the end of the shot. The decoder never sees the hidden error; the score is whether, after the recovery, the residual is trivial on the codespace — not whether every physical fault was named. That is closer to a reward than to a dense label.',
+        'Supervised decoding needs a ground-truth error or a paired recovery, usually from simulation: you sampled the noise, so you know what happened. On hardware you see detectors, then a logical measurement at the end of the shot. The decoder never sees the hidden error; the score is whether, after the recovery, the residual is trivial on the codespace, not whether every physical fault was named. That is closer to a reward than to a dense label.',
         'Scale is the other mechanic. A useful decoder is tested on millions of noisy shots because logical error rates are small. GPU paths, fallbacks, and provenance are part of the learning system: a number without the machine that produced it is not evidence.',
       ],
     },

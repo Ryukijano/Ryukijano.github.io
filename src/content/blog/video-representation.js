@@ -40,7 +40,7 @@ export default {
       kicker: 'MECHANICS',
       heading: 'Temporal heads versus video-native pretraining',
       body: [
-        'One stack freezes a still encoder and trains a small temporal model on the resulting sequence — an MS-TCN, or a transformer over frame tokens. The visual geometry is borrowed. Time is the only thing the labelled set has to teach.',
+        'One stack freezes a still encoder and trains a small temporal model on the resulting sequence, an MS-TCN or a transformer over frame tokens. The visual geometry is borrowed. Time is the only thing the labelled set has to teach.',
         'The other stack pretrains on video: masked tubelets, or latent prediction across time. Then some temporal structure is already in the encoder. The cost is video-scale compute, and a larger encoder may still want the same small head; what changes is transfer and latency, not a free shrinking of the labelled model. The temptation is to call the first stack “a video model” because the input is an mp4.',
       ],
     },
@@ -65,7 +65,7 @@ export default {
       poster: '/assets/images/gotjepa-occlusion-poster.png',
       alt: 'Tool tracks continuing through occlusion in laparoscopic video',
       caption:
-        'An instance of identity through occlusion — a tracking job, not a phase label. The motion is an example of the domain, schematic of the objective rather than a published leaderboard.',
+        'An instance of identity through occlusion; a tracking job, not a phase label. The motion is an example of the domain, schematic of the objective rather than a published leaderboard.',
       highlight: 'schematic',
     },
   },

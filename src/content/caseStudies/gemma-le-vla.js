@@ -20,7 +20,7 @@ const study = {
   breadcrumb: 'ROBOTICS',
   kicker: 'GEMMA-LE / GEMMA-GR00T · OPEN WEIGHTS, 5B',
   title: 'A compact vision-language-action policy for manipulation',
-  lead: 'SigLIP for vision, Gemma 3 for language, and a ScaleDP diffusion head that denoises eight-step action chunks — assembled in LeRobot on three L40s. Every backbone is a stock Hugging Face checkpoint, which is the point: the NV Eagle components it replaces were not.',
+  lead: 'SigLIP for vision, Gemma 3 for language, and a ScaleDP diffusion head that denoises eight-step action chunks, assembled in LeRobot on three L40s. Every backbone is a stock Hugging Face checkpoint, which is the point: the NV Eagle components it replaces were not.',
 
   meta: [
     { k: 'YEAR', v: '2025' },
@@ -62,7 +62,7 @@ const study = {
       kicker: 'PROBLEM',
       h2: 'The good VLAs are too big to iterate on',
       body: [
-        'Vision-language-action models put a pretrained multimodal backbone in front of a robot so it can follow a written instruction instead of a scripted trajectory. That part works. The problem is scale: the models that demonstrate it convincingly are large enough that fine-tuning them requires a cluster, which puts the interesting experiments — new tasks, new embodiments, new action representations — out of reach of anyone without one.',
+        'Vision-language-action models put a pretrained multimodal backbone in front of a robot so it can follow a written instruction instead of a scripted trajectory. That part works. The problem is scale: the models that demonstrate it convincingly are large enough that fine-tuning them requires a cluster, which puts the interesting experiments (new tasks, new embodiments, new action representations) out of reach of anyone without one.',
         'The other constraint is the control loop. A policy that predicts one action per forward pass has to keep up with the robot in real time, and language-model inference is not fast at that granularity.',
       ],
     },
@@ -72,7 +72,7 @@ const study = {
       kicker: 'ENGINEERING',
       h2: 'Three parts, each doing only its own job',
       body:
-        "The design is deliberately unclever: keep the pretrained perception and language components frozen or lightly tuned, and put the learning where the embodiment actually differs — in the action head. Everything is composed inside LeRobot, so the dataset format, the training loop and the evaluation harness are the community's rather than mine.",
+        "The design is deliberately unclever: keep the pretrained perception and language components frozen or lightly tuned, and put the learning where the embodiment actually differs: in the action head. Everything is composed inside LeRobot, so the dataset format, the training loop and the evaluation harness are the community's rather than mine.",
       stack: [
         {
           stage: 'PERCEPTION',
@@ -101,12 +101,12 @@ const study = {
         },
       ],
       closing:
-        'The diffusion head is the part that earns its place. Rather than regressing a single action, it denoises a whole chunk of the trajectory at once — which smooths the multimodality problem that plagues behaviour cloning (two valid ways to grasp the same object averaging into one invalid one) and amortises the backbone forward pass across several control steps.',
+        'The diffusion head is the part that earns its place. Rather than regressing a single action, it denoises a whole chunk of the trajectory at once, which smooths the multimodality problem that plagues behaviour cloning (two valid ways to grasp the same object averaging into one invalid one) and amortises the backbone forward pass across several control steps.',
       buildList: [
-        'Action chunking at chunk_size 8 — one backbone pass covers eight control steps, so the language model is not in the inner loop',
+        'Action chunking at chunk_size 8: one backbone pass covers eight control steps, so the language model is not in the inner loop',
         'LoRA rank 16 on q/k/v/o keeps Gemma 3 adaptable without a full fine-tune; SigLIP stays frozen outright',
         '50 diffusion steps in the head, trained to predict action noise rather than regress the action directly',
-        'Behaviour cloning on teleoperated episodes in the LeRobot format — robot_sim.PickNPlace, batch size 3, 200k steps',
+        'Behaviour cloning on teleoperated episodes in the LeRobot format: robot_sim.PickNPlace, batch size 3, 200k steps',
         'Three L40s under SLURM; full training wants 48GB of VRAM, which set the size of every component above',
       ],
     },
@@ -116,9 +116,9 @@ const study = {
       kicker: 'WHAT I LEARNED',
       h2: 'Most of the difficulty is in the data, not the model',
       body: [
-        'The architecture came together faster than the demonstrations did. Imitation learning inherits every inconsistency in the teleoperated episodes — a slightly different approach angle, a pause while the operator thinks, a recovery that the policy learns as if it were part of the task. Cleaning and re-recording episodes moved success rates more than any change to the head.',
+        'The architecture came together faster than the demonstrations did. Imitation learning inherits every inconsistency in the teleoperated episodes: a slightly different approach angle, a pause while the operator thinks, a recovery that the policy learns as if it were part of the task. Cleaning and re-recording episodes moved success rates more than any change to the head.',
         'The second lesson was about frozen backbones, and it matches what I found in the surgical work: a strong self-supervised encoder left frozen is usually better than a mediocre one fine-tuned, and it makes every subsequent experiment cheaper to run.',
-        'The weights are public because the useful thing here is not a benchmark number — it is a VLA small enough that someone else can retrain it on their own arm in an afternoon.',
+        'The weights are public because the useful thing here is not a benchmark number; it is a VLA small enough that someone else can retrain it on their own arm in an afternoon.',
       ],
     },
 
