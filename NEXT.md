@@ -54,6 +54,11 @@ npm run lint && npm run notes && npm run voice && npm run facts && npm run smoke
 (additive, 2026-08-22) extends the anti-slop vocabulary to all content
 modules; extend its list rather than loosening it.
 
+`.opencode/skills/humanizer/` is vendored for de-AI-ing *new* prose. Read
+`SITE-OVERRIDE.md` in that folder before pointing it at `src/content`:
+this site's "X, not Y" disclaimers are evidence markers, not AI cadence,
+and `facts` outranks the style list.
+
 ## Facts that must not be inflated
 
 See `README.md`. Short list:
