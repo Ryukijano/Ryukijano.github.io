@@ -563,16 +563,59 @@
     font-size: 13px;
   }
 
+  /*
+   * Underline as state, not event: the line is always laid out and only its
+   * colour transitions, so hover/focus never shifts text by half a pixel.
+   */
   .site-nav__links a {
     letter-spacing: 0;
     text-transform: none;
     line-height: 1.2;
+    text-decoration-line: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color
+      var(--md-sys-motion-duration-expressive-fast-effects)
+      var(--md-sys-motion-spring-expressive-fast-effects);
   }
 
   .site-nav__links a:hover,
-  .site-nav__links a.is-active {
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
+  .site-nav__links a.is-active,
+  .site-nav__links a:focus-visible {
+    text-decoration-color: currentColor;
+  }
+
+  /*
+   * Mode toggle. Icon-only, so it names itself to AT and keeps the quiet
+   * ink-and-paper register of the rest of the bar.
+   */
+  .site-nav__mode {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    margin-left: 0.4rem;
+    padding: 0;
+    border: 0;
+    border-radius: var(--md-sys-shape-corner-full);
+    background: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+    cursor: pointer;
+    transition:
+      color var(--md-sys-motion-duration-expressive-fast-effects)
+        var(--md-sys-motion-spring-expressive-fast-effects),
+      transform var(--md-sys-motion-duration-expressive-fast-spatial)
+        var(--md-sys-motion-spring-expressive-fast-spatial);
+  }
+
+  .site-nav__mode:hover {
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .site-nav__mode:active {
+    transform: scale(0.94);
   }
 
   /* --------------------------------------------------------- reduced motion */
@@ -736,6 +779,68 @@
     .note-taxonomy__row {
       grid-template-columns: 1fr;
       gap: 2px 0;
+    }
+  }
+
+  /*
+   * Phones: the plate keeps its full width, but an overlay of thirds across a
+   * print this narrow is three slivers, not three targets. The lanes leave the
+   * sheet and stack beneath it as plain cards — chip label and persona name in
+   * one row, always visible, no hover dependency.
+   */
+  @media (max-width: 599px) {
+    .folio__block {
+      padding-bottom: var(--folio-gutter);
+    }
+
+    .folio__kento {
+      display: none;
+    }
+
+    .folio__thirds {
+      position: static;
+      grid-template-columns: 1fr;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .folio__thirds .folio__lane {
+      border: 1px solid var(--md-sys-color-outline-variant);
+      background: var(--md-sys-color-surface-container-low);
+      color: var(--md-sys-color-on-surface);
+      min-height: 2.75rem;
+    }
+
+    .folio__thirds .folio__lane.is-on::after,
+    .folio__thirds .folio__lane:hover::after,
+    .folio__thirds .folio__lane:focus-visible::after {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+    .folio__chip {
+      position: static;
+      height: auto;
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: flex-start;
+      gap: 0.5rem;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.62rem;
+    }
+
+    .folio__chip::before {
+      width: 0.32rem;
+      height: 1px;
+      align-self: center;
+    }
+
+    .folio__chip-who {
+      display: inline;
+      font-size: 0.78rem;
+      letter-spacing: 0.01em;
     }
   }
 

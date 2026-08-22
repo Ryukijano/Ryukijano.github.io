@@ -49,6 +49,12 @@
     outline-offset: 2px;
   }
 
+  /* Same logic for text selection: a wash of the page's own primary, quiet
+     enough that selected prose stays legible in both schemes. */
+  ::selection {
+    background: color-mix(in srgb, var(--md-sys-color-primary) 24%, transparent);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

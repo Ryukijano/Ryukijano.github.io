@@ -1,5 +1,28 @@
 import { Link, useLocation } from 'react-router-dom';
+import { Moon, Sun } from 'lucide-react';
 import { CV_URL, SITE_NAME } from '../content/site.js';
+import { setSiteMode, useSiteMode } from '../lib/mode.js';
+
+function ModeToggle() {
+  const mode = useSiteMode();
+  const next = mode === 'dark' ? 'light' : 'dark';
+  const label = `Switch to ${next} theme`;
+  return (
+    <button
+      type="button"
+      className="site-nav__mode"
+      onClick={() => setSiteMode(next)}
+      aria-label={label}
+      title={label}
+    >
+      {mode === 'dark' ? (
+        <Sun size={14} strokeWidth={1.75} aria-hidden="true" />
+      ) : (
+        <Moon size={14} strokeWidth={1.75} aria-hidden="true" />
+      )}
+    </button>
+  );
+}
 
 function variantClass(variant) {
   switch (variant) {
@@ -63,6 +86,7 @@ export default function SiteNav({ variant = 'ink', overlay = false }) {
         ) : null}
         <span aria-hidden="true"> · </span>
         <a href={CV_URL}>CV</a>
+        <ModeToggle />
       </div>
     </nav>
   );

@@ -2,6 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
+    <script>
+      /* Pre-paint theme stamp. Must agree with src/lib/mode.js: stored
+         preference first, else prefers-color-scheme. html[data-mode] feeds
+         the generated pre-mount ground in m3-tokens.css and color-scheme. */
+      (function () {
+        var m = null;
+        try { m = localStorage.getItem('site-mode'); } catch (e) {}
+        if (m !== 'light' && m !== 'dark') {
+          m = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.dataset.mode = m;
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gyanateet Dutta</title>
@@ -10,6 +23,9 @@
     <meta property="og:description" content="Gyanateet Dutta — surgical video, quantum algorithms, and graphics. University of Leeds.">
     <meta property="og:url" content="https://ryukijano.github.io/">
     <meta property="og:type" content="website">
+    <meta property="og:image" content="https://ryukijano.github.io/assets/images/kanagawa_latentspace_autoencoder.jpg">
+    <meta property="og:image:alt" content="Hokusai's Great Wave as a latent-autoencoder reconstruction: painted, dithered, wireframed.">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&display=swap" rel="stylesheet">
