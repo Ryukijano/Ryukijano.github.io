@@ -21,4 +21,18 @@ function pagesSpaFallback() {
 export default defineConfig({
   plugins: [react(), tailwindcss(), pagesSpaFallback()],
   base: '/', // user site served from the domain root
+  // Cloud-agent previews arrive via localhost forward or a tunnel Host
+  // header (trycloudflare, etc.). Vite 7 rejects unknown hosts by default.
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    strictPort: true,
+    allowedHosts: true,
+  },
+  preview: {
+    host: '0.0.0.0',
+    port: 5173,
+    strictPort: true,
+    allowedHosts: true,
+  },
 })
