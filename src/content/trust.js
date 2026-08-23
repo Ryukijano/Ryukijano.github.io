@@ -24,9 +24,9 @@ const trust = {
     h2: 'why sort them this way',
     body: [
       'every project here produces something that looks like a fact. a phase label, an energy, a bounding box, a wall. they don’t all deserve the same amount of belief, and nothing in the output says which is which: a super-resolved pothole comes back at the same resolution as a photographed one, lit the same way, in the same file, with no marker on the invented pixels.',
-      'so the bands below are about provenance rather than quality. a measured result can still be wrong. an invented one can still be the best thing on the site. what changes as you go down is what you’d have to do to catch a mistake, and by the last band the answer is that you can’t.',
+      'so the bands below are about provenance rather than quality. a measured result can still be wrong. an invented one can still be worth your time. what changes as you go down is what you’d have to do to catch a mistake, and by the last band the answer is that you can’t.',
     ],
-    quiet: 'the ordering is deliberate. it gets worse.',
+    quiet: 'most checkable at the top, least at the bottom. nothing else about the projects changes between them.',
   },
 
   bands: [
@@ -48,7 +48,7 @@ const trust = {
           t: 'syndrome-net',
           m: 'quantum · stim · five code families · the page that argues for all of this',
           o: 'decoder performance across surface, colour, qldpc and bosonic codes, plus a note on every result naming the machine that produced it.',
-          b: 'you read it as a claim about provenance. the numbers come out of simulation, not a quantum computer, and the threshold sweeps that would decide whether any of these codes are worth building haven’t been published. what’s rigorously measured here is which accelerator ran the job. that sounds like a small thing. it’s the reason anything else on this site can be argued with six months later.',
+          b: 'the claim to check here is provenance. the numbers come out of simulation, not a quantum computer, and the threshold sweeps that would decide whether any of these codes are worth building haven’t been published. what’s rigorously measured is which accelerator ran the job. that sounds small, but it’s what keeps these results arguable six months later.',
           to: href('Case Study - Syndrome-Net.dc.html'),
         },
         {
@@ -69,7 +69,7 @@ const trust = {
           t: 'generalised shor’s algorithm',
           m: 'quantum · yquantum 2025, yale · 1st',
           o: 'the factors of a number.',
-          b: 'you can multiply. 15 = 3 × 5, from a phase register of 8 qubits, a target of 4 and 9 ancillas, over 2048 shots, with every gate in the modular arithmetic built up by hand from h, cx, cp, t and swap. the check takes seconds and doesn’t involve trusting anything. the honest boundary is where it stopped: n=143 wanted 41 qubits and the backend refused on account permissions, which isn’t a computational failure and the page says so.',
+          b: 'you can multiply. 15 = 3 × 5, from a phase register of 8 qubits, a target of 4 and 9 ancillas, over 2048 shots, with every gate in the modular arithmetic built up by hand from h, cx, cp, t and swap. the check takes seconds and doesn’t involve trusting anything. where it stopped: n=143 wanted 41 qubits and the backend refused on account permissions, which isn’t a computational failure and the page says so.',
           to: href('Case Study - YQuantum Shors Algorithm.dc.html'),
         },
       ],
@@ -85,7 +85,7 @@ const trust = {
           t: 'pothole detection',
           m: 'published · arxiv:2401.08588 · esrgan in front of yolov7',
           o: 'boxes drawn on road defects: on asphalt grain that a gan put there, on a frame that no longer contained it.',
-          b: 'you’re still in the lab. the paper degrades its own 800p capture down to 360p and restores it ×4, so the original does exist and the invention is checkable against it. mAP goes 0.73 → 0.85 on yolov7x and inference goes 53 ms → 69 ms, because the generator forward pass isn’t free. point the same pipeline at a live dashcam and there was never an original. the band changes underneath it and nothing in the output announces that.',
+          b: 'in the published experiment, the original exists. the paper degrades its own 800p capture down to 360p and restores it ×4, so the original does exist and the invention is checkable against it. mAP goes 0.73 → 0.85 on yolov7x and inference goes 53 ms → 69 ms, because the generator forward pass isn’t free. point the same pipeline at a live dashcam and there was never an original. the band changes underneath it and nothing in the output announces that.',
           to: href('Case Study - Pothole Detection.dc.html'),
         },
       ],
@@ -95,13 +95,13 @@ const trust = {
       name: 'INFERRED',
       def: 'the model asserts something no sensor observed. the thing it’s talking about still exists, so someone could in principle go and settle it.',
       test: 'THE TEST: wait, or go and look. the answer is out there. it just isn’t in the file.',
-      note: 'the difference between this band and the next one is whether anyone could settle it, not whether anyone will. in practice the tracking case never gets settled; the frames where the answer matters are exactly the frames no human can supply it for, which is uncomfortably close to unfalsifiable in effect if not in principle. that’s the boundary this whole page is really about.',
+      note: 'the difference between this band and the next one is whether anyone could settle it, not whether anyone will. in practice the tracking case never gets settled; the frames where the answer matters are exactly the frames no human can supply it for.',
       cards: [
         {
           t: 'fet-vae frame prediction',
           m: 'msc thesis, leeds · jigsaws suturing · 22 fps',
           o: 'the next twenty frames of a suture, before they’ve happened.',
-          b: 'you wait twenty frames. this is the cleanest case anywhere on the site: the ground truth turns up on its own, on a schedule, and the comparison runs itself. 28.13 dB psnr, 0.927 ssim and 0.062 lpips at t=20. the write-up also flags that a separate record reports the result as +2.36 dB over a baseline, and declines to merge the two figures without the baseline in front of it.',
+          b: 'wait twenty frames and the ground truth turns up on its own, on a schedule, and the comparison runs itself. 28.13 dB psnr, 0.927 ssim and 0.062 lpips at t=20. the write-up also flags that a separate record reports the result as +2.36 dB over a baseline, and declines to merge the two figures without the baseline in front of it.',
           to: href('Case Study - FET-VAE Surgical Prediction.dc.html'),
         },
         {
@@ -125,20 +125,20 @@ const trust = {
       name: 'INVENTED',
       def: 'the output depicts something that never happened, or that no longer exists to check against. unfalsifiable by construction.',
       test: 'THE TEST: there isn’t one. that’s the definition, not a complaint about the work.',
-      note: 'these two are why the page exists. dalton mills is the sharpest version of the problem anywhere here and it’s also the best thing on the site. the band describes what you’re allowed to do with the output afterwards. put a generated near-miss in front of an insurer and it stops being a hypothesis. put a walkable mill in front of a fourteen-year-old and it stops being a reconstruction.',
+      note: 'these two are why the page exists. dalton mills is also the sharpest version of the problem here. the band describes what you’re allowed to do with the output afterwards. put a generated near-miss in front of an insurer and it stops being a hypothesis. put a walkable mill in front of a fourteen-year-old and it stops being a reconstruction.',
       cards: [
         {
           t: 'dalton mills',
           m: 'helix xr · science museum group · the narration is generated too',
           o: 'a walkable victorian mill, inferred from ten photographs of a grade II* building that burned down in 2022.',
-          b: 'nothing. there is no version of this where anyone finds out. the mill is gone, the photographic record is closed, and the surfaces the ten cameras never covered can’t be compared against the building by anyone, ever. a visitor standing inside has no way to tell which wall came from a photograph and which came from a model’s sense of what a mill looks like. both are lit the same and equally solid under the hand.',
+          b: 'there is no version of this where anyone finds out. the mill is gone, the photographic record is closed, and the surfaces the ten cameras never covered can’t be compared against anything. a visitor standing inside has no way to tell which wall came from a photograph and which came from a model’s idea of a mill; both feel equally solid under the hand.',
           to: href('Case Study - Dalton Mills.dc.html'),
         },
         {
           t: 'cosmos sentinel',
           m: 'video · world models · the public demo runs two of the three stages',
           o: 'video of a collision that didn’t occur, generated from a clip where one nearly did.',
-          b: 'you treat it as an illustration and say so out loud. nothing in the chain knows how heavy the car was, how wet the road was, or how fast that particular driver would have reacted, and it comes back looking like footage. none of it has been measured: no test set, no accuracy figure, nothing held back. and the three stages can’t check each other, because the second and third only ever see what the first picked out. when they agree, that’s inheritance.',
+          b: 'it works as an illustration only while everyone treats it as one, and the page says so out loud. nothing in the chain knows how heavy the car was, how wet the road was, or how fast that particular driver would have reacted, and it comes back looking like footage. none of it has been measured: no test set, no accuracy figure, nothing held back. the three stages can’t check each other either, because the second and third only ever see what the first picked out; when all three agree, the agreement is inherited rather than independent.',
           to: href('Case Study - Cosmos Sentinel.dc.html'),
         },
       ],

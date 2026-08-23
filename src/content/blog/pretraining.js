@@ -24,7 +24,7 @@ export default {
       kicker: 'THE JOB',
       heading: 'Make a representation before you need the answer',
       body: [
-        'Supervised training starts with the task. You collect (x, y) pairs, you minimise a loss that mentions y, and the model is only as good as the labelling protocol. That works when y is cheap. It does not work when y is a surgical phase marked by someone whose other job is the operation.',
+        'Supervised training starts with the task. You collect (x, y) pairs, you minimise a loss that mentions y, and the model is only as good as the labelling protocol. That works when y is cheap. It does not work when y is a surgical phase, marked by clinicians between operations.',
         'Pretraining starts with a pretext: a question you can ask of raw x. Predict a masked patch. Agree two views of the same image. Next-frame in latent space. The pretext is not the product. It is a way to spend unlabelled compute on a representation you will later freeze, fine-tune, or throw a small head on.',
       ],
     },

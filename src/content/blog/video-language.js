@@ -8,7 +8,7 @@ export default {
     'Video-language is the problem of putting frames next to tokens so a clip can produce a sentence, or so both can condition a motor command. One contract emits words. The other emits an action. A VLA is not a VLM with a USB arm.',
   taxonomy: {
     title: 'WHAT THE MODEL MUST PRODUCE',
-    caption: 'A VLA is not a VLM with a USB arm. The action distribution is its own learning problem.',
+    caption: 'The action distribution is its own learning problem, not a language head with a plug on it.',
     branches: [
       { name: 'Caption / retrieve', items: ['pixels → words', 'clip ↔ sentence'] },
       { name: 'VLM', items: ['video + text → text'] },
@@ -34,7 +34,7 @@ export default {
       heading: 'One backbone versus a pipe of specialists',
       body: [
         'A unified VLM puts visual tokens into a language model, often through a frozen encoder and a projector. A composed system hands a cheap watcher a long tape, then a few seconds to a model that can explain them, then optionally a world model that invents an alternative.',
-        'A VLA is not a VLM with a USB arm. The action stream is its own learning problem: tokenised actions under next-token loss, or a diffusion or flow-matching head on chunks. If you only SFT the language tower, you have a talker. If you only train the action head, you have a policy that may not listen.',
+        'The action stream is its own learning problem: tokenised actions under next-token loss, or a diffusion or flow-matching head on chunks. Train only the language tower and the system talks; train only the action head and nothing guarantees it listens to what was said.',
       ],
     },
     {

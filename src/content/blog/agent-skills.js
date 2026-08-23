@@ -36,7 +36,7 @@ export default {
       heading: 'The procedures change faster than a checkpoint should',
       body: [
         'Surgical MOT, HPC jobs, and Gemma-Le’s queue on LeRobot across three L40s are where the costly mistake is procedural: wrong split, wrong GPU, wrong path. You can SFT that knowledge into weights. I wrote it down as a skill instead.',
-        'The test is whether an agent that has not seen the repo can run the eval you meant. If it still has to guess the dataset root, you wrote prose, not a skill.',
+        'The test is whether an agent that has not seen the repo can run the eval you meant. A skill file that still leaves the dataset root to be guessed is prose with a filename.',
       ],
     },
   ],

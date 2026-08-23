@@ -16,7 +16,7 @@ export default {
   },
   taxonomy: {
     title: 'THREE CONTRACTS',
-    caption: 'Three contracts, not one method with three logos.',
+    caption: 'Three contracts; three different things to pay for.',
     branches: [
       { name: 'Reconstruct pixels', items: ['MAE', 'masked video', 'next-frame RGB'] },
       { name: 'Predict representations', items: ['I-JEPA', 'V-JEPA', 'latent targets'] },
@@ -35,7 +35,7 @@ export default {
       heading: 'Fill a hole without being handed y',
       body: [
         'Instance discrimination says which observations belong together. Predictive jobs say: given what I can see, what should be there. Masked autoencoders reconstruct pixels or tokens. Joint-embedding predictive architectures predict a representation of the missing piece from a representation of the context, and they refuse to decode back to RGB. VAEs reconstruct through a bottleneck and spend a KL term so that bottleneck is a distribution you can sample.',
-        'The last of those is an unsupervised latent-variable generative model. It often sits next to self-supervised representation learning in a survey. It is not I-JEPA with a decoder glued on. Pixel reconstruction pays for texture you may not want. Latent prediction pays for whatever the target encoder kept. A VAE pays for a sampleable code.',
+        'The last of those is an unsupervised latent-variable generative model. It often sits next to self-supervised representation learning in a survey, though it is not I-JEPA with a decoder glued on; pixel reconstruction pays for texture you may not want. Latent prediction pays for whatever the target encoder kept. A VAE pays for a sampleable code.',
       ],
     },
     {

@@ -9,7 +9,7 @@ export default {
   taxonomy: {
     title: 'WHAT YOU ARE SHOWN',
     caption:
-      'Schematic of three supervision regimes. NVIDIA-style neural pre-decoders that feed matching are supervised machines in this taxonomy. I have read that line. I did not ship it.',
+      'Schematic of three supervision regimes. NVIDIA-style neural pre-decoders that feed matching count as supervised machines in this taxonomy, though nothing here ships their code.',
     branches: [
       { name: 'Supervised', items: ['observable flip from Stim', 'teacher recovery / MWPM', 'neural pre-decoder'] },
       { name: 'Noise from s', items: ['infer Pauli weights', 'unsupervised-ish likelihood'] },
@@ -29,7 +29,7 @@ export default {
       kicker: 'MECHANICS',
       heading: 'Leakage is the whole method',
       body: [
-        'If your training set includes the true error, you are answering: how well can a model imitate an oracle that hardware will never be. That is still useful, as a pre-decoder, as a proposal, as a way to study capacity. It is not the same paper as “we learned the channel from s.”',
+        'If your training set includes the true error, you are answering how well a model imitates an oracle no hardware gets to be. Still useful: a pre-decoder, a proposal, a capacity study. It is not the same paper as “we learned the channel from s.”',
         'If you only have syndromes, identifiability is the mechanic. Many noise models explain the same click pattern. Regularisers, code structure, and assumed independence are doing as much work as the network. If you only have logical fail/succeed, you are back in the post-training map: a score, then search.',
       ],
     },
@@ -37,8 +37,8 @@ export default {
       kicker: 'THE DOMAIN',
       heading: 'Stim will give you detectors and an observable flip. A device will not.',
       body: [
-        'The workbench can emit supervised labels because a simulator sampled the shot: by default Stim gives detectors and the observable flip, not the Pauli frame. That is a simulator privilege, closer to training a phase head on someone else’s labels than to a fridge. Transfer to a device is a domain shift: leakage, crosstalk, time-varying calibration. A number without which simulator and which decoder produced it is not evidence.',
-        'NVIDIA’s neural pre-decoders that feed matching are a line I have read. They are not my architecture. If a sweep withholds the true error, say so; if it does not, do not call the columns the same.',
+        'The workbench can emit supervised labels because a simulator sampled the shot: by default Stim gives detectors and the observable flip, not the Pauli frame. That is a simulator privilege, closer to training a phase head on someone else’s labels than to a fridge. Transfer to a device is a domain shift: leakage, crosstalk, time-varying calibration. A number that does not name its simulator and decoder is not evidence.',
+        'If a sweep withholds the true error, the table has to say so; otherwise two columns are not measuring the same thing.',
       ],
     },
   ],

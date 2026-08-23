@@ -34,7 +34,7 @@ export default {
       kicker: 'THE JOB',
       heading: 'The substrate is already trained',
       body: [
-        'If you still need a visual encoder or a language model to know what a cup is, you are not post-training. You are pretraining with extra steps. Post-training assumes a useful prior and asks for a behavioural change: answer like this, grasp like that, propose circuits that lower this energy.',
+        'Post-training assumes a useful prior and asks for a behavioural change: answer like this, grasp like that, propose circuits that lower this energy. If the model still needs a visual encoder or a language model to know what a cup is, the pretraining is the missing half, and no amount of fine-tuning replaces it.',
         'SFT maximises the likelihood of target tokens or actions given a context. That is cloning. RL updates a policy so sampled behaviour scores higher under a reward (possibly from a preference model), with GRPO estimating advantage from a group of siblings rather than a value network. DPO skips the reward-model-plus-PPO loop. It is still not SFT: the data are comparisons, not clones.',
       ],
     },
@@ -42,7 +42,7 @@ export default {
       kicker: 'MECHANICS',
       heading: 'Likelihood is not reward',
       body: [
-        'SFT cannot prefer a rare good action over a common mediocre one except by how often it appears in the dataset. If the demonstrations are messy, the clone is messy. LoRA changes how many weights you touch, not the objective. A diffusion head trained on teleoperated chunks is still cloning: the score is agreement with the demonstration, not a reward from the world.',
+        'SFT cannot prefer a rare good action over a common mediocre one except by how often it appears in the dataset. If the demonstrations are messy, the clone is messy. LoRA changes how many weights you touch; it does not change the objective. A diffusion head trained on teleoperated chunks is still cloning: the score is agreement with the demonstration, not a reward from the world.',
         'Search starts when a score exists that no demonstration named: an energy, a judge, a verifiable reward. Offline RL and rejection sampling spend a score without on-policy rollouts. They belong on the map. They do not erase the clone-versus-search cut.',
       ],
     },
@@ -50,7 +50,7 @@ export default {
       kicker: 'THE DOMAIN',
       heading: 'Where you have demonstrations, and where you only have a score',
       body: [
-        'A small VLA usually meets cloning first. The data are teleoperated episodes: a pause while the operator thinks, a recovery the policy will copy as if it were the task. LoRA changes how many language weights you touch. It does not change the objective.',
+        'A small VLA usually meets cloning first. The data are teleoperated episodes: a pause while the operator thinks, a recovery the policy will copy as if it were the task. LoRA narrows which language weights move; the objective stays cloning either way.',
         'A generator of quantum circuits may meet search first, because there is no correct ansatz to copy. The score is an energy. The model proposes a batch, compares siblings, and will discover diagonal operators that do nothing while training looks healthy.',
       ],
     },

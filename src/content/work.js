@@ -61,7 +61,7 @@ export const matrix = [
   },
   {
     method: 'Known physics in the loss',
-    note: 'Do not learn what you can write down.',
+    note: 'What can be written down does not need to be learned.'
     cells: [
       'Fluid and rigid-body constraints in simulation',
       'Temporal consistency across adjacent frames',
@@ -102,7 +102,7 @@ export const strands = [
     page: href('Persona - Ryukijano.dc.html'),
     desc: 'Real-time 3D pipelines, GPU-accelerated simulation and photogrammetric reconstruction. Heritage capture with the University of Leeds HELIX XR facilities, rebuilt in Unreal Engine 5.',
     limit:
-      'Limits: NeRF and Gaussian reconstructions hold under controlled capture. Hand-held footage of a dark mill interior does not: pose estimation degrades before the radiance field gets a chance.',
+      'Limits: NeRF and Gaussian reconstructions hold under controlled capture. Hand-held footage of a dark mill interior does not: pose estimation degrades before the radiance field has anything to lock onto.',
     tags: ['CUDA C++', 'UNREAL ENGINE 5', 'THREE.JS', 'ISAAC SIM', 'BLENDER'],
     projects: [
       {

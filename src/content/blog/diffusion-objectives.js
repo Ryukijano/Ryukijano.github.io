@@ -5,7 +5,7 @@ export default {
   title: 'Denoising is a family, not a medium',
   desc: 'The object being noised can be pixels, actions, or tokens. The reverse losses are cousins, not identical.',
   lead:
-    'A forward process corrupts a structured object, a network learns a reverse step, and at sample time you walk back from noise. The object can be an image, a robot trajectory, or, in papers I have read and not trained, language tokens. The reverse losses are a family: score matching, DDPM epsilon-prediction, flow matching, discrete corruption.',
+    'A forward process corrupts a structured object, a network learns a reverse step, and at sample time you walk back from noise. The object can be an image, a robot trajectory, or language tokens. The reverse losses are a family: score matching, DDPM epsilon-prediction, flow matching, discrete corruption.',
   concept: {
     src: '/assets/gifs/notes/denoise-trajectory.gif',
     poster: '/assets/images/notes/denoise-trajectory-poster.png',
@@ -58,7 +58,7 @@ export default {
   ],
   instance: {
     quote:
-      'The action head on a small VLA is a reverse process on trajectories. That is diffusion as a policy, not as a language model. I have not trained LLaDA, Dream, or any other diffusion LM.',
+      'The action head on a small VLA is a reverse process on trajectories. That is diffusion applied to actions rather than tokens. I have not trained LLaDA, Dream, or any other diffusion LM.',
     attribution: 'ACTIONS, NOT TOKENS',
     workSlug: 'gemma-le-vla',
     workLabel: 'Gemma-Le VLA',

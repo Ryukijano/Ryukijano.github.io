@@ -5,7 +5,7 @@ export default {
   title: 'Energy as a reward',
   desc: 'Hybrid search and RL on circuits: a prior proposes, a score keeps or kills.',
   lead:
-    'Some domains do not hand you a demonstration of the right circuit. They hand you a score (an energy, a residual) and a generator that can propose another candidate. After cloning actions on a small VLA, this is how I actually spent a prior on molecules: propose a structure, read an energy, keep or kill. Same clone-versus-search cut as post-training, with a Hamiltonian instead of a preference model.',
+    'Some domains do not hand you a demonstration of the right circuit. They hand you a score (an energy, a residual) and a generator that can propose another candidate. After cloning actions on a small VLA, this is how I actually spent a prior on molecules: propose a structure, read an energy, keep whichever candidate scores lower. Same clone-versus-search cut as post-training, with a Hamiltonian instead of a preference model.',
   concept: {
     src: '/assets/gifs/notes/sft-then-rl.gif',
     poster: '/assets/images/notes/sft-then-rl-poster.png',
@@ -44,7 +44,7 @@ export default {
       kicker: 'THE DOMAIN',
       heading: 'The scores I actually ran',
       body: [
-        'Conditional GQE proposes an ansatz because there is no dataset of correct circuits for a new molecule, only an energy. I am not a coauthor of Nakaji et al., or of the GQE papers that challenge sits on. NQCC was hydrogen-on-nickel, VQE and sample-based diagonalisation, run as a participant.',
+        'Conditional GQE proposes an ansatz because there is no dataset of correct circuits for a new molecule, only an energy. NQCC was hydrogen-on-nickel, VQE and sample-based diagonalisation, run as a participant.',
         'Shor was period-finding at N=15, 2048 shots, on a simulator. That score is whether the hand-built arithmetic factored 15, not a Hamiltonian. It is not cryptographically relevant factoring.',
       ],
     },

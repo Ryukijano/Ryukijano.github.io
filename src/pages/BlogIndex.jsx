@@ -19,7 +19,7 @@ const SERIF = {
 
 const FACTS = [
   { dt: 'Notes', dd: String(notes.length) },
-  { dt: 'Written', dd: '2026' },
+  { dt: 'Year', dd: '2026' },
   { dt: 'Areas', dd: String(new Set(notes.map((note) => note.area)).size) },
 ];
 
@@ -65,9 +65,9 @@ export default function BlogIndex() {
             How the object changed
           </Text>
           <Text as="p" role="body-small" style={mapCaptionStyle}>
-            Theatre video, then action chunks, then a state I could not look at, then
-            an energy instead of a demonstration. Schematic of that path. Framing, not
-            a survey.
+            The order the notes were met in: theatre video first, then action chunks,
+            then a hidden state, then an energy standing in for a demonstration. A
+            schematic of that path; framing, not a survey.
           </Text>
           <ol style={listStyle}>
             {curriculum.map((row) => (

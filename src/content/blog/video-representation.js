@@ -5,7 +5,7 @@ export default {
   title: 'Video is not a bag of frames',
   desc: 'Temporal structure, and three different questions you can ask of one camera.',
   lead:
-    'A still encoder sees a rectangle. Video is that rectangle asked to keep order, keep an identity after the tool leaves the frame, or guess what happens next. The camera can be shared. The losses cannot.',
+    'A still encoder sees a rectangle. Video asks that rectangle to keep order in time, to hold an identity after the tool leaves the frame, to guess what happens next. One camera; three incompatible losses.',
   concept: {
     src: '/assets/gifs/notes/video-temporal.gif',
     poster: '/assets/images/notes/video-temporal-poster.png',
@@ -16,7 +16,7 @@ export default {
   },
   taxonomy: {
     title: 'SAME CAMERA',
-    caption: 'Three objectives. One stream. The losses cannot be shared just because the pixels can.',
+    caption: 'Three objectives on one stream, and the losses do not transfer between them.',
     branches: [
       { name: 'Phase', items: ['what stage?', 'coarse narrative'] },
       { name: 'Tracking', items: ['where is this entity?', 'identity through occlusion'] },
@@ -32,7 +32,7 @@ export default {
       kicker: 'THE JOB',
       heading: 'Three jobs that share a camera',
       body: [
-        'Video is at least three jobs that happen to share a camera. A phase label is a coarse narrative: what step of a procedure is this. A track is an identity through occlusion. A future frame is a guess about upcoming pixels, not a phase name and not a physics engine. The same footage can host all three. The losses cannot.',
+        'Video is at least three jobs that happen to share a camera. A phase label is a coarse narrative: what step of a procedure is this. A track is an identity through occlusion. A future frame is a guess about upcoming pixels rather than a phase name. The same footage can host all three jobs; the losses cannot be shared.',
         'A bag-of-frames baseline encodes each still, then pools. It can work when the label is visible in a single good frame. It fails when the label is an order of events, a tool that left the image, or a motion that never appears in one still.',
       ],
     },

@@ -52,7 +52,7 @@ export default {
       heading: 'I already had the problem of not looking at the state',
       body: [
         'Surgical video is structured prediction on what the camera will give you, not on a true state you can open and read. QEC is that job with the observation cut further back: the decoder sees a syndrome, never the error, and emits a recovery. Syndrome-Net is the workbench I built once that constraint showed up again. Code families change the syndrome graph; they do not change the job.',
-        'Matching graphs, tensor networks, lookup tables, convolutional nets are different decoders for the same mapping. Comparing them fairly means the same harness and the same scoring; that is what the workbench is for. I have read NVIDIA’s neural pre-decoders that feed matching. I did not train them, and they are not this workbench.',
+        'Matching graphs, tensor networks, lookup tables, convolutional nets are different decoders for the same mapping. Comparing them fairly means the same harness and the same scoring; that is what the workbench is for.',
       ],
     },
   ],

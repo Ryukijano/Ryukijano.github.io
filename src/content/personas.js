@@ -1,7 +1,9 @@
 /**
- * Persona rooms. Statements are the honest fullDesc lines from the anti-slop
- * pass — no invented prizes, no "CS & AI" award title, no Bradford/JAX slugs.
- * One locked still plus the small GIF that belongs to that lane — not a triptych.
+ * Persona rooms. Statements carry the anti-slop facts with softened
+ * delivery (2026-08-22): dates do the work, redundant "I am not still"
+ * clauses removed, imperatives replaced by declaratives. No prize, title,
+ * or affiliation changed. One locked still plus the small GIF that belongs
+ * to that lane — not a triptych.
  */
 import dalton from './caseStudies/dalton-mills.js';
 import fetVae from './caseStudies/fet-vae-surgical-prediction.js';
@@ -13,7 +15,7 @@ export const personas = {
     title: 'Ryukijano',
     subtitle: 'Graphics & systems',
     statement:
-      'I work on graphics and systems: photogrammetry into Unreal, CUDA C++, physics-informed nets. Sep–Dec 2024 I was with Science Museum Group and Leeds HELIX XR on Dalton Mills. That brief ended; I am not still on a heritage contract. Since Nov 2025 my paid work is medical computer vision at Leeds (NDA), which lives in the vision lane.',
+      'I work on graphics and systems: photogrammetry into Unreal, CUDA C++, physics-informed nets. Sep–Dec 2024 I was with Science Museum Group and Leeds HELIX XR on Dalton Mills. Since Nov 2025 my paid work is medical computer vision at Leeds (NDA), which lives in the vision lane.',
     paneClass: 'pane-ryukijano',
     figures: [
       {
@@ -59,7 +61,7 @@ export const personas = {
     title: 'Gyanateet',
     subtitle: 'Vision & robotics',
     statement:
-      'I finished the MSc Advanced Computer Science (Artificial Intelligence) at the University of Leeds in 2023–2024; I am not still enrolled. Mar–Nov 2025 I interned with AIMS (AI in Medicine and Surgery) on ESD workflow / DINOv2. Since Nov 2025 I have been a research technician at Leeds on medical computer vision under NDA. The public record is the ISBI paper and the thesis repo.',
+      'I finished the MSc Advanced Computer Science (Artificial Intelligence) at the University of Leeds in 2023–2024. Mar–Nov 2025 I interned with AIMS (AI in Medicine and Surgery) on ESD workflow / DINOv2. Since Nov 2025 I have been a research technician at Leeds on medical computer vision under NDA. The public record is the ISBI paper and the thesis repo.',
     paneClass: 'pane-gyanateet',
     figures: [
       {
@@ -93,13 +95,13 @@ export const personas = {
     title: 'Ryoushi',
     subtitle: 'Quantum algorithms',
     statement:
-      'I work on hybrid quantum–classical experiments in Qiskit, PennyLane, and cuQuantum. Quantum Buddies is a three-person collective, not a funded lab. Bradford, YQuantum, NQCC, and City of London were weekend-scale builds. Do not read them as clinical or industrial deployments.',
+      'I work on hybrid quantum–classical experiments in Qiskit, PennyLane, and cuQuantum. Quantum Buddies is a three-person collective, not a funded lab. Bradford, YQuantum, NQCC, and City of London were weekend-scale builds, prototypes rather than clinical or industrial deployments.',
     paneClass: 'pane-ryoushi',
     figures: [
       {
         src: '/assets/images/nightcity.jpg',
         alt: 'Night city still used as the quantum-lane lock',
-        caption: 'A lock still for this lane, not a circuit diagram and not a hardware result.',
+        caption: 'A lock still for this lane; it is not a hardware result.',
       },
       {
         src: shor.hero.src,

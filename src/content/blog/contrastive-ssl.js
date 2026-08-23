@@ -5,7 +5,7 @@ export default {
   title: 'Two views, and the thing that must not collapse',
   desc: 'Contrastive learning and self-distillation are sibling ways to grow a geometry without labels.',
   lead:
-    'A representation is a geometry you can reuse, not a class name. Contrastive methods grow it with InfoNCE: the positive pair is identified against in-batch (SimCLR) or queued (MoCo) negatives, not shoved across a margin. Self-distillation methods match a student to a teacher without a negative batch. Collapse is the shared failure. DINO lives in the second family, not in InfoNCE with extra crops.',
+    'A representation is a geometry you can reuse, not a class name. Contrastive methods grow it with InfoNCE: the positive pair is identified against in-batch (SimCLR) or queued (MoCo) negatives, not shoved across a margin. Self-distillation methods match a student to a teacher without a negative batch. Collapse is the shared failure, and DINO belongs to the second family.',
   concept: {
     src: '/assets/gifs/notes/ssl-family.gif',
     poster: '/assets/images/notes/ssl-family-poster.png',
@@ -57,7 +57,7 @@ export default {
   instance: {
     quote:
       'DINOv2 features are what I actually used on endoscopic video: two unlabelled adaptation stages, then a frozen encoder plus a head. That is self-distillation spent on a new camera, not SimCLR, and not a paper that introduced DINO. The domain question is whether teacher–student features still separate a hook from tissue when the camera is wet and close.',
-    attribution: 'SELF-DISTILLATION IN A DOMAIN, NOT A PRODUCT POST',
+    attribution: 'SELF-DISTILLATION ON SURGICAL VIDEO',
     workSlug: 'surgical-phase-detection',
     workLabel: 'Surgical phase recognition',
   },
