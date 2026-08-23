@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Chip, Text, Theme } from '../components/m3/index.jsx';
 import SiteNav from '../components/SiteNav.jsx';
 import useReveal from '../components/useReveal.js';
+import Atmosphere from '../components/Atmosphere.jsx';
 import { joinStyle, parseStyle } from '../lib/style.js';
 import trust, { bandIds } from '../content/trust.js';
 
@@ -96,13 +97,14 @@ export default function Trust() {
     <Theme
       name={THEME}
       style={parseStyle(
-        'min-height:100vh;background:var(--md-sys-color-surface);' +
+        'position:relative;min-height:100vh;background:var(--md-sys-color-surface);' +
           'color:var(--md-sys-color-on-surface);' +
           'font-family:var(--md-sys-typescale-plain-font);-webkit-font-smoothing:antialiased',
       )}
     >
+      <Atmosphere />
       <SiteNav variant="ink" />
-      <div style={parseStyle('max-width:880px;margin:0 auto;padding:0 32px 130px')}>
+      <div style={parseStyle('position:relative;z-index:1;max-width:880px;margin:0 auto;padding:0 32px 130px')}>
         <header style={parseStyle('padding:64px 0 0')}>
           <Text
             role="label-small"

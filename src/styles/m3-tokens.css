@@ -61,32 +61,32 @@
 
     /* ---- type scale (Major Second, 1.125, anchored at 14sp body) ---- */
     --md-sys-typescale-display-large-font: var(--md-sys-typescale-brand-font);
-    --md-sys-typescale-display-large-size: 3.5625rem;
+    --md-sys-typescale-display-large-size: clamp(2.25rem, 1.2rem + 4.8vw, 3.5625rem);
     --md-sys-typescale-display-large-line-height: 4rem;
     --md-sys-typescale-display-large-tracking: -0.016em;
     --md-sys-typescale-display-large-weight: 400;
     --md-sys-typescale-display-medium-font: var(--md-sys-typescale-brand-font);
-    --md-sys-typescale-display-medium-size: 2.8125rem;
+    --md-sys-typescale-display-medium-size: clamp(1.95rem, 1.12rem + 3.5vw, 2.8125rem);
     --md-sys-typescale-display-medium-line-height: 3.25rem;
     --md-sys-typescale-display-medium-tracking: 0em;
     --md-sys-typescale-display-medium-weight: 400;
     --md-sys-typescale-display-small-font: var(--md-sys-typescale-brand-font);
-    --md-sys-typescale-display-small-size: 2.25rem;
+    --md-sys-typescale-display-small-size: clamp(1.7rem, 1.08rem + 2.6vw, 2.25rem);
     --md-sys-typescale-display-small-line-height: 2.75rem;
     --md-sys-typescale-display-small-tracking: 0em;
     --md-sys-typescale-display-small-weight: 400;
     --md-sys-typescale-headline-large-font: var(--md-sys-typescale-brand-font);
-    --md-sys-typescale-headline-large-size: 2rem;
+    --md-sys-typescale-headline-large-size: clamp(1.6rem, 1.12rem + 1.9vw, 2rem);
     --md-sys-typescale-headline-large-line-height: 2.5rem;
     --md-sys-typescale-headline-large-tracking: 0em;
     --md-sys-typescale-headline-large-weight: 400;
     --md-sys-typescale-headline-medium-font: var(--md-sys-typescale-brand-font);
-    --md-sys-typescale-headline-medium-size: 1.75rem;
+    --md-sys-typescale-headline-medium-size: clamp(1.45rem, 1.08rem + 1.55vw, 1.75rem);
     --md-sys-typescale-headline-medium-line-height: 2.25rem;
     --md-sys-typescale-headline-medium-tracking: 0em;
     --md-sys-typescale-headline-medium-weight: 400;
     --md-sys-typescale-headline-small-font: var(--md-sys-typescale-brand-font);
-    --md-sys-typescale-headline-small-size: 1.5rem;
+    --md-sys-typescale-headline-small-size: clamp(1.3rem, 1.06rem + 1.1vw, 1.5rem);
     --md-sys-typescale-headline-small-line-height: 2rem;
     --md-sys-typescale-headline-small-tracking: 0em;
     --md-sys-typescale-headline-small-weight: 400;
@@ -168,6 +168,20 @@
     --md-sys-elevation-3: 0 4px 8px 3px rgba(48, 36, 28, 0.10), 0 1px 3px rgba(48, 36, 28, 0.18);
     --md-sys-elevation-4: 0 6px 10px 4px rgba(48, 36, 28, 0.10), 0 2px 3px rgba(48, 36, 28, 0.18);
     --md-sys-elevation-5: 0 8px 12px 6px rgba(48, 36, 28, 0.12), 0 4px 4px rgba(48, 36, 28, 0.18);
+  }
+
+  /* ---- pre-mount ground: keyed off html[data-mode], see index.html ---- */
+
+  html[data-mode='light'] {
+    color-scheme: light;
+    --md-sys-color-surface: #fef9f0;
+    --md-sys-color-on-surface: #1d1c16;
+  }
+
+  html[data-mode='dark'] {
+    color-scheme: dark;
+    --md-sys-color-surface: #131316;
+    --md-sys-color-on-surface: #e4e1e6;
   }
 
   /* ryukijano — seed #6f9fd8, default ground dark */

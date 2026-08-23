@@ -29,9 +29,10 @@ const study = {
 
   hero: {
     src: '/assets/gifs/cosmos-sentinel-pipeline.gif',
+    poster: '/assets/images/cosmos-sentinel-pipeline-poster.png',
     alt: 'A risk trace runs across a dashcam clip and spikes; those few seconds are cut out and sent onward, a larger model fills in what happened, and two short film strips play out the ending that was recorded and the one that was invented',
     caption:
-      'The risk trace decides which seconds get read; only those seconds reach the model that explains them; and the explanation is what the final scene is built from. This is a schematic — the curve, the findings and the frames are illustrative, not model output.',
+      'The risk trace decides which seconds get read; only those seconds reach the model that explains them; and the explanation is what the final scene is built from. This is a schematic; the curve, the findings and the frames are illustrative, not model output.',
     highlight: 'schematic',
     gutter: true,
   },
@@ -43,7 +44,7 @@ const study = {
       h2: 'Most of the footage is nothing happening',
       body: [
         'A model good enough to explain a near-miss is far too expensive to point at an hour of ordinary driving. Almost all of that hour is a car staying in its lane, and a large model would spend nearly all of its effort confirming that nothing happened. The moments worth understanding are a rounding error in the footage, and nobody has marked them.',
-        'So something cheap watches the whole thing first, and it is deliberately ignorant. It has no idea what a cyclist is or what a wet road means. It answers one question — is this about to go badly — and it answers it continuously. When it says yes, it hands over a few seconds of video to something that can actually explain them. Cheap and narrow decides where to look; expensive and broad decides what it means.',
+        'So something cheap watches the whole thing first, and it is deliberately ignorant. It has no idea what a cyclist is or what a wet road means. It answers one question, whether this is about to go badly, and it answers it continuously. When it says yes, it hands over a few seconds of video to something that can actually explain them. Cheap and narrow decides where to look; expensive and broad decides what it means.',
       ],
     },
 
@@ -51,23 +52,23 @@ const study = {
       num: '02',
       kicker: 'METHOD',
       h2: 'Narrow, then deep, then imagined',
-      body: 'Each stage hands the next one less, and something different in kind. A long recording becomes a moment. That moment becomes a description — how serious, who was involved, what the conditions were — kept deliberately structured rather than written out, because the last stage has to act on it rather than read it. Then the description becomes a scene that never existed.',
+      body: 'Each stage hands the next one less, and something different in kind. A long recording becomes a moment. That moment becomes a description (how serious, who was involved, what the conditions were) kept deliberately structured rather than written out, because the last stage has to act on it rather than read it. Then the description becomes a scene that never existed.',
       buildList: [
         'Something small and fast watches the entire recording and flags when things look about to go wrong',
-        'Only the seconds around that flag are cut out and passed on — everything else is discarded',
+        'Only the seconds around that flag are cut out and passed on; everything else is discarded',
         'A far larger model reads those seconds, with the wider context available, and reports what happened as fields rather than a paragraph',
-        'A world model then plays the scene forward twice — once as it went, once as it might have gone',
+        'A world model then plays the scene forward twice: once as it went, once as it might have gone',
         'Every run leaves behind enough visual evidence for a person to disagree with it',
       ],
       closing:
-        'Everything it decides, it shows its working for — where in the frame it was looking, how the risk rose and fell, what it drew a box around. A score on its own is not something anyone can argue with, and the only claim this pipeline makes is that a person can check it.',
+        'Everything it decides, it shows its working for: where in the frame it was looking, how the risk rose and fell, what it drew a box around. A score on its own is not something anyone can argue with, and the only claim this pipeline makes is that a person can check it.',
     },
 
     deployment: {
       num: '03',
       kicker: 'DEPLOYMENT',
       h2: 'What survives being put somewhere public',
-      body: 'Running this on a shared, free GPU is a different problem from running it on your own machine. The models weigh more than thirty gigabytes, and the clock starts the moment you are given hardware — spend that window downloading and it ends before anything is computed. Most of the deployment work is about arriving with the weights already there.',
+      body: 'Running this on a shared, free GPU is a different problem from running it on your own machine. The models weigh more than thirty gigabytes, and the clock starts the moment you are given hardware. Spend that window downloading and it ends before anything is computed. Most of the deployment work is about arriving with the weights already there.',
       tableHead: ['PIECE', 'HOSTED', 'WHY'],
       tableRows: [
         {
@@ -82,7 +83,7 @@ const study = {
           name: 'The imaginer',
           cells: [
             'skipped',
-            'its dependencies will not install in that environment — left out rather than faked',
+            'its dependencies will not install in that environment; left out rather than faked',
           ],
         },
         {
@@ -101,8 +102,8 @@ const study = {
       h2: 'The convincing part is the invented part',
       body: [
         'The last stage produces video of something that did not happen. It is a guess about how traffic usually behaves, shaped by a description written by one model about a clip picked out by another. Nothing anywhere in that chain knows how heavy the car was, how wet the road was, or how fast that particular driver would have reacted. It comes out looking like footage, and it is not.',
-        'That matters because of what such a video invites. Put it in front of an insurer or a review board and it stops being a hypothesis and becomes a claim about what should have happened — a weight it cannot carry. It is a way of showing someone an idea, not a way of settling whether the idea was right.',
-        'The mistakes also only travel one way. If the cheap model looks in the wrong place, the expensive one never sees the incident — and it will describe whatever it was handed with complete confidence. These are not three opinions that can check each other. The second and third only ever see what the first chose, so when all three agree that is not corroboration, it is inheritance.',
+        'That matters because of what such a video invites. Put it in front of an insurer or a review board and it stops being a hypothesis and becomes a claim about what should have happened, a weight it cannot carry. It is a way of showing someone an idea, not a way of settling whether the idea was right.',
+        'The mistakes also only travel one way. If the cheap model looks in the wrong place, the expensive one never sees the incident, and it will describe whatever it was handed with complete confidence. These are not three opinions that can check each other. The second and third only ever see what the first chose, so when all three agree that is not corroboration, it is inheritance.',
         'None of this has been measured. There is no test set, no accuracy figure, nothing held back to check against. The argument it makes is about how to spend attention, and that argument stands or falls on reasoning rather than evidence.',
       ],
     },

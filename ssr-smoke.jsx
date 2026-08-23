@@ -6,8 +6,11 @@ import WorkIndex from './src/pages/WorkIndex.jsx';
 import CaseStudyPage from './src/pages/CaseStudyPage.jsx';
 import Trust from './src/pages/Trust.jsx';
 import PersonaPage from './src/pages/PersonaPage.jsx';
+import BlogIndex from './src/pages/BlogIndex.jsx';
+import BlogPage from './src/pages/BlogPage.jsx';
 import NotFound from './src/pages/NotFound.jsx';
 import { caseStudies } from './src/content/caseStudies/index.js';
+import { notes } from './src/content/blog/index.js';
 
 const tree = (
   <Routes>
@@ -15,6 +18,8 @@ const tree = (
     <Route path="/academic" element={<Academic />} />
     <Route path="/work" element={<WorkIndex />} />
     <Route path="/work/:slug" element={<CaseStudyPage />} />
+    <Route path="/blog" element={<BlogIndex />} />
+    <Route path="/blog/:slug" element={<BlogPage />} />
     <Route path="/trust" element={<Trust />} />
     <Route path="/persona/:id" element={<PersonaPage />} />
     <Route path="*" element={<NotFound />} />
@@ -31,6 +36,8 @@ const routes = [
   '/',
   '/academic',
   '/work',
+  '/blog',
+  ...notes.map((n) => `/blog/${n.slug}`),
   '/trust',
   ...caseStudies.map((s) => `/work/${s.slug}`),
   '/persona/ryukijano',

@@ -26,6 +26,8 @@ Additional verification commands:
 
 ```bash
 npm run lint
+npm run notes
+npm run voice
 npm run smoke
 npm run facts
 npm run tokens
@@ -37,6 +39,8 @@ npm run tokens
 - `/academic`: Distill-style academic profile
 - `/work`: dated project table
 - `/work/:slug`: individual long-form case studies
+- `/blog`: field notes on how the learning areas work
+- `/blog/:slug`: individual notes (pretraining, SSL, video, post-training, diffusion, QEC, search)
 - `/trust`: evidence and provenance index for project claims
 - `/persona/ryukijano`, `/persona/gyanateet`, `/persona/ryoushi`: persona rooms
 - unknown paths: a real 404 page (not a silent redirect to `/`)
@@ -47,8 +51,8 @@ GitHub Pages has no server-side rewrite. The Vite build still copies `dist/index
 
 ```text
 src/routes.jsx                  Browser routing
-src/pages/                      Intro, academic, work, trust, persona rooms, 404, and case-study pages
-src/content/                    Structured page and case-study content
+src/pages/                      Intro, academic, work, notes, trust, persona rooms, 404, and case-study pages
+src/content/                    Structured page, blog, and case-study content
 src/components/                 Shared layout, media, tables, circuit, and M3 primitives
 src/styles/                     Material 3 token and component styles
 public/assets/gifs/             Case-study GIFs and technical demos

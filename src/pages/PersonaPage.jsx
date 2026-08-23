@@ -5,6 +5,7 @@ import { Text, Theme } from '../components/m3/index.jsx';
 import SiteNav from '../components/SiteNav.jsx';
 import { FigurePair } from '../components/MediaFigure.jsx';
 import { getPersona } from '../content/personas.js';
+import Atmosphere from '../components/Atmosphere.jsx';
 import NotFound from './NotFound.jsx';
 
 const SERIF = '--m3-font:var(--md-sys-typescale-brand-font)';
@@ -49,15 +50,16 @@ export default function PersonaPage() {
 
   return (
     <Theme
-      name="study"
+      name={data.id === 'gyanateet' ? 'study' : data.id}
       className={data.paneClass}
       style={parseStyle(
-        'min-height:100vh;' +
+        'position:relative;min-height:100vh;' +
           'font-family:var(--md-sys-typescale-brand-font);-webkit-font-smoothing:antialiased',
       )}
     >
+      <Atmosphere />
       <SiteNav variant="paper" />
-      <main style={parseStyle('max-width:42rem;margin:0 auto;padding:4rem 1.5rem 6rem')}>
+      <main style={parseStyle('position:relative;z-index:1;max-width:42rem;margin:0 auto;padding:4rem 1.5rem 6rem')}>
         <Text as="h1" role="headline-large" style={parseStyle(`${INK};margin:0`)}>
           {data.title}
         </Text>

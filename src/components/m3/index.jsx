@@ -9,6 +9,7 @@
  */
 import { createElement } from 'react';
 import { typeStyle } from './typeStyle.js';
+import { useSiteMode } from './../../lib/mode.js';
 import './../../styles/m3.css';
 
 /**
@@ -27,9 +28,19 @@ export function Text({ role = 'body-medium', emphasized, as = 'p', style, childr
   );
 }
 
-/** A themed region. Sets data-theme so descendants resolve the right palette. */
+/**
+ * A themed region. Sets data-theme so descendants resolve the right palette.
+ *
+ * Pages declare a palette ("study"), not a scheme: both grounds are generated
+ * for every theme, and the site-wide mode decides which one mounts. A name
+ * that already carries "-light"/"-dark" is normalized first, so legacy call
+ * sites like WorkIndex's study-dark follow the toggle instead of pinning
+ * their old ground forever.
+ */
 export function Theme({ name, as = 'div', style, children, ...rest }) {
-  return createElement(as, { 'data-theme': name, style, ...rest }, children);
+  const mode = useSiteMode();
+  const base = String(name).replace(/-(light|dark)$/, '');
+  return createElement(as, { 'data-theme': `${base}-${mode}`, style, ...rest }, children);
 }
 
 const cx = (...parts) => parts.filter(Boolean).join(' ');

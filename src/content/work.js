@@ -10,7 +10,7 @@
 import { href } from './links.js';
 
 export const hero = {
-  kicker: 'MSC ADVANCED COMPUTER SCIENCE (ARTIFICIAL INTELLIGENCE) — UNIVERSITY OF LEEDS',
+  kicker: 'MSC ADVANCED COMPUTER SCIENCE (ARTIFICIAL INTELLIGENCE), UNIVERSITY OF LEEDS',
   name: ['Gyanateet', 'Dutta'],
   roles: [
     'GRAPHICS & SYSTEMS',
@@ -61,7 +61,7 @@ export const matrix = [
   },
   {
     method: 'Known physics in the loss',
-    note: 'Do not learn what you can write down.',
+    note: 'What can be written down does not need to be learned.'
     cells: [
       'Fluid and rigid-body constraints in simulation',
       'Temporal consistency across adjacent frames',
@@ -102,7 +102,7 @@ export const strands = [
     page: href('Persona - Ryukijano.dc.html'),
     desc: 'Real-time 3D pipelines, GPU-accelerated simulation and photogrammetric reconstruction. Heritage capture with the University of Leeds HELIX XR facilities, rebuilt in Unreal Engine 5.',
     limit:
-      'Limits: NeRF and Gaussian reconstructions hold under controlled capture. Hand-held footage of a dark mill interior does not — pose estimation degrades before the radiance field gets a chance.',
+      'Limits: NeRF and Gaussian reconstructions hold under controlled capture. Hand-held footage of a dark mill interior does not: pose estimation degrades before the radiance field has anything to lock onto.',
     tags: ['CUDA C++', 'UNREAL ENGINE 5', 'THREE.JS', 'ISAAC SIM', 'BLENDER'],
     projects: [
       {
@@ -183,12 +183,12 @@ export const strands = [
     page: href('Persona - Ryoushi.dc.html'),
     desc: 'Co-founder of Quantum Buddies. VQE, QAOA, quantum walks and error correction. YQuantum 2025 Quantum Rings virtual track with Quantum Bits. Bradford prizes are teammate-reported. NQCC participant. Finalist at City of London 2025.',
     limit:
-      'Limits: none of this beats a classical solver at useful scale. VQE on the Rolls-Royce challenge is a method demonstration on a small active space — the claim is that the ansatz converges, not that it wins.',
+      'Limits: none of this beats a classical solver at useful scale. VQE on the Rolls-Royce challenge is a method demonstration on a small active space; the claim is that the ansatz converges, not that it wins.',
     tags: ['QISKIT', 'PENNYLANE', 'CUDA-Q', 'TKET', 'VQE / QAOA'],
     projects: [
       {
         title: 'YQuantum 2025 (Yale)',
-        desc: "Quantum Rings virtual track — generalized Shor's",
+        desc: "Quantum Rings virtual track, generalized Shor's",
         to: href('Case Study - YQuantum Shors Algorithm.dc.html'),
         media: '/assets/gifs/shor-algorithm.gif',
         isGif: true,
@@ -245,7 +245,7 @@ export const strands = [
       },
       {
         title: 'Cosmos Sentinel',
-        desc: 'Gate, reason, predict — BADAS + Cosmos on ZeroGPU',
+        desc: 'Gate, reason, predict: BADAS + Cosmos on ZeroGPU',
         to: href('Case Study - Cosmos Sentinel.dc.html'),
         media: '/assets/gifs/cosmos-sentinel-pipeline.gif',
         isGif: true,

@@ -21,7 +21,7 @@ const study = {
   breadcrumb: 'QUANTUM',
   kicker: 'NQCC UK QUANTUM HACKATHON 2025 · TEAM 15',
   title: 'Hydrogen on nickel, on a device that is still noisy',
-  lead: 'A Rolls-Royce materials challenge run with VQE and sample-based quantum diagonalisation — and a week spent finding out how much circuit depth the hardware would actually tolerate before the answer stopped meaning anything.',
+  lead: 'A Rolls-Royce materials challenge run with VQE and sample-based quantum diagonalisation, and a week spent finding out how much circuit depth the hardware would actually tolerate before the answer stopped meaning anything.',
 
   meta: [
     { k: 'YEAR', v: '2025' },
@@ -35,7 +35,7 @@ const study = {
     src: '/assets/gifs/sqd-krylov.gif',
     alt: 'Animated schematic of the SQD pipeline: initial reference state, Krylov subspace via Trotterized time evolution, bitstring sampling, Hamming-weight configuration recovery, subspace diagonalisation',
     caption:
-      "The SQD pipeline as it runs in the team's own code — Krylov states built by Trotterized time evolution, sampled in the computational basis, filtered by Hamming weight to keep configurations covering >95% of the probability mass, then diagonalised in that subspace. Ground-state energy (−2.15 eV) and the DFT/depth figures are the repository's reported results; the bitstring histogram and excited-state levels are illustrative, not the team's raw sample counts.",
+      "The SQD pipeline as it runs in the team's own code: Krylov states built by Trotterized time evolution, sampled in the computational basis, filtered by Hamming weight to keep configurations covering >95% of the probability mass, then diagonalised in that subspace. Ground-state energy (−2.15 eV) and the DFT/depth figures are the repository's reported results; the bitstring histogram and excited-state levels are illustrative, not the team's raw sample counts.",
     highlight:
       "Ground-state energy (−2.15 eV) and the DFT/depth figures are the repository's reported results; the bitstring histogram and excited-state levels are illustrative, not the team's raw sample counts.",
     poster: '/assets/images/sqd-pipeline-poster.png',
@@ -46,7 +46,7 @@ const study = {
       src: '/assets/gifs/sqd-krylov.gif',
       alt: 'Animated schematic of the SQD pipeline: initial reference state, Krylov subspace via Trotterized time evolution, bitstring sampling, Hamming-weight configuration recovery, subspace diagonalisation',
       caption:
-        "The SQD pipeline as it runs in the team's own code — Krylov states built by Trotterized time evolution, sampled in the computational basis, filtered by Hamming weight to keep configurations covering >95% of the probability mass, then diagonalised in that subspace. Ground-state energy (−2.15 eV) and the DFT/depth figures are the repository's reported results; the bitstring histogram and excited-state levels are illustrative, not the team's raw sample counts.",
+        "The SQD pipeline as it runs in the team's own code: Krylov states built by Trotterized time evolution, sampled in the computational basis, filtered by Hamming weight to keep configurations covering >95% of the probability mass, then diagonalised in that subspace. Ground-state energy (−2.15 eV) and the DFT/depth figures are the repository's reported results; the bitstring histogram and excited-state levels are illustrative, not the team's raw sample counts.",
       highlight:
         "Ground-state energy (−2.15 eV) and the DFT/depth figures are the repository's reported results; the bitstring histogram and excited-state levels are illustrative, not the team's raw sample counts.",
       poster: '/assets/images/sqd-pipeline-poster.png',
@@ -55,7 +55,7 @@ const study = {
       src: '/assets/gifs/sqd-vqe-dft-energy.gif',
       alt: 'SQD versus DFT ground-state energy across the four adsorption sites: fcc, hcp, bridge, atop',
       caption:
-        "Site-by-site comparison, all four numbers real: fcc −2.18 eV vs DFT −2.20 eV (0.9% error), hcp −2.06 vs −2.09 (1.4%), bridge −1.94 vs −1.98 (2.0%), atop −1.71 vs −1.76 (2.8%) — from the team's SQD_vs_SVD_Summary.md, which runs about 0.03 eV lower than the headline fcc figure above (a different sampling run of the same stochastic algorithm — the repo reports both).",
+        "Site-by-site comparison, all four numbers real: fcc −2.18 eV vs DFT −2.20 eV (0.9% error), hcp −2.06 vs −2.09 (1.4%), bridge −1.94 vs −1.98 (2.0%), atop −1.71 vs −1.76 (2.8%), from the team's SQD_vs_SVD_Summary.md, which runs about 0.03 eV lower than the headline fcc figure above (a different sampling run of the same stochastic algorithm; the repo reports both).",
       highlight:
         'fcc −2.18 eV vs DFT −2.20 eV (0.9% error), hcp −2.06 vs −2.09 (1.4%), bridge −1.94 vs −1.98 (2.0%), atop −1.71 vs −1.76 (2.8%)',
       poster: '/assets/images/sqd-vqe-dft-energy-poster.png',
@@ -68,7 +68,7 @@ const study = {
       kicker: 'PROBLEM',
       h2: 'A catalysis question with an industrial deadline behind it',
       body: [
-        'Hydrogen adsorbing onto a nickel surface is not an academic toy. It sits underneath hydrogen storage, embrittlement, and catalyst design — all of which matter to an engine manufacturer. It is also exactly the kind of strongly-correlated surface chemistry where density functional theory has to make a choice of functional, and where the choice changes the answer.',
+        'Hydrogen adsorbing onto a nickel surface is not an academic toy. It sits underneath hydrogen storage, embrittlement, and catalyst design, all of which matter to an engine manufacturer. It is also exactly the kind of strongly-correlated surface chemistry where density functional theory has to make a choice of functional, and where the choice changes the answer.',
         "That is the honest case for putting it on a quantum device: not speed, but a method whose error is structured differently from DFT's. The challenge, set by Rolls-Royce through the NQCC, was to see how far that gets you on hardware available in 2025.",
       ],
     },
@@ -77,12 +77,12 @@ const study = {
       num: '02',
       kicker: 'METHOD',
       h2: 'VQE for the variational search, SQD to clean up after it',
-      body: 'The surface is reduced to a cluster model and mapped to a qubit Hamiltonian, then attacked from two directions. VQE optimises a parameterised ansatz against the energy expectation, with a classical optimiser in the loop. Sample-based quantum diagonalisation then takes the measured configurations the device actually produced and diagonalises the Hamiltonian in that subspace — which turns noisy samples into a variational bound rather than discarding them.',
+      body: 'The surface is reduced to a cluster model and mapped to a qubit Hamiltonian, then attacked from two directions. VQE optimises a parameterised ansatz against the energy expectation, with a classical optimiser in the loop. Sample-based quantum diagonalisation then takes the measured configurations the device actually produced and diagonalises the Hamiltonian in that subspace, which turns noisy samples into a variational bound rather than discarding them.',
       steps: [
         {
           stage: 'MODEL',
           name: 'Cluster Hamiltonian',
-          role: 'The nickel surface and adsorbed hydrogen reduced to a tractable cluster, then mapped to qubits — the step that decides everything downstream.',
+          role: 'The nickel surface and adsorbed hydrogen reduced to a tractable cluster, then mapped to qubits: the step that decides everything downstream.',
         },
         {
           stage: 'ANSATZ',
@@ -97,11 +97,11 @@ const study = {
         {
           stage: 'REFINE',
           name: 'SQD',
-          role: 'Diagonalise the Hamiltonian in the subspace spanned by the configurations the device actually sampled — accuracy recovered without added depth.',
+          role: 'Diagonalise the Hamiltonian in the subspace spanned by the configurations the device actually sampled: accuracy recovered without added depth.',
         },
       ],
       closing:
-        'Almost all of the engineering went into depth. Every two-qubit gate is a decoherence event waiting to happen, so the ansatz was cut back repeatedly — fewer entangling layers, hardware-native gate choices, measurement grouping to reduce the number of circuit executions per energy evaluation. The version that ran usefully was considerably shallower than the version that was theoretically better.',
+        'Almost all of the engineering went into depth. Every two-qubit gate is a decoherence event waiting to happen, so the ansatz was cut back repeatedly: fewer entangling layers, hardware-native gate choices, measurement grouping to reduce the number of circuit executions per energy evaluation. The version that ran usefully was considerably shallower than the version that was theoretically better.',
     },
 
     finding: {
@@ -109,9 +109,9 @@ const study = {
       kicker: 'FINDING',
       h2: 'The useful result was where the method stops paying',
       body: [
-        'Benchmarked against DFT, the hybrid pipeline reproduced the qualitative adsorption behaviour on the reduced cluster — and the point at which noise overwhelmed the variational signal was identifiable and reportable. That boundary is the deliverable. An industrial partner deciding whether to invest in quantum chemistry needs to know where the crossover currently sits far more than they need another optimistic extrapolation.',
+        'Benchmarked against DFT, the hybrid pipeline reproduced the qualitative adsorption behaviour on the reduced cluster, and the point at which noise overwhelmed the variational signal was identifiable and reportable. That boundary is the deliverable. An industrial partner deciding whether to invest in quantum chemistry needs to know where the crossover currently sits far more than they need another optimistic extrapolation.',
         "SQD was the part that surprised me. Treating the device's noisy output as a sampled subspace rather than as a failed measurement recovers a real amount of accuracy for no extra circuit depth, which on NISQ hardware is the only currency that matters.",
-        'For the record, read directly from the repository: SQD found −2.15 eV at the fcc site against a DFT reference of −2.20 eV — under 5% error — with circuit depth held below 100 gates; VQE landed at −2.08 eV on the same site. The 4-qubit system is fully implemented; an 8-qubit version is scaffolded; a 127+ qubit architecture is designed on paper, not run. Site ordering held across all four adsorption geometries: fcc binds hardest, then hcp, then bridge, then atop.',
+        'For the record, read directly from the repository: SQD found −2.15 eV at the fcc site against a DFT reference of −2.20 eV, under 5% error, with circuit depth held below 100 gates; VQE landed at −2.08 eV on the same site. The 4-qubit system is fully implemented; an 8-qubit version is scaffolded; a 127+ qubit architecture is designed on paper, not run. Site ordering held across all four adsorption geometries: fcc binds hardest, then hcp, then bridge, then atop.',
       ],
     },
 
@@ -129,7 +129,7 @@ const study = {
         {
           place: 'GRAND PRIX',
           event: 'Bradford Quantum Hackathon 2025',
-          desc: 'Teammate-reported Grand Prix and first in the Medicine track — hackathon-scale. QD-HMC with a Quixer quantum transformer for genomic sequence prediction, around 90% against a ~80% classical MCMC baseline.',
+          desc: 'Teammate-reported Grand Prix and first in the Medicine track, hackathon-scale. QD-HMC with a Quixer quantum transformer for genomic sequence prediction, around 90% against a ~80% classical MCMC baseline.',
         },
         {
           place: 'FINALIST',

@@ -13,8 +13,8 @@
 ## Remaining Engineering Tasks
 
 - [ ] Add dedicated `/persona/ryukijano`, `/persona/gyanateet`, and `/persona/ryoushi` routes using shared persona content and ensure every persona link resolves directly.
-- [ ] Add a real responsive breakpoint for the fixed triptych so narrow viewports stack into accessible persona cards.
-- [ ] Reduce or disable decorative canvas effects on small screens and for `prefers-reduced-motion`.
+- [x] Add a real responsive breakpoint for the fixed triptych so narrow viewports stack into accessible persona cards. (Done 2026-08-22: ≤599px stacks the lane links as cards under the plate.)
+- [x] Reduce or disable decorative canvas effects on small screens and for `prefers-reduced-motion`. (Verified 2026-08-22: no decorative canvas is imported by the active build — `src/legacy/` is unreferenced, and CircuitLab's loop is user-initiated. Reveals honour reduced motion in `useReveal`.)
 - [ ] Decide whether duplicated root `public/` assets can be removed after checking for external hotlinks.
 - [ ] Complete a final factual review of claims, links, resume selection, and publication metadata.
 - [ ] Merge this branch into `main` when the GitHub Pages deployment is approved.

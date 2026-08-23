@@ -23,7 +23,7 @@ function Marked({ text, highlight }) {
   );
 }
 
-/** / — plate owns the viewport; bio lives on one slip under the print. */
+/** / — untrimmed block with kento in the margin; bio on a slip under the object. */
 export default function Intro() {
   const [lane, setLane] = useState(null);
 
@@ -34,6 +34,15 @@ export default function Intro() {
   return (
     <Theme name="study" className="folio">
       <SiteNav variant="paper" overlay />
+
+      {/*
+       * Grain only: the plate is the composition here, so no wash or rings.
+       * The film sits over everything (pointer-events: none in CSS) and
+       * gives the paper tooth without touching the lane targets.
+       */}
+      <div className="atmo" aria-hidden="true">
+        <div className="atmo__grain" />
+      </div>
 
       <main className="folio__stage">
         <figure className="folio__print">

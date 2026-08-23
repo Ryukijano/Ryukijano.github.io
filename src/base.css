@@ -20,8 +20,8 @@
     margin: 0;
     padding: 0;
     /* Falls back only if no [data-theme] is mounted; every page sets one. */
-    background: var(--md-sys-color-surface, #090908);
-    color: var(--md-sys-color-on-surface, #e4e1e6);
+    background: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -45,8 +45,14 @@
 
   /* Themed rather than a fixed terracotta, so the ring belongs to the page. */
   :focus-visible {
-    outline: 2px solid var(--md-sys-color-primary, #d1764f);
+    outline: 2px solid var(--md-sys-color-primary);
     outline-offset: 2px;
+  }
+
+  /* Same logic for text selection: a wash of the page's own primary, quiet
+     enough that selected prose stays legible in both schemes. */
+  ::selection {
+    background: color-mix(in srgb, var(--md-sys-color-primary) 24%, transparent);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -64,16 +70,10 @@
    * fallback. Intro panes override with an inline transparent wash so the
    * dusk canvas still shows through.
    */
-  .pane-ryukijano {
-    background-color: #e6e1d3;
-    color: #1a237e;
-  }
-  .pane-gyanateet {
-    background-color: #e4e8dc;
-    color: #1a237e;
-  }
+  .pane-ryukijano,
+  .pane-gyanateet,
   .pane-ryoushi {
-    background-color: #e8dce4;
-    color: #1a237e;
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
   }
 }

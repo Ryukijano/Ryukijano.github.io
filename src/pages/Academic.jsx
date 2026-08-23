@@ -137,6 +137,7 @@ function Section({ id, title, children }) {
 const HEADER_LINKS = [
   { href: CV_URL, label: 'CV', external: true },
   { href: '/work', label: 'Work', external: false },
+  { href: '/blog', label: 'Notes', external: false },
   { href: academic.profiles.orcid, label: 'ORCID', external: true },
   { href: academic.profiles.github, label: 'GitHub', external: true },
 ].filter((item) => item.href);
