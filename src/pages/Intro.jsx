@@ -35,6 +35,15 @@ export default function Intro() {
     <Theme name="study" className="folio">
       <SiteNav variant="paper" overlay />
 
+      {/*
+       * Grain only: the plate is the composition here, so no wash or rings.
+       * The film sits over everything (pointer-events: none in CSS) and
+       * gives the paper tooth without touching the lane targets.
+       */}
+      <div className="atmo" aria-hidden="true">
+        <div className="atmo__grain" />
+      </div>
+
       <main className="folio__stage">
         <figure className="folio__print">
           <KanagawaPlate src={content.plate.src} alt={content.plate.alt}>

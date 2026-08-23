@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Text, Theme } from '../components/m3/index.jsx';
 import SiteNav from '../components/SiteNav.jsx';
+import Atmosphere from '../components/Atmosphere.jsx';
 import { alsoStudies, caseStudies, featuredStudies } from '../content/caseStudies/index.js';
 
 /**
@@ -40,9 +41,10 @@ export default function WorkIndex() {
 
   return (
     <Theme name={THEME} style={rootStyle}>
+      <Atmosphere />
       <SiteNav variant="ink" />
 
-      <main className="work-index">
+      <main className="work-index" style={{ position: 'relative', zIndex: 1 }}>
         <header style={headerStyle}>
           <Text as="h1" role="display-small" style={{ margin: 0 }}>
             Work
@@ -128,6 +130,7 @@ export default function WorkIndex() {
 }
 
 const rootStyle = {
+  position: 'relative',
   minHeight: '100vh',
   background: 'var(--md-sys-color-surface)',
   color: 'var(--md-sys-color-on-surface)',

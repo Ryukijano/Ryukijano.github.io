@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Text, Theme } from '../components/m3/index.jsx';
 import SiteNav from '../components/SiteNav.jsx';
+import Atmosphere from '../components/Atmosphere.jsx';
 import { curriculum, notes } from '../content/blog/index.js';
 
 const HAIRLINE = '1px solid var(--md-sys-color-outline-variant)';
@@ -29,8 +30,9 @@ export default function BlogIndex() {
 
   return (
     <Theme name="study" style={rootStyle}>
+      <Atmosphere />
       <SiteNav variant="paper" />
-      <main className="notes-index">
+      <main className="notes-index" style={{ position: 'relative', zIndex: 1 }}>
         <header style={headerStyle}>
           <Text as="h1" role="display-small" style={{ margin: 0 }}>
             Notes
@@ -125,6 +127,7 @@ export default function BlogIndex() {
 }
 
 const rootStyle = {
+  position: 'relative',
   minHeight: '100vh',
   background: 'var(--md-sys-color-surface)',
   color: 'var(--md-sys-color-on-surface)',

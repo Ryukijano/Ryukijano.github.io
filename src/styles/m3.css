@@ -618,6 +618,115 @@
     transform: scale(0.94);
   }
 
+  /* --------------------------------------------------------- atmosphere */
+
+  /*
+   * The paper world. Every page sits on flat surface colour; these layers
+   * give it tooth and weather without a single authored colour: the grain is
+   * procedural SVG noise, the washes are color-mix over role tokens, and the
+   * rings are currentColor hairlines tinted by the page's own primary. All
+   * three adapt to light/dark and per-persona themes for free.
+   *
+   * Layer order inside the page root: wash (deepest), rings, content, grain
+   * on top as film. Nothing here intercepts pointer events.
+   */
+
+  .atmo {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .atmo__wash {
+    position: absolute;
+    inset: -1px; /* keep gradient edges off the seam */
+    background:
+      radial-gradient(
+        92% 54% at 50% -12%,
+        color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent),
+        transparent 66%
+      ),
+      radial-gradient(
+        150% 110% at 50% 118%,
+        transparent 58%,
+        color-mix(in srgb, var(--md-sys-color-on-surface) 4%, transparent) 100%
+      );
+  }
+
+  .atmo__rings {
+    position: absolute;
+    right: max(-30vmax, -26rem);
+    bottom: max(-30vmax, -26rem);
+    width: min(64vmax, 58rem);
+    height: min(64vmax, 58rem);
+    border-radius: 50%;
+    color: color-mix(in srgb, var(--md-sys-color-primary) 15%, transparent);
+    background: radial-gradient(
+      circle,
+      transparent 56.4%,
+      currentColor 57%,
+      transparent 57.7%,
+      transparent 63.4%,
+      currentColor 64%,
+      transparent 64.8%,
+      transparent 70.4%,
+      currentColor 71%,
+      transparent 71.9%,
+      transparent 77.4%,
+      currentColor 78%,
+      transparent 79%,
+      transparent 84.4%,
+      currentColor 85%,
+      transparent 86.1%,
+      transparent 91.4%,
+      currentColor 92%,
+      transparent 93.2%
+    );
+  }
+
+  @media (prefers-reduced-motion: no-preference) and (min-width: 600px) {
+    .atmo__rings {
+      animation: atmo-drift 180s linear infinite;
+    }
+  }
+
+  @keyframes atmo-drift {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /*
+   * Procedural fractal noise, no authored colour in it: soft-light blend
+   * reads as fibre on warm paper and as grain on ink, both schemes.
+   */
+  .atmo__grain {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+    opacity: 0.055;
+    mix-blend-mode: soft-light;
+  }
+
+  .atmo--quiet .atmo__rings {
+    display: none;
+  }
+
+  .atmo--quiet .atmo__wash {
+    background:
+      radial-gradient(
+        80% 40% at 50% -10%,
+        color-mix(in srgb, var(--md-sys-color-primary) 5%, transparent),
+        transparent 62%
+      );
+  }
+
   /* --------------------------------------------------------- reduced motion */
 
   @media (prefers-reduced-motion: reduce) {

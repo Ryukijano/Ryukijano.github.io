@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { parseStyle } from '../lib/style.js';
 import { Text, Theme } from '../components/m3/index.jsx';
 import SiteNav from '../components/SiteNav.jsx';
+import Atmosphere from '../components/Atmosphere.jsx';
 
 const SERIF = '--m3-font:var(--md-sys-typescale-brand-font)';
 const MUTED = 'color:var(--md-sys-color-on-surface-variant)';
@@ -22,13 +23,14 @@ export default function NotFound() {
     <Theme
       name="study-dark"
       style={parseStyle(
-        'min-height:100vh;background:var(--md-sys-color-surface);' +
+        'position:relative;min-height:100vh;background:var(--md-sys-color-surface);' +
           'color:var(--md-sys-color-on-surface);' +
           'font-family:var(--md-sys-typescale-brand-font);-webkit-font-smoothing:antialiased',
       )}
     >
+      <Atmosphere />
       <SiteNav variant="ink" />
-      <main style={parseStyle('max-width:42rem;margin:0 auto;padding:4rem 1.5rem 6rem')}>
+      <main style={parseStyle('position:relative;z-index:1;max-width:42rem;margin:0 auto;padding:4rem 1.5rem 6rem')}>
         <Text as="p" role="label-large" style={parseStyle(`${MUTED};margin:0`)}>
           404
         </Text>

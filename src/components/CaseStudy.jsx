@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { parseStyle } from '../lib/style.js';
 import { Divider, Text, Theme } from './m3/index.jsx';
 import SiteNav from './SiteNav.jsx';
+import Atmosphere from './Atmosphere.jsx';
 import useReveal, { RevealContext } from './useReveal.js';
 import MediaFigure, { FigurePair } from './MediaFigure.jsx';
 
@@ -25,8 +26,9 @@ export default function CaseStudy({ study, sectionCount = 6, children }) {
 
   return (
     <Theme name="study" style={shellStyle}>
+      <Atmosphere variant="quiet" />
       <SiteNav variant="paper" />
-      <article style={{ maxWidth: '940px', margin: '0 auto', padding: '0 40px' }}>
+      <article style={{ position: 'relative', zIndex: 1, maxWidth: '940px', margin: '0 auto', padding: '0 40px' }}>
         <Nav breadcrumb={study.breadcrumb} />
 
         <section
@@ -99,6 +101,7 @@ const mono = (extra) => ({
 });
 
 const shellStyle = {
+  position: 'relative',
   minHeight: '100vh',
   background: 'var(--md-sys-color-surface)',
   color: 'var(--md-sys-color-on-surface)',

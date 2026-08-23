@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { parseStyle } from '../lib/style.js';
 import { Text, Theme } from '../components/m3/index.jsx';
 import SiteNav from '../components/SiteNav.jsx';
+import Atmosphere from '../components/Atmosphere.jsx';
 import MediaFigure from '../components/MediaFigure.jsx';
 import NoteEquations from '../components/NoteEquations.jsx';
 import NoteTaxonomy from '../components/NoteTaxonomy.jsx';
@@ -39,8 +40,9 @@ export default function BlogNote({ note }) {
           'font-family:var(--md-sys-typescale-brand-font);-webkit-font-smoothing:antialiased',
       )}
     >
+      <Atmosphere variant="quiet" />
       <SiteNav variant="paper" />
-      <article style={parseStyle('max-width:42rem;margin:0 auto;padding:4rem 1.5rem 6rem')}>
+      <article style={parseStyle('position:relative;z-index:1;max-width:42rem;margin:0 auto;padding:4rem 1.5rem 6rem')}>
         <Text as="p" role="label-medium" style={parseStyle(`${MONO};${MUTED};margin:0`)}>
           {note.written}
           {' · '}
