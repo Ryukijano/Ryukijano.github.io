@@ -98,4 +98,18 @@ See `README.md`. Short list:
 8. One note, e.g. `src/content/blog/contrastive-ssl.js`
 9. `src/components/KanagawaPlate.jsx` + folio rules in `src/styles/m3.css`
 
+## Project skills (.opencode/skills/, loadable via the skill tool)
+
+- `site-gates` — branch rules, the full gate, exact-count discipline,
+  protected strings. Read before editing anything.
+- `content-authoring` — writing notes/case studies: structure,
+  disclosure language, asset conventions, fact registration.
+- `visual-system` — tokens, themes, dark mode, atmosphere layers, page
+  shell recipe.
+- `browser-qa` — real-browser verification in this sandbox, servers,
+  tunnels, and the browser-use API quirks.
+- `humanizer` (+ `SITE-OVERRIDE.md`), `design-taste-frontend`,
+  `web-design-guidelines` — vendored external skills, scoped by their
+  override notes.
+
 Run the full gate **before and after** every change.
