@@ -98,4 +98,25 @@ See `README.md`. Short list:
 8. One note, e.g. `src/content/blog/contrastive-ssl.js`
 9. `src/components/KanagawaPlate.jsx` + folio rules in `src/styles/m3.css`
 
+## Project skills (.opencode/skills/, loadable via the skill tool)
+
+- `site-gates` — branch rules, the full gate, exact-count discipline,
+  protected strings. Read before editing anything.
+- `content-authoring` — writing notes/case studies: structure,
+  disclosure language, asset conventions, fact registration.
+- `visual-system` — tokens, themes, dark mode, atmosphere layers, page
+  shell recipe.
+- `browser-qa` — real-browser verification in this sandbox, servers,
+  tunnels, and the browser-use API quirks.
+- `paint-with-code` — emit p5.brush the way the post-training Qwen
+  3.5 35B paint-with-code policy wrote it (WEBGL scaffold, closed
+  allowlist, unrolled motifs). Literature grammar, **not** Gyanateet's
+  run; do not put it on `/work`.
+- `creative-rl-design` — how that run actually trained: pairwise VLM
+  vs a hand-rated pool, binary compile/length gates, GEPA on a short
+  allowlist rather than a 400-line API dump.
+- `humanizer` (+ `SITE-OVERRIDE.md`), `design-taste-frontend`,
+  `web-design-guidelines` — vendored external skills, scoped by their
+  override notes.
+
 Run the full gate **before and after** every change.
