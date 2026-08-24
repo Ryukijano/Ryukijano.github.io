@@ -108,6 +108,13 @@ See `README.md`. Short list:
   shell recipe.
 - `browser-qa` — real-browser verification in this sandbox, servers,
   tunnels, and the browser-use API quirks.
+- `paint-with-code` — emit p5.brush the way the post-training Qwen
+  3.5 35B paint-with-code policy wrote it (WEBGL scaffold, closed
+  allowlist, unrolled motifs). Literature grammar, **not** Gyanateet's
+  run; do not put it on `/work`.
+- `creative-rl-design` — how that run actually trained: pairwise VLM
+  vs a hand-rated pool, binary compile/length gates, GEPA on a short
+  allowlist rather than a 400-line API dump.
 - `humanizer` (+ `SITE-OVERRIDE.md`), `design-taste-frontend`,
   `web-design-guidelines` — vendored external skills, scoped by their
   override notes.
