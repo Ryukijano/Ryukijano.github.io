@@ -16,11 +16,15 @@ export default function SiteNav({ variant = 'ink', overlay = false }) {
   const workActive = path === '/work' || path.startsWith('/work/');
   const academicActive = path === '/academic';
   const bar = variant === 'paper' ? VARIANT.paper : VARIANT.ink;
-  const placement = overlay ? '' : 'sticky top-0';
-  const wash = overlay && variant !== 'paper' ? 'bg-work-ink/80' : '';
+  const placement = overlay ? 'absolute top-0 left-0 right-0' : 'sticky top-0';
+  const wash = overlay
+    ? variant === 'paper'
+      ? 'bg-washi/80'
+      : 'bg-work-ink/70'
+    : '';
 
   return (
-    <nav aria-label="Site" className={`${placement} z-50 border-b ${bar} ${wash}`}>
+    <nav aria-label="Site" className={`site-nav ${placement} z-50 border-b ${bar} ${wash}`}>
       <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-6">
         <Link href="/" className="font-serif text-[15px] tracking-normal">
           Gyanateet Dutta

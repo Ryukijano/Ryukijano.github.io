@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Atmosphere from '../components/Atmosphere';
 import SiteNav from '../components/SiteNav';
 import { CV_URL } from '../data/portfolio';
 import {
@@ -25,7 +26,7 @@ function CopyBibtex({ text }) {
   }
 
   return (
-    <button type="button" onClick={copy} className="mt-2 underline-offset-4 hover:underline">
+    <button type="button" onClick={copy} className="print__ghost">
       {copied ? 'Copied' : 'Copy'}
     </button>
   );
@@ -35,12 +36,12 @@ function PublicationEntry({ pub }) {
   const doiHref = pub.doi ? `https://doi.org/${pub.doi}` : null;
 
   return (
-    <li className="-indent-8 mt-5 pl-8 leading-relaxed">
+    <li className="print__pub">
       {pub.authors.join(', ')}. {pub.title}. <em>{pub.venue}</em>, {pub.year}.
       {pub.pdfUrl ? (
         <>
           {' '}
-          <a href={pub.pdfUrl} target="_blank" rel="noopener noreferrer" className="underline-offset-4 hover:underline">
+          <a href={pub.pdfUrl} target="_blank" rel="noopener noreferrer">
             [pdf]
           </a>
         </>
@@ -48,7 +49,7 @@ function PublicationEntry({ pub }) {
       {doiHref ? (
         <>
           {' '}
-          <a href={doiHref} target="_blank" rel="noopener noreferrer" className="underline-offset-4 hover:underline">
+          <a href={doiHref} target="_blank" rel="noopener noreferrer">
             [doi]
           </a>
         </>
@@ -56,16 +57,16 @@ function PublicationEntry({ pub }) {
       {pub.codeUrl ? (
         <>
           {' '}
-          <a href={pub.codeUrl} target="_blank" rel="noopener noreferrer" className="underline-offset-4 hover:underline">
+          <a href={pub.codeUrl} target="_blank" rel="noopener noreferrer">
             [code]
           </a>
         </>
       ) : null}
-      {pub.note ? <div className="mt-1 indent-0">{pub.note}</div> : null}
-      <div className="mt-1 indent-0">
+      {pub.note ? <div className="print__pub-note">{pub.note}</div> : null}
+      <div className="print__pub-note">
         <details>
-          <summary className="cursor-pointer underline-offset-4 hover:underline">BibTeX</summary>
-          <pre className="mt-2 overflow-x-auto whitespace-pre-wrap text-sm opacity-80">{pub.bibtex}</pre>
+          <summary>BibTeX</summary>
+          <pre>{pub.bibtex}</pre>
           <CopyBibtex text={pub.bibtex} />
         </details>
       </div>
@@ -83,31 +84,33 @@ const HEADER_LINKS = [
 export default function AcademicPage() {
   const degree = EDUCATION[0];
 
+  useEffect(() => {
+    document.title = 'Academic · Gyanateet Dutta';
+  }, []);
+
   return (
-    <div className="min-h-screen bg-[#E6E1D3] font-serif text-[#1a237e]">
+    <div className="print print--paper">
+      <Atmosphere variant="quiet" />
       <SiteNav variant="paper" />
 
-      <main className="mx-auto max-w-2xl px-6 py-16">
-        <h1 className="text-4xl leading-tight">{ACADEMIC_BIO.name}</h1>
-        <p className="mt-3">{ACADEMIC_BIO.role}</p>
+      <main className="print__body print__body--narrow">
+        <h1 className="print__name">{ACADEMIC_BIO.name}</h1>
+        <p className="print__role">{ACADEMIC_BIO.role}</p>
         {degree ? (
-          <p className="mt-1">
+          <p className="print__role">
             {degree.title}, {degree.org}, {degree.years}
           </p>
         ) : null}
-        <p className="mt-6 leading-relaxed">{ACADEMIC_BIO.statement}</p>
+        <p className="print__lede">{ACADEMIC_BIO.statement}</p>
 
-        <p className="mt-6">
+        <p className="print__links">
           {HEADER_LINKS.map((item, index) => {
-            const className = 'underline-offset-4 hover:underline';
             const link = item.external ? (
-              <a href={item.href} target="_blank" rel="noopener noreferrer" className={className}>
+              <a href={item.href} target="_blank" rel="noopener noreferrer">
                 {item.label}
               </a>
             ) : (
-              <Link href={item.href} className={className}>
-                {item.label}
-              </Link>
+              <Link href={item.href}>{item.label}</Link>
             );
 
             return (
@@ -119,40 +122,40 @@ export default function AcademicPage() {
           })}
         </p>
 
-        <section className="mt-14">
-          <h2 className="text-xl">Research interests</h2>
-          <p className="mt-4 leading-relaxed">{RESEARCH_INTERESTS.join(', ')}.</p>
+        <section className="print__section">
+          <h2>Research interests</h2>
+          <p>{RESEARCH_INTERESTS.join(', ')}.</p>
         </section>
 
-        <section className="mt-14">
-          <h2 className="text-xl">Education</h2>
-          <ul className="mt-4 space-y-6">
+        <section className="print__section">
+          <h2>Education</h2>
+          <ul className="print__stack">
             {EDUCATION.map((entry) => (
               <li key={entry.title}>
                 <div>{entry.title}</div>
                 <div>{entry.org}</div>
                 <div>{entry.years}</div>
-                {entry.note ? <div>{entry.note}</div> : null}
+                {entry.note ? <div className="print__note">{entry.note}</div> : null}
               </li>
             ))}
           </ul>
         </section>
 
-        <section className="mt-14">
-          <h2 className="text-xl">Selected publications</h2>
-          <ul className="mt-2 list-none">
+        <section className="print__section">
+          <h2>Selected publications</h2>
+          <ul className="print__pubs">
             {PUBLICATIONS.map((pub) => (
               <PublicationEntry key={pub.title} pub={pub} />
             ))}
           </ul>
         </section>
 
-        <section className="mt-14">
-          <h2 className="text-xl">Timeline</h2>
-          <ul className="mt-4 space-y-2">
+        <section className="print__section">
+          <h2>Timeline</h2>
+          <ul className="print__timeline">
             {RESEARCH_TIMELINE.map((entry) => (
-              <li key={`${entry.year}-${entry.title}`} className="flex gap-6">
-                <span className="w-12 shrink-0">{entry.year}</span>
+              <li key={`${entry.year}-${entry.title}`}>
+                <span>{entry.year}</span>
                 <span>
                   {entry.title}
                   {entry.org ? <>, {entry.org}</> : null}

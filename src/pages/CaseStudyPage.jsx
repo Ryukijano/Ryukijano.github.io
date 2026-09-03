@@ -1,10 +1,9 @@
+import { useEffect } from 'react';
+import Atmosphere from '../components/Atmosphere';
 import SiteNav from '../components/SiteNav';
 import { relatedProjects } from '../data/portfolio';
 import Link from '../lib/Link';
 import { WorkInkNotFound } from './WorkPage';
-
-const MUTED = '#9a9588';
-const RULE = 'rgba(230, 225, 211, 0.16)';
 
 function projectYear(project) {
   if (typeof project?.year === 'number' && Number.isFinite(project.year)) {
@@ -69,6 +68,12 @@ function collectLinks(project) {
 }
 
 export default function CaseStudyPage({ project }) {
+  useEffect(() => {
+    if (project?.title) {
+      document.title = `${project.title} · Gyanateet Dutta`;
+    }
+  }, [project?.title]);
+
   if (!project) return <WorkInkNotFound />;
 
   const year = projectYear(project);
@@ -84,88 +89,52 @@ export default function CaseStudyPage({ project }) {
       : project.title;
 
   return (
-    <main className="min-h-screen bg-[#11110e] text-[#E6E1D3]">
+    <div className="print print--ink">
+      <Atmosphere variant="quiet" />
       <SiteNav variant="ink" />
 
-      <article className="mx-auto max-w-[42rem] px-6 py-16">
-        <p className="mb-10 font-sans text-sm" style={{ color: MUTED }}>
-          <Link href="/work" className="hover:text-[#E6E1D3] hover:underline">
-            Work
-          </Link>
+      <article className="print__body print__body--narrow">
+        <p className="print__crumb">
+          <Link href="/work">Work</Link>
         </p>
 
-        {year != null ? (
-          <p
-            className="font-mono text-[13px] tabular-nums"
-            style={{ color: MUTED }}
-          >
-            {year}
-          </p>
-        ) : null}
+        {year != null ? <p className="print__kicker">{year}</p> : null}
 
-        <h1 className="mt-3 font-serif text-3xl leading-snug text-[#E6E1D3] sm:text-4xl">
-          {project.title}
-        </h1>
+        <h1 className="print__title">{project.title}</h1>
 
-        {project.role ? (
-          <p className="mt-3 font-sans italic" style={{ color: MUTED }}>
-            {project.role}
-          </p>
-        ) : null}
+        {project.role ? <p className="print__role print__role--ink">{project.role}</p> : null}
 
         {src ? (
-          <figure className="mt-10">
-            <img
-              src={src}
-              alt=""
-              className="max-h-[24rem] w-full object-cover"
-            />
-            <figcaption
-              className="mt-3 font-sans text-sm italic"
-              style={{ color: MUTED }}
-            >
-              {caption}
-            </figcaption>
+          <figure className="print__figure">
+            <img src={src} alt="" />
+            <figcaption>{caption}</figcaption>
           </figure>
         ) : null}
 
-        {body ? (
-          <div
-            className="mt-10 whitespace-pre-line font-serif text-[18px] leading-[1.65] text-[#E6E1D3]"
-          >
-            {body}
-          </div>
-        ) : null}
+        {body ? <div className="print__body-copy">{body}</div> : null}
 
         {lane || tags.length > 0 || links.length > 0 ? (
-          <dl
-            className="mt-12 space-y-3 font-sans text-sm"
-          >
+          <dl className="print__meta">
             {lane ? (
-              <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-x-4 border-t pt-3" style={{ borderColor: RULE }}>
-                <dt style={{ color: MUTED }}>Lane</dt>
-                <dd className="text-[#E6E1D3]">{lane}</dd>
+              <div>
+                <dt>Lane</dt>
+                <dd>{lane}</dd>
               </div>
             ) : null}
             {tags.length > 0 ? (
-              <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-x-4 border-t pt-3" style={{ borderColor: RULE }}>
-                <dt style={{ color: MUTED }}>Stack</dt>
-                <dd className="text-[#E6E1D3]">{tags.join(', ')}</dd>
+              <div>
+                <dt>Stack</dt>
+                <dd>{tags.join(', ')}</dd>
               </div>
             ) : null}
             {links.length > 0 ? (
-              <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-x-4 border-t pt-3" style={{ borderColor: RULE }}>
-                <dt style={{ color: MUTED }}>Links</dt>
-                <dd className="text-[#E6E1D3]">
+              <div>
+                <dt>Links</dt>
+                <dd>
                   {links.map((item, index) => (
                     <span key={item.href}>
                       {index > 0 ? ', ' : null}
-                      <a
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="underline decoration-[#E6E1D3]/40 underline-offset-2 hover:decoration-[#E6E1D3]"
-                      >
+                      <a href={item.href} target="_blank" rel="noopener noreferrer">
                         {item.label}
                       </a>
                     </span>
@@ -176,36 +145,18 @@ export default function CaseStudyPage({ project }) {
           </dl>
         ) : null}
 
-        {project.note ? (
-          <p className="mt-8 font-sans text-sm italic" style={{ color: MUTED }}>
-            {project.note}
-          </p>
-        ) : null}
+        {project.note ? <p className="print__note">{project.note}</p> : null}
 
         {related.length > 0 ? (
-          <section className="mt-16 border-t pt-10" style={{ borderColor: RULE }}>
-            <h2 className="font-serif text-lg text-[#E6E1D3]">Also</h2>
-            <ul className="mt-4 space-y-2">
+          <section className="print__section">
+            <h2 className="print__also">Also</h2>
+            <ul className="work-also">
               {related.map((item) => {
                 const itemYear = projectYear(item);
                 return (
-                  <li
-                    key={item.slug}
-                    className="font-sans text-[13px]"
-                    style={{ color: MUTED }}
-                  >
-                    {itemYear != null ? (
-                      <span
-                        className="mr-3 inline-block w-10 font-mono tabular-nums"
-                      >
-                        {itemYear}
-                      </span>
-                    ) : (
-                      <span className="mr-3 inline-block w-10" />
-                    )}
-                    <Link href={`/work/${item.slug}`} className="hover:text-[#E6E1D3] hover:underline">
-                      {item.title}
-                    </Link>
+                  <li key={item.slug}>
+                    <span>{itemYear != null ? itemYear : ''}</span>
+                    <Link href={`/work/${item.slug}`}>{item.title}</Link>
                   </li>
                 );
               })}
@@ -213,6 +164,6 @@ export default function CaseStudyPage({ project }) {
           </section>
         ) : null}
       </article>
-    </main>
+    </div>
   );
 }

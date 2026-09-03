@@ -1,9 +1,8 @@
+import { useEffect } from 'react';
+import Atmosphere from '../components/Atmosphere';
 import SiteNav from '../components/SiteNav';
 import { allProjects } from '../data/portfolio';
 import Link from '../lib/Link';
-
-const MUTED = '#9a9588';
-const RULE = 'rgba(230, 225, 211, 0.16)';
 
 function projectYear(project) {
   if (typeof project?.year === 'number' && Number.isFinite(project.year)) {
@@ -44,30 +43,21 @@ function byFeatured(a, b) {
 
 export function WorkInkNotFound() {
   return (
-    <main className="min-h-screen bg-[#11110e] text-[#E6E1D3]">
+    <div className="print print--ink">
+      <Atmosphere variant="quiet" />
       <SiteNav variant="ink" />
-      <div className="mx-auto max-w-[42rem] px-6 pb-16 pt-10">
-        <p className="font-mono text-sm tabular-nums" style={{ color: MUTED }}>
-          404
-        </p>
-        <h1 className="mt-4 font-serif text-3xl leading-snug text-[#E6E1D3]">
-          This note is not here.
-        </h1>
-        <p className="mt-4 font-sans text-sm" style={{ color: MUTED }}>
-          <Link href="/work" className="underline decoration-[#E6E1D3]/30 hover:text-[#E6E1D3]">
-            Work
-          </Link>
-          <span className="mx-2">·</span>
-          <Link href="/academic" className="underline decoration-[#E6E1D3]/30 hover:text-[#E6E1D3]">
-            Academic
-          </Link>
-          <span className="mx-2">·</span>
-          <Link href="/" className="underline decoration-[#E6E1D3]/30 hover:text-[#E6E1D3]">
-            Personal
-          </Link>
-        </p>
-      </div>
-    </main>
+      <main className="print__body print__body--narrow">
+        <p className="print__kicker">404</p>
+        <h1 className="print__title">This note is not here.</h1>
+        <nav className="print__foot" aria-label="Other pages">
+          <Link href="/work">Work</Link>
+          <span aria-hidden="true"> · </span>
+          <Link href="/academic">Academic</Link>
+          <span aria-hidden="true"> · </span>
+          <Link href="/">Personal</Link>
+        </nav>
+      </main>
+    </div>
   );
 }
 
@@ -77,8 +67,7 @@ export default function WorkPage() {
   const also = projects.filter((project) => !isFeatured(project)).slice().sort(byYearDesc);
 
   const years = projects.map(projectYear).filter((year) => year != null);
-  const span =
-    years.length > 0 ? `${Math.min(...years)}–${Math.max(...years)}` : null;
+  const span = years.length > 0 ? `${Math.min(...years)}–${Math.max(...years)}` : null;
   const lanes = [...new Set(projects.map(projectLane).filter(Boolean))];
 
   const facts = [
@@ -87,26 +76,24 @@ export default function WorkPage() {
     lanes.length > 0 ? { term: 'Lanes', detail: lanes.join(', ') } : { term: 'Record', detail: 'Academic is separate' },
   ].filter(Boolean);
 
+  useEffect(() => {
+    document.title = 'Work · Gyanateet Dutta';
+  }, []);
+
   return (
-    <main className="min-h-screen bg-[#11110e] text-[#E6E1D3]">
+    <div className="print print--ink">
+      <Atmosphere variant="quiet" />
       <SiteNav variant="ink" />
 
-      <div className="mx-auto max-w-5xl px-6 pb-20 pt-10">
-        <header>
-          <h1 className="font-serif text-4xl leading-tight text-[#E6E1D3] sm:text-5xl">Work</h1>
-          <p
-            className="mt-4 max-w-xl font-sans text-[15px] leading-relaxed"
-            style={{ color: MUTED }}
-          >
+      <main className="print__body print__body--wide">
+        <header className="print__header">
+          <h1 className="print__title">Work</h1>
+          <p className="print__lede print__lede--muted">
             Dated notes on things I built. The academic record is separate.
           </p>
-
-          <dl
-            className="mt-8 flex flex-wrap gap-x-10 gap-y-2 font-sans text-[12px]"
-            style={{ color: MUTED }}
-          >
+          <dl className="print__facts">
             {facts.slice(0, 3).map((fact) => (
-              <div key={fact.term} className="flex gap-2">
+              <div key={fact.term}>
                 <dt>{fact.term}</dt>
                 <dd>{fact.detail}</dd>
               </div>
@@ -115,47 +102,21 @@ export default function WorkPage() {
         </header>
 
         {featured.length > 0 ? (
-          <section className="mt-14" aria-label="Featured work">
-            <ul>
+          <section className="print__section" aria-label="Featured work">
+            <ul className="work-table">
               {featured.map((project) => {
                 const year = projectYear(project);
                 const lane = projectLane(project);
                 const desc = project.desc || '';
 
                 return (
-                  <li
-                    key={project.slug}
-                    className="border-b py-4 first:border-t"
-                    style={{ borderColor: RULE }}
-                  >
-                    <div className="grid grid-cols-[3.25rem_minmax(0,1fr)] items-baseline gap-x-4 gap-y-1 sm:grid-cols-[3.5rem_minmax(10rem,1.15fr)_6.5rem_minmax(0,1.5fr)]">
-                      <span
-                        className="font-mono text-[13px] tabular-nums"
-                        style={{ color: MUTED }}
-                      >
-                        {year ?? '—'}
-                      </span>
-                      <div className="min-w-0 sm:contents">
-                        <Link
-                          href={`/work/${project.slug}`}
-                          className="font-serif text-[1.05rem] leading-snug text-[#E6E1D3] hover:underline"
-                        >
-                          {project.title}
-                        </Link>
-                        <span
-                          className="mt-0.5 block font-sans text-[12px] sm:mt-0"
-                          style={{ color: MUTED }}
-                        >
-                          {lane}
-                        </span>
-                        <p
-                          className="mt-0.5 font-sans text-[13px] sm:mt-0 sm:truncate"
-                          style={{ color: MUTED }}
-                        >
-                          {desc}
-                        </p>
-                      </div>
-                    </div>
+                  <li key={project.slug} className="work-table__row">
+                    <span className="work-table__year">{year ?? '—'}</span>
+                    <Link href={`/work/${project.slug}`} className="work-table__title">
+                      {project.title}
+                    </Link>
+                    <span className="work-table__lane">{lane}</span>
+                    <p className="work-table__desc">{desc}</p>
                   </li>
                 );
               })}
@@ -164,27 +125,15 @@ export default function WorkPage() {
         ) : null}
 
         {also.length > 0 ? (
-          <section className="mt-16">
-            <h2 className="font-serif text-lg text-[#E6E1D3]">Also</h2>
-            <ul className="mt-4 space-y-2">
+          <section className="print__section">
+            <h2 className="print__also">Also</h2>
+            <ul className="work-also">
               {also.map((project) => {
                 const year = projectYear(project);
                 return (
-                  <li
-                    key={project.slug}
-                    className="font-sans text-[13px]"
-                    style={{ color: MUTED }}
-                  >
-                    {year != null ? (
-                      <span className="mr-3 inline-block w-10 font-mono tabular-nums">
-                        {year}
-                      </span>
-                    ) : (
-                      <span className="mr-3 inline-block w-10" />
-                    )}
-                    <Link href={`/work/${project.slug}`} className="hover:text-[#E6E1D3] hover:underline">
-                      {project.title}
-                    </Link>
+                  <li key={project.slug}>
+                    <span>{year != null ? year : ''}</span>
+                    <Link href={`/work/${project.slug}`}>{project.title}</Link>
                   </li>
                 );
               })}
@@ -192,20 +141,12 @@ export default function WorkPage() {
           </section>
         ) : null}
 
-        <nav
-          className="mt-20 font-sans text-sm"
-          style={{ color: MUTED }}
-          aria-label="Other pages"
-        >
-          <Link href="/academic" className="hover:text-[#E6E1D3] hover:underline">
-            Academic
-          </Link>
-          <span className="mx-2">·</span>
-          <Link href="/" className="hover:text-[#E6E1D3] hover:underline">
-            Personal
-          </Link>
+        <nav className="print__foot" aria-label="Other pages">
+          <Link href="/academic">Academic</Link>
+          <span aria-hidden="true"> · </span>
+          <Link href="/">Personal</Link>
         </nav>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
