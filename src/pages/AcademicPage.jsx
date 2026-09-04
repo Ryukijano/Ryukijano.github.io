@@ -89,11 +89,11 @@ export default function AcademicPage() {
   }, []);
 
   return (
-    <div className="print print--paper">
+    <div className="print">
       <Atmosphere variant="quiet" />
-      <SiteNav variant="paper" />
+      <SiteNav />
 
-      <main className="print__body print__body--narrow">
+      <main id="main" className="print__body print__body--narrow">
         <h1 className="print__name">{ACADEMIC_BIO.name}</h1>
         <p className="print__role">{ACADEMIC_BIO.role}</p>
         {degree ? (

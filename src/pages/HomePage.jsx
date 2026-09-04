@@ -1,97 +1,120 @@
 import { useEffect, useState } from 'react';
-import { DATA } from '../data/portfolio';
-import { navigate } from '../lib/navigation';
 import Atmosphere from '../components/Atmosphere';
-import HallPane from '../components/HallPane';
+import KanagawaPlate from '../components/KanagawaPlate';
 import SiteNav from '../components/SiteNav';
-import CircuitField from '../components/hall/CircuitField';
-import EmbeddingSpace from '../components/hall/EmbeddingSpace';
-import FluidWaves from '../components/hall/FluidWaves';
+import { DATA, LANES } from '../data/portfolio';
+import { ACADEMIC_BIO, EDUCATION } from '../data/publications';
+import Link from '../lib/Link';
 
+const PLATE = {
+  src: '/assets/images/kanagawa_latentspace_autoencoder.jpg',
+  width: 3923,
+  height: 2160,
+  sources: [
+    {
+      type: 'image/webp',
+      srcSet:
+        '/assets/images/kanagawa-plate-1200.webp 1200w, /assets/images/kanagawa-plate-1800.webp 1800w, /assets/images/kanagawa-plate-2600.webp 2600w',
+      sizes: '(max-width: 899px) 100vw, min(100vw, 1400px)',
+    },
+  ],
+  alt: 'Kanagawa plate in three states: painted woodblock, RGB dither, neon wireframe',
+  caption:
+    'The plate is a schematic of a representation, not a measurement. Painted, dithered, wireframed. The three lanes are framing, not measured results.',
+  highlight: 'schematic',
+};
+
+const ROOMS = LANES.map((lane) => ({
+  id: lane.id,
+  lane: lane.label,
+  title: DATA[lane.id].title,
+  to: `/persona/${lane.slug}`,
+}));
+
+function laneClass(id, active) {
+  return ['folio__lane', active === id ? 'is-on' : ''].filter(Boolean).join(' ');
+}
+
+function Marked({ text, highlight }) {
+  const at = highlight ? text.indexOf(highlight) : -1;
+  if (at < 0) return text;
+  return (
+    <>
+      {text.slice(0, at)}
+      <span className="folio__mark">{highlight}</span>
+      {text.slice(at + highlight.length)}
+    </>
+  );
+}
+
+/** / — one hung plate with kento in the margin; name, degree and bio on a slip under it. */
 export default function HomePage() {
-  const [activePane, setActivePane] = useState(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const [lane, setLane] = useState(null);
+  const degree = EDUCATION[0];
 
   useEffect(() => {
     document.title = 'Gyanateet Dutta';
-    const checkDevice = () => {
-      setIsMobile(window.innerWidth < 900);
-    };
-    window.addEventListener('resize', checkDevice);
-    checkDevice();
-    return () => window.removeEventListener('resize', checkDevice);
   }, []);
 
   return (
-    <div className="hall">
-      <SiteNav variant="ink" overlay />
-
-      <div className="hall__plate" aria-hidden="true">
-        <img
-          src="/assets/images/kanagawa_latentspace_autoencoder.jpg"
-          alt=""
-          width={3923}
-          height={2160}
-          fetchPriority="high"
-        />
-      </div>
+    <div className="folio">
+      <SiteNav overlay hideWordmark />
       <Atmosphere variant="film" />
 
-      <div className="hall__rooms">
-        <HallPane
-          id="left"
-          room="ryukijano"
-          kicker="Systems"
-          activePane={activePane}
-          setActivePane={setActivePane}
-          onExpand={() => navigate('/persona/ryukijano')}
-          titleLines={['Ryu', 'ki', 'jano']}
-          subtitle={DATA.ryukijano.subtitle}
-          desc={DATA.ryukijano.desc}
-          tags={DATA.ryukijano.tags}
-          projects={DATA.ryukijano.projects}
-          socials={DATA.ryukijano.socials}
-          isMobile={isMobile}
-        >
-          <FluidWaves />
-        </HallPane>
+      <main id="main" className="folio__stage">
+        <figure className="folio__print">
+          <KanagawaPlate
+            src={PLATE.src}
+            sources={PLATE.sources}
+            alt={PLATE.alt}
+            width={PLATE.width}
+            height={PLATE.height}
+          >
+            <div className="folio__thirds">
+              {ROOMS.map((room) => (
+                <Link
+                  key={room.id}
+                  href={room.to}
+                  className={laneClass(room.id, lane)}
+                  aria-label={`${room.lane}: ${room.title}`}
+                  onMouseEnter={() => setLane(room.id)}
+                  onMouseLeave={() => setLane(null)}
+                  onFocus={() => setLane(room.id)}
+                  onBlur={() => setLane(null)}
+                >
+                  <span className="folio__chip">
+                    {room.lane}
+                    <span className="folio__chip-who">{room.title}</span>
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </KanagawaPlate>
 
-        <HallPane
-          id="center"
-          room="gyanateet"
-          kicker="Vision"
-          activePane={activePane}
-          setActivePane={setActivePane}
-          onExpand={() => navigate('/persona/gyanateet')}
-          titleLines={['G', 'YANA', 'TEET']}
-          subtitle={DATA.ai.subtitle}
-          desc={DATA.ai.desc}
-          tags={DATA.ai.tags}
-          projects={DATA.ai.projects}
-          socials={DATA.ai.socials}
-          isMobile={isMobile}
-        >
-          <EmbeddingSpace />
-        </HallPane>
+          <figcaption className="folio__slip">
+            <div className="folio__slip-head">
+              <h1 className="folio__name">{ACADEMIC_BIO.name}</h1>
+              <span className="seal" aria-hidden="true">
+                G
+              </span>
+            </div>
+            {degree ? <p className="folio__degree">{degree.title}</p> : null}
+            <p className="folio__bio">{ACADEMIC_BIO.statement}</p>
+            <p className="folio__caption">
+              <Marked text={PLATE.caption} highlight={PLATE.highlight} />
+            </p>
+          </figcaption>
+        </figure>
 
-        <HallPane
-          id="right"
-          room="ryoushi"
-          kicker="Quantum"
-          activePane={activePane}
-          setActivePane={setActivePane}
-          onExpand={() => navigate('/persona/ryoushi')}
-          titleLines={['RY', 'OU', 'SHI']}
-          subtitle={DATA.ryoushi.subtitle}
-          desc={DATA.ryoushi.desc}
-          tags={DATA.ryoushi.tags}
-          projects={DATA.ryoushi.projects}
-          socials={DATA.ryoushi.socials}
-          isMobile={isMobile}
-        >
-          <CircuitField />
-        </HallPane>
-      </div>
+        <nav className="folio__lanes-list" aria-label="Lanes">
+          {ROOMS.map((room) => (
+            <Link key={room.id} href={room.to}>
+              <span className="folio__lanes-lane">{room.lane}</span>
+              <span className="folio__lanes-who">{room.title}</span>
+            </Link>
+          ))}
+        </nav>
+      </main>
     </div>
   );
 }
