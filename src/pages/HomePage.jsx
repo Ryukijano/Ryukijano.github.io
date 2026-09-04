@@ -18,15 +18,15 @@ const PLATE = {
       sizes: '(max-width: 899px) 100vw, min(100vw, 1400px)',
     },
   ],
-  alt: 'Kanagawa plate in three states: painted woodblock, RGB dither, neon wireframe',
+  alt: 'Kanagawa plate in three states, left to right: the painted wave, its RGB encoding, a neon wireframe.',
   caption:
-    'The plate is a schematic of a representation, not a measurement. Painted, dithered, wireframed. The three lanes are framing, not measured results.',
+    'The plate reads left to right: the real world, its encoding, the digital reconstruction. Painted, dithered, wireframed. A schematic of a representation, not a measurement.',
   highlight: 'schematic',
 };
 
 const ROOMS = LANES.map((lane) => ({
   id: lane.id,
-  lane: lane.label,
+  lane: lane.stage,
   title: DATA[lane.id].title,
   to: `/persona/${lane.slug}`,
 }));
@@ -71,7 +71,7 @@ export default function HomePage() {
             height={PLATE.height}
           >
             <div className="folio__thirds">
-              {ROOMS.map((room) => (
+              {ROOMS.map((room, index) => (
                 <Link
                   key={room.id}
                   href={room.to}
@@ -82,7 +82,8 @@ export default function HomePage() {
                   onFocus={() => setLane(room.id)}
                   onBlur={() => setLane(null)}
                 >
-                  <span className="folio__chip">
+                  <span className={index > 0 ? 'folio__chip folio__chip--after' : 'folio__chip'}>
+                    {index > 0 ? <span className="folio__arrow" aria-hidden="true" /> : null}
                     {room.lane}
                     <span className="folio__chip-who">{room.title}</span>
                   </span>
@@ -107,9 +108,16 @@ export default function HomePage() {
         </figure>
 
         <nav className="folio__lanes-list" aria-label="Lanes">
-          {ROOMS.map((room) => (
+          {ROOMS.map((room, index) => (
             <Link key={room.id} href={room.to}>
-              <span className="folio__lanes-lane">{room.lane}</span>
+              <span className="folio__lanes-lane">
+                {index > 0 ? (
+                  <span className="folio__lanes-seq" aria-hidden="true">
+                    →
+                  </span>
+                ) : null}
+                {room.lane}
+              </span>
               <span className="folio__lanes-who">{room.title}</span>
             </Link>
           ))}

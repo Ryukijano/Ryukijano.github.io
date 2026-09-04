@@ -277,9 +277,9 @@ export const PERSONA_BY_SLUG = {
 };
 
 export const LANES = [
-  { id: 'ryukijano', slug: 'ryukijano', label: 'Systems', kicker: 'Ryukijano' },
-  { id: 'ai', slug: 'gyanateet', label: 'Vision', kicker: 'Gyanateet' },
-  { id: 'ryoushi', slug: 'ryoushi', label: 'Quantum', kicker: 'Ryoushi' },
+  { id: 'ryukijano', slug: 'ryukijano', label: 'Systems', stage: 'Real world', kicker: 'Ryukijano' },
+  { id: 'ai', slug: 'gyanateet', label: 'Vision', stage: 'Encoding', kicker: 'Gyanateet' },
+  { id: 'ryoushi', slug: 'ryoushi', label: 'Quantum', stage: 'Digital', kicker: 'Ryoushi' },
 ];
 
 export function projectSlug(title) {

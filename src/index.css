@@ -226,9 +226,10 @@
 /*
  * Ukiyo-e registration. The plate sits on an untrimmed paper block; kagi
  * and hikitsuke live in that margin, not on the art. Bio is one slip under
- * the object. Left / centre / right of the plate are Systems / Vision /
- * Quantum. Block width is min(viewport, height-budget × 3923/2160 +
- * gutters) so the sheet fills without cropping a lane.
+ * the object. Left / centre / right of the plate read as a pipeline:
+ * Real world → Encoding → Digital. Block width is min(viewport,
+ * height-budget × 3923/2160 + gutters) so the sheet fills without
+ * cropping a lane.
  */
 .folio {
   position: relative;
@@ -355,6 +356,8 @@
   align-items: center;
   gap: 0.12rem;
   padding: 0.32rem 0.15rem 0;
+  overflow: visible;
+  white-space: nowrap;
   font-family: var(--font-mono);
   font-size: var(--step--2);
   letter-spacing: 0.12em;
@@ -386,6 +389,41 @@
 .folio__lane.is-on .folio__chip-who,
 .folio__lane:focus-visible .folio__chip-who {
   visibility: visible;
+}
+
+/* Hairline pipeline arrows in the gutter between thirds. */
+.folio__arrow {
+  position: absolute;
+  left: -0.8rem;
+  top: 1.05rem;
+  width: 1.6rem;
+  height: 1px;
+  background: currentColor;
+  color: var(--color-ink-muted);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.folio__arrow::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.folio__lane:hover .folio__arrow,
+.folio__lane.is-on .folio__arrow,
+.folio__lane:focus-visible .folio__arrow,
+.folio__lane:hover + .folio__lane .folio__arrow,
+.folio__lane.is-on + .folio__lane .folio__arrow,
+.folio__lane:focus-visible + .folio__lane .folio__arrow {
+  color: var(--color-seal);
+  opacity: 0.85;
 }
 
 /* Daisen title slip under the plate. */
@@ -489,7 +527,7 @@
 
   .folio__lanes-list a {
     display: grid;
-    grid-template-columns: 6rem minmax(0, 1fr);
+    grid-template-columns: minmax(8.25rem, auto) minmax(0, 1fr);
     gap: 1rem;
     align-items: baseline;
     padding: 0.85rem 0;
@@ -506,6 +544,15 @@
     font-size: var(--step--2);
     letter-spacing: 0.12em;
     text-transform: uppercase;
+  }
+
+  .folio__lanes-seq {
+    display: inline-block;
+    margin-right: 0.4rem;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--color-ink-muted);
+    opacity: 0.7;
   }
 
   .folio__lanes-who {
