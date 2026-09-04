@@ -27,7 +27,6 @@ export const DATA = {
         featuredOrder: 5,
         role: 'Collaborator, Science Museum Group / Leeds HELIX XR',
         note: 'Geometric fidelity is limited by that photo set; there is no pre-fire laser scan to check against.',
-        media: { type: 'image', src: '/assets/images/Offrenda_Final_2000x1200__1_.jpg' },
         tags: ["Unreal Engine 5", "NeRF", "Photogrammetry", "VR"]
       },
       { 
@@ -37,7 +36,6 @@ export const DATA = {
         link: "https://www.linkedin.com/in/gyanateet-dutta-386215192/", 
         icon: Trophy,
         year: 2023,
-        media: { type: 'image', src: '/assets/images/doom_ppo.gif' },
         tags: ["AWS", "DeepRacer", "PPO", "Reinforcement Learning"]
       },
       { 
@@ -46,7 +44,6 @@ export const DATA = {
         fullDesc: "I keep a repo of GPU-side PDE solvers and physics-informed nets: Navier–Stokes, Burgers, a few other nonlinear PDEs. CUDA C++ and PyTorch. Limit: a methods notebook, not a validated CFD code.",
         link: "https://github.com/Ryukijano/Physics-Based-DeepLearning", 
         icon: Flame,
-        media: { type: 'image', src: '/assets/images/neural-network-architecture.png' },
         tags: ["CUDA", "PINNs", "CFD", "Scientific Computing"]
       },
       {
@@ -55,7 +52,6 @@ export const DATA = {
         fullDesc: "I combined Mast3r and Spann3r for 3D reconstruction from image pairs — stereo matching and depth, then a mesh. Limit: no reconstruction benchmark against the source papers.",
         link: "https://github.com/Ryukijano/B3tt3r",
         icon: Box,
-        media: { type: 'image', src: '/assets/images/computer-vision-pipeline.png' },
         tags: ["3D Vision", "Stereo Matching", "Python", "Deep Learning"]
       },
       {
@@ -64,7 +60,6 @@ export const DATA = {
         fullDesc: "QuantumVice-M25-CUDAQuest is a practice log: classical CUDA C++ kernels and CUDA-Q / cuQuantum exercises. Limit: drills, not a library.",
         link: "https://github.com/Ryukijano/QuantumVice-M25-CUDAQuest",
         icon: Terminal,
-        media: { type: 'image', src: '/assets/images/command-line__2_.jpg' },
         tags: ["CUDA", "cuQuantum", "GPU Computing", "C++"]
       }
     ]
@@ -98,7 +93,6 @@ export const DATA = {
           { href: 'https://doi.org/10.1109/isbi61048.2026.11515812', label: 'Paper' },
           { href: 'https://github.com/Ryukijano/DINOEndo', label: 'Code' },
         ],
-        media: { type: 'image', src: '/assets/images/computer_vision.jpg' },
         tags: ["DINOv2", "V-JEPA", "Medical AI", "Self-Supervised Learning"]
       },
       { 
@@ -107,7 +101,6 @@ export const DATA = {
         fullDesc: "I wired a compact vision-language-action policy in a LeRobot fork: SigLIP for vision, Gemma 3 with LoRA for language, ScaleDP as the action head. Checkpoints trained on LeRobot-format sim data (robot_sim.PickNPlace). Limit: imitation on a simulated pick-and-place set, not a robot I deployed.",
         link: "https://huggingface.co/Ryukijano/gemma-groot", 
         icon: Cpu,
-        media: { type: 'image', src: '/assets/images/gemma-groot-demo.png' },
         tags: ["Robotics", "VLA", "Gemma 3", "Diffusion Policy"]
       },
       { 
@@ -121,7 +114,6 @@ export const DATA = {
         featuredOrder: 4,
         role: 'MSc student, University of Leeds',
         note: 'Not deposited in White Rose eTheses. I did not measure longer-horizon drift or a downstream workflow effect.',
-        media: { type: 'image', src: '/assets/images/neural-network-architecture.png' },
         tags: ["VAE", "Transformer", "Video Prediction", "Medical AI"]
       },
       { 
@@ -135,7 +127,6 @@ export const DATA = {
         featuredOrder: 6,
         role: 'Competitor, Hugging Face JAX Diffusers sprint',
         note: 'No FID score and no paper. A sprint checkpoint, not a methods contribution.',
-        media: { type: 'image', src: '/assets/images/diffusion.png' },
         tags: ["JAX", "TPU v4", "ControlNet", "Diffusion Models"]
       },
       {
@@ -149,7 +140,6 @@ export const DATA = {
         featuredOrder: 7,
         role: 'Co-author',
         note: 'A labelled-image study, not a deployed fleet evaluation.',
-        media: { type: 'image', src: '/assets/images/pothole-detection-demo.png' },
         tags: ["YOLOv7", "ESRGAN", "Computer Vision", "Published"]
       },
       {
@@ -159,7 +149,6 @@ export const DATA = {
         link: "https://arxiv.org/abs/2202.13746",
         icon: Terminal,
         year: 2022,
-        media: { type: 'image', src: '/assets/images/reinforcement-learning-diagram.png' },
         tags: ["Hopfield Networks", "Optimization", "TSP", "Published"]
       },
       {
@@ -168,7 +157,6 @@ export const DATA = {
         fullDesc: "I hosted an LGM (Large Gaussian Model) demo on Hugging Face Spaces: one image in, Gaussian-splat 3D out. Limit: a wrapper around an existing model, not a new generator.",
         link: "https://huggingface.co/spaces/Ryukijano/LGM",
         icon: Box,
-        media: { type: 'image', src: '/assets/images/diffusion.png' },
         tags: ["3D Generation", "Gaussian Splatting", "Hugging Face", "Image-to-3D"]
       },
       {
@@ -177,7 +165,6 @@ export const DATA = {
         fullDesc: "Implementations from the Hugging Face Deep RL course: PPO, DQN, and related algorithms, pushed to the Hub. Doom and PyBullet among the environments. Limit: course units, not an original RL paper.",
         link: "https://github.com/Ryukijano/Deep-Reinforcement-Learning-and-Hugging-Face",
         icon: Cpu,
-        media: { type: 'image', src: '/assets/images/ant_bullet.gif' },
         tags: ["Deep RL", "PPO", "DQN", "Hugging Face"]
       },
     ]
@@ -189,7 +176,6 @@ export const DATA = {
     desc: "Hybrid quantum–classical experiments and hackathon notes. I co-run Quantum Buddies with Sid Iliyasu and Dat Chi Le.",
     fullDesc: "I work on hybrid quantum–classical experiments in Qiskit, PennyLane, and cuQuantum. Quantum Buddies is a three-person collective, not a funded lab. Bradford, YQuantum, NQCC, and City of London were weekend-scale builds. Do not read them as clinical or industrial deployments.",
     tags: ["Qiskit", "PennyLane", "Quantum ML", "Python", "CuQuantum"],
-    bannerImage: "/assets/images/nightcity.jpg",
     socials: [
       { icon: Users, link: "https://quantum-buddies.github.io", label: "Quantum Buddies" },
       { icon: Code, link: "https://devpost.com/Ryukijano", label: "Devpost" },
@@ -204,7 +190,6 @@ export const DATA = {
         icon: Users,
         isBanner: true,
         year: 2025,
-        bannerSrc: "/assets/images/nightcity.jpg",
         tags: ["Quantum ML", "Research", "Open Source", "Collaboration"]
       },
       { 
@@ -218,7 +203,6 @@ export const DATA = {
         featuredOrder: 1,
         role: 'Competitor, team Ryoushi / Quantum Buddies',
         note: 'Prizes are teammate-reported. Hackathon-scale, not a clinical genome panel.',
-        media: { type: 'image', src: '/assets/images/CULTURE_III__2_.jpg' },
         tags: ["Genomics", "lambeq", "Quixer"]
       },
       { 
@@ -232,7 +216,6 @@ export const DATA = {
         featuredOrder: 2,
         role: 'Competitor, team Quantum Bits',
         note: 'Quantum Rings virtual track, not the Yale Grand Prize.',
-        media: { type: 'image', src: '/assets/images/Feature_Github_Hero_Accessibility.jpg' },
         tags: ["Quantum Rings", "Shor's Algorithm", "Yale"]
       },
       { 
@@ -246,7 +229,6 @@ export const DATA = {
         featuredOrder: 8,
         role: 'Competitor, Rolls-Royce challenge',
         note: 'Participant. Not listed among the official 1st–3rd place teams.',
-        media: { type: 'image', src: '/assets/images/kanagawa_latentspace_autoencoder.jpg' },
         tags: ["NQCC", "VQE", "SQD", "Rolls-Royce", "Materials Science"]
       },
       { 
@@ -256,7 +238,6 @@ export const DATA = {
         link: "https://news.cityoflondon.gov.uk/quantum-meets-finance-hackathon-sparks-next-generation-solutions-in-the-city/", 
         icon: Grid,
         year: 2025,
-        media: { type: 'image', src: '/assets/images/quantum-variational-demo.png' },
         tags: ["Finalist", "QCBM", "Finance", "Quantum Walk MCMC"]
       },
       {
@@ -265,7 +246,6 @@ export const DATA = {
         fullDesc: "Early code for Quantum Continuous Thought Machines: a hybrid recurrent sketch mixing quantum circuits with a continuous-thought-style loop. Lives in the Quantum Buddies pile. Limit: a repo named after an idea, not a published architecture.",
         link: "https://github.com/Ryukijano/quantum-continuous-thought-machines",
         icon: Cpu,
-        media: { type: 'image', src: '/assets/images/neural-network-architecture.png' },
         tags: ["QCTM", "Hybrid Quantum", "Recurrent Networks", "Reasoning"]
       },
       {
@@ -274,7 +254,6 @@ export const DATA = {
         fullDesc: "Stabilizer-circuit and surface-code notes using Stim. Decoding experiments, not a new code family. Limit: simulator work, not a hardware QEC stack.",
         link: "https://github.com/Ryukijano/quantum-error-correction",
         icon: Terminal,
-        media: { type: 'image', src: '/assets/images/command-line__2_.jpg' },
         tags: ["QEC", "Surface Code", "Stim", "Error Correction"]
       },
       {
@@ -283,7 +262,6 @@ export const DATA = {
         fullDesc: "A folder of IBM Qiskit notebooks I use for algorithms, variational circuits, and quantum ML sketches. Limit: tutorials, not a textbook.",
         link: "https://github.com/Ryukijano/Qiskit_on_Qubit",
         icon: Code,
-        media: { type: 'image', src: '/assets/images/quantum-variational-demo.png' },
         tags: ["Qiskit", "Quantum Algorithms", "IBM Quantum", "Tutorials"]
       },
     ]

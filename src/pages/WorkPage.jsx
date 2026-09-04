@@ -33,28 +33,30 @@ function featuredOrder(project) {
     : Number.POSITIVE_INFINITY;
 }
 
-function byYearDesc(a, b) {
-  return (projectYear(b) ?? -Infinity) - (projectYear(a) ?? -Infinity);
-}
-
-function byFeatured(a, b) {
-  return featuredOrder(a) - featuredOrder(b);
+function withinYear(a, b) {
+  const rank = Number(isFeatured(b)) - Number(isFeatured(a));
+  if (rank !== 0) return rank;
+  const order = featuredOrder(a) - featuredOrder(b);
+  if (order !== 0) return order;
+  return String(a.title).localeCompare(String(b.title));
 }
 
 export function WorkInkNotFound() {
   return (
-    <div className="print print--ink">
+    <div className="print">
       <Atmosphere variant="quiet" />
-      <SiteNav variant="ink" />
-      <main className="print__body print__body--narrow">
+      <SiteNav />
+      <main id="main" className="print__body print__body--narrow">
         <p className="print__kicker">404</p>
-        <h1 className="print__title">This note is not here.</h1>
+        <h1 className="print__title" style={{ marginTop: '0.75rem' }}>
+          This note is not here.
+        </h1>
         <nav className="print__foot" aria-label="Other pages">
           <Link href="/work">Work</Link>
           <span aria-hidden="true"> · </span>
           <Link href="/academic">Academic</Link>
           <span aria-hidden="true"> · </span>
-          <Link href="/">Personal</Link>
+          <Link href="/">Home</Link>
         </nav>
       </main>
     </div>
@@ -62,81 +64,65 @@ export function WorkInkNotFound() {
 }
 
 export default function WorkPage() {
-  const projects = allProjects().slice().sort(byYearDesc);
-  const featured = projects.filter(isFeatured).slice().sort(byFeatured);
-  const also = projects.filter((project) => !isFeatured(project)).slice().sort(byYearDesc);
+  const projects = allProjects();
+  const dated = projects.filter((project) => projectYear(project) != null);
+  const undated = projects
+    .filter((project) => projectYear(project) == null)
+    .sort((a, b) => String(a.title).localeCompare(String(b.title)));
 
-  const years = projects.map(projectYear).filter((year) => year != null);
-  const span = years.length > 0 ? `${Math.min(...years)}–${Math.max(...years)}` : null;
-  const lanes = [...new Set(projects.map(projectLane).filter(Boolean))];
-
-  const facts = [
-    { term: 'Notes', detail: String(projects.length) },
-    span ? { term: 'Span', detail: span } : null,
-    lanes.length > 0 ? { term: 'Lanes', detail: lanes.join(', ') } : { term: 'Record', detail: 'Academic is separate' },
-  ].filter(Boolean);
+  const years = [...new Set(dated.map(projectYear))].sort((a, b) => b - a);
+  const span = years.length > 0 ? `${years[years.length - 1]}–${years[0]}` : null;
 
   useEffect(() => {
     document.title = 'Work · Gyanateet Dutta';
   }, []);
 
   return (
-    <div className="print print--ink">
+    <div className="print">
       <Atmosphere variant="quiet" />
-      <SiteNav variant="ink" />
+      <SiteNav />
 
-      <main className="print__body print__body--wide">
-        <header className="print__header">
-          <h1 className="print__title">Work</h1>
+      <main id="main" className="print__body print__body--wide">
+        <header>
+          {span ? <p className="print__kicker">{span}</p> : null}
+          <h1 className="print__title" style={{ marginTop: span ? '0.75rem' : 0 }}>
+            Work
+          </h1>
           <p className="print__lede print__lede--muted">
             Dated notes on things I built. The academic record is separate.
           </p>
-          <dl className="print__facts">
-            {facts.slice(0, 3).map((fact) => (
-              <div key={fact.term}>
-                <dt>{fact.term}</dt>
-                <dd>{fact.detail}</dd>
-              </div>
-            ))}
-          </dl>
         </header>
 
-        {featured.length > 0 ? (
-          <section className="print__section" aria-label="Featured work">
-            <ul className="work-table">
-              {featured.map((project) => {
-                const year = projectYear(project);
-                const lane = projectLane(project);
-                const desc = project.desc || '';
-
-                return (
-                  <li key={project.slug} className="work-table__row">
-                    <span className="work-table__year">{year ?? '—'}</span>
-                    <Link href={`/work/${project.slug}`} className="work-table__title">
+        {years.map((year) => {
+          const rows = dated.filter((project) => projectYear(project) === year).sort(withinYear);
+          return (
+            <section key={year} aria-label={`Work from ${year}`}>
+              <h2 className="catalog__year">{year}</h2>
+              <ul className="catalog__rows">
+                {rows.map((project) => (
+                  <li key={project.slug} className={`catalog__row${isFeatured(project) ? ' is-featured' : ''}`}>
+                    <Link href={`/work/${project.slug}`} className="catalog__title">
                       {project.title}
                     </Link>
-                    <span className="work-table__lane">{lane}</span>
-                    <p className="work-table__desc">{desc}</p>
+                    <span className="catalog__lane">{projectLane(project)}</span>
+                    <p className="catalog__desc">{project.desc}</p>
                   </li>
-                );
-              })}
-            </ul>
-          </section>
-        ) : null}
+                ))}
+              </ul>
+            </section>
+          );
+        })}
 
-        {also.length > 0 ? (
+        {undated.length > 0 ? (
           <section className="print__section">
             <h2 className="print__also">Also</h2>
             <ul className="work-also">
-              {also.map((project) => {
-                const year = projectYear(project);
-                return (
-                  <li key={project.slug}>
-                    <span>{year != null ? year : ''}</span>
-                    <Link href={`/work/${project.slug}`}>{project.title}</Link>
-                  </li>
-                );
-              })}
+              {undated.map((project) => (
+                <li key={project.slug}>
+                  <span />
+                  <Link href={`/work/${project.slug}`}>{project.title}</Link>
+                </li>
+              ))}
             </ul>
           </section>
         ) : null}
@@ -144,7 +130,7 @@ export default function WorkPage() {
         <nav className="print__foot" aria-label="Other pages">
           <Link href="/academic">Academic</Link>
           <span aria-hidden="true"> · </span>
-          <Link href="/">Personal</Link>
+          <Link href="/">Home</Link>
         </nav>
       </main>
     </div>

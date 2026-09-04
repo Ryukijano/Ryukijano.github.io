@@ -24,11 +24,6 @@ function projectLane(project) {
   return '';
 }
 
-function mediaSrc(project) {
-  if (typeof project.media === 'string' && project.media) return project.media;
-  return project.media?.src || project.bannerSrc || null;
-}
-
 function labelFromHref(href) {
   try {
     const host = new URL(href).hostname.replace(/^www\./, '');
@@ -67,6 +62,20 @@ function collectLinks(project) {
   return links;
 }
 
+/** Pull a trailing "Limit: …" sentence out so it is shown once, labelled. */
+function splitLimit(text) {
+  const match = text.match(/\s*Limit:\s*([\s\S]+)$/);
+  if (!match) return { body: text.trim(), limit: null };
+  return { body: text.slice(0, match.index).trim(), limit: match[1].trim() };
+}
+
+function paragraphs(text) {
+  const sentences = text.split(/(?<=[.!?”"])\s+(?=[A-Z“"(])/).filter(Boolean);
+  if (sentences.length <= 4) return [text];
+  const cut = Math.ceil(sentences.length / 2);
+  return [sentences.slice(0, cut).join(' '), sentences.slice(cut).join(' ')];
+}
+
 export default function CaseStudyPage({ project }) {
   useEffect(() => {
     if (project?.title) {
@@ -80,47 +89,48 @@ export default function CaseStudyPage({ project }) {
   const lane = projectLane(project);
   const tags = Array.isArray(project.tags) ? project.tags.filter(Boolean) : [];
   const links = collectLinks(project);
-  const src = mediaSrc(project);
-  const body = project.fullDesc || project.desc || '';
+  const { body, limit } = splitLimit(project.fullDesc || project.desc || '');
+  const aside = project.note || limit;
   const related = relatedProjects(project);
-  const caption =
-    year != null && !String(project.title).includes(String(year))
-      ? `${project.title}, ${year}`
-      : project.title;
 
   return (
-    <div className="print print--ink">
+    <div className="print">
       <Atmosphere variant="quiet" />
-      <SiteNav variant="ink" />
+      <SiteNav />
 
-      <article className="print__body print__body--narrow">
+      <article id="main" className="print__body print__body--narrow">
         <p className="print__crumb">
           <Link href="/work">Work</Link>
         </p>
 
-        {year != null ? <p className="print__kicker">{year}</p> : null}
+        {year != null || lane ? (
+          <p className="cartouche">
+            {year != null ? <span>{year}</span> : null}
+            {lane ? <span>{lane}</span> : null}
+          </p>
+        ) : null}
 
         <h1 className="print__title">{project.title}</h1>
 
-        {project.role ? <p className="print__role print__role--ink">{project.role}</p> : null}
+        {project.role ? <p className="print__role print__role--italic">{project.role}</p> : null}
 
-        {src ? (
-          <figure className="print__figure">
-            <img src={src} alt="" />
-            <figcaption>{caption}</figcaption>
-          </figure>
+        {body ? (
+          <div className="print__body-copy">
+            {paragraphs(body).map((para) => (
+              <p key={para.slice(0, 40)}>{para}</p>
+            ))}
+          </div>
         ) : null}
 
-        {body ? <div className="print__body-copy">{body}</div> : null}
+        {aside ? (
+          <aside className="limit">
+            <span className="limit__label">Limit</span>
+            <p>{aside}</p>
+          </aside>
+        ) : null}
 
-        {lane || tags.length > 0 || links.length > 0 ? (
+        {tags.length > 0 || links.length > 0 ? (
           <dl className="print__meta">
-            {lane ? (
-              <div>
-                <dt>Lane</dt>
-                <dd>{lane}</dd>
-              </div>
-            ) : null}
             {tags.length > 0 ? (
               <div>
                 <dt>Stack</dt>
@@ -144,8 +154,6 @@ export default function CaseStudyPage({ project }) {
             ) : null}
           </dl>
         ) : null}
-
-        {project.note ? <p className="print__note">{project.note}</p> : null}
 
         {related.length > 0 ? (
           <section className="print__section">
