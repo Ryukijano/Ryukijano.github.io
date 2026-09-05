@@ -464,6 +464,30 @@
   color: var(--color-ink-muted);
 }
 
+.folio__handles {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  color: var(--color-ink-muted);
+}
+
+.folio__handles a {
+  text-decoration: none;
+}
+
+.folio__handles-rule {
+  margin: 0 0.45em;
+  opacity: 0.45;
+}
+
+.folio__handles a:hover,
+.folio__handles a.is-on,
+.folio__handles a:focus-visible {
+  color: var(--color-seal);
+}
+
 .folio__bio {
   margin: 0.15rem 0 0;
   max-width: 68ch;

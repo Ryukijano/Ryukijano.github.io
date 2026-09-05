@@ -273,13 +273,14 @@ export const CV_URL = '/resume/Gyanateet_Dutta_Resume_updated.pdf';
 export const PERSONA_BY_SLUG = {
   ryukijano: 'ryukijano',
   gyanateet: 'ai',
+  yana: 'ai',
   ryoushi: 'ryoushi',
 };
 
 export const LANES = [
-  { id: 'ryukijano', slug: 'ryukijano', label: 'Systems', stage: 'Real world', kicker: 'Ryukijano' },
-  { id: 'ai', slug: 'gyanateet', label: 'Vision', stage: 'Encoding', kicker: 'Gyanateet' },
-  { id: 'ryoushi', slug: 'ryoushi', label: 'Quantum', stage: 'Digital', kicker: 'Ryoushi' },
+  { id: 'ryukijano', slug: 'ryukijano', label: 'Systems', stage: 'Real world', kicker: 'Ryukijano', handle: 'Ryukijano' },
+  { id: 'ai', slug: 'yana', label: 'Vision', stage: 'Encoding', kicker: 'Gyanateet', handle: 'Yana' },
+  { id: 'ryoushi', slug: 'ryoushi', label: 'Quantum', stage: 'Digital', kicker: 'Ryoushi', handle: 'Ryoushi' },
 ];
 
 export function projectSlug(title) {

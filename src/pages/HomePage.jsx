@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Atmosphere from '../components/Atmosphere';
 import KanagawaPlate from '../components/KanagawaPlate';
 import SiteNav from '../components/SiteNav';
-import { DATA, LANES } from '../data/portfolio';
+import { LANES } from '../data/portfolio';
 import { ACADEMIC_BIO, EDUCATION } from '../data/publications';
 import Link from '../lib/Link';
 
@@ -27,7 +27,7 @@ const PLATE = {
 const ROOMS = LANES.map((lane) => ({
   id: lane.id,
   lane: lane.stage,
-  title: DATA[lane.id].title,
+  handle: lane.handle,
   to: `/persona/${lane.slug}`,
 }));
 
@@ -76,7 +76,7 @@ export default function HomePage() {
                   key={room.id}
                   href={room.to}
                   className={laneClass(room.id, lane)}
-                  aria-label={`${room.lane}: ${room.title}`}
+                  aria-label={`${room.lane}: ${room.handle}`}
                   onMouseEnter={() => setLane(room.id)}
                   onMouseLeave={() => setLane(null)}
                   onFocus={() => setLane(room.id)}
@@ -85,7 +85,7 @@ export default function HomePage() {
                   <span className={index > 0 ? 'folio__chip folio__chip--after' : 'folio__chip'}>
                     {index > 0 ? <span className="folio__arrow" aria-hidden="true" /> : null}
                     {room.lane}
-                    <span className="folio__chip-who">{room.title}</span>
+                    <span className="folio__chip-who">{room.handle}</span>
                   </span>
                 </Link>
               ))}
@@ -100,6 +100,27 @@ export default function HomePage() {
               </span>
             </div>
             {degree ? <p className="folio__degree">{degree.title}</p> : null}
+            <nav className="folio__handles" aria-label="Ryukijano, Yana, Ryoushi">
+              {ROOMS.map((room, index) => (
+                <span key={room.id}>
+                  {index > 0 ? (
+                    <span className="folio__handles-rule" aria-hidden="true">
+                      /
+                    </span>
+                  ) : null}
+                  <Link
+                    href={room.to}
+                    className={lane === room.id ? 'is-on' : undefined}
+                    onMouseEnter={() => setLane(room.id)}
+                    onMouseLeave={() => setLane(null)}
+                    onFocus={() => setLane(room.id)}
+                    onBlur={() => setLane(null)}
+                  >
+                    {room.handle}
+                  </Link>
+                </span>
+              ))}
+            </nav>
             <p className="folio__bio">{ACADEMIC_BIO.statement}</p>
             <p className="folio__caption">
               <Marked text={PLATE.caption} highlight={PLATE.highlight} />
@@ -118,7 +139,7 @@ export default function HomePage() {
                 ) : null}
                 {room.lane}
               </span>
-              <span className="folio__lanes-who">{room.title}</span>
+              <span className="folio__lanes-who">{room.handle}</span>
             </Link>
           ))}
         </nav>

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Atmosphere from '../components/Atmosphere';
 import SiteNav from '../components/SiteNav';
-import { projectSlug } from '../data/portfolio';
+import { LANES, projectSlug } from '../data/portfolio';
 import Link from '../lib/Link';
 
 const SOUND = {
@@ -23,6 +23,8 @@ function byYearDescWhenPresent(a, b) {
 export default function PersonaPage({ data }) {
   const projects = data.projects.slice().sort(byYearDescWhenPresent);
   const sound = SOUND[data.id];
+  const handle = LANES.find((lane) => lane.id === data.id)?.handle;
+  const kicker = handle && handle !== data.title ? `${handle} · ${data.subtitle}` : data.subtitle;
 
   useEffect(() => {
     document.title = `${data.title} · Gyanateet Dutta`;
@@ -34,7 +36,7 @@ export default function PersonaPage({ data }) {
       <SiteNav />
 
       <main id="main" className="print__body print__body--narrow">
-        <p className="print__kicker">{data.subtitle}</p>
+        <p className="print__kicker">{kicker}</p>
         <h1 className="print__name" style={{ marginTop: '0.75rem' }}>
           {data.title}
         </h1>
