@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { DATA, findProject } from './data/portfolio';
 import { resolveRoute } from './lib/navigation';
 import { routeMeta } from './lib/routeMeta';
@@ -63,11 +63,20 @@ function Routed() {
     }
   }, []);
 
+  const firstRender = useRef(true);
   useEffect(() => {
-    // One effect, three fixes: the tree remounts per path, so without this the
-    // scroll position carries over from the previous page, focus falls to
-    // <body>, and the "Skip to content" link scrolls without moving focus.
-    // #main carries tabIndex={-1} on every page so it can receive focus.
+    // Only on an actual navigation, never on first load. The tree remounts per
+    // path, so without this the scroll position carries over from the previous
+    // page and focus falls to <body> — a keyboard user activates a link and
+    // hears nothing. #main carries tabIndex={-1} so it can receive focus.
+    //
+    // Skipping the first render matters: on load the reader is already at the
+    // top, and stealing focus into #main would put the "Skip to content" link
+    // behind the content it skips, out of reach of the first Tab.
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
     window.scrollTo(0, 0);
     document.getElementById('main')?.focus({ preventScroll: true });
   }, [path]);

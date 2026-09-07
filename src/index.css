@@ -64,7 +64,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    overflow-x: hidden;
+    /* No overflow-x: hidden. It hid horizontal overflow rather than preventing
+       it, which turns a layout bug into a mystery. tests/browser/layout.spec.js
+       asserts scrollWidth at nine viewports instead, so overflow is now loud. */
   }
 
   a {

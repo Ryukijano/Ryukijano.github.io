@@ -50,9 +50,15 @@ carries real text, it fails.
 
 ### Where the accent is allowed
 
-The seal appears in four places and nowhere else: `.limit__label`, the active
-nav item, the marked word in the plate caption, and the keyboard focus rule on
-the plate lanes. One accent, spent on the things that distinguish the site.
+The seal marks exactly two things:
+
+1. **The honesty convention** — `.limit__label`, the marked word in the plate
+   caption (`.folio__mark`), and the gloss footer that names the rule.
+2. **Interaction** — focus, hover, the active nav item, text selection.
+
+Nothing else. `tests/tokens.test.js` walks every rule that references
+`--color-seal` and fails on any selector that is neither of those, because an
+accent that starts appearing elsewhere stops meaning either.
 
 ## Type — three families, one scale
 
@@ -63,8 +69,15 @@ the plate lanes. One accent, spent on the things that distinguish the site.
   prose. `font-variant-numeric: tabular-nums` everywhere a year appears.
 
 A 1.25 modular scale on a 17px body, `--step--2` (0.72rem) through `--step-5`
-(3.24rem). The tests assert the ratio is monotonic at 1.25 ± 0.02, so a
-one-off size cannot quietly enter the scale.
+(3.24rem). The tests assert the ratio holds at 1.25 ± 0.02 from `--step--1`
+upward, so a one-off size cannot quietly enter the scale.
+
+`--step--2` is deliberately **off** the scale. A true 1.25 step below
+`--step--1` is 0.68rem (10.88px), and that step carries tracked uppercase mono
+— `.cartouche`, `.limit__label`, `.catalog__lane`, `.folio__chip` — where
+10.88px is not readable. It is held at 0.72rem (11.52px) as a legibility
+floor, and the tests assert that too, so the exception stays an exception
+rather than becoming licence to add more.
 
 Note the layout constants (`--measure`, `--folio-gutter`) are on a 16px root
 while the type is on 17px — `html` sets no `font-size`; the 17px comes from
