@@ -190,3 +190,29 @@ the bottom gutter carries the state where the ground is paper we control.
 `tests/focus-ring.test.js` re-measures this against the actual plate file, so
 recropping or replacing the image tells you if the ring stopped being visible
 instead of letting it go dark silently.
+
+## Headings
+
+`.print__name` (a person, on `/academic` and the persona sheets) and
+`.print__title` (a project, on `/work/<slug>`) are the same size, `--step-4`,
+on purpose. Each sheet carries one `h1` and the two never share a page, so
+there is no hierarchy to draw between them. The two class names say what the
+heading *is*; the size is one decision, made once.
+
+## Open
+
+Decisions not yet made, kept here so they are not mistaken for defects.
+
+**The stacked home page does not carry the idea.** Below 900px wide *or* 720px
+tall the print is stacked: the kento marks and the three ticks with their
+arrows are `display: none`, and the pipeline survives only as the caption and
+the lane list. That is most phones, and also any desktop window with a dock
+or devtools open. The fix is a *plate key* — the three stage words and their
+handles drawn under the sheet, in the same mono register, with the arrows —
+rather than un-hiding the overlay on a plate too narrow to aim at. Not built;
+the list is correct, it is just not the print.
+
+**Not open:** `--color-seal-bright`. It is sub-AA against the paper, it is
+used by exactly one `aria-hidden` element, and the tests hold it there. Folding
+it into `--color-seal` so that "one accent" is literal would trade a tuned
+vermilion chip for a rule that already holds.

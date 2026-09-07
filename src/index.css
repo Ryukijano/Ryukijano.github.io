@@ -806,20 +806,16 @@
   box-sizing: content-box;
 }
 
+/* One h1 per sheet, one size. A person's name on /academic and a project title
+   on /work/<slug> never share a page, so there is no hierarchy to draw between
+   them; the two class names mark what the heading is, not how big it is. */
 .print__name,
 .print__title {
   font-family: var(--font-serif);
+  font-size: var(--step-4);
   line-height: 1.1;
   letter-spacing: -0.025em;
   font-weight: 600;
-}
-
-.print__name {
-  font-size: var(--step-4);
-}
-
-.print__title {
-  font-size: var(--step-4);
 }
 
 .print__kicker,
