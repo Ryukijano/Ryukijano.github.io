@@ -56,6 +56,25 @@ for (const { w, h, note } of VIEWPORTS) {
   });
 }
 
+test.describe('the home page fits one screen', () => {
+  // The whole conceit is a single hung print. It is sized from a height budget
+  // (--folio-plate), and that budget is a constant, so anything added to the
+  // title slip eats into it -- adding one line of copy put the page 91px past
+  // the fold at every common desktop size. This is the assertion that makes
+  // that loud.
+  for (const [w, h] of [[1440, 900], [1366, 768], [1280, 800], [1600, 1000], [1920, 1080]]) {
+    test(`at ${w}x${h}`, async ({ page }) => {
+      await page.setViewportSize({ width: w, height: h });
+      await page.goto('/');
+      await page.evaluate(() => document.fonts.ready);
+      const over = await page.evaluate(
+        () => document.documentElement.scrollHeight - window.innerHeight,
+      );
+      expect(over, `the home page scrolls by ${over}px`).toBeLessThanOrEqual(2);
+    });
+  }
+});
+
 test.describe('the plate itself', () => {
   test('loads, and is not stretched', async ({ page }) => {
     await page.goto('/');

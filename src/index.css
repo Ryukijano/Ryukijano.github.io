@@ -336,10 +336,24 @@
   --folio-gutter-bottom: 2.7rem;
   /* Capped so the print always keeps paper margin instead of going full-bleed
      in a narrow window. */
+  /*
+   * 29rem is the measured height of everything that is not the plate: the
+   * stage's top padding, the slip (name, degree, handles, gloss, bio, caption)
+   * and the block's own gutters. It was 23rem, which left the page scrolling
+   * by ~91px at every common desktop size.
+   *
+   * This constant is the layout's one soft spot -- plate width derives from the
+   * height budget, the slip's width equals the plate's, and the slip's HEIGHT
+   * depends on its width because the text rewraps, so the value can only be
+   * exactly right at one wrap point. tests/browser/layout.spec.js asserts the
+   * page fits, so adding a line to the slip fails loudly instead of quietly
+   * scrolling. Replacing the constant with a grid that lets the browser solve
+   * the constraint is the real fix, and is noted as an open question.
+   */
   --folio-plate: min(
     100% - 3rem,
     76rem,
-    calc((100dvh - 23rem) * 3923 / 2160 + 2 * var(--folio-gutter))
+    calc((100dvh - 29rem) * 3923 / 2160 + 2 * var(--folio-gutter))
   );
   --page-measure: var(--folio-plate);
 }

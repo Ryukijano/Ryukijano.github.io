@@ -121,6 +121,17 @@ describe('measures', () => {
   });
 });
 
+describe('the plate height budget', () => {
+  it('is the same number in the stylesheet and in the sizes attribute', async () => {
+    // --folio-plate derives the plate's WIDTH from the viewport height, and
+    // `sizes` has to mirror that or the browser picks a tier for a layout that
+    // does not exist. Raising one and not the other is a silent over-fetch.
+    const { PLATE_HEIGHT_BUDGET_REM } = await import('../src/data/plate.js');
+    const inCss = Number(css.match(/calc\(\(100dvh - (\d+(?:\.\d+)?)rem\)/)[1]);
+    expect(inCss).toBe(PLATE_HEIGHT_BUDGET_REM);
+  });
+});
+
 describe('non-negotiables', () => {
   it('declares a light color-scheme: a print has no dark variant', () => {
     expect(css).toMatch(/color-scheme:\s*light/);

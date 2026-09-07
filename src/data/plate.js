@@ -14,9 +14,17 @@
  * unparseable source-size is dropped in favour of 100vw -- which is exactly
  * today's behaviour, so the failure mode is safe.
  */
+/**
+ * The height reserved for everything that is not the plate. MUST match
+ * --folio-plate's constant in src/index.css, or `sizes` describes a different
+ * layout than the CSS produces and the browser fetches the wrong tier.
+ * tests/tokens.test.js asserts the two agree.
+ */
+export const PLATE_HEIGHT_BUDGET_REM = 29;
+
 const PLATE_SIZES =
   '(max-width: 899px) calc(100vw - 4rem), ' +
-  '(min-aspect-ratio: 4/3) calc((100vh - 23rem) * 1.8162), ' +
+  `(min-aspect-ratio: 4/3) calc((100vh - ${PLATE_HEIGHT_BUDGET_REM}rem) * 1.8162), ` +
   'calc(100vw - 3rem)';
 
 export const PLATE = {
