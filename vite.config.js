@@ -18,4 +18,12 @@ export default defineConfig({
     strictPort: true,
     allowedHosts: true,
   },
+
+  test: {
+    // Node only. tests/browser/* are Playwright specs, driven by
+    // playwright.config.js — vitest must not try to collect them.
+    environment: 'node',
+    include: ['tests/*.test.js'],
+    exclude: ['tests/browser/**', 'node_modules/**', 'dist/**'],
+  },
 })
