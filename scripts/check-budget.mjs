@@ -58,14 +58,29 @@ for (const f of files) {
 }
 
 // --- nothing unreferenced ---
-const html = files.filter((f) => f.endsWith('.html')).map((f) => readFileSync(f, 'utf8')).join('\n');
+// References are followed transitively: HTML names the stylesheet, and the
+// stylesheet names the fonts. Scanning only HTML would flag every self-hosted
+// woff2 as an orphan.
 const referenced = new Set();
-for (const m of html.matchAll(/(?:src|href|content)="([^"]+)"/g)) {
-  if (m[1].startsWith('/')) referenced.add(m[1].slice(1));
-  else if (m[1].includes('ryukijano.github.io/')) referenced.add(m[1].split('ryukijano.github.io/')[1]);
-}
-for (const m of html.matchAll(/(\/[^\s",]+\.(?:webp|avif|jpe?g|png))\s+\d+w/g)) {
-  referenced.add(m[1].slice(1));
+
+const collect = (text) => {
+  for (const m of text.matchAll(/(?:src|href|content)="([^"]+)"/g)) {
+    if (m[1].startsWith('/')) referenced.add(m[1].slice(1));
+    else if (m[1].includes('ryukijano.github.io/')) {
+      referenced.add(m[1].split('ryukijano.github.io/')[1]);
+    }
+  }
+  // srcset candidates, and url() in CSS
+  for (const m of text.matchAll(/(\/[^\s",)]+\.(?:webp|avif|jpe?g|png))\s+\d+w/g)) {
+    referenced.add(m[1].slice(1));
+  }
+  for (const m of text.matchAll(/url\(\s*['"]?(\/[^'")]+)['"]?\s*\)/g)) {
+    referenced.add(m[1].slice(1));
+  }
+};
+
+for (const f of files) {
+  if (f.endsWith('.html') || f.endsWith('.css')) collect(readFileSync(f, 'utf8'));
 }
 
 const orphans = files

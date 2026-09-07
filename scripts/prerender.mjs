@@ -27,15 +27,25 @@ const shell = readFileSync(join(DIST, 'index.html'), 'utf8');
 const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-/** The responsive preload, generated from the same PLATE the <picture> uses. */
+/**
+ * The responsive preload, generated from the same PLATE the <picture> uses.
+ *
+ * It must describe the FIRST source, because that is the one the browser will
+ * accept -- preload the WebP while <picture> picks the AVIF and the plate is
+ * downloaded twice. `href` is present deliberately: it is optional when every
+ * candidate carries a `w` descriptor, but WebKit's support for an href-less
+ * responsive preload is patchy, and the plate lives inside the React tree, so
+ * a preload that does not fire means the image cannot start loading until the
+ * bundle has parsed and mounted.
+ */
 function preloadTag() {
-  const webp = PLATE.sources.find((s) => s.type === 'image/webp') ?? PLATE.sources[0];
-  if (!webp) return '';
-  const href = webp.srcSet.split(',')[0].trim().split(/\s+/)[0];
+  const preferred = PLATE.sources[0];
+  if (!preferred) return '';
+  const href = preferred.srcSet.split(',')[0].trim().split(/\s+/)[0];
   return (
-    `<link rel="preload" as="image" type="${webp.type}" href="${href}"\n` +
-    `      imagesrcset="${esc(webp.srcSet)}"\n` +
-    `      imagesizes="${esc(webp.sizes)}" />`
+    `<link rel="preload" as="image" type="${preferred.type}" href="${href}"\n` +
+    `      imagesrcset="${esc(preferred.srcSet)}"\n` +
+    `      imagesizes="${esc(preferred.sizes)}" />`
   );
 }
 

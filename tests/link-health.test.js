@@ -197,8 +197,25 @@ describe('the prerender manifest', () => {
 
   it('preloads the plate on the home page only', () => {
     // It was preloaded everywhere, costing each text-only case study 286 KB
-    // of an image that page never displays.
-    const withPreload = pages.filter((p) => p.html.includes('rel="preload"')).map((p) => p.file);
-    expect(withPreload).toEqual(['index.html']);
+    // of an image that page never displays. The FONT preload is on every page
+    // by design, so this looks for the image one specifically.
+    const withPlate = pages
+      .filter((p) => /rel="preload"[^>]*as="image"/.test(p.html))
+      .map((p) => p.file);
+    expect(withPlate).toEqual(['index.html']);
+  });
+
+  it('preloads the display serif on every page', () => {
+    const withFont = pages.filter((p) => /rel="preload"[^>]*as="font"/.test(p.html));
+    expect(withFont.length).toBe(pages.length);
+  });
+
+  it('requests no third-party origin at all', () => {
+    // The Google Fonts link cost two sequential round trips before text could
+    // paint in its intended face.
+    for (const { file, html } of pages) {
+      expect(html, file).not.toMatch(/fonts\.(googleapis|gstatic)\.com/);
+      expect(html, file).not.toMatch(/rel="preconnect"/);
+    }
   });
 });

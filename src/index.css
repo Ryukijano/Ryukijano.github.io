@@ -1,12 +1,82 @@
 @import "tailwindcss";
 
 /*
+ * Self-hosted, same origin. Google Fonts cost two sequential round trips
+ * before text could paint in its intended face -- render-blocking CSS from one
+ * third-party origin, then the font files from another -- for 1.3 kB of CSS.
+ *
+ * The upright serif keeps its opsz axis (+71 kB): 41.6px display against 17px
+ * body is real optical work, and that face is the site. The italic drops it
+ * (-110 kB, 130 kB -> 20 kB): it sets venue names on /academic at 17px, where
+ * an 8..60 axis has nothing to do. That split is only possible self-hosted --
+ * Google's API returns HTTP 400 for a per-style axis tuple.
+ *
+ * Dropped entirely, because src/index.css never asks for them: Plex Mono 500
+ * and italic, Plex Sans 500 and 600.
+ */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/source-serif-4-upright-var.woff2') format('woff2-variations');
+}
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/source-serif-4-italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/ibm-plex-sans-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/ibm-plex-sans-italic-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2');
+}
+
+/*
+ * A fallback whose metrics match Source Serif 4, so the swap does not move any
+ * line. Computed from both fonts' OS/2 tables against Times New Roman
+ * (xAvgCharWidth 558/1000 vs 1069/2048; ascent 1036, descent 335, no line gap).
+ * Case-study pages are entirely text, so without this every line shifts when
+ * the serif arrives.
+ */
+@font-face {
+  font-family: 'Source Serif Fallback';
+  src: local('Times New Roman'), local('Palatino Linotype'), local('Palatino'), local('Georgia');
+  size-adjust: 106.90%;
+  ascent-override: 96.91%;
+  descent-override: 31.34%;
+  line-gap-override: 0%;
+}
+
+/*
  * Palette is specified by the print, not a default: washi paper, the wave's
  * Prussian/indigo ink, and the artist's vermilion seal. One accent only.
  */
 @theme {
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Source Serif 4", "Source Serif Pro", Palatino, "Palatino Linotype", "Times New Roman", serif;
+  --font-serif: "Source Serif 4", "Source Serif Fallback", Palatino, "Times New Roman", serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --color-washi: #e6e1d3;
   --color-washi-deep: #d9d3c2;
