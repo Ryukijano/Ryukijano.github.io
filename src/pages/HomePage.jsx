@@ -79,7 +79,7 @@ export default function HomePage() {
               </span>
             </div>
             {degree ? <p className="folio__degree">{degree.title}</p> : null}
-            <nav className="folio__handles" aria-label="Lanes">
+            <nav className="folio__handles" aria-label="Three names">
               {ROOMS.map((room, index) => (
                 <span key={room.id}>
                   {index > 0 ? (
@@ -100,9 +100,7 @@ export default function HomePage() {
                 </span>
               ))}
             </nav>
-            <p className="folio__gloss">
-              Three names, one person: systems, vision, quantum.
-            </p>
+            <p className="folio__gloss">Three names, one person.</p>
             <p className="folio__bio">{ACADEMIC_BIO.statement}</p>
             <p className="folio__caption">
               <Marked text={PLATE.caption} highlight={PLATE.highlight} />

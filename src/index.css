@@ -633,8 +633,9 @@
   color: var(--color-seal);
 }
 
-/* One line of plain speech in the slip's mono register: what the three lanes
-   are, and what the .limit convention promises. */
+/* One line of plain speech in the slip's mono register: that the three handles
+   are one person, and what the .limit convention promises. The plate's thirds
+   are stages of one process, so the gloss names no departments. */
 .folio__gloss {
   margin: 0;
   font-family: var(--font-mono);
