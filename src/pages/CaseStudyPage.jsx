@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import Atmosphere from '../components/Atmosphere';
 import SiteNav from '../components/SiteNav';
 import { projectLane, projectYear, relatedProjects } from '../data/portfolio';
@@ -60,11 +59,6 @@ function paragraphs(text) {
 }
 
 export default function CaseStudyPage({ project }) {
-  useEffect(() => {
-    if (project?.title) {
-      document.title = `${project.title} · Gyanateet Dutta`;
-    }
-  }, [project?.title]);
 
   if (!project) return <WorkInkNotFound />;
 

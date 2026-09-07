@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import Atmosphere from '../components/Atmosphere';
 import SiteNav from '../components/SiteNav';
 import { LANES, projectSlug } from '../data/portfolio';
@@ -26,9 +25,6 @@ export default function PersonaPage({ data }) {
   const handle = LANES.find((lane) => lane.id === data.id)?.handle;
   const kicker = handle && handle !== data.title ? `${handle} · ${data.subtitle}` : data.subtitle;
 
-  useEffect(() => {
-    document.title = `${data.title} · Gyanateet Dutta`;
-  }, [data.title]);
 
   return (
     <div className="print">

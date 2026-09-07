@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { DATA, findProject } from './data/portfolio';
 import { resolveRoute } from './lib/navigation';
-import { usePath } from './lib/usePath';
+import { routeMeta } from './lib/routeMeta';
+import { PathContext, usePath } from './lib/usePath';
 import Link from './lib/Link';
 import AcademicPage from './pages/AcademicPage';
 import CaseStudyPage from './pages/CaseStudyPage';
@@ -50,7 +51,7 @@ function Page({ route }) {
   }
 }
 
-export default function Portfolio() {
+function Routed() {
   const path = usePath();
   const route = resolveRoute(path);
 
@@ -71,5 +72,21 @@ export default function Portfolio() {
     document.getElementById('main')?.focus({ preventScroll: true });
   }, [path]);
 
+  // Set here rather than in each page, so the tab and the prerendered <head>
+  // read from the same routeMeta().
+  useEffect(() => {
+    document.title = routeMeta(path).title;
+  }, [path]);
+
   return <Page key={path} route={route} />;
+}
+
+/** `path` is supplied at build time by the prerender step; in the browser it
+ *  is undefined and usePath reads window.location instead. */
+export default function Portfolio({ path }) {
+  return (
+    <PathContext.Provider value={path ?? null}>
+      <Routed />
+    </PathContext.Provider>
+  );
 }

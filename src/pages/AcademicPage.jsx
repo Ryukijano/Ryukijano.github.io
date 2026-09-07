@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Atmosphere from '../components/Atmosphere';
 import SiteNav from '../components/SiteNav';
 import { CV_URL } from '../data/portfolio';
@@ -84,9 +84,6 @@ const HEADER_LINKS = [
 export default function AcademicPage() {
   const degree = EDUCATION[0];
 
-  useEffect(() => {
-    document.title = 'Academic · Gyanateet Dutta';
-  }, []);
 
   return (
     <div className="print">

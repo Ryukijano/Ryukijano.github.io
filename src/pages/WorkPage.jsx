@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import Atmosphere from '../components/Atmosphere';
 import SiteNav from '../components/SiteNav';
 import { allProjects, isFeatured, projectLane, projectYear, withinYear } from '../data/portfolio';
@@ -36,9 +35,6 @@ export default function WorkPage() {
   const years = [...new Set(dated.map(projectYear))].sort((a, b) => b - a);
   const span = years.length > 0 ? `${years[years.length - 1]}–${years[0]}` : null;
 
-  useEffect(() => {
-    document.title = 'Work · Gyanateet Dutta';
-  }, []);
 
   return (
     <div className="print">

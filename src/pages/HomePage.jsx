@@ -1,27 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import KanagawaPlate from '../components/KanagawaPlate';
 import SiteNav from '../components/SiteNav';
+import { PLATE } from '../data/plate';
 import { LANES } from '../data/portfolio';
 import { ACADEMIC_BIO, EDUCATION } from '../data/publications';
 import Link from '../lib/Link';
 
-const PLATE = {
-  src: '/assets/images/kanagawa_latentspace_autoencoder.jpg',
-  width: 3923,
-  height: 2160,
-  sources: [
-    {
-      type: 'image/webp',
-      srcSet:
-        '/assets/images/kanagawa-plate-1200.webp 1200w, /assets/images/kanagawa-plate-1800.webp 1800w, /assets/images/kanagawa-plate-2600.webp 2600w',
-      sizes: '(max-width: 899px) 100vw, min(100vw, 1400px)',
-    },
-  ],
-  alt: 'Kanagawa plate in three states, left to right: the painted wave, its RGB encoding, a neon wireframe.',
-  caption:
-    'The plate reads left to right: the real world, its encoding, the digital reconstruction. Painted, dithered, wireframed. A schematic of a representation, not a measurement.',
-  highlight: 'schematic',
-};
 
 const ROOMS = LANES.map((lane) => ({
   id: lane.id,
@@ -51,9 +35,6 @@ export default function HomePage() {
   const [lane, setLane] = useState(null);
   const degree = EDUCATION[0];
 
-  useEffect(() => {
-    document.title = 'Gyanateet Dutta';
-  }, []);
 
   return (
     <div className="folio">
