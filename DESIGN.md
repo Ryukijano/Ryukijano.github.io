@@ -100,6 +100,48 @@ Six tokens on a 1.6 ratio (`--space-1` 0.25rem … `--space-6` 3.2rem), which
 rhymes with the type scale. Before them there were twenty ad-hoc values and
 three different section separations on the same page.
 
+## The hung print, and the one constant
+
+The home page is a single print sized to one screen: the plate's **width** is
+derived from the leftover viewport **height**, so the whole composition scales
+without ever cropping a lane or scrolling. `--folio-plate` spends `29rem` on
+everything that is not the plate — the stage's top padding, the title slip, the
+gutters — and gives the rest to the sheet.
+
+That `29rem` is the layout's one hard-coded number, and it is hard-coded because
+the constraint is circular: the plate's width comes from the leftover height,
+the title slip is exactly as wide as the plate (a *daisen* slip is the width of
+the print it labels), and the slip's own height depends on that width because
+the bio rewraps. CSS cannot solve it — sizing the plate from a grid row needs
+the row's height, which needs the slip's height, which needs the plate's width.
+
+Worse, below a certain size it does not merely fail to settle, it **diverges**:
+a shorter viewport gives a narrower plate, which gives a taller slip, which
+leaves less height, which narrows the plate again. Measured at 1440px wide, the
+bio holds its wrap down to a 465px plate — viewport height **720px**, where the
+budget is exact with zero slack — and at 715px it rewraps and the page goes
+39px over, reaching 99px over by 660px at every width from 900 to 1920.
+
+So the stacked layout is not only the small-screen presentation, it is the fence
+around that band: `@media (max-width: 899px), (max-height: 719px)`. Above the
+fence the constant is exact; below it the print is stacked and scrolls, which is
+what it should do anyway when there is no room to hang anything.
+
+Three things follow, and all three are asserted:
+
+- `sizes` on the plate has to describe this same layout, breakpoints included,
+  or the browser picks a tier for a layout that does not exist. It mirrors the
+  query as `and`-only conditions with the stacked case as the trailing default,
+  because a media *condition* may not contain a comma and Level 4 `or` only
+  landed in Safari 16.4 — and one unparseable source-size drops the whole
+  attribute to `100vw`. `tests/tokens.test.js` holds all four numbers (budget,
+  both breakpoints, the plate ratio) against the stylesheet.
+- `tests/browser/layout.spec.js` asserts the page fits at ten desktop sizes,
+  **1440×720 among them** — the boundary, and therefore the first viewport that
+  fails when anything is added to the slip.
+- The same file asserts the fence engages just below it, because dropping the
+  height half of that query would silently return the diverging layout.
+
 ## Figures
 
 A case-study figure is hung the way the home page's plate is: an untrimmed

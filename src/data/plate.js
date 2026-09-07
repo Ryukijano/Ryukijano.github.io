@@ -5,27 +5,60 @@
  */
 /*
  * The honest `sizes`. The CSS derives the block's width from the viewport
- * HEIGHT -- min(100% - 3rem, 76rem, (100dvh - 23rem) * 3923/2160 + 2rem) --
- * which `sizes` cannot express directly, so this mirrors it with two branches.
+ * HEIGHT -- min(100% - 3rem, 76rem, (100dvh - 29rem) * 3923/2160 + 2rem) --
+ * which `sizes` cannot express directly, so this mirrors it branch for branch.
  * The old value claimed `min(100vw, 1400px)` while the truth on a 1440x900
  * laptop is 966px, so the browser fetched 1800w instead of 1000w.
  *
- * calc() only, no min(): Safari's source-size parser is the narrow one, and an
- * unparseable source-size is dropped in favour of 100vw -- which is exactly
- * today's behaviour, so the failure mode is safe.
+ * Every condition is `and`-only and every value is a bare calc(): no comma, no
+ * `or`, no top-level min(). A media *condition* may not contain a comma, and
+ * Level 4 `or` only landed in Safari 16.4 -- and one unparseable source-size
+ * invalidates the WHOLE attribute, dropping the browser to 100vw. So the
+ * stacked case is the trailing default rather than a leading `or` branch.
  */
+
 /**
- * The height reserved for everything that is not the plate. MUST match
- * --folio-plate's constant in src/index.css, or `sizes` describes a different
- * layout than the CSS produces and the browser fetches the wrong tier.
- * tests/tokens.test.js asserts the two agree.
+ * The height reserved for everything that is not the plate, and the two
+ * breakpoints at which the print stops being hung and starts being stacked.
+ * All three MUST match src/index.css -- `sizes` describes the layout, so a
+ * disagreement makes the browser pick a tier for a layout that does not
+ * exist. tests/tokens.test.js asserts each one against the stylesheet.
  */
 export const PLATE_HEIGHT_BUDGET_REM = 29;
+export const PLATE_MIN_WIDTH_PX = 900;
+/*
+ * 720px, not the 620px this used to be. Below 720 the layout eats itself: the
+ * plate is sized from the leftover height, the title slip is exactly as wide
+ * as the plate, and the slip's own height depends on that width because the
+ * bio rewraps -- so a shorter viewport gives a narrower plate, which gives a
+ * TALLER slip, which leaves less height, which narrows the plate again. It
+ * diverges. Measured at 1440w: the bio holds one wrap down to a 465px plate
+ * (viewport height 720, page fits exactly); at 715 it rewraps to 367px and the
+ * page is 39px over; by 660 it is 99px over at every width from 900 to 1920.
+ * Overflow in that band is purely a function of height -- identical across the
+ * whole width range -- so 720 is the exact height at which the hung print
+ * stops fitting and the stacked layout becomes the correct presentation.
+ */
+export const PLATE_MIN_HEIGHT_PX = 720;
+/**
+ * The plate's true aspect ratio, from the master scan. The authority for the
+ * rendered box is .folio__sheet's `aspect-ratio`, so this is the same pair of
+ * numbers and `sizes` derives its multiplier from them rather than repeating a
+ * literal 1.8162 that a recrop would silently falsify.
+ */
+export const PLATE_ASPECT = [3923, 2160];
+
+const ASPECT = (PLATE_ASPECT[0] / PLATE_ASPECT[1]).toFixed(4);
+const HUNG = `(min-width: ${PLATE_MIN_WIDTH_PX}px) and (min-height: ${PLATE_MIN_HEIGHT_PX}px)`;
 
 const PLATE_SIZES =
-  '(max-width: 899px) calc(100vw - 4rem), ' +
-  `(min-aspect-ratio: 4/3) calc((100vh - ${PLATE_HEIGHT_BUDGET_REM}rem) * 1.8162), ` +
-  'calc(100vw - 3rem)';
+  // Hung, and wide enough that the height budget is what binds.
+  `${HUNG} and (min-aspect-ratio: 4/3) ` +
+    `calc((100vh - ${PLATE_HEIGHT_BUDGET_REM}rem) * ${ASPECT}), ` +
+  // Hung but tall and narrow: the `100% - 3rem` cap binds instead.
+  `${HUNG} calc(100vw - 3rem), ` +
+  // Stacked -- either breakpoint. Full bleed less the stage and block gutters.
+  'calc(100vw - 4rem)';
 
 export const PLATE = {
   // The <img src> floor: a 1200w JPEG rather than the 3923x2160 master, which

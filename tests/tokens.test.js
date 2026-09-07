@@ -121,14 +121,64 @@ describe('measures', () => {
   });
 });
 
-describe('the plate height budget', () => {
-  it('is the same number in the stylesheet and in the sizes attribute', async () => {
-    // --folio-plate derives the plate's WIDTH from the viewport height, and
-    // `sizes` has to mirror that or the browser picks a tier for a layout that
-    // does not exist. Raising one and not the other is a silent over-fetch.
+/*
+ * `sizes` is a description of the layout, so every number in it is a claim
+ * about the stylesheet. A claim that drifts does not throw -- it just makes
+ * the browser pick a tier for a layout that does not exist, over-fetching or,
+ * worse, under-fetching and shipping a soft plate. These four assertions are
+ * the only thing keeping the two files honest.
+ */
+describe('the sizes attribute describes the stylesheet', () => {
+  it('reserves the same height for everything that is not the plate', async () => {
     const { PLATE_HEIGHT_BUDGET_REM } = await import('../src/data/plate.js');
     const inCss = Number(css.match(/calc\(\(100dvh - (\d+(?:\.\d+)?)rem\)/)[1]);
     expect(inCss).toBe(PLATE_HEIGHT_BUDGET_REM);
+  });
+
+  it('switches from hung to stacked at the same two breakpoints', async () => {
+    const { PLATE_MIN_WIDTH_PX, PLATE_MIN_HEIGHT_PX } = await import('../src/data/plate.js');
+    // The stacked query is a max-*, `sizes` a min-*, so they meet at n and n-1.
+    const query = css.match(
+      /@media \(max-width: (\d+)px\), \(max-height: (\d+)px\) \{/,
+    );
+    expect(query, 'the stacked breakpoint query moved or changed shape').toBeTruthy();
+    expect(Number(query[1])).toBe(PLATE_MIN_WIDTH_PX - 1);
+    expect(Number(query[2])).toBe(PLATE_MIN_HEIGHT_PX - 1);
+  });
+
+  it('derives its multiplier from the plate ratio the sheet is drawn at', async () => {
+    // A recrop changes .folio__sheet's aspect-ratio. If `sizes` kept a literal
+    // 1.8162 the height branch would quietly describe the old crop.
+    const { PLATE_ASPECT, PLATE } = await import('../src/data/plate.js');
+    const inCss = css.match(/\.folio__sheet\s*\{[^}]*aspect-ratio:\s*(\d+)\s*\/\s*(\d+)/);
+    expect(inCss, 'the sheet lost its aspect-ratio').toBeTruthy();
+    expect([Number(inCss[1]), Number(inCss[2])]).toEqual(PLATE_ASPECT);
+
+    const ratio = PLATE_ASPECT[0] / PLATE_ASPECT[1];
+    const claimed = Number(
+      PLATE.sources[0].sizes.match(/100vh - \d+rem\) \* (\d+\.\d+)/)[1],
+    );
+    expect(claimed).toBeCloseTo(ratio, 3);
+    // And the src fallback is a crop of the same plate, within rounding.
+    expect(PLATE.width / PLATE.height).toBeCloseTo(ratio, 2);
+  });
+
+  it('is parseable by the narrowest source-size parser', async () => {
+    // One bad source-size invalidates the whole attribute and the browser
+    // falls back to 100vw. A media condition may not contain a comma, `or` is
+    // Safari 16.4+, and a top-level min() is not a <source-size-value>.
+    const { PLATE } = await import('../src/data/plate.js');
+    for (const { sizes } of PLATE.sources) {
+      const branches = sizes.split(/,\s*/);
+      expect(branches.length).toBeGreaterThan(1);
+      for (const branch of branches) {
+        expect(branch, `\`or\` is not universally parseable: ${branch}`).not.toMatch(/\bor\b/);
+        expect(branch, `min() is not a source-size value: ${branch}`).not.toMatch(/^\s*min\(/);
+      }
+      // The last branch is the default, so it carries no media condition.
+      expect(branches.at(-1)).not.toMatch(/[()]\s*calc/);
+      expect(branches.at(-1).trim()).toMatch(/^calc\(/);
+    }
   });
 });
 

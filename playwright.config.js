@@ -26,7 +26,10 @@ export default defineConfig({
   webServer: {
     // A different port from vite.config.js's strictPort 5173, so a running
     // dev server can never be mistaken for the artifact under test.
-    command: `npx vite preview --port ${PORT} --strictPort`,
+    // Build first. `vite preview` serves whatever dist/ already holds, so
+    // without this an edit to src/ produces a green run against the previous
+    // artifact -- which is the one failure mode a harness must not have.
+    command: `npm run build && npx vite preview --port ${PORT} --strictPort`,
     url: baseURL,
     reuseExistingServer: false,
     timeout: 60_000,

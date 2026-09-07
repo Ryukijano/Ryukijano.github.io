@@ -18,6 +18,7 @@ const VIEWPORTS = [
   { w: 900, h: 800, note: 'just above it' },
   { w: 900, h: 400, note: 'wide and short -- the plate-collapse case' },
   { w: 1194, h: 834, note: 'iPad Pro landscape, a touch device above 899px' },
+  { w: 1000, h: 700, note: 'inside the band that now stacks by height' },
   { w: 1280, h: 420, note: 'a docked-devtools window' },
   { w: 1440, h: 900, note: 'laptop' },
 ];
@@ -62,7 +63,17 @@ test.describe('the home page fits one screen', () => {
   // title slip eats into it -- adding one line of copy put the page 91px past
   // the fold at every common desktop size. This is the assertion that makes
   // that loud.
-  for (const [w, h] of [[1440, 900], [1366, 768], [1280, 800], [1600, 1000], [1920, 1080]]) {
+  //
+  // 1440x720 is the boundary and belongs in this list permanently: the budget
+  // is exact there and has zero slack, so it is the first viewport that fails
+  // when the slip grows. The 950-1150 widths are here because the first
+  // version of this list was five viewports that all happened to wrap the bio
+  // identically, which made a constant tuned at one wrap point look verified
+  // at five.
+  for (const [w, h] of [
+    [1440, 720], [950, 760], [1024, 768], [1100, 740], [1150, 800],
+    [1440, 900], [1366, 768], [1280, 800], [1600, 1000], [1920, 1080],
+  ]) {
     test(`at ${w}x${h}`, async ({ page }) => {
       await page.setViewportSize({ width: w, height: h });
       await page.goto('/');
@@ -71,6 +82,32 @@ test.describe('the home page fits one screen', () => {
         () => document.documentElement.scrollHeight - window.innerHeight,
       );
       expect(over, `the home page scrolls by ${over}px`).toBeLessThanOrEqual(2);
+    });
+  }
+});
+
+test.describe('the stacked breakpoint fences off the band it has to', () => {
+  /*
+   * Below 720px tall the height budget stops holding: the plate narrows, the
+   * bio rewraps, the slip grows, the plate narrows again. The stacked layout
+   * is the fence. If its height half is ever dropped back to a width-only
+   * query, the hung print returns at these sizes and the page silently scrolls
+   * by 40-100px at EVERY width -- which is how it shipped before.
+   */
+  for (const [w, h] of [[1440, 700], [1280, 660], [960, 640], [1920, 719]]) {
+    test(`at ${w}x${h} the print is stacked, not hung`, async ({ page }) => {
+      await page.setViewportSize({ width: w, height: h });
+      await page.goto('/');
+      await page.evaluate(() => document.fonts.ready);
+
+      await expect(page.locator('.folio__thirds')).toBeHidden();
+      await expect(page.locator('.folio__lanes-list')).toBeVisible();
+
+      // Stacked means full bleed less the gutters, which is what the trailing
+      // `sizes` branch claims. A plate still sized from the height budget
+      // would be a fraction of this.
+      const sheet = await page.locator('.folio__sheet').boundingBox();
+      expect(sheet.width, 'the plate is still height-derived').toBeGreaterThan(w - 80);
     });
   }
 });
