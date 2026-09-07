@@ -219,3 +219,33 @@ describe('the prerender manifest', () => {
     }
   });
 });
+
+describe('case-study figures', () => {
+  it('every figure declares dimensions, alt text and its own limit', () => {
+    // A figure without dimensions shifts the page; one without a limit
+    // oversells the work, which is the opposite of this site's whole stance.
+    for (const p of allProjects().filter((x) => x.figure)) {
+      const f = p.figure;
+      expect(f.kind, p.title).toMatch(/^(image|video)$/);
+      expect(typeof f.width, p.title).toBe('number');
+      expect(typeof f.height, p.title).toBe('number');
+      expect(f.alt, p.title).toBeTruthy();
+      expect(f.caption, p.title).toBeTruthy();
+      expect(f.limit, p.title).toBeTruthy();
+      if (f.kind === 'video') expect(f.poster, p.title).toBeTruthy();
+    }
+  });
+
+  it('no figure asset is heavy enough to undo the site\'s restraint', () => {
+    // doom_ppo.gif was 7.8 MB. A multi-megabyte figure on a case study would
+    // cost more than the figure adds.
+    const CAP = 700_000;
+    for (const p of allProjects().filter((x) => x.figure)) {
+      for (const path of [p.figure.src, p.figure.poster].filter(Boolean)) {
+        const file = join(DIST, path.slice(1));
+        expect(existsSync(file), `${p.title}: ${path}`).toBe(true);
+        expect(statSync(file).size, `${p.title}: ${path}`).toBeLessThan(CAP);
+      }
+    }
+  });
+});

@@ -150,6 +150,18 @@ export const DATA = {
         desc: "Hugging Face Deep RL course agents: PPO, DQN, Doom, PyBullet.",
         fullDesc: "Implementations from the Hugging Face Deep RL course: PPO, DQN, and related algorithms, pushed to the Hub. Doom and PyBullet among the environments. Limit: course units, not an original RL paper.",
         link: "https://github.com/Ryukijano/Deep-Reinforcement-Learning-and-Hugging-Face",
+        figure: {
+          kind: 'video',
+          src: '/assets/media/doom-ppo.mp4',
+          poster: '/assets/media/doom-ppo-poster.avif',
+          width: 320,
+          height: 240,
+          alt: 'A PPO agent playing Doom: the view swings across a canyon while the HUD tracks health and ammunition.',
+          caption: 'The PPO agent in ViZDoom, eight seconds of one rollout.',
+          // The same honesty the .limit aside carries. A figure that oversells
+          // is worse than no figure.
+          limit: 'A course-unit agent in a scripted scenario, not a benchmark result.',
+        },
         tags: ["Deep RL", "PPO", "DQN", "Hugging Face"]
       },
     ]

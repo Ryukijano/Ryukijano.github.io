@@ -1062,6 +1062,95 @@
   padding-top: 0.15rem;
 }
 
+/* --------------------------------------------------------- case-study plate */
+
+/*
+ * A figure treated as a hung print, the same way the home page's plate is: an
+ * untrimmed block whose padding is the paper margin, one kento mark in that
+ * margin, and a caption slip beneath. Sits after the first paragraph, never
+ * above the title -- the title is still the page.
+ */
+.plate {
+  position: relative;
+  box-sizing: border-box;
+  margin: var(--space-5) 0 0;
+  padding: var(--space-3) var(--space-3) 0;
+  background: var(--color-washi-lift);
+  border: var(--hairline);
+}
+
+.plate__sheet {
+  position: relative;
+  width: 100%;
+  background: var(--color-washi-deep);
+  box-shadow: 0 0 0 1px var(--color-rule);
+  overflow: hidden;
+}
+
+.plate__sheet img,
+.plate__sheet video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Pixel art and low-resolution captures: keep them crisp rather than
+     letting the browser smear them at 2x. */
+  image-rendering: crisp-edges;
+}
+
+.plate__slip {
+  display: grid;
+  grid-template-columns: 3.6rem minmax(0, 1fr);
+  gap: 0 var(--space-3);
+  padding: var(--space-3) 0;
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--color-ink-muted);
+}
+
+.plate__slug {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.15rem;
+}
+
+/* The figure's own caveat, in the same voice as .limit but quieter -- it
+   qualifies one image, not the whole project. */
+.plate__limit {
+  color: var(--color-ink-muted);
+  opacity: 0.85;
+}
+
+.plate__kento {
+  position: absolute;
+  right: calc(var(--space-3) - 12px);
+  bottom: calc(var(--space-3) - 4px);
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  box-sizing: content-box;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* A looping video is motion whether or not it has controls. */
+  .plate__sheet video {
+    display: none;
+  }
+
+  .plate__sheet {
+    background-image: var(--plate-poster, none);
+    background-size: cover;
+    background-position: center;
+  }
+}
+
 /* --------------------------------------------------------- work catalog */
 
 .catalog__year {

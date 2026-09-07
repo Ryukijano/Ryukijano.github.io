@@ -100,6 +100,23 @@ Six tokens on a 1.6 ratio (`--space-1` 0.25rem … `--space-6` 3.2rem), which
 rhymes with the type scale. Before them there were twenty ad-hoc values and
 three different section separations on the same page.
 
+## Figures
+
+A case-study figure is hung the way the home page's plate is: an untrimmed
+block whose padding is the paper margin, a hairline around the sheet, a mono
+`Fig. 1` slug, a caption in the plate's register, and one kento mark in the
+margin. It sits **after** the prose, not above the title — the design
+deliberately cut hero imagery, and a figure below the text reads as evidence
+for what was just claimed rather than as decoration above it.
+
+Every figure states its own limit, in the same voice as `.limit` but quieter,
+because it qualifies one image rather than the whole project. This is enforced
+by `tests/link-health.test.js`, along with dimensions (so nothing shifts), alt
+text, and a 700 kB cap per asset.
+
+`media/README.md` has the shape of the `figure:` field, the ffmpeg invocation,
+and — usefully — a list of which images in `media/` are *not* real evidence.
+
 ## No dark mode
 
 `html { color-scheme: light }`, deliberately and permanently.

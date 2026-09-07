@@ -58,6 +58,62 @@ function paragraphs(text) {
   return [sentences.slice(0, cut).join(' '), sentences.slice(cut).join(' ')];
 }
 
+/**
+ * One figure, hung the way the plate is: an untrimmed block whose padding is
+ * the paper margin, a hairline around the sheet, a mono `Fig. 1` slug and a
+ * caption in the same register as the plate's. It states its own limit,
+ * because a figure that oversells the work is worse than no figure.
+ */
+function Figure({ figure }) {
+  const { kind, src, poster, sources = [], width, height, alt, caption, limit } = figure;
+
+  return (
+    <figure className="plate">
+      <div
+        className="plate__sheet"
+        style={{
+          aspectRatio: `${width} / ${height}`,
+          // Read by the prefers-reduced-motion rule, which hides the video and
+          // shows this instead -- a looping clip is motion either way.
+          ...(poster ? { '--plate-poster': `url(${poster})` } : {}),
+        }}
+      >
+        {kind === 'video' ? (
+          // Muted, looping and inline: it reads as a moving still, not a
+          // player. No controls, and it never autoplays with sound.
+          <video
+            src={src}
+            poster={poster}
+            width={width}
+            height={height}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            aria-label={alt}
+          />
+        ) : (
+          <picture>
+            {sources.map((source) => (
+              <source key={source.srcSet} type={source.type} srcSet={source.srcSet} sizes={source.sizes} />
+            ))}
+            <img src={src} alt={alt} width={width} height={height} decoding="async" loading="lazy" />
+          </picture>
+        )}
+      </div>
+      <figcaption className="plate__slip">
+        <span className="plate__slug">Fig. 1</span>
+        <span>
+          {caption}
+          {limit ? <em className="plate__limit"> {limit}</em> : null}
+        </span>
+      </figcaption>
+      <span className="plate__kento" aria-hidden="true" />
+    </figure>
+  );
+}
+
 export default function CaseStudyPage({ project }) {
 
   if (!project) return <WorkInkNotFound />;
@@ -98,6 +154,8 @@ export default function CaseStudyPage({ project }) {
             ))}
           </div>
         ) : null}
+
+        {project.figure ? <Figure figure={project.figure} /> : null}
 
         {aside ? (
           <aside className="limit">
