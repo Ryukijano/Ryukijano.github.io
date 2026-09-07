@@ -93,7 +93,7 @@ export default function AcademicPage() {
       <Atmosphere variant="quiet" />
       <SiteNav />
 
-      <main id="main" className="print__body print__body--narrow">
+      <main id="main" tabIndex={-1} className="route print__body print__body--narrow">
         <h1 className="print__name">{ACADEMIC_BIO.name}</h1>
         <p className="print__role">{ACADEMIC_BIO.role}</p>
         {degree ? (
@@ -129,7 +129,7 @@ export default function AcademicPage() {
 
         <section className="print__section">
           <h2>Education</h2>
-          <ul className="print__stack">
+          <ul role="list" className="print__stack">
             {EDUCATION.map((entry) => (
               <li key={entry.title}>
                 <div>{entry.title}</div>
@@ -143,7 +143,7 @@ export default function AcademicPage() {
 
         <section className="print__section">
           <h2>Selected publications</h2>
-          <ul className="print__pubs">
+          <ul role="list" className="print__pubs">
             {PUBLICATIONS.map((pub) => (
               <PublicationEntry key={pub.title} pub={pub} />
             ))}
@@ -152,7 +152,7 @@ export default function AcademicPage() {
 
         <section className="print__section">
           <h2>Timeline</h2>
-          <ul className="print__timeline">
+          <ul role="list" className="print__timeline">
             {RESEARCH_TIMELINE.map((entry) => (
               <li key={`${entry.year}-${entry.title}`}>
                 <span>{entry.year}</span>

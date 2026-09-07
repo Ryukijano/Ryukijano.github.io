@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Atmosphere from '../components/Atmosphere';
 import KanagawaPlate from '../components/KanagawaPlate';
 import SiteNav from '../components/SiteNav';
 import { LANES } from '../data/portfolio';
@@ -59,9 +58,8 @@ export default function HomePage() {
   return (
     <div className="folio">
       <SiteNav overlay hideWordmark />
-      <Atmosphere variant="film" />
 
-      <main id="main" className="folio__stage">
+      <main id="main" tabIndex={-1} className="route folio__stage">
         <figure className="folio__print">
           <KanagawaPlate
             src={PLATE.src}
@@ -100,7 +98,7 @@ export default function HomePage() {
               </span>
             </div>
             {degree ? <p className="folio__degree">{degree.title}</p> : null}
-            <nav className="folio__handles" aria-label="Ryukijano, Yana, Ryoushi">
+            <nav className="folio__handles" aria-label="Lanes">
               {ROOMS.map((room, index) => (
                 <span key={room.id}>
                   {index > 0 ? (
@@ -121,9 +119,15 @@ export default function HomePage() {
                 </span>
               ))}
             </nav>
+            <p className="folio__gloss">
+              Three names, one person: systems, vision, quantum.
+            </p>
             <p className="folio__bio">{ACADEMIC_BIO.statement}</p>
             <p className="folio__caption">
               <Marked text={PLATE.caption} highlight={PLATE.highlight} />
+            </p>
+            <p className="folio__gloss folio__gloss--foot">
+              Every project on this site states its own limit.
             </p>
           </figcaption>
         </figure>

@@ -1,35 +1,18 @@
 import { useEffect } from 'react';
 import Atmosphere from '../components/Atmosphere';
 import SiteNav from '../components/SiteNav';
-import { relatedProjects } from '../data/portfolio';
+import { projectLane, projectYear, relatedProjects } from '../data/portfolio';
 import Link from '../lib/Link';
 import { WorkInkNotFound } from './WorkPage';
-
-function projectYear(project) {
-  if (typeof project?.year === 'number' && Number.isFinite(project.year)) {
-    return project.year;
-  }
-
-  const blob = [project?.title, project?.desc, project?.fullDesc, project?.note]
-    .filter(Boolean)
-    .join(' ');
-  const matches = blob.match(/\b(?:19|20)\d{2}\b/g);
-  if (!matches) return null;
-  return Math.max(...matches.map(Number));
-}
-
-function projectLane(project) {
-  if (typeof project?.lane === 'string' && project.lane.trim()) return project.lane;
-  if (typeof project?.laneLabel === 'string' && project.laneLabel.trim()) return project.laneLabel;
-  return '';
-}
 
 function labelFromHref(href) {
   try {
     const host = new URL(href).hostname.replace(/^www\./, '');
-    if (host.includes('github')) return 'Code';
-    if (host.includes('arxiv')) return 'Paper';
-    if (host.includes('huggingface')) return 'Hugging Face';
+    // Exact host, not `includes('github')` -- that labelled the Quantum
+    // Buddies site (quantum-buddies.github.io) as a code repository.
+    if (host === 'github.com' || host === 'gist.github.com') return 'Code';
+    if (host === 'arxiv.org') return 'Paper';
+    if (host === 'huggingface.co') return 'Hugging Face';
     return host;
   } catch {
     return 'Link';
@@ -70,7 +53,7 @@ function splitLimit(text) {
 }
 
 function paragraphs(text) {
-  const sentences = text.split(/(?<=[.!?”"])\s+(?=[A-Z“"(])/).filter(Boolean);
+  const sentences = text.split(/(?<=[a-z0-9)\]”"][.!?])\s+(?=[A-Z“"(])/).filter(Boolean);
   if (sentences.length <= 4) return [text];
   const cut = Math.ceil(sentences.length / 2);
   return [sentences.slice(0, cut).join(' '), sentences.slice(cut).join(' ')];
@@ -98,7 +81,7 @@ export default function CaseStudyPage({ project }) {
       <Atmosphere variant="quiet" />
       <SiteNav />
 
-      <article id="main" className="print__body print__body--narrow">
+      <article id="main" tabIndex={-1} className="route print__body print__body--narrow">
         <p className="print__crumb">
           <Link href="/work">Work</Link>
         </p>
@@ -116,8 +99,8 @@ export default function CaseStudyPage({ project }) {
 
         {body ? (
           <div className="print__body-copy">
-            {paragraphs(body).map((para) => (
-              <p key={para.slice(0, 40)}>{para}</p>
+            {paragraphs(body).map((para, index) => (
+              <p key={index}>{para}</p>
             ))}
           </div>
         ) : null}
@@ -158,7 +141,7 @@ export default function CaseStudyPage({ project }) {
         {related.length > 0 ? (
           <section className="print__section">
             <h2 className="print__also">Also</h2>
-            <ul className="work-also">
+            <ul role="list" className="work-also">
               {related.map((item) => {
                 const itemYear = projectYear(item);
                 return (

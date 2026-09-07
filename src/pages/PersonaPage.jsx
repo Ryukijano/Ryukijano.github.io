@@ -35,7 +35,7 @@ export default function PersonaPage({ data }) {
       <Atmosphere variant="quiet" />
       <SiteNav />
 
-      <main id="main" className="print__body print__body--narrow">
+      <main id="main" tabIndex={-1} className="route print__body print__body--narrow">
         <p className="print__kicker">{kicker}</p>
         <h1 className="print__name" style={{ marginTop: '0.75rem' }}>
           {data.title}
@@ -67,7 +67,7 @@ export default function PersonaPage({ data }) {
 
         <section className="print__section">
           <h2>Projects</h2>
-          <ul className="print__timeline">
+          <ul role="list" className="print__timeline">
             {projects.map((project) => (
               <li key={project.title}>
                 <span>{project.year ?? '—'}</span>

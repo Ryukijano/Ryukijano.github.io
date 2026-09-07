@@ -81,7 +81,7 @@ export const DATA = {
       { 
         title: "AIMS: Surgical Phase Detection", 
         desc: "AIMS intern, Mar–Nov 2025. DINOv2 on ESD workflow. ISBI 2026 paper.", 
-        fullDesc: "Computer Vision Research Intern, AIMS (AI in Medicine and Surgery), University of Leeds, Mar–Nov 2025. ESD phase recognition with DINOv2 (DINO-Endo). ISBI 2026 paper: “Self-Supervised Vision Transformer for Surgical Phase Recognition in Endoscopic Submucosal Dissection”, DOI 10.1109/isbi61048.2026.11515812. That paper reports 89.5% accuracy on the patient set and 90.0% on porcine. Limit: those numbers are from that paper’s test splits, not a Trust-wide clinical evaluation.",
+        fullDesc: "Computer Vision Research Intern, AIMS (AI in Medicine and Surgery), University of Leeds, Mar–Nov 2025. ESD phase recognition with DINOv2 (DINO-Endo). ISBI 2026 paper: “Self-Supervised Vision Transformer for Surgical Phase Recognition in Endoscopic Submucosal Dissection”, DOI 10.1109/isbi61048.2026.11515812. That paper reports 89.5% accuracy on the patient set and 90.0% on porcine.",
         link: "https://github.com/Ryukijano/DINOEndo", 
         icon: Microscope,
         year: 2025,
@@ -119,7 +119,7 @@ export const DATA = {
       { 
         title: "JAX Diffusers Sprint", 
         desc: "8th globally, Hugging Face JAX Diffusers sprint 2023. ControlNet anime-realism on TPU v4.", 
-        fullDesc: "Hugging Face JAX Diffusers community sprint, 2023. I finished 8th globally with a ControlNet for anime-realism, trained on TPU v4. No FID score, no paper. Limit: a sprint checkpoint, not a methods contribution.",
+        fullDesc: "Hugging Face JAX Diffusers community sprint, 2023. I finished 8th globally with a ControlNet for anime-realism, trained on TPU v4. No FID score, no paper.",
         link: "https://github.com/Ryukijano/CatCon-Controlnet-WD-1-5-b2", 
         icon: Database,
         year: 2023,
@@ -132,7 +132,7 @@ export const DATA = {
       {
         title: "Pothole Detection (arXiv)",
         desc: "Co-author. YOLOv7 + ESRGAN preprint: 94.7% precision, 82.6% recall on the PNW table.",
-        fullDesc: "I am a co-author, not the sole author. Official title: “Improved Pothole Detection Using YOLOv7 and ESRGAN”, arXiv:2401.08588, submitted Nov 2023. Authors: N. K. Rout, G. Dutta, V. Sinha, A. Dey, S. Mukherjee, G. Gupta. Table 3 on the preprint: YOLOv7 tiny multi + ESRGAN, precision 0.947, recall 0.826 on PNW frames. Dashcam images, no LIDAR. Limit: a labelled-image study, not a deployed fleet evaluation.",
+        fullDesc: "I am a co-author, not the sole author. Official title: “Improved Pothole Detection Using YOLOv7 and ESRGAN”, arXiv:2401.08588, submitted Nov 2023. Authors: N. K. Rout, G. Dutta, V. Sinha, A. Dey, S. Mukherjee, G. Gupta. Table 3 on the preprint: YOLOv7 tiny multi + ESRGAN, precision 0.947, recall 0.826 on PNW frames. Dashcam images, no LIDAR.",
         link: "https://arxiv.org/abs/2401.08588",
         icon: Globe,
         year: 2024,
@@ -195,7 +195,7 @@ export const DATA = {
       { 
         title: "Bradford Quantum Hackathon 2025", 
         desc: "Nov 2025, team Ryoushi / Quantum Buddies. lambeq + Quixer, promoter vs non-promoter on GRCh38.", 
-        fullDesc: "Bradford Quantum Hackathon, Nov 2025. Team Ryoushi / Quantum Buddies (Sid Iliyasu, Dat Chi Le, me). LinkedIn project: lambeq + Quixer, binary promoter vs non-promoter on GRCh38. Teammate posts claim Grand Prix and the healthcare / BYO track; I am repeating that as teammate-reported, not as an independent results table. Limit: hackathon-scale, not a clinical genome panel.",
+        fullDesc: "Bradford Quantum Hackathon, Nov 2025. Team Ryoushi / Quantum Buddies (Sid Iliyasu, Dat Chi Le, me). LinkedIn project: lambeq + Quixer, binary promoter vs non-promoter on GRCh38. Teammate posts claim Grand Prix and the healthcare / BYO track; I am repeating that as teammate-reported, not as an independent results table.",
         link: "https://quantumbradford2025.com/", 
         icon: Trophy,
         year: 2025,
@@ -208,7 +208,7 @@ export const DATA = {
       { 
         title: "YQuantum 2025 (Yale)", 
         desc: "Apr 2025, Yale. Quantum Rings virtual-track win with Alisa Petrusinskaia (Quantum Bits).", 
-        fullDesc: "YQuantum 2025 at Yale, April. Team Quantum Bits with Alisa Petrusinskaia. We won the Quantum Rings virtual track with a generalized Shor implementation on Quantum Rings — not the Yale Grand Prize. Modular exponentiation, QPE, inverse QFT on their simulator. Limit: a sponsored virtual track, not the overall event prize.",
+        fullDesc: "YQuantum 2025 at Yale, April. Team Quantum Bits with Alisa Petrusinskaia. We won the Quantum Rings virtual track with a generalized Shor implementation on Quantum Rings — not the Yale Grand Prize. Modular exponentiation, QPE, inverse QFT on their simulator.",
         link: "https://github.com/Ryukijano/Quantum-bits-YQuantum-2025", 
         icon: Trophy,
         year: 2025,
@@ -221,7 +221,7 @@ export const DATA = {
       { 
         title: "NQCC UK Quantum Hackathon", 
         desc: "Participant, Jul 2025 Edinburgh. Rolls-Royce hydrogen-on-nickel. Team Superposition Impossible.", 
-        fullDesc: "NQCC UK Quantum Hackathon, Edinburgh, Jul 2025. Team Superposition Impossible. Rolls-Royce challenge: VQE + SQD for hydrogen on nickel. Circuit-depth notes for NISQ, some DFT comparison talk. I was a participant. Limit: not a placed winner.",
+        fullDesc: "NQCC UK Quantum Hackathon, Edinburgh, Jul 2025. Team Superposition Impossible. Rolls-Royce challenge: VQE + SQD for hydrogen on nickel. Circuit-depth notes for NISQ, some DFT comparison talk. I was a participant.",
         link: "https://github.com/Ryukijano/Team_15_NQCC_UK_Quantum_Hackathon_2025_new", 
         icon: Zap,
         year: 2025,
@@ -308,9 +308,63 @@ export function findProject(slug) {
   return allProjects().find((project) => project.slug === slug) ?? null;
 }
 
+/**
+ * Project metadata, in one place. These used to be copy-pasted verbatim into
+ * both WorkPage and CaseStudyPage, so the year in a catalogue heading and the
+ * year in a case-study cartouche came from independent code.
+ */
+
+/** An explicit year or nothing. There is deliberately no prose fallback: the
+ *  old regex scraped `\b(?:19|20)\d{2}\b` out of description text, fired for
+ *  none of the 21 projects, and would have filed a project under a year
+ *  mentioned in a sentence ("a mill that burned in 2022"). */
+export function projectYear(project) {
+  return typeof project?.year === 'number' && Number.isFinite(project.year)
+    ? project.year
+    : null;
+}
+
+export function projectLane(project) {
+  if (typeof project?.lane === 'string' && project.lane.trim()) return project.lane;
+  if (typeof project?.laneLabel === 'string' && project.laneLabel.trim()) return project.laneLabel;
+  return '';
+}
+
+export function isFeatured(project) {
+  return project?.featured === true;
+}
+
+export function featuredOrder(project) {
+  return typeof project?.featuredOrder === 'number' && Number.isFinite(project.featuredOrder)
+    ? project.featuredOrder
+    : Number.POSITIVE_INFINITY;
+}
+
+/** Featured first, then by explicit rank, then alphabetically.
+ *  The Number.isFinite guard matters: two unfeatured projects both default to
+ *  +Infinity, and `Infinity - Infinity` is NaN, which passed the old
+ *  `order !== 0` check and made the localeCompare tie-break unreachable. */
+export function withinYear(a, b) {
+  const rank = Number(isFeatured(b)) - Number(isFeatured(a));
+  if (rank !== 0) return rank;
+  const order = featuredOrder(a) - featuredOrder(b);
+  if (Number.isFinite(order) && order !== 0) return order;
+  return String(a.title).localeCompare(String(b.title));
+}
+
+/** Dated projects newest first, undated ones last. */
+export function byYearDescWhenPresent(a, b) {
+  const yearA = projectYear(a);
+  const yearB = projectYear(b);
+  if (yearA == null && yearB == null) return 0;
+  if (yearA == null) return 1;
+  if (yearB == null) return -1;
+  return yearB - yearA;
+}
+
 export function relatedProjects(project, limit = 5) {
   return allProjects()
     .filter((item) => item.slug !== project.slug && item.laneId === project.laneId)
-    .sort((a, b) => (b.year ?? 0) - (a.year ?? 0) || (a.featuredOrder ?? 99) - (b.featuredOrder ?? 99))
+    .sort((a, b) => byYearDescWhenPresent(a, b) || withinYear(a, b))
     .slice(0, limit);
 }

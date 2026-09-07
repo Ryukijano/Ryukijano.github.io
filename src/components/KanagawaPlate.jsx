@@ -13,6 +13,7 @@ export default function KanagawaPlate({ src, sources = [], alt, width, height, c
           ))}
           <img src={src} alt={alt} width={width} height={height} fetchPriority="high" decoding="async" />
         </picture>
+        <span className="folio__sheet-grain" aria-hidden="true" />
       </div>
       {children}
       <span className="folio__kento folio__kento--hikitsuke" aria-hidden="true" />

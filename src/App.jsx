@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { DATA, findProject } from './data/portfolio';
 import { resolveRoute } from './lib/navigation';
 import { usePath } from './lib/usePath';
@@ -15,7 +16,7 @@ function NotFoundPage() {
     <div className="print">
       <Atmosphere variant="quiet" />
       <SiteNav />
-      <main id="main" className="print__body print__body--narrow">
+      <main id="main" tabIndex={-1} className="route print__body print__body--narrow">
         <p className="print__kicker">404</p>
         <h1 className="print__title" style={{ marginTop: '0.75rem' }}>
           This path isn&apos;t on the site.
@@ -53,9 +54,22 @@ export default function Portfolio() {
   const path = usePath();
   const route = resolveRoute(path);
 
-  return (
-    <div key={path} className="route">
-      <Page route={route} />
-    </div>
-  );
+  useEffect(() => {
+    // Browsers restore the previous offset on a history entry; we place the
+    // reader ourselves so a client-side hop doesn't land mid-document.
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }, []);
+
+  useEffect(() => {
+    // One effect, three fixes: the tree remounts per path, so without this the
+    // scroll position carries over from the previous page, focus falls to
+    // <body>, and the "Skip to content" link scrolls without moving focus.
+    // #main carries tabIndex={-1} on every page so it can receive focus.
+    window.scrollTo(0, 0);
+    document.getElementById('main')?.focus({ preventScroll: true });
+  }, [path]);
+
+  return <Page key={path} route={route} />;
 }

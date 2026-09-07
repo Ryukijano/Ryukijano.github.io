@@ -1,52 +1,15 @@
 import { useEffect } from 'react';
 import Atmosphere from '../components/Atmosphere';
 import SiteNav from '../components/SiteNav';
-import { allProjects } from '../data/portfolio';
+import { allProjects, isFeatured, projectLane, projectYear, withinYear } from '../data/portfolio';
 import Link from '../lib/Link';
-
-function projectYear(project) {
-  if (typeof project?.year === 'number' && Number.isFinite(project.year)) {
-    return project.year;
-  }
-
-  const blob = [project?.title, project?.desc, project?.fullDesc, project?.note]
-    .filter(Boolean)
-    .join(' ');
-  const matches = blob.match(/\b(?:19|20)\d{2}\b/g);
-  if (!matches) return null;
-  return Math.max(...matches.map(Number));
-}
-
-function projectLane(project) {
-  if (typeof project?.lane === 'string' && project.lane.trim()) return project.lane;
-  if (typeof project?.laneLabel === 'string' && project.laneLabel.trim()) return project.laneLabel;
-  return '';
-}
-
-function isFeatured(project) {
-  return project?.featured === true;
-}
-
-function featuredOrder(project) {
-  return typeof project?.featuredOrder === 'number' && Number.isFinite(project.featuredOrder)
-    ? project.featuredOrder
-    : Number.POSITIVE_INFINITY;
-}
-
-function withinYear(a, b) {
-  const rank = Number(isFeatured(b)) - Number(isFeatured(a));
-  if (rank !== 0) return rank;
-  const order = featuredOrder(a) - featuredOrder(b);
-  if (order !== 0) return order;
-  return String(a.title).localeCompare(String(b.title));
-}
 
 export function WorkInkNotFound() {
   return (
     <div className="print">
       <Atmosphere variant="quiet" />
       <SiteNav />
-      <main id="main" className="print__body print__body--narrow">
+      <main id="main" tabIndex={-1} className="route print__body print__body--narrow">
         <p className="print__kicker">404</p>
         <h1 className="print__title" style={{ marginTop: '0.75rem' }}>
           This note is not here.
@@ -82,7 +45,7 @@ export default function WorkPage() {
       <Atmosphere variant="quiet" />
       <SiteNav />
 
-      <main id="main" className="print__body print__body--wide">
+      <main id="main" tabIndex={-1} className="route print__body print__body--wide">
         <header>
           {span ? <p className="print__kicker">{span}</p> : null}
           <h1 className="print__title" style={{ marginTop: span ? '0.75rem' : 0 }}>
@@ -98,7 +61,7 @@ export default function WorkPage() {
           return (
             <section key={year} aria-label={`Work from ${year}`}>
               <h2 className="catalog__year">{year}</h2>
-              <ul className="catalog__rows">
+              <ul role="list" className="catalog__rows">
                 {rows.map((project) => (
                   <li key={project.slug} className={`catalog__row${isFeatured(project) ? ' is-featured' : ''}`}>
                     <Link href={`/work/${project.slug}`} className="catalog__title">
@@ -116,7 +79,7 @@ export default function WorkPage() {
         {undated.length > 0 ? (
           <section className="print__section">
             <h2 className="print__also">Also</h2>
-            <ul className="work-also">
+            <ul role="list" className="work-also">
               {undated.map((project) => (
                 <li key={project.slug}>
                   <span />

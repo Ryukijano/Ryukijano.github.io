@@ -1,25 +1,19 @@
 const cx = (...parts) => parts.filter(Boolean).join(' ');
 
 /**
- * Paper-world film: a faint wash and procedural grain.
+ * Paper-world film: a faint wash and procedural grain, under the ink.
  * Decorative only — never intercepts clicks.
  *
- * full  — wash + rings + grain
  * quiet — wash + grain, for paper/ink reading pages
- * film  — grain only, so the Kanagawa plate can read
+ * film  — grain only
+ *
+ * The home page does not use this: its grain lives on the plate itself
+ * (.folio__sheet-grain) so no text is ever composited under noise.
  */
-export default function Atmosphere({ variant = 'full' }) {
+export default function Atmosphere({ variant = 'quiet' }) {
   return (
-    <div
-      className={cx(
-        'atmo',
-        variant === 'quiet' && 'atmo--quiet',
-        variant === 'film' && 'atmo--film',
-      )}
-      aria-hidden="true"
-    >
+    <div className={cx('atmo', variant === 'film' && 'atmo--film')} aria-hidden="true">
       {variant !== 'film' ? <div className="atmo__wash" /> : null}
-      {variant === 'full' ? <div className="atmo__rings" /> : null}
       <div className="atmo__grain" />
     </div>
   );
