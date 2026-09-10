@@ -199,18 +199,49 @@ on purpose. Each sheet carries one `h1` and the two never share a page, so
 there is no hierarchy to draw between them. The two class names say what the
 heading *is*; the size is one decision, made once.
 
+## The plate key
+
+Below 900px wide *or* 720px tall the print is stacked — most phones, and any
+desktop window with a dock or devtools open. The overlay lanes go, because a
+plate that narrow is not something to aim at. What replaces them is a **plate
+key** under the sheet: the same three ticks, stage words and handles as the
+gutter chips, the same hairline arrows, laid out as a legend in normal flow
+(`.folio__key`). Each lane is the tap target, 44px tall, so there is no
+separate list repeating the same three links underneath.
+
+The kento marks stay on the stacked print, in the block's bottom margin under
+the key. They are the difference between a print and a picture, and the
+stacked layout is the one most visitors see.
+
+Stacked, the order is print, key, slip — the figure before its caption, as on
+the hung layout. The slip used to come first, which put "the plate reads left
+to right" above a plate the reader had not scrolled to.
+
+The stacked print is still sized from height first. On a phone it is full
+bleed less the gutters. In a wide, short window — a laptop with a dock, a
+docked devtools pane — full bleed would be a 1376px plate with the name a
+whole screen down, so `--folio-stacked` caps the block at
+`(100dvh − 17rem) × 3923/2160`, floored at 20rem so the sheet is never a
+sliver. The trailing branch of `sizes` claims full bleed and therefore
+over-describes in that band; it cannot express the cap without a nested
+`min()`, and over-fetching is the safe direction.
+
+`tests/browser/layout.spec.js` asserts that exactly one of the overlay and the
+key is live at every viewport, that the key's lanes clear 44px, that the three
+stage words and two arrows are present in the fence band, that the kagi mark
+is visible there, that the sheet's width is what the stacked rule says, and
+that the name sits above the fold under the print. A 320px viewport is in the
+list because that is where `Real world` has to wrap rather than overflow.
+
 ## Open
 
 Decisions not yet made, kept here so they are not mistaken for defects.
 
-**The stacked home page does not carry the idea.** Below 900px wide *or* 720px
-tall the print is stacked: the kento marks and the three ticks with their
-arrows are `display: none`, and the pipeline survives only as the caption and
-the lane list. That is most phones, and also any desktop window with a dock
-or devtools open. The fix is a *plate key* — the three stage words and their
-handles drawn under the sheet, in the same mono register, with the arrows —
-rather than un-hiding the overlay on a plate too narrow to aim at. Not built;
-the list is correct, it is just not the print.
+**Yana.** Ryukijano and Ryoushi exist online; Yana is the middle of Gyanateet
+and has no footprint of its own. The slip says "Three names, one person", and
+`/persona/gyanateet` resolves to the same page as `/persona/yana`, so nothing
+is misrepresented — but a reader who searches the name finds nothing. Whether
+the vision lane should carry `Gyanateet` instead is the owner's call.
 
 **Not open:** `--color-seal-bright`. It is sub-AA against the paper, it is
 used by exactly one `aria-hidden` element, and the tests hold it there. Folding

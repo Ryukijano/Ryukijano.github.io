@@ -673,7 +673,8 @@
   color: var(--color-seal);
 }
 
-.folio__lanes-list {
+/* Hung: the ticks live in the overlay's gutter, so the key is not drawn. */
+.folio__key {
   display: none;
 }
 
@@ -695,67 +696,132 @@
     padding: 0 1rem;
   }
 
-  .folio__block {
-    width: 100%;
-    padding-bottom: var(--folio-gutter);
+  /*
+   * Stacked, the print is still sized from height first: full bleed on a
+   * phone, but in a wide, short window (a laptop with a dock, a docked
+   * devtools pane) full bleed would be a 1376px plate that puts the name a
+   * whole screen down. 17rem is the nav, the key, the block's margins and the
+   * first lines of the slip; 20rem is the floor at which the sheet is still a
+   * print and not a sliver. The slip shares the width, as a daisen slip does.
+   */
+  .folio {
+    --folio-stacked: clamp(
+      20rem,
+      calc((100dvh - 17rem) * 3923 / 2160 + 2 * var(--folio-gutter)),
+      100%
+    );
   }
 
-  .folio__thirds,
-  .folio__kento {
+  /* The bottom margin now holds only the kento marks; the key sits above it
+     in flow, so the block grows with the key rather than clipping it. */
+  .folio__block {
+    width: var(--folio-stacked);
+    padding-bottom: 1.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* The overlay goes; the plate is too narrow to aim at. The marks stay --
+     they are what says this is a print and not a picture. */
+  .folio__thirds {
     display: none;
   }
 
+  .folio__kento--hikitsuke {
+    bottom: 0.6rem;
+  }
+
+  .folio__kento--kagi {
+    bottom: 0.25rem;
+  }
+
+  /* Print, then key, then slip -- the figure before its caption, as on the
+     hung layout. The slip used to come first, which put "the plate reads left
+     to right" above a plate the reader had not reached. */
   .folio__slip {
-    order: -1;
-    width: 100%;
-    margin: 0 0 1rem;
+    width: var(--folio-stacked);
+    margin: 0 0 2.5rem;
     padding: 1.1rem 1.15rem 1.15rem;
   }
 
-  .folio__lanes-list {
+  /*
+   * The plate key. Same tick, stage word and handle as .folio__chip, same
+   * hairline arrows, but laid out under the sheet as a legend: three lanes
+   * with the arrows in their own columns so the sequence reads even when a
+   * stage word has to wrap. Each lane is the tap target -- there is no
+   * separate list to duplicate it.
+   */
+  .folio__key {
     display: grid;
-    width: 100%;
-    padding: 0 1rem 3rem;
-    gap: 0;
-  }
-
-  .folio__lanes-list a {
-    display: grid;
-    grid-template-columns: minmax(8.25rem, auto) minmax(0, 1fr);
-    gap: 1rem;
-    align-items: baseline;
-    padding: 0.85rem 0;
-    border-top: var(--hairline);
-    text-decoration: none;
-  }
-
-  .folio__lanes-list a:last-child {
-    border-bottom: var(--hairline);
-  }
-
-  .folio__lanes-lane {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: start;
+    margin-top: 0.5rem;
     font-family: var(--font-mono);
     font-size: var(--step--2);
     letter-spacing: 0.12em;
     text-transform: uppercase;
+    line-height: 1.2;
   }
 
-  .folio__lanes-seq {
-    display: inline-block;
-    margin-right: 0.4rem;
-    letter-spacing: 0;
+  .folio__key-lane {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.12rem;
+    min-height: 44px;
+    padding: 0.2rem 0.15rem 0.3rem;
+    text-align: center;
+    text-decoration: none;
+    text-wrap: balance;
+  }
+
+  .folio__key-lane::before {
+    content: '';
+    width: 1px;
+    height: 0.32rem;
+    background: currentColor;
+  }
+
+  .folio__key-who {
+    letter-spacing: 0.02em;
     text-transform: none;
     color: var(--color-ink-muted);
-    opacity: 0.7;
   }
 
-  .folio__lanes-who {
-    font-family: var(--font-serif);
-    font-size: var(--step-1);
-  }
-
-  .folio__lanes-list a:hover .folio__lanes-lane {
+  .folio__key-lane:hover,
+  .folio__key-lane:focus-visible {
     color: var(--color-seal);
+  }
+
+  /* Sits on the stage word's centre line: lane padding + tick + gap + half a
+     line of --step--2 at 1.2 line-height. */
+  .folio__key-arrow {
+    position: relative;
+    width: 1.4rem;
+    height: 1px;
+    margin-top: 1.05rem;
+    background: currentColor;
+    color: var(--color-ink-muted);
+    opacity: 0.55;
+  }
+
+  .folio__key-arrow::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: 50%;
+    width: 4px;
+    height: 4px;
+    border-top: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .folio__key-lane:hover + .folio__key-arrow,
+  .folio__key-lane:focus-visible + .folio__key-arrow,
+  .folio__key-arrow:has(+ .folio__key-lane:hover),
+  .folio__key-arrow:has(+ .folio__key-lane:focus-visible) {
+    color: var(--color-seal);
+    opacity: 0.85;
   }
 }
 
@@ -1281,14 +1347,9 @@
 
 @media (max-width: 640px) {
   .site-nav__links a,
-  .print__ghost,
-  .folio__lanes-list a {
+  .print__ghost {
     min-height: 44px;
     display: inline-flex;
     align-items: center;
-  }
-
-  .folio__lanes-list a {
-    display: grid;
   }
 }

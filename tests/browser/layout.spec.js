@@ -2,7 +2,7 @@
  * Layout assertions at the viewports where this design actually breaks.
  *
  * Two checks per viewport, and both are needed. The 899px breakpoint governs
- * whether the plate overlay or the stacked lane list renders, but the *plate*
+ * whether the plate overlay or the plate key under the sheet renders, but the *plate*
  * is sized from viewport height -- so a wide, short window (900x400) used to
  * collapse it to ~36px while leaving three invisible navigation targets live.
  * That failure produces no horizontal overflow at all, so an overflow-only
@@ -11,6 +11,7 @@
 import { expect, test } from '@playwright/test';
 
 const VIEWPORTS = [
+  { w: 320, h: 568, note: 'the narrowest phone still in use; the key wraps rather than overflows' },
   { w: 375, h: 667, note: 'iPhone SE' },
   { w: 390, h: 844, note: 'iPhone 14' },
   { w: 640, h: 800, note: 'the 640px touch-target breakpoint' },
@@ -47,11 +48,24 @@ for (const { w, h, note } of VIEWPORTS) {
       const sheet = await page.locator('.folio__sheet').boundingBox();
       expect(sheet.width, 'the plate collapsed').toBeGreaterThanOrEqual(280);
 
-      // If the overlay lanes are live, they must be big enough to aim at.
-      const lanes = page.locator('.folio__lane');
-      if (await lanes.first().isVisible().catch(() => false)) {
-        const box = await lanes.first().boundingBox();
+      // Exactly one of the two navigations is live: the overlay on the hung
+      // print, the key under a stacked one. Never both, never neither.
+      const overlay = await page.locator('.folio__lane').first().isVisible().catch(() => false);
+      const key = await page.locator('.folio__key-lane').first().isVisible().catch(() => false);
+      expect([overlay, key], 'overlay and key must be mutually exclusive').toContain(true);
+      expect(overlay && key, 'both the overlay and the key are showing').toBe(false);
+
+      // Whichever is live must be big enough to aim at.
+      if (overlay) {
+        const box = await page.locator('.folio__lane').first().boundingBox();
         expect(box.width, 'overlay lanes are live but too small to hit').toBeGreaterThanOrEqual(60);
+      }
+      if (key) {
+        for (const lane of await page.locator('.folio__key-lane').all()) {
+          const box = await lane.boundingBox();
+          expect(box.height, 'a key lane is under the 44px touch target').toBeGreaterThanOrEqual(44);
+          expect(box.width, 'a key lane is too narrow to hit').toBeGreaterThanOrEqual(60);
+        }
       }
     });
   });
@@ -101,13 +115,29 @@ test.describe('the stacked breakpoint fences off the band it has to', () => {
       await page.evaluate(() => document.fonts.ready);
 
       await expect(page.locator('.folio__thirds')).toBeHidden();
-      await expect(page.locator('.folio__lanes-list')).toBeVisible();
+      await expect(page.locator('.folio__key')).toBeVisible();
+      // The idea travels with the print: stacked still reads as a pipeline,
+      // with the kento marks saying it is a print and not a picture.
+      await expect(page.locator('.folio__key-stage')).toHaveText(['Real world', 'Encoding', 'Digital']);
+      await expect(page.locator('.folio__key-arrow')).toHaveCount(2);
+      await expect(page.locator('.folio__kento--kagi')).toBeVisible();
 
-      // Stacked means full bleed less the gutters, which is what the trailing
-      // `sizes` branch claims. A plate still sized from the height budget
-      // would be a fraction of this.
+      // Stacked means the print is sized by the stacked rule, not the hung
+      // one: full bleed less the gutters on a phone, capped by height in a
+      // wide short window so the name is not a screen down, floored at 20rem
+      // so it is never a sliver. This is the number the stylesheet's
+      // --folio-stacked clamp produces; the trailing `sizes` branch claims
+      // full bleed, which over-describes here -- the safe direction.
+      const rem = 16;
+      const block = Math.min(w - 4 * rem, Math.max(20 * rem, (h - 17 * rem) * (3923 / 2160) + 2 * rem));
+      const expected = block - 2 * rem;
       const sheet = await page.locator('.folio__sheet').boundingBox();
-      expect(sheet.width, 'the plate is still height-derived').toBeGreaterThan(w - 80);
+      expect(Math.abs(sheet.width - expected), `sheet is ${sheet.width}px, stacked rule says ${expected}px`).toBeLessThanOrEqual(2);
+
+      // And the whole first screen carries the idea: the name is reachable
+      // without scrolling, under the print and its key.
+      const name = await page.locator('.folio__name').boundingBox();
+      expect(name.y + name.height, 'the name is below the fold in the stacked band').toBeLessThanOrEqual(h);
     });
   }
 });
@@ -157,7 +187,9 @@ test.describe('keyboard', () => {
 
   test('history back and forward keep the URL and the heading in agreement', async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('link', { name: 'Ryukijano', exact: true }).click();
+    // The slip's handle link: the only link named exactly "Ryukijano" in
+    // either layout (the plate lanes and key lanes carry the stage word too).
+    await page.locator('.folio__handles').getByRole('link', { name: 'Ryukijano', exact: true }).click();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Ryukijano');
     await page.goBack();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Gyanateet Dutta');

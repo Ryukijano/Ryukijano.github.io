@@ -58,6 +58,10 @@ const PLATE_SIZES =
   // Hung but tall and narrow: the `100% - 3rem` cap binds instead.
   `${HUNG} calc(100vw - 3rem), ` +
   // Stacked -- either breakpoint. Full bleed less the stage and block gutters.
+  // On a phone this is exact. In the wide-and-short band the stylesheet also
+  // caps the stacked print by height (--folio-stacked), which this branch
+  // cannot express without a nested min(); it over-describes there, and
+  // over-fetching is the safe direction -- a soft plate is the one to avoid.
   'calc(100vw - 4rem)';
 
 export const PLATE = {

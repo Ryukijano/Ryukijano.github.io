@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import KanagawaPlate from '../components/KanagawaPlate';
 import SiteNav from '../components/SiteNav';
 import { PLATE } from '../data/plate';
@@ -69,6 +69,21 @@ export default function HomePage() {
                 </Link>
               ))}
             </div>
+
+            {/* The plate key: the same three ticks, drawn under the sheet in
+                flow when the print is stacked and the overlay is hidden. A
+                plate too narrow to aim at still gets its legend. */}
+            <nav className="folio__key" aria-label="Lanes">
+              {ROOMS.map((room, index) => (
+                <Fragment key={room.id}>
+                  {index > 0 ? <span className="folio__key-arrow" aria-hidden="true" /> : null}
+                  <Link href={room.to} className="folio__key-lane">
+                    <span className="folio__key-stage">{room.lane}</span>
+                    <span className="folio__key-who">{room.handle}</span>
+                  </Link>
+                </Fragment>
+              ))}
+            </nav>
           </KanagawaPlate>
 
           <figcaption className="folio__slip">
@@ -110,22 +125,6 @@ export default function HomePage() {
             </p>
           </figcaption>
         </figure>
-
-        <nav className="folio__lanes-list" aria-label="Lanes">
-          {ROOMS.map((room, index) => (
-            <Link key={room.id} href={room.to}>
-              <span className="folio__lanes-lane">
-                {index > 0 ? (
-                  <span className="folio__lanes-seq" aria-hidden="true">
-                    →
-                  </span>
-                ) : null}
-                {room.lane}
-              </span>
-              <span className="folio__lanes-who">{room.handle}</span>
-            </Link>
-          ))}
-        </nav>
       </main>
     </div>
   );
