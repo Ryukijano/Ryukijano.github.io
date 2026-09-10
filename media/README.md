@@ -1,6 +1,7 @@
 # media/
 
-Source images from the pre-React site, kept out of `public/` on purpose.
+Source images from earlier versions of the site, kept out of `public/` unless
+they appear in a project case study.
 
 Anything in `public/` is copied verbatim into `dist/` and deployed, so an
 unreferenced file there is bytes every visitor's CDN edge carries for nothing —
@@ -19,9 +20,17 @@ single representative frame, then put the result in
 `scripts/check-budget.mjs` fails the build if anything in `dist/` is
 unreferenced, which is what keeps this boundary honest.
 
-## What a figure looks like
+## Deployed demos
 
-`/work/deep-rl-and-hugging-face` is the worked example. `doom_ppo.gif` was
+Nine case studies currently include figures. Eight animations restored from
+the earlier field-note design were converted from GIF to H.264 MP4 with WebP
+posters: Dalton Mills, surgical phase recognition, FET-VAE, Gemma-Le, pothole
+detection, NQCC, YQuantum, and quantum error correction. The Deep RL page uses
+the separately encoded ViZDoom rollout.
+
+## Figure format
+
+`/work/deep-rl-and-hugging-face` is one example. `doom_ppo.gif` was
 7.8 MB; cropped to its actual content, trimmed to eight seconds, denoised and
 encoded as H.264 it is **489 kB** — 6% of the GIF — with a 50 kB AVIF poster so
 the box is filled before the video decodes.

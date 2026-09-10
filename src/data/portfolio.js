@@ -24,6 +24,16 @@ export const DATA = {
         featuredOrder: 5,
         role: 'Collaborator, Science Museum Group / Leeds HELIX XR',
         note: 'Geometric fidelity is limited by that photo set; there is no pre-fire laser scan to check against.',
+        figure: {
+          kind: 'video',
+          src: '/assets/media/dalton-mills.mp4',
+          poster: '/assets/media/dalton-mills-poster.webp',
+          width: 640,
+          height: 360,
+          alt: 'A point-cloud mill facade with ten camera positions and colour-coded photographed and unphotographed surfaces.',
+          caption: 'A reconstruction schematic showing the input viewpoints and the surfaces they cover.',
+          limit: 'Camera positions and coverage are illustrative rather than project capture data.',
+        },
         tags: ["Unreal Engine 5", "NeRF", "Photogrammetry", "VR"]
       },
       { 
@@ -85,6 +95,16 @@ export const DATA = {
           { href: 'https://doi.org/10.1109/isbi61048.2026.11515812', label: 'Paper' },
           { href: 'https://github.com/Ryukijano/DINOEndo', label: 'Code' },
         ],
+        figure: {
+          kind: 'video',
+          src: '/assets/media/esd-comparison.mp4',
+          poster: '/assets/media/esd-comparison-poster.webp',
+          width: 1280,
+          height: 962,
+          alt: 'Endoscopic frames beside DINOv2 patch-norm and centre-similarity maps through an ESD sequence.',
+          caption: 'DINOv2 feature diagnostics across an endoscopic submucosal dissection sequence.',
+          limit: 'Selected frames from one sequence rather than aggregate model evaluation.',
+        },
         tags: ["DINOv2", "V-JEPA", "Medical AI", "Self-Supervised Learning"]
       },
       { 
@@ -92,6 +112,16 @@ export const DATA = {
         desc: "SigLIP + Gemma 3 + ScaleDP VLA in a LeRobot fork. Hub checkpoints.", 
         fullDesc: "I implemented a compact vision-language-action policy in a LeRobot fork, using SigLIP for vision, Gemma 3 with LoRA for language, and ScaleDP for action generation. The checkpoints were trained on the robot_sim.PickNPlace simulation dataset in LeRobot format. Limit: Evaluated on simulated pick-and-place data.",
         link: "https://huggingface.co/Ryukijano/gemma-groot", 
+        figure: {
+          kind: 'video',
+          src: '/assets/media/vla-diffusion.mp4',
+          poster: '/assets/media/vla-diffusion-poster.webp',
+          width: 520,
+          height: 292,
+          alt: 'Gemma-Le architecture with an action trajectory being denoised over 50 diffusion steps.',
+          caption: 'The signal path from multimodal inputs to the ScaleDP action head.',
+          limit: 'Architecture visualisation; the trajectory does not represent a measured policy success rate.',
+        },
         tags: ["Robotics", "VLA", "Gemma 3", "Diffusion Policy"]
       },
       { 
@@ -104,6 +134,16 @@ export const DATA = {
         featuredOrder: 4,
         role: 'MSc student, University of Leeds',
         note: 'Not deposited in White Rose eTheses. I did not measure longer-horizon drift or a downstream workflow effect.',
+        figure: {
+          kind: 'video',
+          src: '/assets/media/fetvae-prediction.mp4',
+          poster: '/assets/media/fetvae-prediction-poster.webp',
+          width: 520,
+          height: 292,
+          alt: 'FET-VAE pipeline with content and motion encoders, a ternary latent space, autoregressive rollout, and video reconstruction.',
+          caption: 'The FET-VAE architecture used for autoregressive surgical-video prediction.',
+          limit: 'Architecture schematic with an illustrative quality-decay curve.',
+        },
         tags: ["VAE", "Transformer", "Video Prediction", "Medical AI"]
       },
       { 
@@ -128,6 +168,16 @@ export const DATA = {
         featuredOrder: 7,
         role: 'Co-author',
         note: 'Evaluation used labelled dashcam images from the PNW dataset.',
+        figure: {
+          kind: 'video',
+          src: '/assets/media/pothole-sr.mp4',
+          poster: '/assets/media/pothole-sr-poster.webp',
+          width: 520,
+          height: 292,
+          alt: 'A low-resolution road frame being upscaled by ESRGAN before YOLOv7 marks a pothole.',
+          caption: 'The super-resolution and detection pipeline used in the pothole study.',
+          limit: 'Procedural road texture illustrating the method rather than output from the paper.',
+        },
         tags: ["YOLOv7", "ESRGAN", "Computer Vision", "Published"]
       },
       {
@@ -208,6 +258,16 @@ export const DATA = {
         featuredOrder: 2,
         role: 'Competitor, team Quantum Bits',
         note: 'Awarded in the Quantum Rings virtual track.',
+        figure: {
+          kind: 'video',
+          src: '/assets/media/shor-algorithm.mp4',
+          poster: '/assets/media/shor-algorithm-poster.webp',
+          width: 520,
+          height: 300,
+          alt: 'Shor algorithm stages from a classical GCD check through quantum phase estimation and continued fractions.',
+          caption: 'The period-finding pipeline implemented for the Quantum Rings challenge.',
+          limit: 'Phase peaks are schematic and do not reproduce a measurement histogram.',
+        },
         tags: ["Quantum Rings", "Shor's Algorithm", "Yale"]
       },
       { 
@@ -220,6 +280,16 @@ export const DATA = {
         featuredOrder: 8,
         role: 'Competitor, Rolls-Royce challenge',
         note: 'Participant. Not listed among the official 1st–3rd place teams.',
+        figure: {
+          kind: 'video',
+          src: '/assets/media/sqd-krylov.mp4',
+          poster: '/assets/media/sqd-krylov-poster.webp',
+          width: 520,
+          height: 300,
+          alt: 'SQD pipeline from Krylov-state construction through sampling, configuration recovery, and subspace diagonalisation.',
+          caption: 'The sample-based quantum diagonalisation pipeline used by the team.',
+          limit: 'Animated schematic with illustrative bitstrings and energy levels.',
+        },
         tags: ["NQCC", "VQE", "SQD", "Rolls-Royce", "Materials Science"]
       },
       { 
@@ -242,6 +312,16 @@ export const DATA = {
         desc: "Surface-code experiments in Stim.",
         fullDesc: "These experiments use Stim to study stabiliser circuits, surface codes, and decoding. Limit: Simulator experiments with established codes.",
         link: "https://github.com/Ryukijano/quantum-error-correction",
+        figure: {
+          kind: 'video',
+          src: '/assets/media/syndrome-net-decode.mp4',
+          poster: '/assets/media/syndrome-net-decode-poster.webp',
+          width: 640,
+          height: 360,
+          alt: 'A surface-code error path activates detectors before a decoder draws a proposed correction.',
+          caption: 'How a decoder infers a correction from the detector events at each end of an error path.',
+          limit: 'Illustrative fault path and decoder response rather than a recorded run.',
+        },
         tags: ["QEC", "Surface Code", "Stim", "Error Correction"]
       },
       {

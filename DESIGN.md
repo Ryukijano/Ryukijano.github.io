@@ -156,6 +156,12 @@ because it qualifies one image rather than the whole project. This is enforced
 by `tests/link-health.test.js`, along with dimensions (so nothing shifts), alt
 text, and a 700 kB cap per asset.
 
+The animated figures from the earlier field-note design remain part of the
+project record. They are delivered as muted H.264 videos with WebP posters
+rather than GIFs; reduced-motion mode shows the poster. Most explain a method
+and are labelled as schematics. The surgical-phase figure is a model diagnostic
+from selected ESD frames.
+
 `media/README.md` has the shape of the `figure:` field, the ffmpeg invocation,
 and — usefully — a list of which images in `media/` are *not* real evidence.
 

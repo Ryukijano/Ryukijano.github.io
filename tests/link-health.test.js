@@ -221,6 +221,27 @@ describe('the prerender manifest', () => {
 });
 
 describe('case-study figures', () => {
+  it('keeps the project demos in their case studies', () => {
+    const withFigures = allProjects()
+      .filter((project) => project.figure)
+      .map((project) => project.title);
+
+    expect(withFigures).toHaveLength(9);
+    expect(withFigures).toEqual(
+      expect.arrayContaining([
+        'Dalton Mills VR Reconstruction',
+        'AIMS: Surgical Phase Detection',
+        'Gemma-Le: VLA Policy',
+        'MSc Thesis: Surgical Video Prediction',
+        'Pothole Detection (arXiv)',
+        'Deep RL & Hugging Face',
+        'YQuantum 2025 (Yale)',
+        'NQCC UK Quantum Hackathon',
+        'Quantum Error Correction',
+      ]),
+    );
+  });
+
   it('every figure declares dimensions, alt text and its own limit', () => {
     // A figure without dimensions shifts the page; one without a limit
     // oversells the work, which is the opposite of this site's whole stance.
