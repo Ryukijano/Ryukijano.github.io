@@ -115,7 +115,7 @@ export const DATA = {
         featured: true,
         featuredOrder: 6,
         role: 'Competitor, Hugging Face JAX Diffusers sprint',
-        note: 'No FID score and no paper. A sprint checkpoint, not a methods contribution.',
+        note: 'No FID score and no paper. A sprint checkpoint, not a methods contribution. The 8th place is my own record of the sprint; I have found no published results table to cite for it.',
         tags: ["JAX", "TPU v4", "ControlNet", "Diffusion Models"]
       },
       {
