@@ -11,7 +11,7 @@ export function WorkInkNotFound() {
       <main id="main" tabIndex={-1} className="route print__body print__body--narrow">
         <p className="print__kicker">404</p>
         <h1 className="print__title" style={{ marginTop: '0.75rem' }}>
-          This note is not here.
+          Page not found
         </h1>
         <nav className="print__foot" aria-label="Other pages">
           <Link href="/work">Work</Link>
@@ -48,7 +48,7 @@ export default function WorkPage() {
             Work
           </h1>
           <p className="print__lede print__lede--muted">
-            Dated notes on things I built. The academic record is separate.
+            Selected projects in graphics, computer vision, and quantum computing.
           </p>
         </header>
 

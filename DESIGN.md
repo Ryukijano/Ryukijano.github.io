@@ -52,8 +52,8 @@ carries real text, it fails.
 
 The seal marks exactly two things:
 
-1. **The honesty convention** — `.limit__label`, the marked word in the plate
-   caption (`.folio__mark`), and the gloss footer that names the rule.
+1. **Scope and evidence** — `.limit__label` and the marked word in the plate
+   caption (`.folio__mark`).
 2. **Interaction** — focus, hover, the active nav item, text selection.
 
 Nothing else. `tests/tokens.test.js` walks every rule that references
@@ -238,10 +238,9 @@ list because that is where `Real world` has to wrap rather than overflow.
 Decisions not yet made, kept here so they are not mistaken for defects.
 
 **Yana.** Ryukijano and Ryoushi exist online; Yana is the middle of Gyanateet
-and has no footprint of its own. The slip says "Three names, one person", and
-`/persona/gyanateet` resolves to the same page as `/persona/yana`, so nothing
-is misrepresented — but a reader who searches the name finds nothing. Whether
-the vision lane should carry `Gyanateet` instead is the owner's call.
+and has no footprint of its own. `/persona/gyanateet` resolves to the same page
+as `/persona/yana`. Whether the vision lane should carry `Gyanateet` instead
+is the owner's call.
 
 **Not open:** `--color-seal-bright`. It is sub-AA against the paper, it is
 used by exactly one `aria-hidden` element, and the tests hold it there. Folding

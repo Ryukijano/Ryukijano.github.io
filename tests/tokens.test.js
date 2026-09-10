@@ -196,11 +196,6 @@ describe('non-negotiables', () => {
   });
 
   it('spends the accent only on the limit convention and on interaction', () => {
-    // The rule is not "four selectors" -- it is that the seal marks two
-    // things and nothing else: the honesty convention (.limit__label, the
-    // marked caption word, the gloss footer) and interaction state (focus,
-    // hover, the active nav item, selection). Anything else picking up the
-    // accent means it has stopped meaning those two things.
     const blocks = [...css.matchAll(/([^{}]+)\{[^}]*var\(--color-seal\)[^}]*\}/g)];
     const selectors = new Set(
       blocks.flatMap((m) =>
@@ -212,7 +207,7 @@ describe('non-negotiables', () => {
       ),
     );
 
-    const CONVENTION = /^\.(limit__label|folio__mark|folio__gloss--foot)$/;
+    const CONVENTION = /^\.(limit__label|folio__mark)$/;
     const INTERACTION = /(:focus-visible|:hover|\.is-active|\.is-on|::selection)/;
 
     const stray = [...selectors].filter(

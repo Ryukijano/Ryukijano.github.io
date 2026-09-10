@@ -10,7 +10,7 @@ export const PUBLICATIONS = [
     doi: '10.1109/isbi61048.2026.11515812',
     pdfUrl: null,
     codeUrl: 'https://github.com/Ryukijano/DINOEndo',
-    note: '89.5% accuracy on the patient set and 90.0% on the porcine set in the paper; not a clinical deployment study.',
+    note: 'The paper reports 89.5% accuracy on the patient test set and 90.0% on the porcine test set.',
     bibtex: `@inproceedings{dutta2026selfsupervised,
   title={Self-Supervised Vision Transformer for Surgical Phase Recognition in Endoscopic Submucosal Dissection},
   author={Dutta, Gyanateet and Hammad, Aya and Archer, Thomas and Dou, Qi and Mohammed, Noor and Ali, Sharib},
@@ -144,5 +144,5 @@ export const ACADEMIC_BIO = {
   name: 'Gyanateet Dutta',
   role: 'Research technician · University of Leeds',
   statement:
-    'I train vision models on surgical video under sparse labels and tight inference budgets. Parallel to that I write hybrid quantum–classical algorithms with Quantum Buddies.',
+    'I am a research technician at the University of Leeds, working on computer vision for surgical video. My interests include learning from sparsely labelled data, efficient inference, and hybrid quantum–classical algorithms.',
 };

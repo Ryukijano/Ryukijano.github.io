@@ -30,7 +30,6 @@ function Marked({ text, highlight }) {
   );
 }
 
-/** / — one hung plate with kento in the margin; name, degree and bio on a slip under it. */
 export default function HomePage() {
   const [lane, setLane] = useState(null);
   const degree = EDUCATION[0];
@@ -70,9 +69,6 @@ export default function HomePage() {
               ))}
             </div>
 
-            {/* The plate key: the same three ticks, drawn under the sheet in
-                flow when the print is stacked and the overlay is hidden. A
-                plate too narrow to aim at still gets its legend. */}
             <nav className="folio__key" aria-label="Lanes">
               {ROOMS.map((room, index) => (
                 <Fragment key={room.id}>
@@ -94,7 +90,7 @@ export default function HomePage() {
               </span>
             </div>
             {degree ? <p className="folio__degree">{degree.title}</p> : null}
-            <nav className="folio__handles" aria-label="Three names">
+            <nav className="folio__handles" aria-label="Profiles">
               {ROOMS.map((room, index) => (
                 <span key={room.id}>
                   {index > 0 ? (
@@ -115,13 +111,9 @@ export default function HomePage() {
                 </span>
               ))}
             </nav>
-            <p className="folio__gloss">Three names, one person.</p>
             <p className="folio__bio">{ACADEMIC_BIO.statement}</p>
             <p className="folio__caption">
               <Marked text={PLATE.caption} highlight={PLATE.highlight} />
-            </p>
-            <p className="folio__gloss folio__gloss--foot">
-              Every project on this site states its own limit.
             </p>
           </figcaption>
         </figure>

@@ -7,8 +7,6 @@ import { WorkInkNotFound } from './WorkPage';
 function labelFromHref(href) {
   try {
     const host = new URL(href).hostname.replace(/^www\./, '');
-    // Exact host, not `includes('github')` -- that labelled the Quantum
-    // Buddies site (quantum-buddies.github.io) as a code repository.
     if (host === 'github.com' || host === 'gist.github.com') return 'Code';
     if (host === 'arxiv.org') return 'Paper';
     if (host === 'huggingface.co') return 'Hugging Face';
@@ -58,12 +56,6 @@ function paragraphs(text) {
   return [sentences.slice(0, cut).join(' '), sentences.slice(cut).join(' ')];
 }
 
-/**
- * One figure, hung the way the plate is: an untrimmed block whose padding is
- * the paper margin, a hairline around the sheet, a mono `Fig. 1` slug and a
- * caption in the same register as the plate's. It states its own limit,
- * because a figure that oversells the work is worse than no figure.
- */
 function Figure({ figure }) {
   const { kind, src, poster, sources = [], width, height, alt, caption, limit } = figure;
 
@@ -73,14 +65,10 @@ function Figure({ figure }) {
         className="plate__sheet"
         style={{
           aspectRatio: `${width} / ${height}`,
-          // Read by the prefers-reduced-motion rule, which hides the video and
-          // shows this instead -- a looping clip is motion either way.
           ...(poster ? { '--plate-poster': `url(${poster})` } : {}),
         }}
       >
         {kind === 'video' ? (
-          // Muted, looping and inline: it reads as a moving still, not a
-          // player. No controls, and it never autoplays with sound.
           <video
             src={src}
             poster={poster}

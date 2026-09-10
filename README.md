@@ -7,12 +7,11 @@ Live at **[ryukijano.github.io](https://ryukijano.github.io)**.
 
 ## What it is
 
-A print, hung on paper. The home page is one plate — a Hokusai wave in three
-states, reading left to right as *the real world, its encoding, the digital
-reconstruction* — with the paper's *kento* registration marks sitting in the
-margin rather than on the art. Interior pages are sheets from the same press.
+A portfolio for research and engineering work in graphics, computer vision,
+and quantum computing. The visual system is based on a Japanese woodblock
+print, with *kento* registration marks in the paper margin.
 
-Three lanes run through it, and they are three names for one person:
+The work is organised into three areas:
 
 | lane | handle | subject |
 |---|---|---|
@@ -20,11 +19,8 @@ Three lanes run through it, and they are three names for one person:
 | Encoding | Yana | computer vision |
 | Digital | Ryoushi | quantum algorithms |
 
-Every project states its own limit. That is the site's one editorial rule: a
-`Limit:` clause or a `note` on each of the 21 entries, saying what the work is
-*not* — a hackathon build and not a clinical panel, a sprint checkpoint and not
-a methods contribution, a virtual-track win and not the Grand Prize. It is
-enforced by a test, not by good intentions.
+Each project includes a short note about its evaluation scope or available
+evidence.
 
 ## Stack
 

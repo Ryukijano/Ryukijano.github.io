@@ -9,7 +9,7 @@ export const OG_IMAGE_ALT =
   'Kanagawa plate in three states, left to right: the painted wave, its RGB encoding, a neon wireframe.';
 
 const HOME_DESCRIPTION =
-  'Gyanateet Dutta — the real world, its encoding, the digital reconstruction: graphics, surgical vision, and quantum algorithms. MSc Advanced Computer Science (Artificial Intelligence), University of Leeds.';
+  'Gyanateet Dutta is a research technician at the University of Leeds working on computer vision for surgical video and hybrid quantum–classical algorithms.';
 
 /** Trim to a length social cards and search results will actually show. */
 function clamp(text, max = 200) {
@@ -33,7 +33,7 @@ export function routeMeta(pathname) {
       return {
         title: `Work · ${SITE_NAME}`,
         description:
-          'Dated notes on things I built — graphics and systems, surgical computer vision, and quantum algorithms. The academic record is separate.',
+          'Selected projects by Gyanateet Dutta in graphics and systems, surgical computer vision, and quantum algorithms.',
         canonical: '/work',
       };
 
