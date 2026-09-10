@@ -106,3 +106,25 @@ test('the plate reserves its box before the bytes land', async ({ page }) => {
   const box = await page.locator('.folio__sheet').boundingBox();
   expect(box.width / box.height).toBeCloseTo(3923 / 2160, 1);
 });
+
+test('project demos load with posters and video metadata', async ({ page }) => {
+  const routes = [
+    '/work/dalton-mills-vr-reconstruction',
+    '/work/aims-surgical-phase-detection',
+    '/work/gemma-le-vla-policy',
+    '/work/msc-thesis-surgical-video-prediction',
+    '/work/pothole-detection-arxiv',
+    '/work/deep-rl-and-hugging-face',
+    '/work/yquantum-2025-yale',
+    '/work/nqcc-uk-quantum-hackathon',
+    '/work/quantum-error-correction',
+  ];
+
+  for (const route of routes) {
+    await page.goto(route);
+    const video = page.locator('.plate__sheet video');
+    await expect(video).toHaveCount(1);
+    await expect(video).toHaveAttribute('poster', /\/assets\/media\/.+-poster\.(avif|webp)$/);
+    await expect.poll(() => video.evaluate((element) => element.readyState)).toBeGreaterThanOrEqual(1);
+  }
+});
