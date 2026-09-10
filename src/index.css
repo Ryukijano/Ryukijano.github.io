@@ -1193,7 +1193,6 @@
    qualifies one image, not the whole project. */
 .plate__limit {
   color: var(--color-ink-muted);
-  opacity: 0.85;
 }
 
 .plate__kento {
