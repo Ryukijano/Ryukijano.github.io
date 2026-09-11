@@ -66,6 +66,12 @@ export const PUBLICATIONS = [
 export const RESEARCH_TIMELINE = [
   {
     year: 2026,
+    title: 'H-cGQE for the GIC advanced-materials track',
+    org: 'Ryoushi / Quantum Buddies',
+    desc: 'Conditional circuit generation for molecular quantum simulation.',
+  },
+  {
+    year: 2026,
     title: 'Self-supervised ViT for surgical phase recognition',
     org: 'IEEE ISBI',
     desc: 'Peer-reviewed conference paper on endoscopic submucosal dissection.',

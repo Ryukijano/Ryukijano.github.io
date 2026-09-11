@@ -226,7 +226,7 @@ describe('case-study figures', () => {
       .filter((project) => project.figure)
       .map((project) => project.title);
 
-    expect(withFigures).toHaveLength(9);
+    expect(withFigures).toHaveLength(10);
     expect(withFigures).toEqual(
       expect.arrayContaining([
         'Dalton Mills VR Reconstruction',
@@ -235,6 +235,7 @@ describe('case-study figures', () => {
         'MSc Thesis: Surgical Video Prediction',
         'Pothole Detection (arXiv)',
         'Deep RL & Hugging Face',
+        'H-cGQE: Conditional GQE',
         'YQuantum 2025 (Yale)',
         'NQCC UK Quantum Hackathon',
         'Quantum Error Correction',

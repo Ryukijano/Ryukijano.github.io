@@ -115,6 +115,7 @@ test('project demos load with posters and video metadata', async ({ page }) => {
     '/work/msc-thesis-surgical-video-prediction',
     '/work/pothole-detection-arxiv',
     '/work/deep-rl-and-hugging-face',
+    '/work/h-cgqe-conditional-gqe',
     '/work/yquantum-2025-yale',
     '/work/nqcc-uk-quantum-hackathon',
     '/work/quantum-error-correction',

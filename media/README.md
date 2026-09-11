@@ -22,11 +22,11 @@ unreferenced, which is what keeps this boundary honest.
 
 ## Deployed demos
 
-Nine case studies currently include figures. Eight animations restored from
+Ten case studies currently include figures. Nine animations restored from
 the earlier field-note design were converted from GIF to H.264 MP4 with WebP
-posters: Dalton Mills, surgical phase recognition, FET-VAE, Gemma-Le, pothole
-detection, NQCC, YQuantum, and quantum error correction. The Deep RL page uses
-the separately encoded ViZDoom rollout.
+posters: H-cGQE, Dalton Mills, surgical phase recognition, FET-VAE, Gemma-Le,
+pothole detection, NQCC, YQuantum, and quantum error correction. The Deep RL
+page uses the separately encoded ViZDoom rollout.
 
 ## Figure format
 

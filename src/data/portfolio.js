@@ -228,6 +228,32 @@ export const DATA = {
     ],
     projects: [
       {
+        title: "H-cGQE: Conditional GQE",
+        desc: "GIC 2026. GNN + Transformer + QD-GRPO for molecular quantum-circuit design.",
+        fullDesc: "For the Mitsubishi Chemical Group and AIST track of the 2026 Global Industry Challenge, Ryoushi / Quantum Buddies developed H-cGQE for molecular quantum-circuit design. A chemical graph neural network and Transformer propose operator sequences, QD-GRPO supplies the learning signal, and L-BFGS-B optimises the continuous angles. The implementation uses CUDA-Q simulation with selected quantum-hardware checks.",
+        link: "https://github.com/Quantum-Buddies/Conditional_GQE",
+        links: [
+          { href: "https://github.com/Quantum-Buddies/Conditional_GQE", label: "Code" },
+          { href: "https://huggingface.co/Ryukijano/h-cgqe-gic2026", label: "Models" },
+        ],
+        year: 2026,
+        featured: true,
+        featuredOrder: 1,
+        role: "Team member, Ryoushi / Quantum Buddies",
+        note: "The reported 0.63 mHa result is from a controlled 8-qubit methyl-iodide active-space comparison. The reference is CASCI/FCI within that active space; held-out molecule generalisation remains open.",
+        figure: {
+          kind: "video",
+          src: "/assets/media/h-cgqe-gic2026.mp4",
+          poster: "/assets/media/h-cgqe-gic2026-poster.webp",
+          width: 800,
+          height: 450,
+          alt: "An H-cGQE pipeline in which a molecule becomes a graph, a policy proposes circuits, energy supplies a learning signal, and selected circuits proceed to hardware checks.",
+          caption: "The H-cGQE workflow from molecular graph construction to circuit generation, optimisation, and validation.",
+          limit: "Project-authored architecture animation rather than a measured training trace.",
+        },
+        tags: ["GIC 2026", "CUDA-Q", "GNN", "Transformer", "QD-GRPO"],
+      },
+      {
         title: "Quantum Buddies",
         desc: "Small collective, 2025. Shared repos and hackathon builds.",
         fullDesc: "I co-founded Quantum Buddies in 2025 with Sid Iliyasu and Dat Chi Le. We maintain shared repositories and collaborate on hackathon projects in quantum machine learning, error correction, genomics, and market simulation. Limit: Three-person independent collective.",
