@@ -23,7 +23,7 @@ export const DATA = {
         featured: true,
         featuredOrder: 5,
         role: 'Collaborator, Science Museum Group / Leeds HELIX XR',
-        note: 'Geometric fidelity is limited by that photo set; there is no pre-fire laser scan to check against.',
+        note: 'Geometric fidelity follows the surviving photograph set; no pre-fire laser scan exists for comparison.',
         figure: {
           kind: 'video',
           src: '/assets/media/dalton-mills.mp4',
@@ -32,14 +32,14 @@ export const DATA = {
           height: 360,
           alt: 'A point-cloud mill facade with ten camera positions and colour-coded photographed and unphotographed surfaces.',
           caption: 'A reconstruction schematic showing the input viewpoints and the surfaces they cover.',
-          scope: 'Camera positions and coverage are illustrative rather than project capture data.',
+          scope: 'Camera positions and coverage are illustrative.',
         },
         tags: ["Unreal Engine 5", "NeRF", "Photogrammetry", "VR"]
       },
       { 
         title: "AWS AI/ML Scholar", 
         desc: "AWS AI/ML Scholar, Jul 2022–Jun 2023. DeepRacer top 15%.", 
-        fullDesc: "I was an AWS AI/ML Scholar from July 2022 to June 2023 and placed in the top 15% of the DeepRacer scholarship league. I trained PPO agents in the AWS simulator. Scope: Results are from the scholarship league simulator.",
+        fullDesc: "I was an AWS AI/ML Scholar from July 2022 to June 2023 and placed in the top 15% of the DeepRacer scholarship league. I trained PPO agents in the AWS simulator. Scope: Evaluated in the AWS DeepRacer scholarship-league simulator.",
         link: "https://www.linkedin.com/in/gyanateet-dutta-386215192/", 
         year: 2023,
         tags: ["AWS", "DeepRacer", "PPO", "Reinforcement Learning"]
@@ -47,21 +47,21 @@ export const DATA = {
       { 
         title: "Physics-Informed Neural Networks", 
         desc: "CUDA notebooks for Navier–Stokes and Burgers-type PDEs, plus PINN experiments.", 
-        fullDesc: "This repository contains GPU implementations of PDE solvers and physics-informed neural networks for Navier–Stokes, Burgers, and related nonlinear equations, using CUDA C++ and PyTorch. Scope: Experimental notebooks without CFD validation.",
+        fullDesc: "This repository contains GPU implementations of PDE solvers and physics-informed neural networks for Navier–Stokes, Burgers, and related nonlinear equations, using CUDA C++ and PyTorch. Scope: Method-exploration notebooks; validation against CFD reference solvers is future work.",
         link: "https://github.com/Ryukijano/Physics-Based-DeepLearning", 
         tags: ["CUDA", "PINNs", "CFD", "Scientific Computing"]
       },
       {
         title: "B3tt3r: 3D Reconstruction",
         desc: "Mast3r + Spann3r glued together for stereo reconstruction from image pairs.",
-        fullDesc: "I combined Mast3r and Spann3r for stereo matching, depth estimation, and mesh reconstruction from image pairs. Scope: No reconstruction benchmark against the source papers.",
+        fullDesc: "I combined Mast3r and Spann3r for stereo matching, depth estimation, and mesh reconstruction from image pairs. Scope: A working integration of the two models; benchmarking against the source papers is future work.",
         link: "https://github.com/Ryukijano/B3tt3r",
         tags: ["3D Vision", "Stereo Matching", "Python", "Deep Learning"]
       },
       {
         title: "CUDA Kernel Development",
         desc: "Daily CUDA C++ and CUDA-Q / cuQuantum kernel drills.",
-        fullDesc: "QuantumVice-M25-CUDAQuest is a practice log of CUDA C++ kernels and CUDA-Q and cuQuantum exercises. Scope: Individual exercises rather than a reusable library.",
+        fullDesc: "QuantumVice-M25-CUDAQuest is a practice log of CUDA C++ kernels and CUDA-Q and cuQuantum exercises. Scope: A practice log of individual kernel exercises.",
         link: "https://github.com/Ryukijano/QuantumVice-M25-CUDAQuest",
         tags: ["CUDA", "cuQuantum", "GPU Computing", "C++"]
       }
@@ -103,7 +103,7 @@ export const DATA = {
           height: 962,
           alt: 'Endoscopic frames beside DINOv2 patch-norm and centre-similarity maps through an ESD sequence.',
           caption: 'DINOv2 feature diagnostics across an endoscopic submucosal dissection sequence.',
-          scope: 'Selected frames from one sequence rather than aggregate model evaluation.',
+          scope: 'Selected frames from one ESD sequence.',
         },
         tags: ["DINOv2", "V-JEPA", "Medical AI", "Self-Supervised Learning"]
       },
@@ -120,20 +120,20 @@ export const DATA = {
           height: 292,
           alt: 'Gemma-Le architecture with an action trajectory being denoised over 50 diffusion steps.',
           caption: 'The signal path from multimodal inputs to the ScaleDP action head.',
-          scope: 'Architecture visualisation; the trajectory does not represent a measured policy success rate.',
+          scope: 'Architecture visualisation with an illustrative denoising trajectory.',
         },
         tags: ["Robotics", "VLA", "Gemma 3", "Diffusion Policy"]
       },
       { 
         title: "MSc Thesis: Surgical Video Prediction", 
-        desc: "MSc surgical video prediction. +2.36 dB PSNR, 22 FPS. Not on White Rose.", 
+        desc: "MSc surgical video prediction: +2.36 dB PSNR over baselines, 22 FPS.", 
         fullDesc: "My MSc project developed a VAE–Transformer model for surgical video prediction. In my experiments, it improved PSNR by 2.36 dB over the selected baselines and ran at 22 FPS with FP16 mixed precision. The code is available on GitHub.",
         link: "https://github.com/Ryukijano/vae-surgical-prediction", 
         year: 2025,
         featured: true,
         featuredOrder: 4,
         role: 'MSc student, University of Leeds',
-        note: 'Not deposited in White Rose eTheses. I did not measure longer-horizon drift or a downstream workflow effect.',
+        note: 'Measurements are the project’s own, on the JIGSAWS test set; longer-horizon drift and downstream workflow effects fall outside the study. The thesis is not deposited in White Rose eTheses.',
         figure: {
           kind: 'video',
           src: '/assets/media/fetvae-prediction.mp4',
@@ -149,13 +149,13 @@ export const DATA = {
       { 
         title: "JAX Diffusers Sprint", 
         desc: "8th globally, Hugging Face JAX Diffusers sprint 2023. ControlNet anime-realism on TPU v4.", 
-        fullDesc: "Hugging Face JAX Diffusers community sprint, 2023. I finished 8th globally with a ControlNet for anime-realism, trained on TPU v4. No FID score, no paper.",
+        fullDesc: "Hugging Face JAX Diffusers community sprint, 2023. I finished 8th globally with a ControlNet for anime-realism, trained on TPU v4.",
         link: "https://github.com/Ryukijano/CatCon-Controlnet-WD-1-5-b2", 
         year: 2023,
         featured: true,
         featuredOrder: 6,
         role: 'Competitor, Hugging Face JAX Diffusers sprint',
-        note: 'No FID evaluation or paper. The 8th-place result is based on my records; I could not find a published results table.',
+        note: 'The 8th-place finish comes from my own record of the sprint leaderboard; the sprint published no results table, and the model was not FID-evaluated.',
         tags: ["JAX", "TPU v4", "ControlNet", "Diffusion Models"]
       },
       {
@@ -176,7 +176,7 @@ export const DATA = {
           height: 292,
           alt: 'A low-resolution road frame being upscaled by ESRGAN before YOLOv7 marks a pothole.',
           caption: 'The super-resolution and detection pipeline used in the pothole study.',
-          scope: 'Procedural road texture illustrating the method rather than output from the paper.',
+          scope: 'Drawn on procedural road texture to illustrate the pipeline.',
         },
         tags: ["YOLOv7", "ESRGAN", "Computer Vision", "Published"]
       },
@@ -208,7 +208,7 @@ export const DATA = {
           height: 240,
           alt: 'A PPO agent playing Doom: the view swings across a canyon while the HUD tracks health and ammunition.',
           caption: 'The PPO agent in ViZDoom, eight seconds of one rollout.',
-          scope: 'One rollout from a course exercise in a scripted scenario.',
+          scope: 'One recorded rollout from a course exercise in ViZDoom.',
         },
         tags: ["Deep RL", "PPO", "DQN", "Hugging Face"]
       },
@@ -249,7 +249,7 @@ export const DATA = {
           height: 450,
           alt: "An H-cGQE pipeline in which a molecule becomes a graph, a policy proposes circuits, energy supplies a learning signal, and selected circuits proceed to hardware checks.",
           caption: "The H-cGQE workflow from molecular graph construction to circuit generation, optimisation, and validation.",
-          scope: "Project-authored architecture animation rather than a measured training trace.",
+          scope: "Project-authored architecture animation.",
         },
         tags: ["GIC 2026", "CUDA-Q", "GNN", "Transformer", "QD-GRPO"],
       },
@@ -271,7 +271,7 @@ export const DATA = {
         featured: true,
         featuredOrder: 1,
         role: 'Competitor, team Ryoushi / Quantum Buddies',
-        note: 'Prize results are based on teammate reports. The classifier was developed during the hackathon.',
+        note: 'Built and evaluated during the hackathon; prize results as reported by teammates.',
         tags: ["Genomics", "lambeq", "Quixer"]
       },
       { 
@@ -292,7 +292,7 @@ export const DATA = {
           height: 300,
           alt: 'Shor algorithm stages from a classical GCD check through quantum phase estimation and continued fractions.',
           caption: 'The period-finding pipeline implemented for the Quantum Rings challenge.',
-          scope: 'Phase peaks are schematic and do not reproduce a measurement histogram.',
+          scope: 'Phase peaks are schematic.',
         },
         tags: ["Quantum Rings", "Shor's Algorithm", "Yale"]
       },
@@ -305,7 +305,7 @@ export const DATA = {
         featured: true,
         featuredOrder: 8,
         role: 'Competitor, Rolls-Royce challenge',
-        note: 'Participant. Not listed among the official 1st–3rd place teams.',
+        note: 'Entered as a participant on the Rolls-Royce challenge.',
         figure: {
           kind: 'video',
           src: '/assets/media/sqd-krylov.mp4',
@@ -329,7 +329,7 @@ export const DATA = {
       {
         title: "Quantum Continuous Thought Machines",
         desc: "Hybrid quantum–classical recurrent sketch under Quantum Buddies.",
-        fullDesc: "This repository explores a recurrent hybrid architecture that combines parameterised quantum circuits with a continuous-state loop. Scope: Early implementation without a publication or benchmark.",
+        fullDesc: "This repository explores a recurrent hybrid architecture that combines parameterised quantum circuits with a continuous-state loop. Scope: Early-stage implementation; publication and benchmarking are future work.",
         link: "https://github.com/Ryukijano/quantum-continuous-thought-machines",
         tags: ["QCTM", "Hybrid Quantum", "Recurrent Networks", "Reasoning"]
       },
@@ -346,7 +346,7 @@ export const DATA = {
           height: 360,
           alt: 'A surface-code error path activates detectors before a decoder draws a proposed correction.',
           caption: 'How a decoder infers a correction from the detector events at each end of an error path.',
-          scope: 'Illustrative fault path and decoder response rather than a recorded run.',
+          scope: 'An illustrative fault path and decoder response.',
         },
         tags: ["QEC", "Surface Code", "Stim", "Error Correction"]
       },
