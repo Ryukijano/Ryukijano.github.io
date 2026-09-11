@@ -42,11 +42,11 @@ function collectLinks(project) {
   return links;
 }
 
-/** Pull a trailing "Limit: …" sentence out so it is shown once, labelled. */
-function splitLimit(text) {
-  const match = text.match(/\s*Limit:\s*([\s\S]+)$/);
-  if (!match) return { body: text.trim(), limit: null };
-  return { body: text.slice(0, match.index).trim(), limit: match[1].trim() };
+/** Pull a trailing "Scope: …" sentence out so it is shown once, labelled. */
+function splitScope(text) {
+  const match = text.match(/\s*Scope:\s*([\s\S]+)$/);
+  if (!match) return { body: text.trim(), scope: null };
+  return { body: text.slice(0, match.index).trim(), scope: match[1].trim() };
 }
 
 function paragraphs(text) {
@@ -57,7 +57,7 @@ function paragraphs(text) {
 }
 
 function Figure({ figure }) {
-  const { kind, src, poster, sources = [], width, height, alt, caption, limit } = figure;
+  const { kind, src, poster, sources = [], width, height, alt, caption, scope } = figure;
 
   return (
     <figure className="plate">
@@ -94,7 +94,7 @@ function Figure({ figure }) {
         <span className="plate__slug">Fig. 1</span>
         <span>
           {caption}
-          {limit ? <em className="plate__limit"> {limit}</em> : null}
+          {scope ? <em className="plate__scope"> {scope}</em> : null}
         </span>
       </figcaption>
       <span className="plate__kento" aria-hidden="true" />
@@ -110,8 +110,8 @@ export default function CaseStudyPage({ project }) {
   const lane = projectLane(project);
   const tags = Array.isArray(project.tags) ? project.tags.filter(Boolean) : [];
   const links = collectLinks(project);
-  const { body, limit } = splitLimit(project.fullDesc || project.desc || '');
-  const aside = project.note || limit;
+  const { body, scope } = splitScope(project.fullDesc || project.desc || '');
+  const aside = project.note || scope;
   const related = relatedProjects(project);
 
   return (
@@ -146,8 +146,8 @@ export default function CaseStudyPage({ project }) {
         {project.figure ? <Figure figure={project.figure} /> : null}
 
         {aside ? (
-          <aside className="limit">
-            <span className="limit__label">Limit</span>
+          <aside className="scope">
+            <span className="scope__label">Scope</span>
             <p>{aside}</p>
           </aside>
         ) : null}

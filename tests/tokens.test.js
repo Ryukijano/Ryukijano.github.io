@@ -75,7 +75,7 @@ describe('palette', () => {
 describe('type scale', () => {
   // --step--2 is deliberately OFF the scale: 1.25 below --step--1 would be
   // 0.68rem (10.88px), and this step carries tracked uppercase mono labels
-  // (.cartouche, .limit__label, .catalog__lane, .folio__chip) where that is
+  // (.cartouche, .scope__label, .catalog__lane, .folio__chip) where that is
   // too small to read. It is held at 0.72rem as a legibility floor.
   const scaled = ['--step--1', '--step-0', '--step-1', '--step-2',
                   '--step-3', '--step-4', '--step-5'];
@@ -195,7 +195,7 @@ describe('non-negotiables', () => {
     expect(z(atmo)).toBeLessThan(z(body));
   });
 
-  it('spends the accent only on the limit convention and on interaction', () => {
+  it('spends the accent only on the scope convention and on interaction', () => {
     const blocks = [...css.matchAll(/([^{}]+)\{[^}]*var\(--color-seal\)[^}]*\}/g)];
     const selectors = new Set(
       blocks.flatMap((m) =>
@@ -207,7 +207,7 @@ describe('non-negotiables', () => {
       ),
     );
 
-    const CONVENTION = /^\.(limit__label|folio__mark)$/;
+    const CONVENTION = /^\.(scope__label|folio__mark)$/;
     const INTERACTION = /(:focus-visible|:hover|\.is-active|\.is-on|::selection)/;
 
     const stray = [...selectors].filter(

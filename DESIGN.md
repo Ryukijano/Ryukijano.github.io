@@ -52,7 +52,7 @@ carries real text, it fails.
 
 The seal marks exactly two things:
 
-1. **Scope and evidence** — `.limit__label` and the marked word in the plate
+1. **Scope and evidence** — `.scope__label` and the marked word in the plate
    caption (`.folio__mark`).
 2. **Interaction** — focus, hover, the active nav item, text selection.
 
@@ -74,7 +74,7 @@ upward, so a one-off size cannot quietly enter the scale.
 
 `--step--2` is deliberately **off** the scale. A true 1.25 step below
 `--step--1` is 0.68rem (10.88px), and that step carries tracked uppercase mono
-— `.cartouche`, `.limit__label`, `.catalog__lane`, `.folio__chip` — where
+— `.cartouche`, `.scope__label`, `.catalog__lane`, `.folio__chip` — where
 10.88px is not readable. It is held at 0.72rem (11.52px) as a legibility
 floor, and the tests assert that too, so the exception stays an exception
 rather than becoming licence to add more.
@@ -151,7 +151,7 @@ margin. It sits **after** the prose, not above the title — the design
 deliberately cut hero imagery, and a figure below the text reads as evidence
 for what was just claimed rather than as decoration above it.
 
-Every figure states its own limit, in the same voice as `.limit` but quieter,
+Every figure states its own scope, in the same voice as `.scope` but quieter,
 because it qualifies one image rather than the whole project. This is enforced
 by `tests/link-health.test.js`, along with dimensions (so nothing shifts), alt
 text, and a 700 kB cap per asset.

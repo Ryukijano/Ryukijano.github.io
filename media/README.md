@@ -44,12 +44,12 @@ figure: {
   height: 240,                                    // both required: no layout shift
   alt: 'A PPO agent playing Doom: …',
   caption: 'The PPO agent in ViZDoom, eight seconds of one rollout.',
-  limit: 'A course-unit agent in a scripted scenario, not a benchmark result.',
+  scope: 'One recorded rollout from a course exercise in ViZDoom.',
 }
 ```
 
-`limit` is not optional, and the tests enforce it. A figure that oversells is
-worse than no figure, which is the same stance every project's `Limit:` clause
+`scope` is not optional, and the tests enforce it. A figure that oversells is
+worse than no figure, which is the same stance every project's `Scope:` clause
 takes.
 
 The ffmpeg used:

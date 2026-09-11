@@ -32,14 +32,14 @@ export const DATA = {
           height: 360,
           alt: 'A point-cloud mill facade with ten camera positions and colour-coded photographed and unphotographed surfaces.',
           caption: 'A reconstruction schematic showing the input viewpoints and the surfaces they cover.',
-          limit: 'Camera positions and coverage are illustrative rather than project capture data.',
+          scope: 'Camera positions and coverage are illustrative rather than project capture data.',
         },
         tags: ["Unreal Engine 5", "NeRF", "Photogrammetry", "VR"]
       },
       { 
         title: "AWS AI/ML Scholar", 
         desc: "AWS AI/ML Scholar, Jul 2022–Jun 2023. DeepRacer top 15%.", 
-        fullDesc: "I was an AWS AI/ML Scholar from July 2022 to June 2023 and placed in the top 15% of the DeepRacer scholarship league. I trained PPO agents in the AWS simulator. Limit: Results are from the scholarship league simulator.",
+        fullDesc: "I was an AWS AI/ML Scholar from July 2022 to June 2023 and placed in the top 15% of the DeepRacer scholarship league. I trained PPO agents in the AWS simulator. Scope: Results are from the scholarship league simulator.",
         link: "https://www.linkedin.com/in/gyanateet-dutta-386215192/", 
         year: 2023,
         tags: ["AWS", "DeepRacer", "PPO", "Reinforcement Learning"]
@@ -47,21 +47,21 @@ export const DATA = {
       { 
         title: "Physics-Informed Neural Networks", 
         desc: "CUDA notebooks for Navier–Stokes and Burgers-type PDEs, plus PINN experiments.", 
-        fullDesc: "This repository contains GPU implementations of PDE solvers and physics-informed neural networks for Navier–Stokes, Burgers, and related nonlinear equations, using CUDA C++ and PyTorch. Limit: Experimental notebooks without CFD validation.",
+        fullDesc: "This repository contains GPU implementations of PDE solvers and physics-informed neural networks for Navier–Stokes, Burgers, and related nonlinear equations, using CUDA C++ and PyTorch. Scope: Experimental notebooks without CFD validation.",
         link: "https://github.com/Ryukijano/Physics-Based-DeepLearning", 
         tags: ["CUDA", "PINNs", "CFD", "Scientific Computing"]
       },
       {
         title: "B3tt3r: 3D Reconstruction",
         desc: "Mast3r + Spann3r glued together for stereo reconstruction from image pairs.",
-        fullDesc: "I combined Mast3r and Spann3r for stereo matching, depth estimation, and mesh reconstruction from image pairs. Limit: No reconstruction benchmark against the source papers.",
+        fullDesc: "I combined Mast3r and Spann3r for stereo matching, depth estimation, and mesh reconstruction from image pairs. Scope: No reconstruction benchmark against the source papers.",
         link: "https://github.com/Ryukijano/B3tt3r",
         tags: ["3D Vision", "Stereo Matching", "Python", "Deep Learning"]
       },
       {
         title: "CUDA Kernel Development",
         desc: "Daily CUDA C++ and CUDA-Q / cuQuantum kernel drills.",
-        fullDesc: "QuantumVice-M25-CUDAQuest is a practice log of CUDA C++ kernels and CUDA-Q and cuQuantum exercises. Limit: Individual exercises rather than a reusable library.",
+        fullDesc: "QuantumVice-M25-CUDAQuest is a practice log of CUDA C++ kernels and CUDA-Q and cuQuantum exercises. Scope: Individual exercises rather than a reusable library.",
         link: "https://github.com/Ryukijano/QuantumVice-M25-CUDAQuest",
         tags: ["CUDA", "cuQuantum", "GPU Computing", "C++"]
       }
@@ -103,14 +103,14 @@ export const DATA = {
           height: 962,
           alt: 'Endoscopic frames beside DINOv2 patch-norm and centre-similarity maps through an ESD sequence.',
           caption: 'DINOv2 feature diagnostics across an endoscopic submucosal dissection sequence.',
-          limit: 'Selected frames from one sequence rather than aggregate model evaluation.',
+          scope: 'Selected frames from one sequence rather than aggregate model evaluation.',
         },
         tags: ["DINOv2", "V-JEPA", "Medical AI", "Self-Supervised Learning"]
       },
       { 
         title: "Gemma-Le: VLA Policy", 
         desc: "SigLIP + Gemma 3 + ScaleDP VLA in a LeRobot fork. Hub checkpoints.", 
-        fullDesc: "I implemented a compact vision-language-action policy in a LeRobot fork, using SigLIP for vision, Gemma 3 with LoRA for language, and ScaleDP for action generation. The checkpoints were trained on the robot_sim.PickNPlace simulation dataset in LeRobot format. Limit: Evaluated on simulated pick-and-place data.",
+        fullDesc: "I implemented a compact vision-language-action policy in a LeRobot fork, using SigLIP for vision, Gemma 3 with LoRA for language, and ScaleDP for action generation. The checkpoints were trained on the robot_sim.PickNPlace simulation dataset in LeRobot format. Scope: Evaluated on simulated pick-and-place data.",
         link: "https://huggingface.co/Ryukijano/gemma-groot", 
         figure: {
           kind: 'video',
@@ -120,7 +120,7 @@ export const DATA = {
           height: 292,
           alt: 'Gemma-Le architecture with an action trajectory being denoised over 50 diffusion steps.',
           caption: 'The signal path from multimodal inputs to the ScaleDP action head.',
-          limit: 'Architecture visualisation; the trajectory does not represent a measured policy success rate.',
+          scope: 'Architecture visualisation; the trajectory does not represent a measured policy success rate.',
         },
         tags: ["Robotics", "VLA", "Gemma 3", "Diffusion Policy"]
       },
@@ -142,7 +142,7 @@ export const DATA = {
           height: 292,
           alt: 'FET-VAE pipeline with content and motion encoders, a ternary latent space, autoregressive rollout, and video reconstruction.',
           caption: 'The FET-VAE architecture used for autoregressive surgical-video prediction.',
-          limit: 'Architecture schematic with an illustrative quality-decay curve.',
+          scope: 'Architecture schematic with an illustrative quality-decay curve.',
         },
         tags: ["VAE", "Transformer", "Video Prediction", "Medical AI"]
       },
@@ -176,14 +176,14 @@ export const DATA = {
           height: 292,
           alt: 'A low-resolution road frame being upscaled by ESRGAN before YOLOv7 marks a pothole.',
           caption: 'The super-resolution and detection pipeline used in the pothole study.',
-          limit: 'Procedural road texture illustrating the method rather than output from the paper.',
+          scope: 'Procedural road texture illustrating the method rather than output from the paper.',
         },
         tags: ["YOLOv7", "ESRGAN", "Computer Vision", "Published"]
       },
       {
         title: "Hopfield Networks & TSP",
         desc: "Sole-author arXiv, 2022. HNN and HNN-SA on TSP.",
-        fullDesc: "I wrote “Solving The Travelling Salesmen Problem using HNN and HNN-SA algorithms” (arXiv:2202.13746) in February 2022. The study compares Hopfield neural networks and simulated annealing on TSP instances. Limit: Student experiments on selected TSP instances.",
+        fullDesc: "I wrote “Solving The Travelling Salesmen Problem using HNN and HNN-SA algorithms” (arXiv:2202.13746) in February 2022. The study compares Hopfield neural networks and simulated annealing on TSP instances. Scope: Student experiments on selected TSP instances.",
         link: "https://arxiv.org/abs/2202.13746",
         year: 2022,
         tags: ["Hopfield Networks", "Optimization", "TSP", "Published"]
@@ -191,14 +191,14 @@ export const DATA = {
       {
         title: "LGM: 3D Model Generation",
         desc: "Hugging Face Space wrapping LGM image-to-3D.",
-        fullDesc: "I built a Hugging Face Space for LGM (Large Gaussian Model) that generates a Gaussian-splat 3D representation from one image. Limit: Interface and deployment work around the existing LGM model.",
+        fullDesc: "I built a Hugging Face Space for LGM (Large Gaussian Model) that generates a Gaussian-splat 3D representation from one image. Scope: Interface and deployment work around the existing LGM model.",
         link: "https://huggingface.co/spaces/Ryukijano/LGM",
         tags: ["3D Generation", "Gaussian Splatting", "Hugging Face", "Image-to-3D"]
       },
       {
         title: "Deep RL & Hugging Face",
         desc: "Hugging Face Deep RL course agents: PPO, DQN, Doom, PyBullet.",
-        fullDesc: "This repository contains PPO, DQN, and related implementations from the Hugging Face Deep RL course, including experiments in Doom and PyBullet. Limit: Course exercises using established algorithms.",
+        fullDesc: "This repository contains PPO, DQN, and related implementations from the Hugging Face Deep RL course, including experiments in Doom and PyBullet. Scope: Course exercises using established algorithms.",
         link: "https://github.com/Ryukijano/Deep-Reinforcement-Learning-and-Hugging-Face",
         figure: {
           kind: 'video',
@@ -208,7 +208,7 @@ export const DATA = {
           height: 240,
           alt: 'A PPO agent playing Doom: the view swings across a canyon while the HUD tracks health and ammunition.',
           caption: 'The PPO agent in ViZDoom, eight seconds of one rollout.',
-          limit: 'One rollout from a course exercise in a scripted scenario.',
+          scope: 'One rollout from a course exercise in a scripted scenario.',
         },
         tags: ["Deep RL", "PPO", "DQN", "Hugging Face"]
       },
@@ -249,14 +249,14 @@ export const DATA = {
           height: 450,
           alt: "An H-cGQE pipeline in which a molecule becomes a graph, a policy proposes circuits, energy supplies a learning signal, and selected circuits proceed to hardware checks.",
           caption: "The H-cGQE workflow from molecular graph construction to circuit generation, optimisation, and validation.",
-          limit: "Project-authored architecture animation rather than a measured training trace.",
+          scope: "Project-authored architecture animation rather than a measured training trace.",
         },
         tags: ["GIC 2026", "CUDA-Q", "GNN", "Transformer", "QD-GRPO"],
       },
       {
         title: "Quantum Buddies",
         desc: "Small collective, 2025. Shared repos and hackathon builds.",
-        fullDesc: "I co-founded Quantum Buddies in 2025 with Sid Iliyasu and Dat Chi Le. We maintain shared repositories and collaborate on hackathon projects in quantum machine learning, error correction, genomics, and market simulation. Limit: Three-person independent collective.",
+        fullDesc: "I co-founded Quantum Buddies in 2025 with Sid Iliyasu and Dat Chi Le. We maintain shared repositories and collaborate on hackathon projects in quantum machine learning, error correction, genomics, and market simulation. Scope: Three-person independent collective.",
         link: "https://quantum-buddies.github.io",
         isBanner: true,
         year: 2025,
@@ -292,7 +292,7 @@ export const DATA = {
           height: 300,
           alt: 'Shor algorithm stages from a classical GCD check through quantum phase estimation and continued fractions.',
           caption: 'The period-finding pipeline implemented for the Quantum Rings challenge.',
-          limit: 'Phase peaks are schematic and do not reproduce a measurement histogram.',
+          scope: 'Phase peaks are schematic and do not reproduce a measurement histogram.',
         },
         tags: ["Quantum Rings", "Shor's Algorithm", "Yale"]
       },
@@ -314,14 +314,14 @@ export const DATA = {
           height: 300,
           alt: 'SQD pipeline from Krylov-state construction through sampling, configuration recovery, and subspace diagonalisation.',
           caption: 'The sample-based quantum diagonalisation pipeline used by the team.',
-          limit: 'Animated schematic with illustrative bitstrings and energy levels.',
+          scope: 'Animated schematic with illustrative bitstrings and energy levels.',
         },
         tags: ["NQCC", "VQE", "SQD", "Rolls-Royce", "Materials Science"]
       },
       { 
         title: "City of London Quantum Hackathon", 
         desc: "Finalist, Oct 2025. QCBM and quantum-walk MCMC for market simulation.", 
-        fullDesc: "Quantum Buddies reached the final of the City of London Lord Mayor’s Quantum Hackathon in October 2025. We developed differentiable QCBMs and quantum-walk MCMC methods for market simulation. Limit: Hackathon prototype evaluated as a simulation.",
+        fullDesc: "Quantum Buddies reached the final of the City of London Lord Mayor’s Quantum Hackathon in October 2025. We developed differentiable QCBMs and quantum-walk MCMC methods for market simulation. Scope: Hackathon prototype evaluated as a simulation.",
         link: "https://news.cityoflondon.gov.uk/quantum-meets-finance-hackathon-sparks-next-generation-solutions-in-the-city/", 
         year: 2025,
         tags: ["Finalist", "QCBM", "Finance", "Quantum Walk MCMC"]
@@ -329,14 +329,14 @@ export const DATA = {
       {
         title: "Quantum Continuous Thought Machines",
         desc: "Hybrid quantum–classical recurrent sketch under Quantum Buddies.",
-        fullDesc: "This repository explores a recurrent hybrid architecture that combines parameterised quantum circuits with a continuous-state loop. Limit: Early implementation without a publication or benchmark.",
+        fullDesc: "This repository explores a recurrent hybrid architecture that combines parameterised quantum circuits with a continuous-state loop. Scope: Early implementation without a publication or benchmark.",
         link: "https://github.com/Ryukijano/quantum-continuous-thought-machines",
         tags: ["QCTM", "Hybrid Quantum", "Recurrent Networks", "Reasoning"]
       },
       {
         title: "Quantum Error Correction",
         desc: "Surface-code experiments in Stim.",
-        fullDesc: "These experiments use Stim to study stabiliser circuits, surface codes, and decoding. Limit: Simulator experiments with established codes.",
+        fullDesc: "These experiments use Stim to study stabiliser circuits, surface codes, and decoding. Scope: Simulator experiments with established codes.",
         link: "https://github.com/Ryukijano/quantum-error-correction",
         figure: {
           kind: 'video',
@@ -346,14 +346,14 @@ export const DATA = {
           height: 360,
           alt: 'A surface-code error path activates detectors before a decoder draws a proposed correction.',
           caption: 'How a decoder infers a correction from the detector events at each end of an error path.',
-          limit: 'Illustrative fault path and decoder response rather than a recorded run.',
+          scope: 'Illustrative fault path and decoder response rather than a recorded run.',
         },
         tags: ["QEC", "Surface Code", "Stim", "Error Correction"]
       },
       {
         title: "Qiskit on Qubit",
         desc: "Qiskit notebooks: algorithms, variational circuits, a bit of QML.",
-        fullDesc: "A collection of Qiskit notebooks covering quantum algorithms, variational circuits, and quantum machine learning. Limit: Personal study notes and tutorials.",
+        fullDesc: "A collection of Qiskit notebooks covering quantum algorithms, variational circuits, and quantum machine learning. Scope: Personal study notes and tutorials.",
         link: "https://github.com/Ryukijano/Qiskit_on_Qubit",
         tags: ["Qiskit", "Quantum Algorithms", "IBM Quantum", "Tutorials"]
       },

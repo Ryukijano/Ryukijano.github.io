@@ -243,8 +243,8 @@ describe('case-study figures', () => {
     );
   });
 
-  it('every figure declares dimensions, alt text and its own limit', () => {
-    // A figure without dimensions shifts the page; one without a limit
+  it('every figure declares dimensions, alt text and its own scope', () => {
+    // A figure without dimensions shifts the page; one without a scope note
     // oversells the work, which is the opposite of this site's whole stance.
     for (const p of allProjects().filter((x) => x.figure)) {
       const f = p.figure;
@@ -253,7 +253,7 @@ describe('case-study figures', () => {
       expect(typeof f.height, p.title).toBe('number');
       expect(f.alt, p.title).toBeTruthy();
       expect(f.caption, p.title).toBeTruthy();
-      expect(f.limit, p.title).toBeTruthy();
+      expect(f.scope, p.title).toBeTruthy();
       if (f.kind === 'video') expect(f.poster, p.title).toBeTruthy();
     }
   });
