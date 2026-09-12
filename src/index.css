@@ -337,26 +337,26 @@
   /* Capped so the print always keeps paper margin instead of going full-bleed
      in a narrow window. */
   /*
-   * 29rem is the measured height of everything that is not the plate: the
-   * stage's top padding, the slip (name, degree, handles, gloss, bio, caption)
-   * and the block's own gutters. It was 23rem, which left the page scrolling
-   * by ~91px at every common desktop size.
+   * 33rem is the measured height of everything that is not the plate: the
+   * stage's top padding, the slip (name, degree, handles, names line, bio,
+   * caption) and the block's own gutters. It was 29rem before the slip gained
+   * the names line and a fuller bio, which moved the whole constant up.
    *
    * The constraint is circular -- plate width derives from the height budget,
    * the slip's width equals the plate's, and the slip's HEIGHT depends on its
-   * width because the bio rewraps -- and below a 465px plate it diverges
+   * width because the bio rewraps -- and below a ~530px plate it diverges
    * rather than settling. CSS cannot solve it: sizing the plate from a grid
    * row needs the row height, which needs the slip height, which needs the
-   * plate width. So the constant stays, and the stacked breakpoint at 719px
-   * fences off the band where it stops holding. 29rem is then exact at every
-   * height from 720 up, which tests/browser/layout.spec.js asserts either side
+   * plate width. So the constant stays, and the stacked breakpoint at 799px
+   * fences off the band where it stops holding. 33rem is then exact at every
+   * height from 800 up, which tests/browser/layout.spec.js asserts either side
    * of the boundary -- adding a line to the slip fails loudly rather than
    * quietly scrolling.
    */
   --folio-plate: min(
     100% - 3rem,
     76rem,
-    calc((100dvh - 29rem) * 3923 / 2160 + 2 * var(--folio-gutter))
+    calc((100dvh - 33rem) * 3923 / 2160 + 2 * var(--folio-gutter))
   );
   --page-measure: var(--folio-plate);
 }
@@ -633,6 +633,16 @@
   color: var(--color-seal);
 }
 
+.folio__names {
+  margin: 0.1rem 0 0;
+  max-width: var(--measure-read);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.02em;
+  line-height: 1.45;
+  color: var(--color-ink-muted);
+}
+
 .folio__bio {
   margin: 0.15rem 0 0;
   max-width: var(--measure-read);
@@ -664,12 +674,12 @@
 /*
  * Stacked below either breakpoint. The height half matters as much as the
  * width half: the plate is sized from leftover HEIGHT, so a wide, short window
- * used to keep the hung layout and collapse the print to a sliver. 720px is
+ * used to keep the hung layout and collapse the print to a sliver. 800px is
  * measured, not chosen -- see PLATE_MIN_HEIGHT_PX in src/data/plate.js for why
  * the constraint diverges below it. tests/tokens.test.js holds these two
  * numbers to the `sizes` attribute, which has to describe the same layout.
  */
-@media (max-width: 899px), (max-height: 719px) {
+@media (max-width: 899px), (max-height: 799px) {
   .folio__stage {
     padding-top: 3.5rem;
   }

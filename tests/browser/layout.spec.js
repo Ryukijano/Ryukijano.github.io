@@ -78,15 +78,15 @@ test.describe('the home page fits one screen', () => {
   // the fold at every common desktop size. This is the assertion that makes
   // that loud.
   //
-  // 1440x720 is the boundary and belongs in this list permanently: the budget
+  // 1440x800 is the boundary and belongs in this list permanently: the budget
   // is exact there and has zero slack, so it is the first viewport that fails
   // when the slip grows. The 950-1150 widths are here because the first
   // version of this list was five viewports that all happened to wrap the bio
   // identically, which made a constant tuned at one wrap point look verified
   // at five.
   for (const [w, h] of [
-    [1440, 720], [950, 760], [1024, 768], [1100, 740], [1150, 800],
-    [1440, 900], [1366, 768], [1280, 800], [1600, 1000], [1920, 1080],
+    [1440, 800], [950, 840], [1024, 820], [1100, 800], [1150, 840],
+    [1440, 900], [1366, 810], [1280, 820], [1600, 1000], [1920, 1080],
   ]) {
     test(`at ${w}x${h}`, async ({ page }) => {
       await page.setViewportSize({ width: w, height: h });
@@ -102,13 +102,13 @@ test.describe('the home page fits one screen', () => {
 
 test.describe('the stacked breakpoint fences off the band it has to', () => {
   /*
-   * Below 720px tall the height budget stops holding: the plate narrows, the
+   * Below 800px tall the height budget stops holding: the plate narrows, the
    * bio rewraps, the slip grows, the plate narrows again. The stacked layout
    * is the fence. If its height half is ever dropped back to a width-only
    * query, the hung print returns at these sizes and the page silently scrolls
    * by 40-100px at EVERY width -- which is how it shipped before.
    */
-  for (const [w, h] of [[1440, 700], [1280, 660], [960, 640], [1920, 719]]) {
+  for (const [w, h] of [[1440, 790], [1280, 760], [960, 740], [1920, 799]]) {
     test(`at ${w}x${h} the print is stacked, not hung`, async ({ page }) => {
       await page.setViewportSize({ width: w, height: h });
       await page.goto('/');

@@ -111,6 +111,10 @@ export default function HomePage() {
                 </span>
               ))}
             </nav>
+            <p className="folio__names">
+              I build and publish as Ryukijano; Yana names the vision work, Ryoushi the quantum
+              collective I co-founded.
+            </p>
             <p className="folio__bio">{ACADEMIC_BIO.statement}</p>
             <p className="folio__caption">
               <Marked text={PLATE.caption} highlight={PLATE.highlight} />

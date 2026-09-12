@@ -150,5 +150,5 @@ export const ACADEMIC_BIO = {
   name: 'Gyanateet Dutta',
   role: 'Research technician · University of Leeds',
   statement:
-    'I am a research technician at the University of Leeds, working on computer vision for surgical video. My interests include learning from sparsely labelled data, efficient inference, and hybrid quantum–classical algorithms.',
+    'I am a research technician at the University of Leeds, working on self-supervised computer vision for surgical video — first author of an ISBI 2026 paper on surgical phase recognition. I also work on hybrid quantum–classical algorithms with Ryoushi / Quantum Buddies, most recently H-cGQE for the GIC 2026 advanced-materials track.',
 };

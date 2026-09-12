@@ -1,7 +1,7 @@
 // Keep these values aligned with the folio media queries in index.css.
-export const PLATE_HEIGHT_BUDGET_REM = 29;
+export const PLATE_HEIGHT_BUDGET_REM = 33;
 export const PLATE_MIN_WIDTH_PX = 900;
-export const PLATE_MIN_HEIGHT_PX = 720;
+export const PLATE_MIN_HEIGHT_PX = 800;
 export const PLATE_ASPECT = [3923, 2160];
 
 const ASPECT = (PLATE_ASPECT[0] / PLATE_ASPECT[1]).toFixed(4);
