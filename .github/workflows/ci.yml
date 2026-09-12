@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: ['main']
+  # So deploy.yml can depend on this exact job rather than polling the checks
+  # API. workflow_run would resolve the definition from the default branch and
+  # never surface on a PR.
+  workflow_call:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      # Design tokens, the focus-ring measurement, and the content invariants
+      # that do not need a browser. `npm run build` has to come first because
+      # link-health asserts against dist/.
+      - name: Build
+        run: npm run build
+
+      - name: Unit and contract tests
+        run: npm test
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: pw-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: pw-${{ runner.os }}-
+
+      - run: npx playwright install --with-deps chromium
+
+      - name: Layout and accessibility
+        run: npx playwright test
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-traces
+          path: test-results/
+          retention-days: 7

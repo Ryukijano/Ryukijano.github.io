@@ -6,4 +6,24 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   base: '/', // For GitHub Pages user site (username.github.io)
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    strictPort: true,
+    allowedHosts: true,
+  },
+  preview: {
+    host: '0.0.0.0',
+    port: 5173,
+    strictPort: true,
+    allowedHosts: true,
+  },
+
+  test: {
+    // Node only. tests/browser/* are Playwright specs, driven by
+    // playwright.config.js — vitest must not try to collect them.
+    environment: 'node',
+    include: ['tests/*.test.js'],
+    exclude: ['tests/browser/**', 'node_modules/**', 'dist/**'],
+  },
 })

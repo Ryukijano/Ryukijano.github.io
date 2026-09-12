@@ -1,150 +1,1379 @@
 @import "tailwindcss";
 
+/*
+ * Self-hosted, same origin. Google Fonts cost two sequential round trips
+ * before text could paint in its intended face -- render-blocking CSS from one
+ * third-party origin, then the font files from another -- for 1.3 kB of CSS.
+ *
+ * The upright serif keeps its opsz axis (+71 kB): 41.6px display against 17px
+ * body is real optical work, and that face is the site. The italic drops it
+ * (-110 kB, 130 kB -> 20 kB): it sets venue names on /academic at 17px, where
+ * an 8..60 axis has nothing to do. That split is only possible self-hosted --
+ * Google's API returns HTTP 400 for a per-style axis tuple.
+ *
+ * Dropped entirely, because src/index.css never asks for them: Plex Mono 500
+ * and italic, Plex Sans 500 and 600.
+ */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/source-serif-4-upright-var.woff2') format('woff2-variations');
+}
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/source-serif-4-italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/ibm-plex-sans-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/ibm-plex-sans-italic-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2');
+}
+
+/*
+ * A fallback whose metrics match Source Serif 4, so the swap does not move any
+ * line. Computed from both fonts' OS/2 tables against Times New Roman
+ * (xAvgCharWidth 558/1000 vs 1069/2048; ascent 1036, descent 335, no line gap).
+ * Case-study pages are entirely text, so without this every line shifts when
+ * the serif arrives.
+ */
+@font-face {
+  font-family: 'Source Serif Fallback';
+  src: local('Times New Roman'), local('Palatino Linotype'), local('Palatino'), local('Georgia');
+  size-adjust: 106.90%;
+  ascent-override: 96.91%;
+  descent-override: 31.34%;
+  line-gap-override: 0%;
+}
+
+/*
+ * Palette is specified by the print, not a default: washi paper, the wave's
+ * Prussian/indigo ink, and the artist's vermilion seal. One accent only.
+ */
 @theme {
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Source Serif 4", "Source Serif Pro", Palatino, "Palatino Linotype", "Times New Roman", serif;
+  --font-serif: "Source Serif 4", "Source Serif Fallback", Palatino, "Times New Roman", serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --color-washi: #e6e1d3;
-  --color-indigo-ink: #1a237e;
-  --color-magenta: #ff2e63;
-  --color-work-ink: #11110e;
-  --color-work-cream: #e6e1d3;
-  --color-work-muted: #9a9588;
-  --color-work-rule: rgba(230, 225, 211, 0.16);
-  --color-hall-center: #2a2a2a;
-  --color-ryoushi-bg: #050505;
-  --color-academic-ink: #16140f;
-  --color-academic-muted: rgba(26, 35, 126, 0.55);
-  --color-academic-rule: rgba(26, 35, 126, 0.18);
+  --color-washi-deep: #d9d3c2;
+  --color-washi-lift: #ece8dc;
+  --color-ink: #1a237e;
+  --color-ink-muted: #535896;
+  --color-rule: rgba(26, 35, 126, 0.18);
+  --color-seal: #a8301b;
+  --color-seal-bright: #c8452c;
+}
+
+/* 1.25 modular scale on a 17px body. */
+:root {
+  --step--2: 0.72rem;
+  --step--1: 0.85rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.33rem;
+  --step-2: 1.66rem;
+  --step-3: 2.07rem;
+  --step-4: 2.6rem;
+  --step-5: 3.24rem;
+  --measure: 40rem;
+  --measure-wide: 58rem;
+  /* The sheet is --measure; the column of running text is narrower. */
+  --measure-read: 34rem;
+  --hairline: 1px solid var(--color-rule);
+
+  /* Space on a 1.6 ratio, so it rhymes with the 1.25 type scale. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.85rem;
+  --space-4: 1.35rem;
+  --space-5: 2.05rem;
+  --space-6: 3.2rem;
+
+  /* The trim size of the current sheet. Each page sets this; the nav reads it
+     so the bar, the text column and the kento marks agree on one edge. */
+  --page-measure: var(--measure);
 }
 
 @layer base {
+  html {
+    /* A woodblock print on washi has no dark variant. Declaring light keeps
+       scrollbars and <details> markers from rendering dark on cream. */
+    color-scheme: light;
+    background: var(--color-washi);
+    color: var(--color-ink);
+  }
+
   body {
+    font-family: var(--font-serif);
+    font-size: var(--step-0);
+    line-height: 1.6;
+    font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    /* No overflow-x: hidden. It hid horizontal overflow rather than preventing
+       it, which turns a layout bug into a mystery. tests/browser/layout.spec.js
+       asserts scrollWidth at nine viewports instead, so overflow is now loud. */
+  }
+
+  a {
+    color: inherit;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+    transition:
+      color 150ms ease,
+      text-decoration-color 150ms ease;
+  }
+
+  a:hover {
+    text-decoration-color: currentColor;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-seal);
+    outline-offset: 3px;
+  }
+
+  /* Focused programmatically on every route change so screen readers and
+     keyboard users land in the content; it is not a user-visible affordance. */
+  #main:focus {
+    outline: none;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-seal) 22%, transparent);
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
   }
 }
 
-/* Custom xs breakpoint for very small screens */
-@media (min-width: 480px) {
-  .xs\:inline {
-    display: inline !important;
-  }
-  .xs\:hidden {
-    display: none !important;
-  }
+/* --------------------------------------------------------- utilities */
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 100;
+  padding: 0.4rem 0.7rem;
+  background: var(--color-washi-lift);
+  border: var(--hairline);
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
 }
 
-/* Hide xs:hidden by default (show on <480px) */
-.xs\:hidden {
-  display: inline;
+.skip:focus-visible {
+  top: 0.5rem;
 }
-.xs\:inline {
+
+.seal {
+  display: inline-grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 3px;
+  background: var(--color-seal-bright);
+  color: var(--color-washi-lift);
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+  user-select: none;
+}
+
+/* --------------------------------------------------------- route fade */
+
+.route {
+  animation: route-in 240ms ease-out both;
+}
+
+@keyframes route-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* --------------------------------------------------------- atmosphere */
+
+.atmo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  /* Under the text layer (.print__body is z-index 1). Grain is fibre in the
+     sheet; ink is printed on top of the fibre, not under it. */
+  z-index: 0;
+}
+
+/* The wash is light falling on the room, so it belongs to the viewport --
+   fixed, not absolute, or a 3000px page turns a page-edge vignette into an
+   arbitrary gradient down the scroll. */
+.atmo__wash {
+  position: fixed;
+  inset: -1px;
+  background:
+    radial-gradient(80% 40% at 50% -10%, color-mix(in srgb, var(--color-ink) 6%, transparent), transparent 62%),
+    radial-gradient(150% 110% at 50% 118%, transparent 60%, color-mix(in srgb, var(--color-ink) 4%, transparent) 100%);
+}
+
+.atmo__grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  opacity: 0.055;
+  mix-blend-mode: soft-light;
+}
+
+/* --------------------------------------------------------- site nav */
+
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--color-washi);
+  border-bottom: var(--hairline);
+}
+
+/* Home only: a washi veil so the plate reads through the bar. No blur. */
+.site-nav--veil {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: color-mix(in srgb, var(--color-washi) 72%, transparent);
+  isolation: isolate;
+}
+
+.site-nav__bar {
+  margin: 0 auto;
+  display: flex;
+  height: 3rem;
+  /* Not a fixed 72rem: the bar's edge must land on the text column's edge,
+     where .print__body::after draws the kagi mark. */
+  max-width: var(--page-measure);
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0.9rem 1.5rem 0;
+}
+
+/* On the type scale, and baseline-aligned with the nav links rather than
+   sitting 1.4px away from them in a different family. */
+.site-nav__wordmark {
+  font-family: var(--font-serif);
+  font-size: var(--step-0);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.site-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+}
+
+.site-nav__links a {
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+}
+
+.site-nav__links a:hover,
+.site-nav__links a.is-active {
+  text-decoration-color: currentColor;
+}
+
+.site-nav__links a.is-active {
+  color: var(--color-seal);
+}
+
+/* --------------------------------------------------------- folio (home) */
+
+/*
+ * Ukiyo-e registration. The plate sits on an untrimmed paper block; kagi
+ * and hikitsuke live in that margin, not on the art. Bio is one slip under
+ * the object. Left / centre / right of the plate read as a pipeline:
+ * Real world → Encoding → Digital. Block width is min(viewport,
+ * height-budget × 3923/2160 + gutters) so the sheet fills without
+ * cropping a lane.
+ */
+.folio {
+  position: relative;
+  min-height: 100dvh;
+  --folio-gutter: 1rem;
+  /* 2.7rem, not 2.55rem: the chip's stage line + handle line measure 41.7px
+     and the old value gave 40.8px -- one pixel short of showing both. */
+  --folio-gutter-bottom: 2.7rem;
+  /* Capped so the print always keeps paper margin instead of going full-bleed
+     in a narrow window. */
+  /*
+   * 33rem is the measured height of everything that is not the plate: the
+   * stage's top padding, the slip (name, degree, handles, names line, bio,
+   * caption) and the block's own gutters. It was 29rem before the slip gained
+   * the names line and a fuller bio, which moved the whole constant up.
+   *
+   * The constraint is circular -- plate width derives from the height budget,
+   * the slip's width equals the plate's, and the slip's HEIGHT depends on its
+   * width because the bio rewraps -- and below a ~530px plate it diverges
+   * rather than settling. CSS cannot solve it: sizing the plate from a grid
+   * row needs the row height, which needs the slip height, which needs the
+   * plate width. So the constant stays, and the stacked breakpoint at 799px
+   * fences off the band where it stops holding. 33rem is then exact at every
+   * height from 800 up, which tests/browser/layout.spec.js asserts either side
+   * of the boundary -- adding a line to the slip fails loudly rather than
+   * quietly scrolling.
+   */
+  --folio-plate: min(
+    100% - 3rem,
+    76rem,
+    calc((100dvh - 33rem) * 3923 / 2160 + 2 * var(--folio-gutter))
+  );
+  --page-measure: var(--folio-plate);
+}
+
+.folio__stage {
+  box-sizing: border-box;
+  min-height: 100dvh;
+  padding-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.folio__print {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Optically centred: flex-end bottom-justified the print and left the empty
+     paper directly under the nav, which is where the eye lands. */
+  justify-content: safe center;
+}
+
+.folio__block {
+  position: relative;
+  box-sizing: border-box;
+  width: var(--folio-plate);
+  padding: var(--folio-gutter) var(--folio-gutter) var(--folio-gutter-bottom);
+  color: inherit;
+}
+
+.folio__sheet {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3923 / 2160;
+  background: var(--color-washi-deep);
+  box-shadow: 0 0 0 1px var(--color-rule);
+}
+
+/* The film belongs to the print, not to the page: grain over the plate,
+   never over the serif in the title slip below it. */
+.folio__sheet-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  opacity: 0.055;
+  mix-blend-mode: soft-light;
+}
+
+.folio__sheet img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  max-width: none;
+}
+
+.folio__kento {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  box-sizing: content-box;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.folio__kento--hikitsuke {
+  left: calc(var(--folio-gutter) + 0.4rem);
+  bottom: calc(var(--folio-gutter-bottom) - 4px);
+  width: 1.2rem;
+  height: 1px;
+}
+
+.folio__kento--kagi {
+  right: calc(var(--folio-gutter) - 12px);
+  bottom: calc(var(--folio-gutter-bottom) - 12px);
+  width: 10px;
+  height: 10px;
+  background: transparent;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+}
+
+.folio__thirds {
+  position: absolute;
+  top: var(--folio-gutter);
+  left: var(--folio-gutter);
+  right: var(--folio-gutter);
+  bottom: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.folio__lane {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  min-height: 0;
+  min-width: 0;
+}
+
+.folio__lane.is-on::after,
+.folio__lane:hover::after,
+.folio__lane:focus-visible::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 var(--folio-gutter-bottom) 0;
+  box-shadow:
+    inset 0 0 0 2px var(--color-washi),
+    inset 0 0 0 4px var(--color-ink);
+  pointer-events: none;
+}
+
+.folio__lane:focus-visible {
+  outline: none;
+}
+
+/* A seal rule in the bottom gutter -- paper we control, so the state is
+   legible regardless of what the plate is doing behind the ring. */
+.folio__lane:focus-visible::before {
+  content: '';
+  position: absolute;
+  left: 0.15rem;
+  right: 0.15rem;
+  bottom: 0;
+  height: 2px;
+  background: var(--color-seal);
+  z-index: 3;
+}
+
+.folio__chip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--folio-gutter-bottom);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.12rem;
+  padding: 0.32rem 0.15rem 0;
+  overflow: visible;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  /* Quiet at rest: three labelled fields on first paint reads as a form. */
+  opacity: 0;
+  transition: opacity 150ms ease, color 150ms ease;
+}
+
+.folio__chip::before {
+  content: '';
+  width: 1px;
+  height: 0.32rem;
+  background: currentColor;
+}
+
+.folio__chip-who {
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--color-ink-muted);
+}
+
+.folio__lane:hover .folio__chip,
+.folio__lane.is-on .folio__chip,
+.folio__lane:focus-visible .folio__chip {
+  opacity: 1;
+  color: var(--color-seal);
+}
+
+/* Hairline pipeline arrows in the gutter between thirds. */
+.folio__arrow {
+  position: absolute;
+  left: -0.8rem;
+  top: 1.05rem;
+  width: 1.6rem;
+  height: 1px;
+  background: currentColor;
+  color: var(--color-ink-muted);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease, color 150ms ease;
+}
+
+.folio__arrow::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.folio__lane:hover .folio__arrow,
+.folio__lane.is-on .folio__arrow,
+.folio__lane:focus-visible .folio__arrow,
+.folio__lane:hover + .folio__lane .folio__arrow,
+.folio__lane.is-on + .folio__lane .folio__arrow,
+.folio__lane:focus-visible + .folio__lane .folio__arrow {
+  color: var(--color-seal);
+  opacity: 0.85;
+}
+
+/* Daisen title slip under the plate. */
+.folio__slip {
+  position: relative;
+  width: var(--folio-plate);
+  box-sizing: border-box;
+  margin: 0.25rem 0 1.5rem;
+  padding: 0.95rem 1.2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  background: var(--color-washi-lift);
+  border: var(--hairline);
+}
+
+.folio__slip-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.folio__name {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--step-3);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.folio__degree {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  color: var(--color-ink-muted);
+}
+
+.folio__handles {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  color: var(--color-ink-muted);
+}
+
+.folio__handles a {
+  text-decoration: none;
+}
+
+.folio__handles-rule {
+  margin: 0 0.45em;
+  opacity: 0.45;
+}
+
+.folio__handles a:hover,
+.folio__handles a.is-on,
+.folio__handles a:focus-visible {
+  color: var(--color-seal);
+}
+
+.folio__names {
+  margin: 0.1rem 0 0;
+  max-width: var(--measure-read);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.02em;
+  line-height: 1.45;
+  color: var(--color-ink-muted);
+}
+
+.folio__bio {
+  margin: 0.15rem 0 0;
+  max-width: var(--measure-read);
+  font-size: var(--step-0);
+  line-height: 1.5;
+}
+
+.folio__caption {
+  margin: 0.25rem 0 0;
+  max-width: 72ch;
+  padding-top: 0.4rem;
+  border-top: 1px dashed var(--color-rule);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.02em;
+  line-height: 1.55;
+  color: var(--color-ink-muted);
+}
+
+.folio__mark {
+  color: var(--color-seal);
+}
+
+/* Hung: the ticks live in the overlay's gutter, so the key is not drawn. */
+.folio__key {
   display: none;
 }
 
-/* Line clamp utilities */
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+/*
+ * Stacked below either breakpoint. The height half matters as much as the
+ * width half: the plate is sized from leftover HEIGHT, so a wide, short window
+ * used to keep the hung layout and collapse the print to a sliver. 800px is
+ * measured, not chosen -- see PLATE_MIN_HEIGHT_PX in src/data/plate.js for why
+ * the constraint diverges below it. tests/tokens.test.js holds these two
+ * numbers to the `sizes` attribute, which has to describe the same layout.
+ */
+@media (max-width: 899px), (max-height: 799px) {
+  .folio__stage {
+    padding-top: 3.5rem;
+  }
+
+  .folio__print {
+    flex: none;
+    padding: 0 1rem;
+  }
+
+  /*
+   * Stacked, the print is still sized from height first: full bleed on a
+   * phone, but in a wide, short window (a laptop with a dock, a docked
+   * devtools pane) full bleed would be a 1376px plate that puts the name a
+   * whole screen down. 17rem is the nav, the key, the block's margins and the
+   * first lines of the slip; 20rem is the floor at which the sheet is still a
+   * print and not a sliver. The slip shares the width, as a daisen slip does.
+   */
+  .folio {
+    --folio-stacked: clamp(
+      20rem,
+      calc((100dvh - 17rem) * 3923 / 2160 + 2 * var(--folio-gutter)),
+      100%
+    );
+  }
+
+  /* The bottom margin now holds only the kento marks; the key sits above it
+     in flow, so the block grows with the key rather than clipping it. */
+  .folio__block {
+    width: var(--folio-stacked);
+    padding-bottom: 1.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* The overlay goes; the plate is too narrow to aim at. The marks stay --
+     they are what says this is a print and not a picture. */
+  .folio__thirds {
+    display: none;
+  }
+
+  .folio__kento--hikitsuke {
+    bottom: 0.6rem;
+  }
+
+  .folio__kento--kagi {
+    bottom: 0.25rem;
+  }
+
+  /* Print, then key, then slip -- the figure before its caption, as on the
+     hung layout. The slip used to come first, which put "the plate reads left
+     to right" above a plate the reader had not reached. */
+  .folio__slip {
+    width: var(--folio-stacked);
+    margin: 0 0 2.5rem;
+    padding: 1.1rem 1.15rem 1.15rem;
+  }
+
+  /*
+   * The plate key. Same tick, stage word and handle as .folio__chip, same
+   * hairline arrows, but laid out under the sheet as a legend: three lanes
+   * with the arrows in their own columns so the sequence reads even when a
+   * stage word has to wrap. Each lane is the tap target -- there is no
+   * separate list to duplicate it.
+   */
+  .folio__key {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: start;
+    margin-top: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .folio__key-lane {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.12rem;
+    min-height: 44px;
+    padding: 0.2rem 0.15rem 0.3rem;
+    text-align: center;
+    text-decoration: none;
+    text-wrap: balance;
+  }
+
+  .folio__key-lane::before {
+    content: '';
+    width: 1px;
+    height: 0.32rem;
+    background: currentColor;
+  }
+
+  .folio__key-who {
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--color-ink-muted);
+  }
+
+  .folio__key-lane:hover,
+  .folio__key-lane:focus-visible {
+    color: var(--color-seal);
+  }
+
+  /* Sits on the stage word's centre line: lane padding + tick + gap + half a
+     line of --step--2 at 1.2 line-height. */
+  .folio__key-arrow {
+    position: relative;
+    width: 1.4rem;
+    height: 1px;
+    margin-top: 1.05rem;
+    background: currentColor;
+    color: var(--color-ink-muted);
+    opacity: 0.55;
+  }
+
+  .folio__key-arrow::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: 50%;
+    width: 4px;
+    height: 4px;
+    border-top: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .folio__key-lane:hover + .folio__key-arrow,
+  .folio__key-lane:focus-visible + .folio__key-arrow,
+  .folio__key-arrow:has(+ .folio__key-lane:hover),
+  .folio__key-arrow:has(+ .folio__key-lane:focus-visible) {
+    color: var(--color-seal);
+    opacity: 0.85;
+  }
+}
+
+/* --------------------------------------------------------- print pages */
+
+.print {
+  position: relative;
+  min-height: 100dvh;
+}
+
+.print__body {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 6rem;
+}
+
+.print__body--narrow {
+  max-width: var(--measure);
+}
+
+.print__body--wide {
+  max-width: var(--measure-wide);
+}
+
+/* Kento ticks in the page margin. content-box so the rules survive the reset. */
+.print__body::before {
+  content: '';
+  position: absolute;
+  top: 1.25rem;
+  left: 0.35rem;
+  width: 11px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.4;
+}
+
+.print__body::after {
+  content: '';
+  position: absolute;
+  right: 0.35rem;
+  bottom: 1.5rem;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  opacity: 0.4;
+  box-sizing: content-box;
+}
+
+/* One h1 per sheet, one size. A person's name on /academic and a project title
+   on /work/<slug> never share a page, so there is no hierarchy to draw between
+   them; the two class names mark what the heading is, not how big it is. */
+.print__name,
+.print__title {
+  font-family: var(--font-serif);
+  font-size: var(--step-4);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+}
+
+.print__kicker,
+.print__crumb {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-muted);
+}
+
+.print__crumb {
+  margin-bottom: 2rem;
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+}
+
+.print__role {
+  margin-top: 0.7rem;
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  color: var(--color-ink-muted);
+}
+
+.print__role--italic {
+  font-style: italic;
+}
+
+.print__lede {
+  margin-top: var(--space-4);
+  max-width: var(--measure-read);
+  font-size: var(--step-1);
+  line-height: 1.5;
+}
+
+.print__lede--muted {
+  max-width: 48ch;
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  color: var(--color-ink-muted);
+}
+
+.print__links,
+.print__foot {
+  margin-top: 1.4rem;
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+}
+
+.print__foot {
+  margin-top: var(--space-6);
+  color: var(--color-ink-muted);
+}
+
+/* The same edge the nav bar lands on, at the foot of the sheet. */
+.print__footer {
+  position: relative;
+  z-index: 1;
+  max-width: var(--page-measure);
+  margin: 0 auto;
+  padding: 0 1.5rem 2.5rem;
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  color: var(--color-ink-muted);
+}
+
+.print__footer nav {
+  padding-top: 0.9rem;
+  border-top: var(--hairline);
+}
+
+.print__footer-rule {
+  margin: 0 0.45em;
+  opacity: 0.45;
+}
+
+.print__section {
+  margin-top: var(--space-6);
+}
+
+.print__section > h2 {
+  font-family: var(--font-serif);
+  font-size: var(--step-1);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  padding-bottom: var(--space-2);
+  border-bottom: var(--hairline);
+}
+
+/* Same idiom as .catalog__year, so a minor list reads as minor. */
+.print__also {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.04em;
+  color: var(--color-ink-muted);
+}
+
+.print__also::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-rule);
+}
+
+.print__section > p,
+.print__stack {
+  margin-top: 1rem;
+}
+
+.print__stack {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.print__note {
+  margin-top: 0.35rem;
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--color-ink-muted);
+}
+
+.print__pubs {
+  list-style: none;
+  margin-top: 0.4rem;
+}
+
+.print__pub {
+  margin-top: var(--space-4);
+  max-width: var(--measure-read);
+  padding-left: 2rem;
+  text-indent: -2rem;
+  line-height: 1.55;
+}
+
+.print__pub-note {
+  margin-top: 0.35rem;
+  text-indent: 0;
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--color-ink-muted);
+}
+
+.print__pub details summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.print__pub details summary::-webkit-details-marker {
+  display: none;
+}
+
+.print__pub details summary::before {
+  content: '+';
+  font-family: var(--font-mono);
+}
+
+.print__pub details[open] summary::before {
+  content: '−';
+}
+
+.print__pub pre {
+  margin-top: 0.6rem;
+  padding: 0.75rem 0.9rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--color-ink);
+  background: var(--color-washi-lift);
+  border: var(--hairline);
+}
+
+.print__ghost {
+  margin-top: 0.45rem;
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.print__timeline {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.print__timeline li {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr);
+  gap: 1.25rem;
+  line-height: 1.45;
+}
+
+.print__timeline li > span:first-child {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-muted);
+}
+
+.print__body-copy {
+  margin-top: var(--space-5);
+  max-width: var(--measure-read);
+  font-size: var(--step-0);
+  line-height: 1.65;
+}
+
+.print__body-copy p + p {
+  margin-top: 1.1rem;
+}
+
+.print__meta {
+  margin-top: var(--space-6);
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+}
+
+.print__meta > div {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-top: var(--hairline);
+}
+
+.print__meta dt {
+  color: var(--color-ink-muted);
+}
+
+/* Year + lane cartouche above a case-study title. */
+.cartouche {
+  display: inline-flex;
+  align-items: center;
+  border: var(--hairline);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-muted);
+}
+
+.cartouche > span {
+  padding: 0.35rem 0.7rem;
+}
+
+.cartouche > span + span {
+  border-left: var(--hairline);
+}
+
+.cartouche + .print__title {
+  margin-top: 1.1rem;
+}
+
+/* Evaluation scope, once, labelled. */
+.scope {
+  margin-top: var(--space-5);
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding-top: 0.9rem;
+  border-top: var(--hairline);
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  line-height: 1.55;
+}
+
+.scope__label {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-seal);
+  padding-top: 0.15rem;
+}
+
+/* --------------------------------------------------------- case-study plate */
+
+/*
+ * A figure treated as a hung print, the same way the home page's plate is: an
+ * untrimmed block whose padding is the paper margin, one kento mark in that
+ * margin, and a caption slip beneath. Sits after the first paragraph, never
+ * above the title -- the title is still the page.
+ */
+.plate {
+  position: relative;
+  box-sizing: border-box;
+  margin: var(--space-5) 0 0;
+  padding: var(--space-3) var(--space-3) 0;
+  background: var(--color-washi-lift);
+  border: var(--hairline);
+}
+
+.plate__sheet {
+  position: relative;
+  width: 100%;
+  background: var(--color-washi-deep);
+  box-shadow: 0 0 0 1px var(--color-rule);
   overflow: hidden;
 }
 
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.plate__sheet img,
+.plate__sheet video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Pixel art and low-resolution captures: keep them crisp rather than
+     letting the browser smear them at 2x. */
+  image-rendering: crisp-edges;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+.plate__slip {
+  display: grid;
+  grid-template-columns: 3.6rem minmax(0, 1fr);
+  gap: 0 var(--space-3);
+  padding: var(--space-3) 0;
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--color-ink-muted);
+}
+
+.plate__slug {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.15rem;
+}
+
+/* The figure's own scope note, in the same voice as .scope but quieter -- it
+   qualifies one image, not the whole project. */
+.plate__scope {
+  color: var(--color-ink-muted);
+}
+
+.plate__kento {
+  position: absolute;
+  right: calc(var(--space-3) - 12px);
+  bottom: calc(var(--space-3) - 4px);
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  box-sizing: content-box;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* A looping video is motion whether or not it has controls. */
+  .plate__sheet video {
+    display: none;
   }
-  to {
-    opacity: 1;
+
+  .plate__sheet {
+    background-image: var(--plate-poster, none);
+    background-size: cover;
+    background-position: center;
   }
 }
 
-.animate-fadeIn {
-  animation: fadeIn 0.4s ease-out forwards;
+/* --------------------------------------------------------- work catalog */
+
+.catalog__year {
+  margin-top: var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-muted);
 }
 
-html {
-  scroll-behavior: smooth;
+.catalog__year::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-rule);
+}
+
+.catalog__rows {
+  margin-top: 0.3rem;
+}
+
+.catalog__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.2rem 1.25rem;
+  align-items: baseline;
+  padding: 0.95rem 0;
+  border-bottom: var(--hairline);
+  transition: transform 150ms ease;
+}
+
+@media (hover: hover) {
+  .catalog__row:hover {
+    transform: translateX(2px);
+  }
+}
+
+.catalog__title {
+  font-family: var(--font-serif);
+  font-size: var(--step-0);
+  line-height: 1.35;
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+}
+
+.catalog__row.is-featured .catalog__title {
+  font-weight: 600;
+}
+
+.catalog__title:hover {
+  text-decoration-color: currentColor;
+}
+
+.catalog__lane {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+}
+
+.catalog__desc {
+  grid-column: 1 / -1;
+  margin: 0;
+  max-width: var(--measure-read);
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--color-ink-muted);
+}
+
+.work-also {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  color: var(--color-ink-muted);
+}
+
+.work-also li {
+  display: grid;
+  grid-template-columns: 2.6rem minmax(0, 1fr);
+  gap: 0.75rem;
+}
+
+.work-also span {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------- motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .route {
+    animation: none;
+  }
+
+  * {
+    transition-duration: 1ms !important;
+  }
 }
 
 @media (max-width: 640px) {
-  a, button {
+  .site-nav__links a,
+  .print__ghost {
     min-height: 44px;
-    min-width: 44px;
-  }
-}
-
-body {
-  overflow-x: hidden;
-}
-
-/* The triptych becomes a linear reading order below the wide-layout breakpoint.
-   Decorative canvases are intentionally removed on touch and reduced-motion
-   contexts so essential content remains the only moving/interactive layer. */
-@media (max-width: 899px), (prefers-reduced-motion: reduce) {
-  canvas,
-  .hero-effects {
-    display: none !important;
-  }
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-@media (max-width: 899px) {
-  .min-h-screen.min-\[900px\]\:h-screen {
-    min-height: 100dvh;
-  }
-}
-
-.pane-ryukijano {
-  background-color: #e6e1d3;
-}
-
-.pane-gyanateet {
-  background-color: #2a2a2a;
-}
-
-.pane-ryoushi {
-  background-color: #050505;
-}
-
-@media (min-width: 900px) {
-  .pane-ryukijano {
-    background-image: linear-gradient(
-      transparent 0%,
-      rgba(230, 225, 211, 0.4) 15%,
-      rgba(230, 225, 211, 0.85) 35%,
-      rgb(230, 225, 211) 50%
-    );
-  }
-
-  .pane-gyanateet {
-    background-image: linear-gradient(
-      transparent 0%,
-      rgba(26, 26, 26, 0.5) 15%,
-      rgba(26, 26, 26, 0.9) 35%,
-      rgb(26, 26, 26) 50%
-    );
-  }
-
-  .pane-ryoushi {
-    background-image: linear-gradient(
-      transparent 0%,
-      transparent 20%,
-      rgba(5, 5, 5, 0.3) 35%,
-      rgba(5, 5, 5, 0.6) 50%,
-      rgba(5, 5, 5, 0.85) 65%,
-      rgb(5, 5, 5) 80%
-    );
+    display: inline-flex;
+    align-items: center;
   }
 }

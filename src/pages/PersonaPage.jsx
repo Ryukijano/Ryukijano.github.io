@@ -1,6 +1,15 @@
+import Atmosphere from '../components/Atmosphere';
+import SiteFooter from '../components/SiteFooter';
 import SiteNav from '../components/SiteNav';
-import { projectSlug } from '../data/portfolio';
+import { LANES, projectSlug } from '../data/portfolio';
 import Link from '../lib/Link';
+
+const SOUND = {
+  ryukijano: {
+    label: 'Know Me (Project 1)',
+    href: 'https://soundcloud.com/user-294342891/know-me-project-1',
+  },
+};
 
 function byYearDescWhenPresent(a, b) {
   const yearA = typeof a.year === 'number' && Number.isFinite(a.year) ? a.year : null;
@@ -13,42 +22,65 @@ function byYearDescWhenPresent(a, b) {
 
 export default function PersonaPage({ data }) {
   const projects = data.projects.slice().sort(byYearDescWhenPresent);
+  const sound = SOUND[data.id];
+  const handle = LANES.find((lane) => lane.id === data.id)?.handle;
+  const kicker = handle && handle !== data.title ? `${handle} · ${data.subtitle}` : data.subtitle;
+
 
   return (
-    <div className="min-h-screen bg-[#E6E1D3] font-serif text-[#1a237e]">
-      <SiteNav variant="paper" />
+    <div className="print">
+      <Atmosphere variant="quiet" />
+      <SiteNav />
 
-      <main className="mx-auto max-w-2xl px-6 py-16">
-        <h1 className="text-4xl leading-tight">{data.title}</h1>
-        <p className="mt-6 leading-relaxed">{data.fullDesc}</p>
+      <main id="main" tabIndex={-1} className="route print__body print__body--narrow">
+        <p className="print__kicker">{kicker}</p>
+        <h1 className="print__name" style={{ marginTop: '0.75rem' }}>
+          {data.title}
+        </h1>
+        <p className="print__lede">{data.fullDesc}</p>
 
-        <section className="mt-14">
-          <h2 className="text-xl">Projects</h2>
-          <ul className="mt-4 space-y-3">
+        {data.socials?.length ? (
+          <p className="print__links">
+            {data.socials.map((social, index) => (
+              <span key={social.label}>
+                {index > 0 ? <span aria-hidden="true"> · </span> : null}
+                <a href={social.link} target="_blank" rel="noopener noreferrer">
+                  {social.label}
+                </a>
+              </span>
+            ))}
+          </p>
+        ) : null}
+
+        {sound ? (
+          <p className="print__note">
+            Sound:{' '}
+            <a href={sound.href} target="_blank" rel="noopener noreferrer">
+              {sound.label}
+            </a>{' '}
+            on SoundCloud.
+          </p>
+        ) : null}
+
+        <section className="print__section">
+          <h2>Projects</h2>
+          <ul role="list" className="print__timeline">
             {projects.map((project) => (
-              <li key={project.title} className="flex gap-6">
-                <span className="w-12 shrink-0">{project.year ?? '—'}</span>
-                <Link
-                  href={`/work/${projectSlug(project.title)}`}
-                  className="underline-offset-4 hover:underline"
-                >
-                  {project.title}
-                </Link>
+              <li key={project.title}>
+                <span>{project.year ?? '—'}</span>
+                <Link href={`/work/${projectSlug(project.title)}`}>{project.title}</Link>
               </li>
             ))}
           </ul>
         </section>
 
-        <p className="mt-14">
-          <Link href="/work" className="underline-offset-4 hover:underline">
-            Work
-          </Link>
+        <p className="print__foot">
+          <Link href="/work">Work</Link>
           <span aria-hidden="true"> · </span>
-          <Link href="/" className="underline-offset-4 hover:underline">
-            Home
-          </Link>
+          <Link href="/">Home</Link>
         </p>
       </main>
+      <SiteFooter />
     </div>
   );
 }
