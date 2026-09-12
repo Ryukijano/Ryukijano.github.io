@@ -210,6 +210,10 @@ heading *is*; the size is one decision, made once.
 
 ## The plate key
 
+Hung, the three overlay lanes stay clickable, but the gutter chips and
+pipeline arrows stay quiet until hover or focus. Three labelled fields on
+first paint read as a form; the slip already carries the names.
+
 Below 900px wide *or* 800px tall the print is stacked — most phones, and any
 desktop window with a dock or devtools open. The overlay lanes go, because a
 plate that narrow is not something to aim at. What replaces them is a **plate

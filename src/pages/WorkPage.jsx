@@ -50,7 +50,7 @@ export default function WorkPage() {
             Work
           </h1>
           <p className="print__lede print__lede--muted">
-            Selected projects in graphics, computer vision, and quantum computing.
+            Each line is a short account. Open a project for the rest.
           </p>
         </header>
 

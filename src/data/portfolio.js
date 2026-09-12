@@ -16,7 +16,7 @@ export const DATA = {
     projects: [
       { 
         title: "Dalton Mills VR Reconstruction", 
-        desc: "SfM / NeRF into Unreal 5 for a mill that burned in 2022. HELIX XR, Sep–Dec 2024.", 
+        desc: "A VR reconstruction of Dalton Mills after the 2022 fire, built in Unreal Engine 5 with Leeds HELIX XR.", 
         fullDesc: "From September to December 2024, I worked with the Science Museum Group and University of Leeds HELIX XR on a VR reconstruction of Dalton Mills in Keighley, which was destroyed by fire in 2022. I collaborated with Alex Neish, Yuan Gao, and Simon Popple. The PCVR reconstruction used photogrammetry and NeRF methods on a small collection of photographs.",
         link: "https://digitaleducation.leeds.ac.uk/2025/01/08/reconstructing-dalton-mills-vr-and-ai-in-cultural-preservation/", 
         year: 2024,
@@ -38,7 +38,7 @@ export const DATA = {
       },
       { 
         title: "AWS AI/ML Scholar", 
-        desc: "AWS AI/ML Scholar, Jul 2022–Jun 2023. DeepRacer top 15%.", 
+        desc: "AWS AI/ML Scholar, 2022–2023. I trained PPO agents in DeepRacer and finished in the top 15% of the scholarship league.", 
         fullDesc: "I was an AWS AI/ML Scholar from July 2022 to June 2023 and placed in the top 15% of the DeepRacer scholarship league. I trained PPO agents in the AWS simulator. Scope: Evaluated in the AWS DeepRacer scholarship-league simulator.",
         link: "https://www.linkedin.com/in/gyanateet-dutta-386215192/", 
         year: 2023,
@@ -46,21 +46,21 @@ export const DATA = {
       },
       { 
         title: "Physics-Informed Neural Networks", 
-        desc: "CUDA notebooks for Navier–Stokes and Burgers-type PDEs, plus PINN experiments.", 
+        desc: "CUDA notebooks for Navier–Stokes and Burgers-type equations, with physics-informed neural network experiments.", 
         fullDesc: "This repository contains GPU implementations of PDE solvers and physics-informed neural networks for Navier–Stokes, Burgers, and related nonlinear equations, using CUDA C++ and PyTorch. Scope: Method-exploration notebooks; validation against CFD reference solvers is future work.",
         link: "https://github.com/Ryukijano/Physics-Based-DeepLearning", 
         tags: ["CUDA", "PINNs", "CFD", "Scientific Computing"]
       },
       {
         title: "B3tt3r: 3D Reconstruction",
-        desc: "Mast3r + Spann3r glued together for stereo reconstruction from image pairs.",
+        desc: "Stereo reconstruction from image pairs, combining Mast3r and Spann3r.",
         fullDesc: "I combined Mast3r and Spann3r for stereo matching, depth estimation, and mesh reconstruction from image pairs. Scope: A working integration of the two models; benchmarking against the source papers is future work.",
         link: "https://github.com/Ryukijano/B3tt3r",
         tags: ["3D Vision", "Stereo Matching", "Python", "Deep Learning"]
       },
       {
         title: "CUDA Kernel Development",
-        desc: "Daily CUDA C++ and CUDA-Q / cuQuantum kernel drills.",
+        desc: "A practice log of CUDA C++ kernels and CUDA-Q / cuQuantum exercises.",
         fullDesc: "QuantumVice-M25-CUDAQuest is a practice log of CUDA C++ kernels and CUDA-Q and cuQuantum exercises. Scope: A practice log of individual kernel exercises.",
         link: "https://github.com/Ryukijano/QuantumVice-M25-CUDAQuest",
         tags: ["CUDA", "cuQuantum", "GPU Computing", "C++"]
@@ -83,8 +83,8 @@ export const DATA = {
     projects: [
       { 
         title: "AIMS: Surgical Phase Detection", 
-        desc: "AIMS intern, Mar–Nov 2025. DINOv2 on ESD workflow. ISBI 2026 paper.", 
-        fullDesc: "Computer Vision Research Intern, AIMS (AI in Medicine and Surgery), University of Leeds, Mar–Nov 2025. ESD phase recognition with DINOv2 (DINO-Endo). ISBI 2026 paper: “Self-Supervised Vision Transformer for Surgical Phase Recognition in Endoscopic Submucosal Dissection”, DOI 10.1109/isbi61048.2026.11515812. That paper reports 89.5% accuracy on the patient set and 90.0% on porcine.",
+        desc: "DINOv2 models for endoscopic surgical workflow at AIMS, later an ISBI 2026 paper.", 
+        fullDesc: "From March to November 2025 I was a computer-vision intern with AIMS (AI in Medicine and Surgery) at Leeds. I trained DINOv2 models for endoscopic submucosal dissection workflow, later published as the ISBI 2026 paper “Self-Supervised Vision Transformer for Surgical Phase Recognition in Endoscopic Submucosal Dissection” (DOI 10.1109/isbi61048.2026.11515812). That paper reports 89.5% accuracy on the patient set and 90.0% on porcine.",
         link: "https://github.com/Ryukijano/DINOEndo", 
         year: 2025,
         featured: true,
@@ -109,7 +109,7 @@ export const DATA = {
       },
       { 
         title: "Gemma-Le: VLA Policy", 
-        desc: "SigLIP + Gemma 3 + ScaleDP VLA in a LeRobot fork. Hub checkpoints.", 
+        desc: "A compact vision-language-action policy in a LeRobot fork, with checkpoints on the Hub.", 
         fullDesc: "I implemented a compact vision-language-action policy in a LeRobot fork, using SigLIP for vision, Gemma 3 with LoRA for language, and ScaleDP for action generation. The checkpoints were trained on the robot_sim.PickNPlace simulation dataset in LeRobot format. Scope: Evaluated on simulated pick-and-place data.",
         link: "https://huggingface.co/Ryukijano/gemma-groot", 
         figure: {
@@ -126,7 +126,7 @@ export const DATA = {
       },
       { 
         title: "MSc Thesis: Surgical Video Prediction", 
-        desc: "MSc surgical video prediction: +2.36 dB PSNR over baselines, 22 FPS.", 
+        desc: "A VAE–Transformer for surgical video prediction: +2.36 dB PSNR over the chosen baselines, at 22 FPS.", 
         fullDesc: "My MSc project developed a VAE–Transformer model for surgical video prediction. In my experiments, it improved PSNR by 2.36 dB over the selected baselines and ran at 22 FPS with FP16 mixed precision. The code is available on GitHub.",
         link: "https://github.com/Ryukijano/vae-surgical-prediction", 
         year: 2025,
@@ -148,8 +148,8 @@ export const DATA = {
       },
       { 
         title: "JAX Diffusers Sprint", 
-        desc: "8th globally, Hugging Face JAX Diffusers sprint 2023. ControlNet anime-realism on TPU v4.", 
-        fullDesc: "Hugging Face JAX Diffusers community sprint, 2023. I finished 8th globally with a ControlNet for anime-realism, trained on TPU v4.",
+        desc: "Eighth globally in the 2023 Hugging Face JAX Diffusers sprint, with a ControlNet trained on TPU v4.", 
+        fullDesc: "In the 2023 Hugging Face JAX Diffusers community sprint I finished eighth globally with a ControlNet for anime-realism, trained on TPU v4.",
         link: "https://github.com/Ryukijano/CatCon-Controlnet-WD-1-5-b2", 
         year: 2023,
         featured: true,
@@ -160,7 +160,7 @@ export const DATA = {
       },
       {
         title: "Pothole Detection (arXiv)",
-        desc: "Co-author. YOLOv7 + ESRGAN preprint: 94.7% precision, 82.6% recall on the PNW table.",
+        desc: "Co-author of a YOLOv7 + ESRGAN preprint: 94.7% precision and 82.6% recall on the PNW table.",
         fullDesc: "I co-authored “Improved Pothole Detection Using YOLOv7 and ESRGAN” (arXiv:2401.08588), submitted in November 2023. Table 3 reports 0.947 precision and 0.826 recall for YOLOv7-tiny with ESRGAN on PNW dashcam frames.",
         link: "https://arxiv.org/abs/2401.08588",
         year: 2024,
@@ -182,7 +182,7 @@ export const DATA = {
       },
       {
         title: "Hopfield Networks & TSP",
-        desc: "Sole-author arXiv, 2022. HNN and HNN-SA on TSP.",
+        desc: "A 2022 sole-author arXiv note on Hopfield networks and simulated annealing for TSP.",
         fullDesc: "I wrote “Solving The Travelling Salesmen Problem using HNN and HNN-SA algorithms” (arXiv:2202.13746) in February 2022. The study compares Hopfield neural networks and simulated annealing on TSP instances. Scope: Student experiments on selected TSP instances.",
         link: "https://arxiv.org/abs/2202.13746",
         year: 2022,
@@ -190,14 +190,14 @@ export const DATA = {
       },
       {
         title: "LGM: 3D Model Generation",
-        desc: "Hugging Face Space wrapping LGM image-to-3D.",
+        desc: "A Hugging Face Space that wraps LGM for image-to-3D.",
         fullDesc: "I built a Hugging Face Space for LGM (Large Gaussian Model) that generates a Gaussian-splat 3D representation from one image. Scope: Interface and deployment work around the existing LGM model.",
         link: "https://huggingface.co/spaces/Ryukijano/LGM",
         tags: ["3D Generation", "Gaussian Splatting", "Hugging Face", "Image-to-3D"]
       },
       {
         title: "Deep RL & Hugging Face",
-        desc: "Hugging Face Deep RL course agents: PPO, DQN, Doom, PyBullet.",
+        desc: "PPO, DQN, Doom, and PyBullet agents from the Hugging Face Deep RL course.",
         fullDesc: "This repository contains PPO, DQN, and related implementations from the Hugging Face Deep RL course, including experiments in Doom and PyBullet. Scope: Course exercises using established algorithms.",
         link: "https://github.com/Ryukijano/Deep-Reinforcement-Learning-and-Hugging-Face",
         figure: {
@@ -229,7 +229,7 @@ export const DATA = {
     projects: [
       {
         title: "H-cGQE: Conditional GQE",
-        desc: "GIC 2026. GNN + Transformer + QD-GRPO for molecular quantum-circuit design.",
+        desc: "A GNN, Transformer, and QD-GRPO pipeline for molecular quantum-circuit design, built for GIC 2026.",
         fullDesc: "For the Mitsubishi Chemical Group and AIST track of the 2026 Global Industry Challenge, Ryoushi / Quantum Buddies developed H-cGQE for molecular quantum-circuit design. A chemical graph neural network and Transformer propose operator sequences, QD-GRPO supplies the learning signal, and L-BFGS-B optimises the continuous angles. The implementation uses CUDA-Q simulation with selected quantum-hardware checks.",
         link: "https://github.com/Quantum-Buddies/Conditional_GQE",
         links: [
@@ -255,7 +255,7 @@ export const DATA = {
       },
       {
         title: "Quantum Buddies",
-        desc: "Small collective, 2025. Shared repos and hackathon builds.",
+        desc: "A three-person collective I co-founded in 2025, for shared repositories and hackathon work.",
         fullDesc: "I co-founded Quantum Buddies in 2025 with Sid Iliyasu and Dat Chi Le. We maintain shared repositories and collaborate on hackathon projects in quantum machine learning, error correction, genomics, and market simulation. Scope: Three-person independent collective.",
         link: "https://quantum-buddies.github.io",
         isBanner: true,
@@ -264,7 +264,7 @@ export const DATA = {
       },
       { 
         title: "Bradford Quantum Hackathon 2025", 
-        desc: "Nov 2025, team Ryoushi / Quantum Buddies. lambeq + Quixer, promoter vs non-promoter on GRCh38.", 
+        desc: "At Bradford Quantum 2025, Quantum Buddies used lambeq and Quixer to tell promoters from non-promoters on GRCh38.", 
         fullDesc: "At the Bradford Quantum Hackathon in November 2025, Quantum Buddies used lambeq and Quixer to classify promoter and non-promoter sequences from GRCh38. My teammates reported wins in the Grand Prix and healthcare/BYO track.",
         link: "https://quantumbradford2025.com/", 
         year: 2025,
@@ -276,7 +276,7 @@ export const DATA = {
       },
       { 
         title: "YQuantum 2025 (Yale)", 
-        desc: "Apr 2025, Yale. Quantum Rings virtual-track win with Alisa Petrusinskaia (Quantum Bits).", 
+        desc: "Quantum Rings virtual-track win at YQuantum 2025, with Alisa Petrusinskaia, on a generalised Shor implementation.", 
         fullDesc: "At YQuantum 2025, I worked with Alisa Petrusinskaia as team Quantum Bits. We won the Quantum Rings virtual track with a generalised implementation of Shor’s algorithm using modular exponentiation, quantum phase estimation, and the inverse QFT.",
         link: "https://github.com/Ryukijano/Quantum-bits-YQuantum-2025", 
         year: 2025,
@@ -298,8 +298,8 @@ export const DATA = {
       },
       { 
         title: "NQCC UK Quantum Hackathon", 
-        desc: "Participant, Jul 2025 Edinburgh. Rolls-Royce hydrogen-on-nickel. Team Superposition Impossible.", 
-        fullDesc: "NQCC UK Quantum Hackathon, Edinburgh, Jul 2025. Team Superposition Impossible. Rolls-Royce challenge: VQE + SQD for hydrogen on nickel. Circuit-depth notes for NISQ, some DFT comparison talk. I was a participant.",
+        desc: "Participant on the Rolls-Royce hydrogen-on-nickel challenge at the 2025 NQCC UK Quantum Hackathon.", 
+        fullDesc: "In July 2025 I joined team Superposition Impossible at the NQCC UK Quantum Hackathon in Edinburgh. We worked the Rolls-Royce challenge: VQE and sample-based quantum diagonalisation for hydrogen on nickel, with notes on circuit depth for NISQ hardware.",
         link: "https://github.com/Ryukijano/Team_15_NQCC_UK_Quantum_Hackathon_2025_new", 
         year: 2025,
         featured: true,
@@ -320,7 +320,7 @@ export const DATA = {
       },
       { 
         title: "City of London Quantum Hackathon", 
-        desc: "Finalist, Oct 2025. QCBM and quantum-walk MCMC for market simulation.", 
+        desc: "Finalist at the City of London quantum hackathon, with QCBM and quantum-walk MCMC for market simulation.", 
         fullDesc: "Quantum Buddies reached the final of the City of London Lord Mayor’s Quantum Hackathon in October 2025. We developed differentiable QCBMs and quantum-walk MCMC methods for market simulation. Scope: Hackathon prototype evaluated as a simulation.",
         link: "https://news.cityoflondon.gov.uk/quantum-meets-finance-hackathon-sparks-next-generation-solutions-in-the-city/", 
         year: 2025,
@@ -328,7 +328,7 @@ export const DATA = {
       },
       {
         title: "Quantum Continuous Thought Machines",
-        desc: "Hybrid quantum–classical recurrent sketch under Quantum Buddies.",
+        desc: "A hybrid quantum–classical recurrent sketch under Quantum Buddies.",
         fullDesc: "This repository explores a recurrent hybrid architecture that combines parameterised quantum circuits with a continuous-state loop. Scope: Early-stage implementation; publication and benchmarking are future work.",
         link: "https://github.com/Ryukijano/quantum-continuous-thought-machines",
         tags: ["QCTM", "Hybrid Quantum", "Recurrent Networks", "Reasoning"]
@@ -352,7 +352,7 @@ export const DATA = {
       },
       {
         title: "Qiskit on Qubit",
-        desc: "Qiskit notebooks: algorithms, variational circuits, a bit of QML.",
+        desc: "Qiskit notebooks on algorithms, variational circuits, and a little QML.",
         fullDesc: "A collection of Qiskit notebooks covering quantum algorithms, variational circuits, and quantum machine learning. Scope: Personal study notes and tutorials.",
         link: "https://github.com/Ryukijano/Qiskit_on_Qubit",
         tags: ["Qiskit", "Quantum Algorithms", "IBM Quantum", "Tutorials"]

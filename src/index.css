@@ -519,6 +519,9 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   line-height: 1.2;
+  /* Quiet at rest: three labelled fields on first paint reads as a form. */
+  opacity: 0;
+  transition: opacity 150ms ease, color 150ms ease;
 }
 
 .folio__chip::before {
@@ -537,6 +540,7 @@
 .folio__lane:hover .folio__chip,
 .folio__lane.is-on .folio__chip,
 .folio__lane:focus-visible .folio__chip {
+  opacity: 1;
   color: var(--color-seal);
 }
 
@@ -549,8 +553,9 @@
   height: 1px;
   background: currentColor;
   color: var(--color-ink-muted);
-  opacity: 0.55;
+  opacity: 0;
   pointer-events: none;
+  transition: opacity 150ms ease, color 150ms ease;
 }
 
 .folio__arrow::after {
