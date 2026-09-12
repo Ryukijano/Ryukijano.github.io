@@ -1,4 +1,5 @@
 import Atmosphere from '../components/Atmosphere';
+import SiteFooter from '../components/SiteFooter';
 import SiteNav from '../components/SiteNav';
 import { LANES, projectSlug } from '../data/portfolio';
 import Link from '../lib/Link';
@@ -79,6 +80,7 @@ export default function PersonaPage({ data }) {
           <Link href="/">Home</Link>
         </p>
       </main>
+      <SiteFooter />
     </div>
   );
 }

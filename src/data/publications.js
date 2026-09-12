@@ -142,6 +142,7 @@ export const ACADEMIC_PROFILES = {
   googleScholar: null,
   linkedin: 'https://www.linkedin.com/in/gyanateet-dutta-386215192/',
   github: 'https://github.com/Ryukijano',
+  huggingface: 'https://huggingface.co/Ryukijano',
   wandb: 'https://wandb.ai/ryukijano',
   ieee: 'https://doi.org/10.1109/isbi61048.2026.11515812',
 };

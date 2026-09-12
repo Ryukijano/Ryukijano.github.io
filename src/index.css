@@ -144,6 +144,9 @@
     text-decoration-thickness: 1px;
     text-underline-offset: 4px;
     text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+    transition:
+      color 150ms ease,
+      text-decoration-color 150ms ease;
   }
 
   a:hover {
@@ -305,12 +308,13 @@
 }
 
 .site-nav__links a {
-  text-decoration: none;
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
 }
 
 .site-nav__links a:hover,
 .site-nav__links a.is-active {
-  text-decoration: underline;
+  text-decoration-color: currentColor;
 }
 
 .site-nav__links a.is-active {
@@ -930,6 +934,28 @@
   color: var(--color-ink-muted);
 }
 
+/* The same edge the nav bar lands on, at the foot of the sheet. */
+.print__footer {
+  position: relative;
+  z-index: 1;
+  max-width: var(--page-measure);
+  margin: 0 auto;
+  padding: 0 1.5rem 2.5rem;
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  color: var(--color-ink-muted);
+}
+
+.print__footer nav {
+  padding-top: 0.9rem;
+  border-top: var(--hairline);
+}
+
+.print__footer-rule {
+  margin: 0 0.45em;
+  opacity: 0.45;
+}
+
 .print__section {
   margin-top: var(--space-6);
 }
@@ -1262,13 +1288,21 @@
   align-items: baseline;
   padding: 0.95rem 0;
   border-bottom: var(--hairline);
+  transition: transform 150ms ease;
+}
+
+@media (hover: hover) {
+  .catalog__row:hover {
+    transform: translateX(2px);
+  }
 }
 
 .catalog__title {
   font-family: var(--font-serif);
   font-size: var(--step-0);
   line-height: 1.35;
-  text-decoration: none;
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
 }
 
 .catalog__row.is-featured .catalog__title {
@@ -1276,7 +1310,7 @@
 }
 
 .catalog__title:hover {
-  text-decoration: underline;
+  text-decoration-color: currentColor;
 }
 
 .catalog__lane {

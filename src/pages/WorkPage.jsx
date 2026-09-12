@@ -1,4 +1,5 @@
 import Atmosphere from '../components/Atmosphere';
+import SiteFooter from '../components/SiteFooter';
 import SiteNav from '../components/SiteNav';
 import { allProjects, isFeatured, projectLane, projectYear, withinYear } from '../data/portfolio';
 import Link from '../lib/Link';
@@ -21,6 +22,7 @@ export function WorkInkNotFound() {
           <Link href="/">Home</Link>
         </nav>
       </main>
+      <SiteFooter />
     </div>
   );
 }
@@ -92,6 +94,7 @@ export default function WorkPage() {
           <Link href="/">Home</Link>
         </nav>
       </main>
+      <SiteFooter />
     </div>
   );
 }

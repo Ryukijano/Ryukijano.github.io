@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Atmosphere from '../components/Atmosphere';
+import SiteFooter from '../components/SiteFooter';
 import SiteNav from '../components/SiteNav';
 import { CV_URL } from '../data/portfolio';
 import {
@@ -162,6 +163,7 @@ export default function AcademicPage() {
           </ul>
         </section>
       </main>
+      <SiteFooter />
     </div>
   );
 }

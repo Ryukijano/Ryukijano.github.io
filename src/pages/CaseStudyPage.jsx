@@ -1,4 +1,5 @@
 import Atmosphere from '../components/Atmosphere';
+import SiteFooter from '../components/SiteFooter';
 import SiteNav from '../components/SiteNav';
 import { projectLane, projectYear, relatedProjects } from '../data/portfolio';
 import Link from '../lib/Link';
@@ -195,6 +196,7 @@ export default function CaseStudyPage({ project }) {
           </section>
         ) : null}
       </article>
+      <SiteFooter />
     </div>
   );
 }
