@@ -113,7 +113,6 @@ test('project demos load as looping GIFs with a still poster', async ({ page }) 
     '/work/aims-surgical-phase-detection',
     '/work/gemma-le-vla-policy',
     '/work/msc-thesis-surgical-video-prediction',
-    '/work/pothole-detection-arxiv',
     '/work/deep-rl-and-hugging-face',
     '/work/h-cgqe-conditional-gqe',
     '/work/yquantum-2025-yale',
@@ -134,4 +133,13 @@ test('project demos load as looping GIFs with a still poster', async ({ page }) 
     expect(response.ok(), `${route} ${src}`).toBe(true);
     expect(response.headers()['content-type'], `${route} ${src}`).toMatch(/gif/i);
   }
+});
+
+test('the pothole case study shows the paper figures', async ({ page }) => {
+  await page.goto('/work/pothole-detection-arxiv');
+  const images = page.locator('.plate__sheet img');
+  await expect(images).toHaveCount(3);
+  await expect(images.nth(0)).toHaveAttribute('src', /pothole-samples\.webp$/);
+  await expect(images.nth(1)).toHaveAttribute('src', /pothole-pipeline\.webp$/);
+  await expect(images.nth(2)).toHaveAttribute('src', /pothole-detect\.webp$/);
 });

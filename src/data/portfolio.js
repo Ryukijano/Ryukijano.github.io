@@ -163,6 +163,10 @@ export const DATA = {
         desc: "Co-author of a YOLOv7 + ESRGAN preprint: 94.7% precision and 82.6% recall on the PNW table.",
         fullDesc: "I co-authored “Improved Pothole Detection Using YOLOv7 and ESRGAN” (arXiv:2401.08588), submitted in November 2023. Table 3 reports 0.947 precision and 0.826 recall for YOLOv7-tiny with ESRGAN on PNW dashcam frames.",
         link: "https://arxiv.org/abs/2401.08588",
+        links: [
+          { href: 'https://arxiv.org/abs/2401.08588', label: 'Paper' },
+          { href: 'https://github.com/Ryukijano/ESRGAN_AND_YOLOV7', label: 'Code' },
+        ],
         year: 2024,
         featured: true,
         featuredOrder: 7,
@@ -170,14 +174,42 @@ export const DATA = {
         note: 'Evaluation used labelled dashcam images from the PNW dataset.',
         figure: {
           kind: 'image',
-          src: '/assets/media/pothole-sr.gif',
-          poster: '/assets/media/pothole-sr-poster.webp',
-          width: 520,
-          height: 292,
-          alt: 'A low-resolution road frame being upscaled by ESRGAN before YOLOv7 marks a pothole.',
-          caption: 'The super-resolution and detection pipeline used in the pothole study.',
-          scope: 'Drawn on procedural road texture to illustrate the pipeline.',
+          src: '/assets/media/pothole-samples.webp',
+          width: 640,
+          height: 538,
+          alt: 'Four PNW dashcam frames with red boxes drawn on labelled potholes, from the paper’s Figure 1.',
+          caption: 'Sample dashcam frames from the PNW set, with the labelled potholes marked.',
+          scope: 'Figure 1 of Rout et al., arXiv:2401.08588. The boxes are the dataset labels, not model output.',
         },
+        figures: [
+          {
+            kind: 'image',
+            src: '/assets/media/pothole-samples.webp',
+            width: 640,
+            height: 538,
+            alt: 'Four PNW dashcam frames with red boxes drawn on labelled potholes, from the paper’s Figure 1.',
+            caption: 'Sample dashcam frames from the PNW set, with the labelled potholes marked.',
+            scope: 'Figure 1 of Rout et al., arXiv:2401.08588. The boxes are the dataset labels, not model output.',
+          },
+          {
+            kind: 'image',
+            src: '/assets/media/pothole-pipeline.webp',
+            width: 726,
+            height: 418,
+            alt: 'ESRGAN upscales a low-resolution pothole crop, then YOLOv7 detects it against ground truth.',
+            caption: 'The paper’s pipeline: ESRGAN super-resolution, then YOLOv7 detection.',
+            scope: 'Figure 2 of Rout et al., arXiv:2401.08588.',
+          },
+          {
+            kind: 'image',
+            src: '/assets/media/pothole-detect.webp',
+            width: 758,
+            height: 914,
+            alt: 'Three dashcam scenes, each shown low-resolution on the left and ESRGAN-upscaled on the right, with detector boxes.',
+            caption: 'Detector output on low-resolution frames (left) and the same frames after ESRGAN (right).',
+            scope: 'Figure 4 of Rout et al., arXiv:2401.08588. Frames from the PNW dashcam set.',
+          },
+        ],
         tags: ["YOLOv7", "ESRGAN", "Computer Vision", "Published"]
       },
       {
@@ -445,4 +477,9 @@ export function relatedProjects(project, limit = 5) {
     .filter((item) => item.slug !== project.slug && item.laneId === project.laneId)
     .sort((a, b) => byYearDescWhenPresent(a, b) || withinYear(a, b))
     .slice(0, limit);
+}
+
+export function projectFigures(project) {
+  if (Array.isArray(project?.figures) && project.figures.length) return project.figures;
+  return project?.figure ? [project.figure] : [];
 }

@@ -1,7 +1,7 @@
 import Atmosphere from '../components/Atmosphere';
 import SiteFooter from '../components/SiteFooter';
 import SiteNav from '../components/SiteNav';
-import { projectLane, projectYear, relatedProjects } from '../data/portfolio';
+import { projectLane, projectYear, projectFigures, relatedProjects } from '../data/portfolio';
 import Link from '../lib/Link';
 import { WorkInkNotFound } from './WorkPage';
 
@@ -57,7 +57,7 @@ function paragraphs(text) {
   return [sentences.slice(0, cut).join(' '), sentences.slice(cut).join(' ')];
 }
 
-function Figure({ figure }) {
+function Figure({ figure, index }) {
   const { kind, src, poster, sources = [], width, height, alt, caption, scope } = figure;
 
   return (
@@ -92,7 +92,7 @@ function Figure({ figure }) {
         )}
       </div>
       <figcaption className="plate__slip">
-        <span className="plate__slug">Fig. 1</span>
+        <span className="plate__slug">Fig. {index}</span>
         <span>
           {caption}
           {scope ? <em className="plate__scope"> {scope}</em> : null}
@@ -114,6 +114,7 @@ export default function CaseStudyPage({ project }) {
   const { body, scope } = splitScope(project.fullDesc || project.desc || '');
   const aside = project.note || scope;
   const related = relatedProjects(project);
+  const plates = projectFigures(project);
 
   return (
     <div className="print">
@@ -144,7 +145,9 @@ export default function CaseStudyPage({ project }) {
           </div>
         ) : null}
 
-        {project.figure ? <Figure figure={project.figure} /> : null}
+        {plates.map((figure, index) => (
+          <Figure key={figure.src} figure={figure} index={index + 1} />
+        ))}
 
         {aside ? (
           <aside className="scope">

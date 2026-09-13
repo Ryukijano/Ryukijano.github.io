@@ -21,10 +21,11 @@ unreferenced, which is what keeps this boundary honest.
 
 ## Deployed demos
 
-Ten case studies include looping GIFs. Eight schematic loops come from the
-earlier field-note design. ESD and the ViZDoom rollout are palette-reduced
-from the cropped captures (the raw ESD GIF is 8 MB at 3223×2424). Each GIF
-keeps a WebP/AVIF poster so reduced-motion visitors see a still.
+Nine case studies include looping GIFs. The pothole preprint uses the paper’s
+own figures (PNW dashcam samples, the ESRGAN–YOLOv7 pipeline, and LR vs SR
+detections) instead of a schematic GIF. ESD and the ViZDoom rollout are
+palette-reduced from the cropped captures. Each GIF keeps a WebP/AVIF poster
+so reduced-motion visitors see a still.
 
 ## Figure format
 

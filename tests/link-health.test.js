@@ -15,7 +15,7 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { beforeAll, describe, expect, it } from 'vitest';
-import { allProjects, findProject, projectSlug } from '../src/data/portfolio.js';
+import { allProjects, findProject, projectFigures, projectSlug } from '../src/data/portfolio.js';
 import { allRoutes, routeMeta } from '../src/lib/routeMeta.js';
 
 const DIST = new URL('../dist/', import.meta.url).pathname;
@@ -223,7 +223,7 @@ describe('the prerender manifest', () => {
 describe('case-study figures', () => {
   it('keeps the project demos in their case studies', () => {
     const withFigures = allProjects()
-      .filter((project) => project.figure)
+      .filter((project) => projectFigures(project).length)
       .map((project) => project.title);
 
     expect(withFigures).toHaveLength(10);
@@ -246,8 +246,8 @@ describe('case-study figures', () => {
   it('every figure declares dimensions, alt text and its own scope', () => {
     // A figure without dimensions shifts the page; one without a scope note
     // oversells the work, which is the opposite of this site's whole stance.
-    for (const p of allProjects().filter((x) => x.figure)) {
-      const f = p.figure;
+    for (const p of allProjects()) {
+      for (const f of projectFigures(p)) {
       expect(f.kind, p.title).toMatch(/^(image|video)$/);
       expect(typeof f.width, p.title).toBe('number');
       expect(typeof f.height, p.title).toBe('number');
@@ -255,6 +255,7 @@ describe('case-study figures', () => {
       expect(f.caption, p.title).toBeTruthy();
       expect(f.scope, p.title).toBeTruthy();
       if (/\.gif$/i.test(f.src) || f.kind === 'video') expect(f.poster, p.title).toBeTruthy();
+      }
     }
   });
 
@@ -262,11 +263,13 @@ describe('case-study figures', () => {
     // doom_ppo.gif was 7.8 MB. A multi-megabyte figure on a case study would
     // cost more than the figure adds.
     const CAP = 700_000;
-    for (const p of allProjects().filter((x) => x.figure)) {
-      for (const path of [p.figure.src, p.figure.poster].filter(Boolean)) {
+    for (const p of allProjects()) {
+      for (const f of projectFigures(p)) {
+      for (const path of [f.src, f.poster].filter(Boolean)) {
         const file = join(DIST, path.slice(1));
         expect(existsSync(file), `${p.title}: ${path}`).toBe(true);
         expect(statSync(file).size, `${p.title}: ${path}`).toBeLessThan(CAP);
+      }
       }
     }
   });
