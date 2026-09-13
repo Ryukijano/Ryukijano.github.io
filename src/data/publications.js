@@ -10,7 +10,7 @@ export const PUBLICATIONS = [
     doi: '10.1109/isbi61048.2026.11515812',
     pdfUrl: null,
     codeUrl: 'https://github.com/Ryukijano/DINOEndo',
-    note: '89.5% accuracy on the patient set and 90.0% on the porcine set in the paper; not a clinical deployment study.',
+    note: 'The paper reports 89.5% accuracy on the patient test set and 90.0% on the porcine test set.',
     bibtex: `@inproceedings{dutta2026selfsupervised,
   title={Self-Supervised Vision Transformer for Surgical Phase Recognition in Endoscopic Submucosal Dissection},
   author={Dutta, Gyanateet and Hammad, Aya and Archer, Thomas and Dou, Qi and Mohammed, Noor and Ali, Sharib},
@@ -64,6 +64,12 @@ export const PUBLICATIONS = [
 ];
 
 export const RESEARCH_TIMELINE = [
+  {
+    year: 2026,
+    title: 'H-cGQE for the GIC advanced-materials track',
+    org: 'Ryoushi / Quantum Buddies',
+    desc: 'Conditional circuit generation for molecular quantum simulation.',
+  },
   {
     year: 2026,
     title: 'Self-supervised ViT for surgical phase recognition',
@@ -136,6 +142,7 @@ export const ACADEMIC_PROFILES = {
   googleScholar: null,
   linkedin: 'https://www.linkedin.com/in/gyanateet-dutta-386215192/',
   github: 'https://github.com/Ryukijano',
+  huggingface: 'https://huggingface.co/Ryukijano',
   wandb: 'https://wandb.ai/ryukijano',
   ieee: 'https://doi.org/10.1109/isbi61048.2026.11515812',
 };
@@ -144,5 +151,5 @@ export const ACADEMIC_BIO = {
   name: 'Gyanateet Dutta',
   role: 'Research technician · University of Leeds',
   statement:
-    'I train vision models on surgical video under sparse labels and tight inference budgets. Parallel to that I write hybrid quantum–classical algorithms with Quantum Buddies.',
+    'I am a research technician at the University of Leeds, working on self-supervised computer vision for surgical video — first author of an ISBI 2026 paper on surgical phase recognition. I also work on hybrid quantum–classical algorithms with Ryoushi / Quantum Buddies, most recently H-cGQE for the GIC 2026 advanced-materials track.',
 };

@@ -1,4 +1,4 @@
-# Simple workflow for deploying static content to GitHub Pages
+# Deploys the site to GitHub Pages, but only if CI passes.
 name: Deploy static content to Pages
 
 on:
@@ -16,35 +16,52 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # The gate. Branch protection governs PR merges, but this workflow triggers
+  # on push, so the dependency has to be structural to cover a direct push too.
+  checks:
+    uses: ./.github/workflows/ci.yml
+
   deploy:
+    needs: checks
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
+      # Client bundle, SSR bundle, prerender every route, then the byte budget.
       - name: Build
         run: npm run build
-      
+
+      # Redundant with the budget check inside `npm run build`, deliberately:
+      # four lines in the deploy path itself, so even an admin push that
+      # bypasses CI cannot ship a build with no pages in it.
+      - name: Fail closed if the prerender did not run
+        run: |
+          test -f dist/404.html || { echo "::error::dist/404.html missing"; exit 1; }
+          test -f dist/work/aims-surgical-phase-detection.html \
+            || { echo "::error::case studies were not prerendered"; exit 1; }
+          test -f dist/sitemap.xml || { echo "::error::sitemap.xml missing"; exit 1; }
+
       - name: Setup Pages
-        uses: actions/configure-pages@v4
-      
+        uses: actions/configure-pages@v5
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './dist'
-      
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
