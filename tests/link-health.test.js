@@ -254,7 +254,7 @@ describe('case-study figures', () => {
       expect(f.alt, p.title).toBeTruthy();
       expect(f.caption, p.title).toBeTruthy();
       expect(f.scope, p.title).toBeTruthy();
-      if (f.kind === 'video') expect(f.poster, p.title).toBeTruthy();
+      if (/\.gif$/i.test(f.src) || f.kind === 'video') expect(f.poster, p.title).toBeTruthy();
     }
   });
 

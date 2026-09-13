@@ -63,7 +63,7 @@ function Figure({ figure }) {
   return (
     <figure className="plate">
       <div
-        className="plate__sheet"
+        className={poster ? 'plate__sheet plate__sheet--loop' : 'plate__sheet'}
         style={{
           aspectRatio: `${width} / ${height}`,
           ...(poster ? { '--plate-poster': `url(${poster})` } : {}),

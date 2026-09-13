@@ -1250,12 +1250,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  /* A looping video is motion whether or not it has controls. */
-  .plate__sheet video {
+  /* A looping GIF is motion the same way a muted video is. */
+  .plate__sheet--loop video,
+  .plate__sheet--loop img {
     display: none;
   }
 
-  .plate__sheet {
+  .plate__sheet--loop {
     background-image: var(--plate-poster, none);
     background-size: cover;
     background-position: center;

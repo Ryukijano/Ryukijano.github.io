@@ -12,36 +12,33 @@ them.
 
 **To use one:** re-encode it first. `doom_ppo.gif` is 7.8 MB and
 `ant_bullet.gif` is 7.4 MB — a multi-megabyte GIF on a case study would undo
-the restraint the rest of the site is built on. Convert to a muted, looping,
-`playsinline` `<video>` (WebM + H.264 is typically 5–15× smaller) or pull a
-single representative frame, then put the result in
-`public/assets/images/`.
+the restraint the rest of the site is built on. Palette-reduce, drop the
+frame rate, and keep a still poster for `prefers-reduced-motion`, then put
+the result in `public/assets/media/`.
 
 `scripts/check-budget.mjs` fails the build if anything in `dist/` is
 unreferenced, which is what keeps this boundary honest.
 
 ## Deployed demos
 
-Ten case studies currently include figures. Nine animations restored from
-the earlier field-note design were converted from GIF to H.264 MP4 with WebP
-posters: H-cGQE, Dalton Mills, surgical phase recognition, FET-VAE, Gemma-Le,
-pothole detection, NQCC, YQuantum, and quantum error correction. The Deep RL
-page uses the separately encoded ViZDoom rollout.
+Ten case studies include looping GIFs. Eight schematic loops come from the
+earlier field-note design. ESD and the ViZDoom rollout are palette-reduced
+from the cropped captures (the raw ESD GIF is 8 MB at 3223×2424). Each GIF
+keeps a WebP/AVIF poster so reduced-motion visitors see a still.
 
 ## Figure format
 
-`/work/deep-rl-and-hugging-face` is one example. `doom_ppo.gif` was
-7.8 MB; cropped to its actual content, trimmed to eight seconds, denoised and
-encoded as H.264 it is **489 kB** — 6% of the GIF — with a 50 kB AVIF poster so
-the box is filled before the video decodes.
+`/work/deep-rl-and-hugging-face` is one example. The original `doom_ppo.gif`
+was 7.8 MB; cropped, palette-reduced and still looping it is under 500 kB,
+with a 50 kB AVIF poster so the box is filled when motion is off.
 
 ```js
 figure: {
-  kind: 'video',                                  // or 'image'
-  src: '/assets/media/doom-ppo.mp4',
-  poster: '/assets/media/doom-ppo-poster.avif',   // required for video
-  width: 320,
-  height: 240,                                    // both required: no layout shift
+  kind: 'image',
+  src: '/assets/media/doom-ppo.gif',
+  poster: '/assets/media/doom-ppo-poster.avif',   // required for looping GIFs
+  width: 240,
+  height: 180,                                    // both required: no layout shift
   alt: 'A PPO agent playing Doom: …',
   caption: 'The PPO agent in ViZDoom, eight seconds of one rollout.',
   scope: 'One recorded rollout from a course exercise in ViZDoom.',
@@ -52,11 +49,13 @@ figure: {
 worse than no figure, which is the same stance every project's `Scope:` clause
 takes.
 
-The ffmpeg used:
+A typical encode from a short capture:
 
 ```sh
-ffmpeg -t 8 -i in.gif -vf "crop=W:H:X:Y,fps=20,hqdn3d=3:3:6:6" \
-  -c:v libx264 -crf 28 -preset slow -an -pix_fmt yuv420p -movflags +faststart out.mp4
+ffmpeg -i in.mp4 -vf "fps=8,scale=640:-1:flags=lanczos,split[s0][s1];\
+[s0]palettegen=max_colors=64:stats_mode=diff[p];\
+[s1][p]paletteuse=dither=bayer:bayer_scale=5" -loop 0 out.gif
+gifsicle -O3 --lossy=40 -o out.gif out.gif
 ```
 
 ## What is NOT usable here

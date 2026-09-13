@@ -107,7 +107,7 @@ test('the plate reserves its box before the bytes land', async ({ page }) => {
   expect(box.width / box.height).toBeCloseTo(3923 / 2160, 1);
 });
 
-test('project demos load with posters and video metadata', async ({ page }) => {
+test('project demos load as looping GIFs with a still poster', async ({ page }) => {
   const routes = [
     '/work/dalton-mills-vr-reconstruction',
     '/work/aims-surgical-phase-detection',
@@ -123,9 +123,11 @@ test('project demos load with posters and video metadata', async ({ page }) => {
 
   for (const route of routes) {
     await page.goto(route);
-    const video = page.locator('.plate__sheet video');
-    await expect(video).toHaveCount(1);
-    await expect(video).toHaveAttribute('poster', /\/assets\/media\/.+-poster\.(avif|webp)$/);
-    await expect.poll(() => video.evaluate((element) => element.readyState)).toBeGreaterThanOrEqual(1);
+    const gif = page.locator('.plate__sheet img');
+    await expect(gif).toHaveCount(1);
+    await expect(gif).toHaveAttribute('src', /\/assets\/media\/.+\.gif$/);
+    await expect(page.locator('.plate__sheet--loop')).toHaveCount(1);
+    const complete = await gif.evaluate((element) => element.complete && element.naturalWidth > 0);
+    expect(complete, `${route} GIF did not decode`).toBe(true);
   }
 });
