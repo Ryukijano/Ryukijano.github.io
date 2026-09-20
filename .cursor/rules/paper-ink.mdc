@@ -1,0 +1,58 @@
+---
+description: The washi print system — invariants, type and space scales, and the twelve route shapes. Attaches when touching styles, pages or components.
+globs:
+  - "src/**/*.css"
+  - "src/**/*.jsx"
+  - "src/data/**"
+  - "src/content/**"
+  - "DESIGN.md"
+alwaysApply: false
+---
+
+# paper-ink
+
+Full rules: `.opencode/skills/paper-ink/SKILL.md`.
+Decision log: `DESIGN.md`. Route markup:
+`.opencode/skills/paper-ink/references/route-shapes.md`.
+
+The site is a print hung on washi paper — reflected light, never emitted. If a
+change needs a light source, it is out.
+
+## Asserted in `tests/tokens.test.js` — do not tune to pass
+
+- `--color-seal` appears in exactly two kinds of rule: the scope-and-evidence
+  convention (`.scope__label`, `.folio__mark`) and interaction
+  (`:focus-visible`, `:hover`, `.is-active`, `::selection`). A third kind
+  fails the suite.
+- `--color-rule` is the ink at 0.18 alpha, never a separate grey.
+- ink on washi ≥ 7.0 (AAA); ink-muted and seal ≥ 4.5. `--color-ink-muted`
+  has 0.52 of headroom — it breaks invisibly.
+- The type scale is 1.25 from `--step--1` up on a 17px body. `--step--2` is
+  held off the scale at 0.72rem as a legibility floor.
+- `color-scheme: light`, permanently.
+- `.atmo` sits below `.print__body`: grain is fibre, ink prints on top.
+
+## Also true, and not asserted
+
+- `--color-washi-deep` is a ground only — ink-muted is 4.38 on it and fails.
+- `--color-seal-bright` is decorative, `.seal` only, `aria-hidden`.
+- Everything is square. The only radius is 3px on `.seal`.
+- Three families and no more: Source Serif 4 (readable), IBM Plex Sans
+  (chrome, weight 400 only), IBM Plex Mono (tracked labels and figures, never
+  prose, always `tabular-nums` for a year).
+- Space is `--space-1`…`--space-6` on a 1.6 ratio. Text sits on
+  `--measure-read`, the sheet on `--page-measure`.
+
+## Writing
+
+British English, first person. Carry the scope of a claim in the sentence
+after the claim — a number without its qualification does not ship. Label
+anything a reader might over-trust (`Self-reported dates`,
+`Unreviewed preprint`, `Teammate-reported`) in the mono label at
+`--color-ink-muted`.
+
+## Never
+
+Glow, bloom, blur, smooth gradients, wet reflections, chrome or bevelled type,
+shadows, elevation, a fourth accent, an icon, an emoji, a hero image above a
+title, a vanity metric, a dark-mode toggle, or a colour picked by eye.
