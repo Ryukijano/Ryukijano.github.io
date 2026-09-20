@@ -91,8 +91,8 @@ the dark stocks are the proposed layer and render nowhere yet.
 | **Ledger** | competitions, with what each rests on |
 
 The five in bold are new. `references/route-shapes.md` has the markup and the
-rules for each. `sections.css` has their CSS, written against the shipped
-tokens.
+rules for each. Their CSS is in the paper-ink route shapes block in
+`src/index.css`, written against the shipped tokens.
 
 ## Adding a page
 

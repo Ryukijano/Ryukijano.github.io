@@ -1,8 +1,8 @@
 # The five new route shapes
 
-Markup and rules for the sections added in September 2026. CSS is in
-`sections.css`; every class below exists there. Nothing here needs a token
-that `src/index.css` does not already define.
+Markup and rules for the sections added in September 2026. CSS lives in
+`src/index.css` (paper-ink route shapes block). Nothing here needs a token
+that the stylesheet does not already define.
 
 ---
 
@@ -38,8 +38,8 @@ rather than evidence. Washi, grain only, no screens, no gradation.
 - The title is the claim; the standfirst is the claim in full. House style is
   to say the thing, not tease it.
 - One pull-quote at most, and only for a sentence the note is built around.
-  It takes the seal on its rule — that is the scope-and-evidence convention
-  pointing at the note's own argument, which is why it is allowed.
+  Its rule is `--color-rule`, not the seal: the scope line below carries
+  evidence framing; the pull is emphasis within the argument.
 - Every note carries a scope line. A note about a method says so.
 - The lane in the kicker is `--color-ink-muted`, not a keyblock. It is context,
   not a label being applied.
