@@ -59,6 +59,28 @@ export const DATA = {
         tags: ["3D Vision", "Stereo Matching", "Python", "Deep Learning"]
       },
       {
+        title: "Agentic structure-from-motion",
+        desc: "An RL agent that calls geometric tools on hard structure-from-motion pairs. An implementation of Gabriele Berton's research idea, still in progress.",
+        fullDesc: "I am training a multimodal agent to call geometric tools (COLMAP, LoFTR, and retrieval) when a structure-from-motion pair is difficult. The research idea is Gabriele Berton's; this repository is my implementation, and it is still in progress. Scope: No public benchmark table yet. The figure is three match drawings saved during training, not a recording of the agent calling those tools.",
+        link: "https://github.com/Ryukijano/agentic-sfm",
+        year: 2026,
+        links: [
+          { href: "https://github.com/Ryukijano/agentic-sfm", label: "Code" },
+          { href: "https://huggingface.co/Ryukijano/agentic-sfm-qwen35-2b", label: "Weights" },
+        ],
+        figure: {
+          kind: 'image',
+          src: '/assets/media/agentic-sfm.gif',
+          poster: '/assets/media/agentic-sfm-poster.webp',
+          width: 640,
+          height: 320,
+          alt: 'Two photographs of a square with coloured lines marking matched points, shown at three saved training steps.',
+          caption: 'MegaDepth matches saved at training steps 10, 20, and 30.',
+          scope: 'Three figures committed in Ryukijano/agentic-sfm. Not a screen recording of the agent.',
+        },
+        tags: ["SfM", "COLMAP", "LoFTR", "Reinforcement Learning"]
+      },
+      {
         title: "CUDA Kernel Development",
         desc: "A practice log of CUDA C++ kernels and CUDA-Q / cuQuantum exercises.",
         fullDesc: "QuantumVice-M25-CUDAQuest is a practice log of CUDA C++ kernels and CUDA-Q and cuQuantum exercises. Scope: A practice log of individual kernel exercises.",
