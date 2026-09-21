@@ -52,8 +52,18 @@ export const DATA = {
       { 
         title: "Physics-Informed Neural Networks", 
         desc: "CUDA notebooks for Navier–Stokes and Burgers-type equations, with physics-informed neural network experiments.", 
-        fullDesc: "This repository contains GPU implementations of PDE solvers and physics-informed neural networks for Navier–Stokes, Burgers, and related nonlinear equations, using CUDA C++ and PyTorch. Scope: Method-exploration notebooks; validation against CFD reference solvers is future work.",
-        link: "https://github.com/Ryukijano/Physics-Based-DeepLearning", 
+        fullDesc: "This repository contains GPU implementations of PDE solvers and physics-informed neural networks for Navier–Stokes, Burgers, and related nonlinear equations, using CUDA C++ and PyTorch. The picture is a diagram of two ink channels, not a solver output. Scope: Method-exploration notebooks; validation against CFD reference solvers is future work.",
+        link: "https://github.com/Ryukijano/Physics-Based-DeepLearning",
+        figure: {
+          kind: 'image',
+          src: '/assets/media/pinn-method.gif',
+          poster: '/assets/media/pinn-method-poster.webp',
+          width: 480,
+          height: 270,
+          alt: 'Two ink drawings of a channel on warm paper, with a few arrows in one channel.',
+          caption: 'A second ink channel appears beside the first, and the gap between them fades.',
+          scope: 'Generated illustration of the method, not a recorded result.',
+        },
         tags: ["CUDA", "PINNs", "CFD", "Scientific Computing"]
       },
       {
@@ -154,6 +164,16 @@ export const DATA = {
         year: 2026,
         role: "Author, public repository",
         note: "Public code only, with no tracking sequence and no benchmark score stated here.",
+        figure: {
+          kind: 'image',
+          src: '/assets/media/got-jepa-method.gif',
+          poster: '/assets/media/got-jepa-method-poster.webp',
+          width: 400,
+          height: 225,
+          alt: 'Three empty ink boxes inside a rectangle on warm paper, with short trails.',
+          caption: 'Ink boxes drift inside a blank frame.',
+          scope: 'Generated illustration of the method, not a recorded result. No clinical frames.',
+        },
         tags: ["GOT-JEPA", "CholecTrack20", "Tracking", "DINOv2"]
       },
       {
@@ -164,6 +184,16 @@ export const DATA = {
         year: 2026,
         role: "Independent reproduction",
         note: "Reproduction of arXiv:2602.11389. Not my paper, and not a claim on its reported results.",
+        figure: {
+          kind: 'image',
+          src: '/assets/media/causal-jepa-method.gif',
+          poster: '/assets/media/causal-jepa-method-poster.webp',
+          width: 400,
+          height: 225,
+          alt: 'Five ink squares on warm paper, two of them covered by a darker block.',
+          caption: 'An ink mask covers two squares, then a lighter outline draws into the gap.',
+          scope: 'Generated illustration of the method, not a recorded result.',
+        },
         links: [
           { href: "https://huggingface.co/spaces/Ryukijano/repro-causal-jepa-learning-world-models-through-object-level-latent-masking", label: "Space" },
           { href: "https://arxiv.org/abs/2602.11389", label: "Paper" },
@@ -220,6 +250,16 @@ export const DATA = {
         featuredOrder: 6,
         role: 'Competitor, Hugging Face JAX Diffusers sprint',
         note: 'The 8th-place finish comes from my own record of the sprint leaderboard; the sprint published no results table, and the model was not FID-evaluated.',
+        figure: {
+          kind: 'image',
+          src: '/assets/media/jax-method.gif',
+          poster: '/assets/media/jax-method-poster.webp',
+          width: 400,
+          height: 225,
+          alt: 'An ink outline of an arch on the left of a warm paper sheet, with strokes moving toward a second arch.',
+          caption: 'An ink edge drawing fills in as a flat arch.',
+          scope: 'Generated illustration of the method, not a recorded result.',
+        },
         tags: ["JAX", "TPU v4", "ControlNet", "Diffusion Models"]
       },
       {
@@ -300,16 +340,36 @@ export const DATA = {
       {
         title: "Hopfield Networks & TSP",
         desc: "A 2022 sole-author arXiv note on Hopfield networks and simulated annealing for TSP.",
-        fullDesc: "I wrote “Solving The Travelling Salesmen Problem using HNN and HNN-SA algorithms” (arXiv:2202.13746) in February 2022. The study compares Hopfield neural networks and simulated annealing on TSP instances. Scope: Student experiments on selected TSP instances.",
+        fullDesc: "I wrote “Solving The Travelling Salesmen Problem using HNN and HNN-SA algorithms” (arXiv:2202.13746) in February 2022. The study compares Hopfield neural networks and simulated annealing on TSP instances. The picture is not a figure from that note. Scope: Student experiments on selected TSP instances.",
         link: "https://arxiv.org/abs/2202.13746",
         year: 2022,
+        figure: {
+          kind: 'image',
+          src: '/assets/media/hopfield-method.gif',
+          poster: '/assets/media/hopfield-method-poster.webp',
+          width: 480,
+          height: 270,
+          alt: 'Eight ink dots on warm paper, joined by a dark path.',
+          caption: 'A jagged ink path between dots settles into a shorter loop.',
+          scope: 'Generated illustration of the method, not a recorded result.',
+        },
         tags: ["Hopfield Networks", "Optimization", "TSP", "Published"]
       },
       {
         title: "LGM: 3D Model Generation",
         desc: "A Hugging Face Space that wraps LGM for image-to-3D.",
-        fullDesc: "I built a Hugging Face Space for LGM (Large Gaussian Model) that generates a Gaussian-splat 3D representation from one image. Scope: Interface and deployment work around the existing LGM model.",
+        fullDesc: "I built a Hugging Face Space for LGM (Large Gaussian Model) that generates a Gaussian-splat 3D representation from one image. The picture is not a capture of that Space. Scope: Interface and deployment work around the existing LGM model.",
         link: "https://huggingface.co/spaces/Ryukijano/LGM",
+        figure: {
+          kind: 'image',
+          src: '/assets/media/lgm-method.gif',
+          poster: '/assets/media/lgm-method-poster.webp',
+          width: 480,
+          height: 270,
+          alt: 'Four small ink sketches of a cup around one larger ink cup on warm paper.',
+          caption: 'Four ink views of a cup slide together into one drawing.',
+          scope: 'Generated illustration of the method, not a recorded result.',
+        },
         tags: ["3D Generation", "Gaussian Splatting", "Hugging Face", "Image-to-3D"]
       },
       {

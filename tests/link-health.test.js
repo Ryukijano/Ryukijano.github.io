@@ -226,13 +226,19 @@ describe('case-study figures', () => {
       .filter((project) => projectFigures(project).length)
       .map((project) => project.title);
 
-    expect(withFigures).toHaveLength(13);
+    expect(withFigures).toHaveLength(19);
     expect(withFigures).toEqual(
       expect.arrayContaining([
         'Dalton Mills VR Reconstruction',
+        'Physics-Informed Neural Networks',
         'B3tt3r: 3D Reconstruction',
         'Agentic structure-from-motion',
+        'GOT-JEPA surgical tool tracking',
+        'Causal-JEPA reproduction',
+        'JAX Diffusers Sprint',
         'Multiview diffusion 3D',
+        'Hopfield Networks & TSP',
+        'LGM: 3D Model Generation',
         'AIMS: Surgical Phase Detection',
         'Gemma-Le: VLA Policy',
         'MSc Thesis: Surgical Video Prediction',
