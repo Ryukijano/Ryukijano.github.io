@@ -59,8 +59,18 @@ export const DATA = {
       {
         title: "B3tt3r: 3D Reconstruction",
         desc: "Stereo reconstruction from image pairs, combining Mast3r and Spann3r.",
-        fullDesc: "I combined Mast3r and Spann3r for stereo matching, depth estimation, and mesh reconstruction from image pairs. Scope: A working integration of the two models; benchmarking against the source papers is future work.",
+        fullDesc: "I combined Mast3r and Spann3r for stereo matching, depth estimation, and mesh reconstruction from image pairs. The picture is not a capture from that repository. Scope: A working integration of the two models; benchmarking against the source papers is future work.",
         link: "https://github.com/Ryukijano/B3tt3r",
+        figure: {
+          kind: 'image',
+          src: '/assets/media/b3tt3r-illustration.gif',
+          poster: '/assets/media/b3tt3r-illustration-poster.webp',
+          width: 480,
+          height: 270,
+          alt: 'Two photographs of a brick mill beside a small grey paper model of a building on a white table.',
+          caption: 'Photographs and a paper model, standing in for a stereo reconstruction.',
+          scope: 'Generated illustration. Not a capture from the B3tt3r repository.',
+        },
         tags: ["3D Vision", "Stereo Matching", "Python", "Deep Learning"]
       },
       {

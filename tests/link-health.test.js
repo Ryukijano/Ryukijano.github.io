@@ -226,10 +226,11 @@ describe('case-study figures', () => {
       .filter((project) => projectFigures(project).length)
       .map((project) => project.title);
 
-    expect(withFigures).toHaveLength(12);
+    expect(withFigures).toHaveLength(13);
     expect(withFigures).toEqual(
       expect.arrayContaining([
         'Dalton Mills VR Reconstruction',
+        'B3tt3r: 3D Reconstruction',
         'Agentic structure-from-motion',
         'Multiview diffusion 3D',
         'AIMS: Surgical Phase Detection',
