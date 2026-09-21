@@ -181,6 +181,27 @@ export const DATA = {
         tags: ["JAX", "TPU v4", "ControlNet", "Diffusion Models"]
       },
       {
+        title: "Multiview diffusion 3D",
+        desc: "A public Hugging Face Space for multiview diffusion. The figure is a generated illustration, not a capture of a run.",
+        fullDesc: "Multiview_diffusion_3d is a Gradio Space that turns a prompt into a four-view grid. The Space is paused, so this page has no screen capture of a run. Scope: Generated illustration. The loop is a clay statue turning on a plain table, made in Google Flow. It is not output from the Space.",
+        link: "https://huggingface.co/spaces/Ryukijano/Multiview_diffusion_3d",
+        year: 2024,
+        links: [
+          { href: "https://huggingface.co/spaces/Ryukijano/Multiview_diffusion_3d", label: "Space" },
+        ],
+        figure: {
+          kind: 'image',
+          src: '/assets/media/multiview-illustration.gif',
+          poster: '/assets/media/multiview-illustration-poster.webp',
+          width: 480,
+          height: 270,
+          alt: 'A small grey clay cat statue on a plain white surface, turning so another side comes into view.',
+          caption: 'A clay statue turning on a plain table.',
+          scope: 'Generated illustration. Not a capture of the Hugging Face Space.',
+        },
+        tags: ["Diffusion", "Multiview", "Hugging Face", "Gradio"]
+      },
+      {
         title: "Pothole Detection (arXiv)",
         desc: "Co-author of a YOLOv7 + ESRGAN preprint: 94.7% precision and 82.6% recall on the PNW table.",
         fullDesc: "I co-authored “Improved Pothole Detection Using YOLOv7 and ESRGAN” (arXiv:2401.08588), submitted in November 2023. Table 3 reports 0.947 precision and 0.826 recall for YOLOv7-tiny with ESRGAN on PNW dashcam frames.",
