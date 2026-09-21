@@ -9,7 +9,7 @@ export const OG_IMAGE_ALT =
   'Kanagawa plate in three states, left to right: the painted wave, its RGB encoding, a neon wireframe.';
 
 const HOME_DESCRIPTION =
-  'Gyanateet Dutta is a research technician at the University of Leeds working on computer vision for surgical video and hybrid quantum–classical algorithms.';
+  'Gyanateet Dutta finished an MSc at the University of Leeds and is a research technician there, working on computer vision for surgical video and hybrid quantum–classical algorithms.';
 
 /** Trim to a length social cards and search results will actually show. */
 function clamp(text, max = 200) {

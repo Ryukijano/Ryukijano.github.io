@@ -16,9 +16,14 @@ export const DATA = {
     projects: [
       { 
         title: "Dalton Mills VR Reconstruction", 
-        desc: "A VR reconstruction of Dalton Mills after the 2022 fire, built in Unreal Engine 5 with Leeds HELIX XR.", 
-        fullDesc: "From September to December 2024, I worked with the Science Museum Group and University of Leeds HELIX XR on a VR reconstruction of Dalton Mills in Keighley, which was destroyed by fire in 2022. I collaborated with Alex Neish, Yuan Gao, and Simon Popple. The PCVR reconstruction used photogrammetry and NeRF methods on a small collection of photographs.",
-        link: "https://digitaleducation.leeds.ac.uk/2025/01/08/reconstructing-dalton-mills-vr-and-ai-in-cultural-preservation/", 
+        desc: "A VR reconstruction of Dalton Mills after the 2022 fire, for the Congruence Engine, built in Unreal Engine 5 with Leeds HELIX XR.", 
+        fullDesc: "From September to December 2024, I worked with the Science Museum Group’s Congruence Engine and University of Leeds HELIX XR on a VR reconstruction of Dalton Mills in Keighley, which was destroyed by fire in 2022. I collaborated with Alex Neish, Yuan Gao, and Simon Popple. The PCVR reconstruction used photogrammetry and NeRF methods on a small collection of photographs.",
+        link: "https://digitaleducation.leeds.ac.uk/2025/01/08/reconstructing-dalton-mills-vr-and-ai-in-cultural-preservation/",
+        links: [
+          { href: "https://digitaleducation.leeds.ac.uk/2025/01/08/reconstructing-dalton-mills-vr-and-ai-in-cultural-preservation/", label: "Leeds case study" },
+          { href: "https://www.sciencemuseumgroup.org.uk/projects/the-congruence-engine", label: "Congruence Engine" },
+          { href: "https://github.com/congruence-engine/Aesthetics-of-AI-Reconstruction", label: "Study repo" },
+        ], 
         year: 2024,
         featured: true,
         featuredOrder: 5,
@@ -93,11 +98,13 @@ export const DATA = {
     id: 'ai',
     title: "Gyanateet",
     subtitle: "Computer vision",
-    desc: "MSc Advanced Computer Science (Artificial Intelligence), Leeds, 2023–2024. Surgical video and self-supervised transformers. Research technician at Leeds since Nov 2025 (NDA).",
-    fullDesc: "I completed the MSc Advanced Computer Science (Artificial Intelligence) at the University of Leeds in 2024. From March to November 2025, I worked with AIMS (AI in Medicine and Surgery) on DINOv2 models for ESD workflow recognition. I have been a research technician at Leeds since November 2025, working on medical computer vision under NDA.",
+    desc: "Completed MSc Advanced Computer Science (Artificial Intelligence), University of Leeds. Research technician at Leeds. Surgical video and self-supervised transformers.",
+    fullDesc: "I completed the MSc Advanced Computer Science (Artificial Intelligence) at the University of Leeds. I am a research technician at Leeds. From March to November 2025 I worked with AIMS (AI in Medicine and Surgery) on DINOv2 models for ESD workflow recognition.",
     tags: ["PyTorch", "JAX", "Computer Vision", "Hugging Face", "TensorFlow"],
     socials: [
       { link: "https://orcid.org/0009-0008-0480-9241", label: "ORCID" },
+      { link: "https://scholar.google.com/citations?user=fEb6N9sAAAAJ", label: "Google Scholar" },
+      { link: "https://x.com/gyanateet", label: "X" },
       { link: "https://doi.org/10.1109/isbi61048.2026.11515812", label: "ISBI 2026" },
       { link: "https://wandb.ai/ryukijano", label: "W&B" },
       { link: "https://www.linkedin.com/in/gyanateet-dutta-386215192/", label: "LinkedIn" },
@@ -128,6 +135,31 @@ export const DATA = {
           scope: 'Selected frames from one ESD sequence.',
         },
         tags: ["DINOv2", "V-JEPA", "Medical AI", "Self-Supervised Learning"]
+      },
+      {
+        title: "GOT-JEPA surgical tool tracking",
+        desc: "Public code for GOT-JEPA multi-object tracking of surgical tools on CholecTrack20, separate from the phase-recognition paper.",
+        fullDesc: "Gyanateet_tracking is my public code for GOT-JEPA surgical-tool tracking on CholecTrack20: a frozen DINOv2 encoder, a per-track predictor, DETR detection, and re-identification. It is a separate line from the ISBI phase-recognition paper.",
+        link: "https://github.com/Ryukijano/Gyanateet_tracking",
+        year: 2026,
+        role: "Author, public repository",
+        note: "Public code only, with no tracking sequence and no benchmark score stated here.",
+        tags: ["GOT-JEPA", "CholecTrack20", "Tracking", "DINOv2"]
+      },
+      {
+        title: "Causal-JEPA reproduction",
+        desc: "An independent reproduction of Causal-JEPA, object-level latent masking. I did not write the paper.",
+        fullDesc: "I am tracing Causal-JEPA, “Learning World Models through Object-Level Latent Masking” (arXiv:2602.11389), through a public Hugging Face Space, blog assets, and a PushT planning checkpoint. The paper’s authors are Heejeong Nam, Quentin Le Lidec, Lucas Maes, Yann LeCun, and Randall Balestriero.",
+        link: "https://huggingface.co/spaces/Ryukijano/repro-causal-jepa-learning-world-models-through-object-level-latent-masking",
+        year: 2026,
+        role: "Independent reproduction",
+        note: "Reproduction of arXiv:2602.11389. Not my paper, and not a claim on its reported results.",
+        links: [
+          { href: "https://huggingface.co/spaces/Ryukijano/repro-causal-jepa-learning-world-models-through-object-level-latent-masking", label: "Space" },
+          { href: "https://arxiv.org/abs/2602.11389", label: "Paper" },
+          { href: "https://huggingface.co/Ryukijano/cjepa-pusht-videosaur-planning", label: "Checkpoint" },
+        ],
+        tags: ["JEPA", "World models", "Reproduction"]
       },
       { 
         title: "Gemma-Le: VLA Policy", 
@@ -327,6 +359,20 @@ export const DATA = {
           scope: "Project-authored architecture animation.",
         },
         tags: ["GIC 2026", "CUDA-Q", "GNN", "Transformer", "QD-GRPO"],
+      },
+      {
+        title: "iQuHACK 2026 NVIDIA LABS",
+        desc: "Guide for Team Cubits on NVIDIA’s LABS challenge at iQuHACK 2026.",
+        fullDesc: "At iQuHACK 2026 I guided Team Cubits on NVIDIA’s low-autocorrelation binary sequences (LABS) challenge. The public repository is a hybrid CUDA-Q workflow that seeds a classical search.",
+        link: "https://github.com/Ryukijano/2026-NVIDIA",
+        year: 2026,
+        role: "Guide, Team Cubits",
+        note: "Mentoring and a public repository, with no prize or placement stated.",
+        links: [
+          { href: "https://github.com/Ryukijano/2026-NVIDIA", label: "Code" },
+          { href: "https://iquhack.mit.edu/", label: "iQuHACK" },
+        ],
+        tags: ["iQuHACK", "CUDA-Q", "LABS", "NVIDIA"]
       },
       {
         title: "Quantum Buddies",

@@ -79,6 +79,7 @@ const HEADER_LINKS = [
   { href: CV_URL, label: 'CV', external: true },
   { href: '/work', label: 'Work', external: false },
   { href: ACADEMIC_PROFILES.orcid, label: 'ORCID', external: true },
+  { href: ACADEMIC_PROFILES.googleScholar, label: 'Google Scholar', external: true },
   { href: ACADEMIC_PROFILES.github, label: 'GitHub', external: true },
 ].filter((item) => item.href);
 

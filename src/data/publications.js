@@ -28,7 +28,7 @@ export const PUBLICATIONS = [
     arxiv: '2401.08588',
     doi: null,
     pdfUrl: 'https://arxiv.org/abs/2401.08588',
-    codeUrl: null,
+    codeUrl: 'https://github.com/Ryukijano/ESRGAN_AND_YOLOV7',
     note: 'Submitted November 2023. Unreviewed preprint.',
     bibtex: `@article{rout2024pothole,
   title={Improved Pothole Detection Using YOLOv7 and ESRGAN},
@@ -78,9 +78,9 @@ export const RESEARCH_TIMELINE = [
   },
   {
     year: 2025,
-    title: 'Research technician (from Nov)',
+    title: 'Research technician',
     org: 'University of Leeds',
-    desc: 'Research technician at the University of Leeds from November 2025.',
+    desc: 'Research technician at the University of Leeds.',
   },
   {
     year: 2025,
@@ -125,7 +125,7 @@ export const EDUCATION = [
     years: '2023–2024',
     title: 'MSc Advanced Computer Science (Artificial Intelligence)',
     org: 'University of Leeds',
-    note: 'Self-reported dates. Research intern, AI in Medicine and Surgery (AIMS), 2025.',
+    note: 'Completed. Self-reported dates. Research intern, AI in Medicine and Surgery (AIMS), 2025.',
   },
 ];
 
@@ -139,7 +139,8 @@ export const RESEARCH_INTERESTS = [
 export const ACADEMIC_PROFILES = {
   orcid: 'https://orcid.org/0009-0008-0480-9241',
   dblp: null,
-  googleScholar: null,
+  googleScholar: 'https://scholar.google.com/citations?user=fEb6N9sAAAAJ',
+  x: 'https://x.com/gyanateet',
   linkedin: 'https://www.linkedin.com/in/gyanateet-dutta-386215192/',
   github: 'https://github.com/Ryukijano',
   huggingface: 'https://huggingface.co/Ryukijano',
@@ -151,5 +152,5 @@ export const ACADEMIC_BIO = {
   name: 'Gyanateet Dutta',
   role: 'Research technician · University of Leeds',
   statement:
-    'I am a research technician at the University of Leeds, working on self-supervised computer vision for surgical video — first author of an ISBI 2026 paper on surgical phase recognition. I also work on hybrid quantum–classical algorithms with Ryoushi / Quantum Buddies, most recently H-cGQE for the GIC 2026 advanced-materials track.',
+    'I finished an MSc and am a research technician at the University of Leeds, working on self-supervised computer vision for surgical video — first author of an ISBI 2026 paper. I also work on hybrid quantum–classical algorithms with Ryoushi / Quantum Buddies, most recently H-cGQE for the GIC 2026 advanced-materials track.',
 };

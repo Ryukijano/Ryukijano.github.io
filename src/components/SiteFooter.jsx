@@ -3,8 +3,10 @@ import { ACADEMIC_PROFILES } from '../data/publications';
 const LINKS = [
   { href: ACADEMIC_PROFILES.github, label: 'GitHub' },
   { href: ACADEMIC_PROFILES.orcid, label: 'ORCID' },
+  { href: ACADEMIC_PROFILES.googleScholar, label: 'Google Scholar' },
   { href: ACADEMIC_PROFILES.linkedin, label: 'LinkedIn' },
   { href: ACADEMIC_PROFILES.huggingface, label: 'Hugging Face' },
+  { href: ACADEMIC_PROFILES.x, label: 'X' },
 ].filter((item) => item.href);
 
 export default function SiteFooter() {
