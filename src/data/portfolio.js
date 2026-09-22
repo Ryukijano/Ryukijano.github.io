@@ -44,9 +44,19 @@ export const DATA = {
       { 
         title: "AWS AI/ML Scholar", 
         desc: "AWS AI/ML Scholar, 2022–2023. I trained PPO agents in DeepRacer and finished in the top 15% of the scholarship league.", 
-        fullDesc: "I was an AWS AI/ML Scholar from July 2022 to June 2023 and placed in the top 15% of the DeepRacer scholarship league. I trained PPO agents in the AWS simulator. Scope: Evaluated in the AWS DeepRacer scholarship-league simulator.",
+        fullDesc: "I was an AWS AI/ML Scholar from July 2022 to June 2023 and placed in the top 15% of the DeepRacer scholarship league. I trained PPO agents in the AWS simulator. The picture is an ink track, not a capture of the simulator. Scope: Evaluated in the AWS DeepRacer scholarship-league simulator.",
         link: "https://www.linkedin.com/in/gyanateet-dutta-386215192/", 
         year: 2023,
+        figure: {
+          kind: 'image',
+          src: '/assets/media/deepracer-method.gif',
+          poster: '/assets/media/deepracer-method-poster.webp',
+          width: 400,
+          height: 225,
+          alt: 'An ink oval track on warm paper with a small dark mark on the line.',
+          caption: 'A mark travels an ink oval and the path grows smoother.',
+          scope: 'Generated illustration of the method, not a recorded result.',
+        },
         tags: ["AWS", "DeepRacer", "PPO", "Reinforcement Learning"]
       },
       { 
@@ -108,8 +118,18 @@ export const DATA = {
       {
         title: "CUDA Kernel Development",
         desc: "A practice log of CUDA C++ kernels and CUDA-Q / cuQuantum exercises.",
-        fullDesc: "QuantumVice-M25-CUDAQuest is a practice log of CUDA C++ kernels and CUDA-Q and cuQuantum exercises. Scope: A practice log of individual kernel exercises.",
+        fullDesc: "QuantumVice-M25-CUDAQuest is a practice log of CUDA C++ kernels and CUDA-Q and cuQuantum exercises. The picture is an ink grid, not a kernel trace. Scope: A practice log of individual kernel exercises.",
         link: "https://github.com/Ryukijano/QuantumVice-M25-CUDAQuest",
+        figure: {
+          kind: 'image',
+          src: '/assets/media/cuda-method.gif',
+          poster: '/assets/media/cuda-method-poster.webp',
+          width: 400,
+          height: 225,
+          alt: 'An ink grid of squares on warm paper, with a dark wave crossing the cells.',
+          caption: 'A dark wave travels across an ink grid of squares.',
+          scope: 'Generated illustration of the method, not a recorded result.',
+        },
         tags: ["CUDA", "cuQuantum", "GPU Computing", "C++"]
       }
     ]
@@ -456,13 +476,23 @@ export const DATA = {
       { 
         title: "Bradford Quantum Hackathon 2025", 
         desc: "At Bradford Quantum 2025, Quantum Buddies used lambeq and Quixer to tell promoters from non-promoters on GRCh38.", 
-        fullDesc: "At the Bradford Quantum Hackathon in November 2025, Quantum Buddies used lambeq and Quixer to classify promoter and non-promoter sequences from GRCh38. My teammates reported wins in the Grand Prix and healthcare/BYO track.",
+        fullDesc: "At the Bradford Quantum Hackathon in November 2025, Quantum Buddies used lambeq and Quixer to classify promoter and non-promoter sequences from GRCh38. My teammates reported wins in the Grand Prix and healthcare/BYO track. The picture is an ink classification diagram, not a prize animation.",
         link: "https://quantumbradford2025.com/", 
         year: 2025,
         featured: true,
         featuredOrder: 1,
         role: 'Competitor, team Ryoushi / Quantum Buddies',
         note: 'Built and evaluated during the hackathon; prize results as reported by teammates.',
+        figure: {
+          kind: 'image',
+          src: '/assets/media/bradford-method.gif',
+          poster: '/assets/media/bradford-method-poster.webp',
+          width: 400,
+          height: 225,
+          alt: 'Ink ticks and crosses on warm paper, gathering into two groups.',
+          caption: 'Ink ticks and crosses sort into two groups.',
+          scope: 'Generated illustration of the method, not a recorded result.',
+        },
         tags: ["Genomics", "lambeq", "Quixer"]
       },
       { 
@@ -512,16 +542,36 @@ export const DATA = {
       { 
         title: "City of London Quantum Hackathon", 
         desc: "Finalist at the City of London quantum hackathon, with QCBM and quantum-walk MCMC for market simulation.", 
-        fullDesc: "Quantum Buddies reached the final of the City of London Lord Mayor’s Quantum Hackathon in October 2025. We developed differentiable QCBMs and quantum-walk MCMC methods for market simulation. Scope: Hackathon prototype evaluated as a simulation.",
+        fullDesc: "Quantum Buddies reached the final of the City of London Lord Mayor’s Quantum Hackathon in October 2025. We developed differentiable QCBMs and quantum-walk MCMC methods for market simulation. The picture is an ink graph, not a capture of the prototype. Scope: Hackathon prototype evaluated as a simulation.",
         link: "https://news.cityoflondon.gov.uk/quantum-meets-finance-hackathon-sparks-next-generation-solutions-in-the-city/", 
         year: 2025,
+        figure: {
+          kind: 'image',
+          src: '/assets/media/city-method.gif',
+          poster: '/assets/media/city-method-poster.webp',
+          width: 400,
+          height: 225,
+          alt: 'An ink graph of nodes and edges on warm paper, with one dark dot on a node.',
+          caption: 'A dark dot hops along the edges of an ink graph.',
+          scope: 'Generated illustration of the method, not a recorded result.',
+        },
         tags: ["Finalist", "QCBM", "Finance", "Quantum Walk MCMC"]
       },
       {
         title: "Quantum Continuous Thought Machines",
         desc: "A hybrid quantum–classical recurrent sketch under Quantum Buddies.",
-        fullDesc: "This repository explores a recurrent hybrid architecture that combines parameterised quantum circuits with a continuous-state loop. Scope: Early-stage implementation; publication and benchmarking are future work.",
+        fullDesc: "This repository explores a recurrent hybrid architecture that combines parameterised quantum circuits with a continuous-state loop. The picture is an ink loop of squares, not a recorded activation. Scope: Early-stage implementation; publication and benchmarking are future work.",
         link: "https://github.com/Ryukijano/quantum-continuous-thought-machines",
+        figure: {
+          kind: 'image',
+          src: '/assets/media/qctm-method.gif',
+          poster: '/assets/media/qctm-method-poster.webp',
+          width: 400,
+          height: 225,
+          alt: 'A loop of ink squares on warm paper, some darker than the rest.',
+          caption: 'Dark squares travel around an ink loop.',
+          scope: 'Generated illustration of the method, not a recorded result.',
+        },
         tags: ["QCTM", "Hybrid Quantum", "Recurrent Networks", "Reasoning"]
       },
       {
@@ -544,8 +594,18 @@ export const DATA = {
       {
         title: "Qiskit on Qubit",
         desc: "Qiskit notebooks on algorithms, variational circuits, and a little QML.",
-        fullDesc: "A collection of Qiskit notebooks covering quantum algorithms, variational circuits, and quantum machine learning. Scope: Personal study notes and tutorials.",
+        fullDesc: "A collection of Qiskit notebooks covering quantum algorithms, variational circuits, and quantum machine learning. The picture is an ink circuit diagram, not a device capture. Scope: Personal study notes and tutorials.",
         link: "https://github.com/Ryukijano/Qiskit_on_Qubit",
+        figure: {
+          kind: 'image',
+          src: '/assets/media/qiskit-method.gif',
+          poster: '/assets/media/qiskit-method-poster.webp',
+          width: 400,
+          height: 225,
+          alt: 'Three ink circuit lines on warm paper with small marks and a bar chart beside them.',
+          caption: 'Marks step along three ink circuit lines while a bar chart changes.',
+          scope: 'Generated illustration of the method, not a recorded result.',
+        },
         tags: ["Qiskit", "Quantum Algorithms", "IBM Quantum", "Tutorials"]
       },
     ]

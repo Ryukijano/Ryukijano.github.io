@@ -226,13 +226,15 @@ describe('case-study figures', () => {
       .filter((project) => projectFigures(project).length)
       .map((project) => project.title);
 
-    expect(withFigures).toHaveLength(19);
+    expect(withFigures).toHaveLength(25);
     expect(withFigures).toEqual(
       expect.arrayContaining([
         'Dalton Mills VR Reconstruction',
+        'AWS AI/ML Scholar',
         'Physics-Informed Neural Networks',
         'B3tt3r: 3D Reconstruction',
         'Agentic structure-from-motion',
+        'CUDA Kernel Development',
         'GOT-JEPA surgical tool tracking',
         'Causal-JEPA reproduction',
         'JAX Diffusers Sprint',
@@ -245,9 +247,13 @@ describe('case-study figures', () => {
         'Pothole Detection (arXiv)',
         'Deep RL & Hugging Face',
         'H-cGQE: Conditional GQE',
+        'Bradford Quantum Hackathon 2025',
         'YQuantum 2025 (Yale)',
         'NQCC UK Quantum Hackathon',
+        'City of London Quantum Hackathon',
+        'Quantum Continuous Thought Machines',
         'Quantum Error Correction',
+        'Qiskit on Qubit',
       ]),
     );
   });
