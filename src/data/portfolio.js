@@ -55,7 +55,7 @@ export const DATA = {
           height: 225,
           alt: 'An ink oval track on warm paper with a small dark mark on the line.',
           caption: 'A mark travels an ink oval and the path grows smoother.',
-          scope: 'Generated illustration of the method, not a recorded result.',
+          scope: 'Generated illustration of the method, not a capture.',
         },
         tags: ["AWS", "DeepRacer", "PPO", "Reinforcement Learning"]
       },
@@ -72,7 +72,7 @@ export const DATA = {
           height: 270,
           alt: 'Two ink drawings of a channel on warm paper, with a few arrows in one channel.',
           caption: 'A second ink channel appears beside the first, and the gap between them fades.',
-          scope: 'Generated illustration of the method, not a recorded result.',
+          scope: 'Generated illustration of the method, not a capture.',
         },
         tags: ["CUDA", "PINNs", "CFD", "Scientific Computing"]
       },
@@ -128,7 +128,7 @@ export const DATA = {
           height: 225,
           alt: 'An ink grid of squares on warm paper, with a dark wave crossing the cells.',
           caption: 'A dark wave travels across an ink grid of squares.',
-          scope: 'Generated illustration of the method, not a recorded result.',
+          scope: 'Generated illustration of the method, not a capture.',
         },
         tags: ["CUDA", "cuQuantum", "GPU Computing", "C++"]
       }
@@ -192,7 +192,7 @@ export const DATA = {
           height: 225,
           alt: 'Three empty ink boxes inside a rectangle on warm paper, with short trails.',
           caption: 'Ink boxes drift inside a blank frame.',
-          scope: 'Generated illustration of the method, not a recorded result. No clinical frames.',
+          scope: 'Generated illustration of the method, not a capture. No clinical frames.',
         },
         tags: ["GOT-JEPA", "CholecTrack20", "Tracking", "DINOv2"]
       },
@@ -212,7 +212,7 @@ export const DATA = {
           height: 225,
           alt: 'Five ink squares on warm paper, two of them covered by a darker block.',
           caption: 'An ink mask covers two squares, then a lighter outline draws into the gap.',
-          scope: 'Generated illustration of the method, not a recorded result.',
+          scope: 'Generated illustration of the method, not a capture.',
         },
         links: [
           { href: "https://huggingface.co/spaces/Ryukijano/repro-causal-jepa-learning-world-models-through-object-level-latent-masking", label: "Space" },
@@ -233,8 +233,8 @@ export const DATA = {
           width: 520,
           height: 292,
           alt: 'Gemma-Le architecture with an action trajectory being denoised over 50 diffusion steps.',
-          caption: 'The signal path from multimodal inputs to the ScaleDP action head.',
-          scope: 'Architecture visualisation with an illustrative denoising trajectory.',
+          caption: 'The signal path from multimodal inputs to the ScaleDP action head. The 50-step path is drawn, not a logged rollout.',
+          scope: 'Architecture diagram. The moving trajectory is drawn, not a capture.',
         },
         tags: ["Robotics", "VLA", "Gemma 3", "Diffusion Policy"]
       },
@@ -278,7 +278,7 @@ export const DATA = {
           height: 225,
           alt: 'An ink outline of an arch on the left of a warm paper sheet, with strokes moving toward a second arch.',
           caption: 'An ink edge drawing fills in as a flat arch.',
-          scope: 'Generated illustration of the method, not a recorded result.',
+          scope: 'Generated illustration of the method, not a capture.',
         },
         tags: ["JAX", "TPU v4", "ControlNet", "Diffusion Models"]
       },
@@ -317,15 +317,6 @@ export const DATA = {
         featuredOrder: 7,
         role: 'Co-author',
         note: 'Evaluation used labelled dashcam images from the PNW dataset.',
-        figure: {
-          kind: 'image',
-          src: '/assets/media/pothole-samples.webp',
-          width: 640,
-          height: 538,
-          alt: 'Four PNW dashcam frames with red boxes drawn on labelled potholes, from the paper’s Figure 1.',
-          caption: 'Sample dashcam frames from the PNW set, with the labelled potholes marked.',
-          scope: 'Figure 1 of Rout et al., arXiv:2401.08588. The boxes are the dataset labels, not model output.',
-        },
         figures: [
           {
             kind: 'image',
@@ -371,7 +362,7 @@ export const DATA = {
           height: 270,
           alt: 'Eight ink dots on warm paper, joined by a dark path.',
           caption: 'A jagged ink path between dots settles into a shorter loop.',
-          scope: 'Generated illustration of the method, not a recorded result.',
+          scope: 'Generated illustration of the method, not a capture.',
         },
         tags: ["Hopfield Networks", "Optimization", "TSP", "Published"]
       },
@@ -388,7 +379,7 @@ export const DATA = {
           height: 270,
           alt: 'Four small ink sketches of a cup around one larger ink cup on warm paper.',
           caption: 'Four ink views of a cup slide together into one drawing.',
-          scope: 'Generated illustration of the method, not a recorded result.',
+          scope: 'Generated illustration of the method, not a capture.',
         },
         tags: ["3D Generation", "Gaussian Splatting", "Hugging Face", "Image-to-3D"]
       },
@@ -491,7 +482,7 @@ export const DATA = {
           height: 225,
           alt: 'Ink ticks and crosses on warm paper, gathering into two groups.',
           caption: 'Ink ticks and crosses sort into two groups.',
-          scope: 'Generated illustration of the method, not a recorded result.',
+          scope: 'Generated illustration of the method, not a capture.',
         },
         tags: ["Genomics", "lambeq", "Quixer"]
       },
@@ -553,7 +544,7 @@ export const DATA = {
           height: 225,
           alt: 'An ink graph of nodes and edges on warm paper, with one dark dot on a node.',
           caption: 'A dark dot hops along the edges of an ink graph.',
-          scope: 'Generated illustration of the method, not a recorded result.',
+          scope: 'Generated illustration of the method, not a capture.',
         },
         tags: ["Finalist", "QCBM", "Finance", "Quantum Walk MCMC"]
       },
@@ -570,7 +561,7 @@ export const DATA = {
           height: 225,
           alt: 'A loop of ink squares on warm paper, some darker than the rest.',
           caption: 'Dark squares travel around an ink loop.',
-          scope: 'Generated illustration of the method, not a recorded result.',
+          scope: 'Generated illustration of the method, not a capture.',
         },
         tags: ["QCTM", "Hybrid Quantum", "Recurrent Networks", "Reasoning"]
       },
@@ -604,7 +595,7 @@ export const DATA = {
           height: 225,
           alt: 'Three ink circuit lines on warm paper with small marks and a bar chart beside them.',
           caption: 'Marks step along three ink circuit lines while a bar chart changes.',
-          scope: 'Generated illustration of the method, not a recorded result.',
+          scope: 'Generated illustration of the method, not a capture.',
         },
         tags: ["Qiskit", "Quantum Algorithms", "IBM Quantum", "Tutorials"]
       },
