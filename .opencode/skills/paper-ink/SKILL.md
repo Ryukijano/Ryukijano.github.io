@@ -102,8 +102,9 @@ rules for each. Their CSS is in the paper-ink route shapes block in
 4. Use the existing classes. A new class needs a reason that is not "this page
    is different".
 5. Every project, note and figure states its own scope.
-6. Run `npm test` before `npm run build`. The token test catches what the
-   screen will not.
+6. Run `npm run build`, then `npm test`. On a fresh checkout the link-health
+   test needs the build output and throws if you test first. The token test
+   catches what the screen will not.
 
 ## What not to do
 
