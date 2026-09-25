@@ -226,7 +226,7 @@ describe('case-study figures', () => {
       .filter((project) => projectFigures(project).length)
       .map((project) => project.title);
 
-    expect(withFigures).toHaveLength(25);
+    expect(withFigures).toHaveLength(27);
     expect(withFigures).toEqual(
       expect.arrayContaining([
         'Dalton Mills VR Reconstruction',
@@ -234,6 +234,7 @@ describe('case-study figures', () => {
         'Physics-Informed Neural Networks',
         'B3tt3r: 3D Reconstruction',
         'Agentic structure-from-motion',
+        'CUDA Blackwell Labs',
         'CUDA Kernel Development',
         'GOT-JEPA surgical tool tracking',
         'Causal-JEPA reproduction',
@@ -247,6 +248,7 @@ describe('case-study figures', () => {
         'Pothole Detection (arXiv)',
         'Deep RL & Hugging Face',
         'H-cGQE: Conditional GQE',
+        'QuantumForge',
         'Bradford Quantum Hackathon 2025',
         'YQuantum 2025 (Yale)',
         'NQCC UK Quantum Hackathon',

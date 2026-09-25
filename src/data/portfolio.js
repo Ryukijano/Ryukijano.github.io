@@ -116,6 +116,44 @@ export const DATA = {
         tags: ["SfM", "COLMAP", "LoFTR", "Reinforcement Learning"]
       },
       {
+        title: "CUDA Blackwell Labs",
+        desc: "Twenty-two CUDA labs on a DGX Spark, from memory probes to hand-written FP4 tensor-core instructions.",
+        fullDesc: "CUDA Blackwell Labs is a 22-project plan I worked through on an NVIDIA DGX Spark, whose GB10 chip shares 128 GB of memory between the CPU and the GPU. It runs from a hardware probe and memory microbenchmarks, through the CUDA-to-PTX-to-SASS pipeline, streams and CUDA Graphs, to hand-written FP16 and FP4 tensor-core instructions, TMA tile copies and a FlashAttention-style softmax. Sustained reads reached 231 GB/s, 85% of the 273 GB/s peak. Bandwidth fell from about 900 GB/s to DRAM speed once the working set outgrew the 24 MB L2 cache. cuBLAS ran a 4096 × 4096 GEMM at about 91 TFLOP/s in FP16, against 18 TFLOP/s in FP32.",
+        link: "https://github.com/Ryukijano/cuda-blackwell-labs",
+        year: 2026,
+        featured: true,
+        featuredOrder: 3,
+        role: "Author, public repository",
+        note: "Every number is my own microbenchmark on one DGX Spark with CUDA 13. The GEMM figures are cuBLAS, not my kernels; my naive tensor-core kernel reached about 14 TFLOP/s.",
+        links: [
+          { href: "https://github.com/Ryukijano/cuda-blackwell-labs", label: "Code" },
+        ],
+        figure: {
+          kind: 'image',
+          src: '/assets/media/cuda-blackwell-bandwidth.webp',
+          width: 1120,
+          height: 687,
+          alt: 'A line chart of effective bandwidth against working-set size, rising to about 980 GB/s at 4 MB, then falling to about 200 GB/s beyond the L2 cache, with a dashed line at the 273 GB/s peak.',
+          caption: 'Effective bandwidth by working-set size on the GB10, for sequential reads, writes and copies.',
+          scope: 'Chart from Project 02 of Ryukijano/cuda-blackwell-labs, one run on one machine. Points above the dashed peak are served from the L2 cache; the two zero points are sizes the run did not record.',
+        },
+        tags: ["CUDA 13", "Blackwell", "PTX", "Tensor Cores"]
+      },
+      {
+        title: "PCOS edge agent",
+        desc: "A local-first router that decides which on-device model, memory store or cloud service answers a request, across Chrome, Android, iOS and a Pixel Watch.",
+        fullDesc: "PCOS (Personal Context Operating System) is a context router rather than a chatbot. A deterministic broker gathers context from the browser, the phone, the watch and PiecesOS memory, then sends each task to the smallest model that can handle it: Gemini Nano in Chrome, Gemma 4 through LiteRT-LM on Android and iOS, FunctionGemma 270M for tool calls, a 12B model on the desktop, and a cloud model only as a last resort. Before anything leaves the device, personal details are stripped and the payload is checked. On Qualcomm phones it downloads the NPU build for that chip and falls back to the GPU, then the CPU. Version 1.0.0 shipped in July 2026.",
+        link: "https://github.com/Ryukijano/pcos-edge-agent",
+        year: 2026,
+        role: "Author, public repository",
+        note: "Checked by the project’s own 235-test Python regression suite and Playwright specifications. There is no public CI run or user study, and the quantised models are Google’s checkpoints, not mine.",
+        links: [
+          { href: "https://github.com/Ryukijano/pcos-edge-agent", label: "Code" },
+          { href: "https://github.com/Ryukijano/pcos-edge-agent/releases/tag/v1.0.0", label: "Release 1.0.0" },
+        ],
+        tags: ["LiteRT-LM", "Gemma 4", "Android", "Chrome Built-in AI"]
+      },
+      {
         title: "CUDA Kernel Development",
         desc: "A practice log of CUDA C++ kernels and CUDA-Q / cuQuantum exercises.",
         fullDesc: "QuantumVice-M25-CUDAQuest is a practice log of CUDA C++ kernels and CUDA-Q and cuQuantum exercises. The picture is an ink grid, not a kernel trace. Scope: A practice log of individual kernel exercises.",
@@ -195,6 +233,21 @@ export const DATA = {
           scope: 'Generated illustration of the method, not a capture. No clinical frames.',
         },
         tags: ["GOT-JEPA", "CholecTrack20", "Tracking", "DINOv2"]
+      },
+      {
+        title: "MVA Rare Disease Hackathon 2026",
+        desc: "A genome-to-genotype call for one child in SageBio’s rare-disease hackathon. The organisers’ scorer returned a full match.",
+        fullDesc: "SageBio’s Rare Disease, Real Kid hackathon gives every entrant the same case: the whole genome of one child with mosaic variegated aneuploidy, a disorder in which cells gain and lose chromosomes as they divide. Track 1 asks for the causal genotype. Working on the University of Leeds AIRE cluster, I annotated the genome with Ensembl VEP 116, AlphaMissense and SpliceAI, then filtered a 17-gene panel of mitotic-checkpoint genes down to rare, functional variants. Only one gene carried two of them, so I submitted that pair as a single row. The gated genome stayed on the cluster throughout. On 12 September 2026 the organisers’ scorer returned a full match: 100 of 100 rank points and an F-max of 1.000, on the first of six allowed submissions.",
+        link: "https://huggingface.co/spaces/SageBio/rare-disease-real-kid-mva-hackathon-2026",
+        year: 2026,
+        featured: true,
+        featuredOrder: 2,
+        role: "Entrant, SageBio MVA Hackathon 2026",
+        note: "The scorer’s result covers Track 1 only and is not a final placing. The hackathon closes on 24 October 2026; every entrant works on the same genome, so the gene and variants stay off this page until then.",
+        links: [
+          { href: "https://huggingface.co/spaces/SageBio/rare-disease-real-kid-mva-hackathon-2026", label: "Hackathon" },
+        ],
+        tags: ["Genomics", "Ensembl VEP", "AlphaMissense", "Rare disease"]
       },
       {
         title: "Causal-JEPA reproduction",
@@ -440,6 +493,28 @@ export const DATA = {
           scope: "Project-authored architecture animation.",
         },
         tags: ["GIC 2026", "CUDA-Q", "GNN", "Transformer", "QD-GRPO"],
+      },
+      {
+        title: "QuantumForge",
+        desc: "A Rust statevector simulator with a Qiskit bridge, benchmarked against NumPy and Qiskit Aer from 4 to 26 qubits.",
+        fullDesc: "QuantumForge is a quantum-circuit simulator I wrote in Rust, with ndarray holding the state and rayon applying gates in parallel, and a Python bridge so Qiskit circuits can run on it. On random circuits it was about 4,000 times faster than a naive NumPy simulator at 16 qubits, and faster than Qiskit Aer on CPU up to about 18 qubits. Beyond that Aer pulls ahead, by about four times at 26 qubits, the largest state (512 MB) I ran on a 48 GB machine. I also compared VQE with an evolutionary GQE on H₂. The Rust VQE finished within 1.1 × 10⁻⁶ hartree of the exact ground-state energy, and the GQE within 10⁻¹³.",
+        link: "https://github.com/Ryukijano/quantumforge",
+        year: 2026,
+        role: "Author, public repository",
+        note: "The benchmarks are one CPU machine and random circuits from my own harness. H₂ is the smallest molecular test, so the energy results show correctness, not scale.",
+        links: [
+          { href: "https://github.com/Ryukijano/quantumforge", label: "Code" },
+        ],
+        figure: {
+          kind: 'image',
+          src: '/assets/media/quantumforge-stress.webp',
+          width: 1120,
+          height: 708,
+          alt: 'A log-scale chart of execution time against qubit count for NumPy, Qiskit Aer and the Rust simulator. The Rust line starts lowest and crosses above Aer at about 19 qubits.',
+          caption: 'Execution time from 4 to 26 qubits for a naive NumPy simulator, Qiskit Aer and QuantumForge’s Rust core. Lower is faster.',
+          scope: 'Chart from Ryukijano/quantumforge, one run of the stress test on a local CPU.',
+        },
+        tags: ["Rust", "rayon", "Qiskit", "VQE", "GQE"]
       },
       {
         title: "iQuHACK 2026 NVIDIA LABS",
