@@ -27,6 +27,18 @@ export function WorkInkNotFound() {
   );
 }
 
+function CatalogRow({ project }) {
+  return (
+    <li className={`catalog__row${isFeatured(project) ? ' is-featured' : ''}`}>
+      <Link href={`/work/${project.slug}`} className="catalog__title">
+        {project.title}
+      </Link>
+      <span className="catalog__lane">{projectLane(project)}</span>
+      <p className="catalog__desc">{project.desc}</p>
+    </li>
+  );
+}
+
 export default function WorkPage() {
   const projects = allProjects();
   const dated = projects.filter((project) => projectYear(project) != null);
@@ -37,9 +49,8 @@ export default function WorkPage() {
   const years = [...new Set(dated.map(projectYear))].sort((a, b) => b - a);
   const span = years.length > 0 ? `${years[years.length - 1]}–${years[0]}` : null;
 
-
   return (
-    <div className="print">
+    <div className="print print--wide">
       <Atmosphere variant="quiet" />
       <SiteNav />
 
@@ -61,13 +72,7 @@ export default function WorkPage() {
               <h2 className="catalog__year">{year}</h2>
               <ul role="list" className="catalog__rows">
                 {rows.map((project) => (
-                  <li key={project.slug} className={`catalog__row${isFeatured(project) ? ' is-featured' : ''}`}>
-                    <Link href={`/work/${project.slug}`} className="catalog__title">
-                      {project.title}
-                    </Link>
-                    <span className="catalog__lane">{projectLane(project)}</span>
-                    <p className="catalog__desc">{project.desc}</p>
-                  </li>
+                  <CatalogRow key={project.slug} project={project} />
                 ))}
               </ul>
             </section>
@@ -75,14 +80,11 @@ export default function WorkPage() {
         })}
 
         {undated.length > 0 ? (
-          <section className="print__section">
-            <h2 className="print__also">Also</h2>
-            <ul role="list" className="work-also">
+          <section aria-label="Undated work">
+            <h2 className="catalog__year">Undated</h2>
+            <ul role="list" className="catalog__rows">
               {undated.map((project) => (
-                <li key={project.slug}>
-                  <span />
-                  <Link href={`/work/${project.slug}`}>{project.title}</Link>
-                </li>
+                <CatalogRow key={project.slug} project={project} />
               ))}
             </ul>
           </section>

@@ -278,6 +278,12 @@
   isolation: isolate;
 }
 
+/* The block's width includes its paper margin, so inset the bar by the same
+   gutter: the last nav link then ends on the plate's edge, not 8px inside it. */
+.site-nav--veil .site-nav__bar {
+  padding-inline: var(--folio-gutter);
+}
+
 .site-nav__bar {
   margin: 0 auto;
   display: flex;
@@ -586,7 +592,8 @@
   width: var(--folio-plate);
   box-sizing: border-box;
   margin: 0.25rem 0 1.5rem;
-  padding: 0.95rem 1.2rem 1rem;
+  /* Inset by the plate's gutter, so the name registers on the sheet's edge. */
+  padding: 0.95rem var(--folio-gutter) 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
@@ -712,6 +719,14 @@
       calc((100dvh - 17rem) * 3923 / 2160 + 2 * var(--folio-gutter)),
       100%
     );
+    --page-measure: var(--folio-stacked);
+  }
+
+  /* The veil gets the print's 1rem side padding, so the 100% inside
+     --folio-stacked resolves against the same width in the bar as in the
+     block, and the links still end on the plate's edge. */
+  .site-nav--veil {
+    padding-inline: 1rem;
   }
 
   /* The bottom margin now holds only the kento marks; the key sits above it
@@ -742,7 +757,7 @@
   .folio__slip {
     width: var(--folio-stacked);
     margin: 0 0 2.5rem;
-    padding: 1.1rem 1.15rem 1.15rem;
+    padding: 1.1rem var(--folio-gutter) 1.15rem;
   }
 
   /*
@@ -832,6 +847,12 @@
 .print {
   position: relative;
   min-height: 100dvh;
+}
+
+/* The catalogue's trim size. Set on the sheet's parent, not on .print__body,
+   because the nav and the footer are siblings of the body and read it too. */
+.print--wide {
+  --page-measure: var(--measure-wide);
 }
 
 .print__body {
@@ -957,7 +978,8 @@
 }
 
 .print__footer-rule {
-  margin: 0 0.45em;
+  /* 0.2em plus the following word space matches the 0.45em on the left. */
+  margin: 0 0.2em 0 0.45em;
   opacity: 0.45;
 }
 
@@ -1111,6 +1133,7 @@
 
 .print__meta {
   margin-top: var(--space-6);
+  border-bottom: var(--hairline);
   font-family: var(--font-sans);
   font-size: var(--step--1);
 }
@@ -1158,11 +1181,17 @@
   display: grid;
   grid-template-columns: 5.5rem minmax(0, 1fr);
   gap: 1rem;
-  padding-top: 0.9rem;
+  padding: 0.9rem 0;
   border-top: var(--hairline);
   font-family: var(--font-sans);
   font-size: var(--step--1);
   line-height: 1.55;
+}
+
+/* Scope, stack and links are one colophon: the same two columns, ruled
+   continuously, closed by a hairline, rather than two tables a gap apart. */
+.scope + .print__meta {
+  margin-top: 0;
 }
 
 .scope__label {

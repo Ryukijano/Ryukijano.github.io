@@ -26,7 +26,6 @@ export default function PersonaPage({ data }) {
   const handle = LANES.find((lane) => lane.id === data.id)?.handle;
   const kicker = handle && handle !== data.title ? `${handle} · ${data.subtitle}` : data.subtitle;
 
-
   return (
     <div className="print">
       <Atmosphere variant="quiet" />
@@ -64,11 +63,14 @@ export default function PersonaPage({ data }) {
 
         <section className="print__section">
           <h2>Projects</h2>
-          <ul role="list" className="print__timeline">
+          <ul role="list" className="catalog__rows">
             {projects.map((project) => (
-              <li key={project.title}>
-                <span>{project.year ?? '—'}</span>
-                <Link href={`/work/${projectSlug(project.title)}`}>{project.title}</Link>
+              <li key={project.title} className={`catalog__row${project.featured ? ' is-featured' : ''}`}>
+                <Link href={`/work/${projectSlug(project.title)}`} className="catalog__title">
+                  {project.title}
+                </Link>
+                <span className="catalog__lane">{project.year ?? '—'}</span>
+                <p className="catalog__desc">{project.desc}</p>
               </li>
             ))}
           </ul>
