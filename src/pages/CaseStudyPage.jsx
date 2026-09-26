@@ -3,7 +3,7 @@ import SiteFooter from '../components/SiteFooter';
 import SiteNav from '../components/SiteNav';
 import { projectLane, projectYear, projectFigures, relatedProjects } from '../data/portfolio';
 import Link from '../lib/Link';
-import { WorkInkNotFound } from './WorkPage';
+import NotFoundPage from './NotFoundPage';
 
 function labelFromHref(href) {
   try {
@@ -105,7 +105,7 @@ function Figure({ figure, index }) {
 
 export default function CaseStudyPage({ project }) {
 
-  if (!project) return <WorkInkNotFound />;
+  if (!project) return <NotFoundPage />;
 
   const year = projectYear(project);
   const lane = projectLane(project);

@@ -4,29 +4,6 @@ import SiteNav from '../components/SiteNav';
 import { allProjects, isFeatured, projectLane, projectYear, withinYear } from '../data/portfolio';
 import Link from '../lib/Link';
 
-export function WorkInkNotFound() {
-  return (
-    <div className="print">
-      <Atmosphere variant="quiet" />
-      <SiteNav />
-      <main id="main" tabIndex={-1} className="route print__body print__body--narrow">
-        <p className="print__kicker">404</p>
-        <h1 className="print__title" style={{ marginTop: '0.75rem' }}>
-          Page not found
-        </h1>
-        <nav className="print__foot" aria-label="Other pages">
-          <Link href="/work">Work</Link>
-          <span aria-hidden="true"> · </span>
-          <Link href="/academic">Academic</Link>
-          <span aria-hidden="true"> · </span>
-          <Link href="/">Home</Link>
-        </nav>
-      </main>
-      <SiteFooter />
-    </div>
-  );
-}
-
 function CatalogRow({ project }) {
   return (
     <li className={`catalog__row${isFeatured(project) ? ' is-featured' : ''}`}>
