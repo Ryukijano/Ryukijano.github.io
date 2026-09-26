@@ -1,6 +1,7 @@
 import { createElement } from 'react';
 import { renderToString } from 'react-dom/server';
 import App from './App.jsx';
+import { ArticleContext } from './lib/article.js';
 import { PLATE } from './data/plate.js';
 import {
   allRoutes,
@@ -19,9 +20,9 @@ import {
  * resolve. Plain createElement here so the file needs no JSX transform of its
  * own and stays out of fast refresh.
  */
-export function render(path) {
+export function render(path, { articles = {} } = {}) {
   return {
-    html: renderToString(createElement(App, { path })),
+    html: renderToString(createElement(ArticleContext.Provider, { value: articles }, createElement(App, { path }))),
     meta: routeMeta(path),
   };
 }

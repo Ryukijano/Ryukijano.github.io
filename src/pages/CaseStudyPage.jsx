@@ -3,6 +3,7 @@ import SiteFooter from '../components/SiteFooter';
 import SiteNav from '../components/SiteNav';
 import { projectLane, projectYear, projectFigures, relatedProjects } from '../data/portfolio';
 import Link from '../lib/Link';
+import { useArticle } from '../lib/article';
 import NotFoundPage from './NotFoundPage';
 
 function labelFromHref(href) {
@@ -107,7 +108,34 @@ function Figure({ figure, index }) {
   );
 }
 
+/**
+ * A long-form case study: the compiled Markdown in chunks, with the project's
+ * figures placed where the text calls for them (<!-- figure N -->). Figures
+ * the text never places follow it, as on a short case study.
+ */
+function Article({ article, plates }) {
+  const placed = new Set(article.figures);
+  return (
+    <>
+      {article.chunks.map((html, i) => {
+        const n = article.figures[i];
+        const figure = n ? plates[n - 1] : null;
+        return (
+          <div key={i}>
+            <div className="print__body-copy article" dangerouslySetInnerHTML={{ __html: html }} />
+            {figure ? <Figure figure={figure} index={n} /> : null}
+          </div>
+        );
+      })}
+      {plates.map((figure, index) =>
+        placed.has(index + 1) ? null : <Figure key={figure.src} figure={figure} index={index + 1} />,
+      )}
+    </>
+  );
+}
+
 export default function CaseStudyPage({ project }) {
+  const article = useArticle(project?.slug);
 
   if (!project) return <NotFoundPage />;
 
@@ -134,6 +162,7 @@ export default function CaseStudyPage({ project }) {
           <p className="cartouche">
             {year != null ? <span>{year}</span> : null}
             {lane ? <span>{lane}</span> : null}
+            {article ? <span>{article.minutes} min read</span> : null}
           </p>
         ) : null}
 
@@ -141,7 +170,12 @@ export default function CaseStudyPage({ project }) {
 
         {project.role ? <p className="print__role print__role--italic">{project.role}</p> : null}
 
-        {body ? (
+        {article ? <Article article={article} plates={plates} /> : null}
+
+        {/* No article: the short account. While an article is loading on a
+            client-side navigation (undefined), nothing, so the page does not
+            show one text and then swap it for another. */}
+        {article === null && body ? (
           <div className="print__body-copy">
             {paragraphs(body).map((para, index) => (
               <p key={index}>{para}</p>
@@ -149,9 +183,9 @@ export default function CaseStudyPage({ project }) {
           </div>
         ) : null}
 
-        {plates.map((figure, index) => (
-          <Figure key={figure.src} figure={figure} index={index + 1} />
-        ))}
+        {article === null
+          ? plates.map((figure, index) => <Figure key={figure.src} figure={figure} index={index + 1} />)
+          : null}
 
         {aside ? (
           <aside className="scope">

@@ -117,7 +117,7 @@ export const DATA = {
       {
         title: "CUDA Blackwell Labs",
         desc: "Twenty-two CUDA labs on a DGX Spark, from memory probes to hand-written FP4 tensor-core instructions.",
-        fullDesc: "CUDA Blackwell Labs is a 22-project plan I worked through on an NVIDIA DGX Spark, whose GB10 chip shares 128 GB of memory between the CPU and the GPU. It runs from a hardware probe and memory microbenchmarks, through the CUDA-to-PTX-to-SASS pipeline, streams and CUDA Graphs, to hand-written FP16 and FP4 tensor-core instructions, TMA tile copies and a FlashAttention-style softmax. Sustained reads reached 231 GB/s, 85% of the 273 GB/s peak. Bandwidth fell from about 900 GB/s to DRAM speed once the working set outgrew the 24 MB L2 cache. cuBLAS ran a 4096 × 4096 GEMM at about 91 TFLOP/s in FP16, against 18 TFLOP/s in FP32.",
+        fullDesc: "CUDA Blackwell Labs is a 22-project plan I worked through on an NVIDIA DGX Spark, whose GB10 chip shares 128 GB of memory between the CPU and the GPU. It runs from a hardware probe and memory microbenchmarks, through the CUDA-to-PTX-to-SASS pipeline, streams and CUDA Graphs, to hand-written FP16 and FP4 tensor-core instructions, TMA tile copies and a FlashAttention-style softmax. Reads ran at about 980 GB/s while the working set fitted in the L2 cache, fell sharply between 8 and 16 MB, and settled at about 200 to 212 GB/s, three-quarters of the 273 GB/s peak. cuBLAS ran a 4096 × 4096 GEMM at about 91 TFLOP/s in FP16, against 18 TFLOP/s in FP32.",
         link: "https://github.com/Ryukijano/cuda-blackwell-labs",
         year: 2026,
         featured: true,
@@ -491,8 +491,8 @@ export const DATA = {
     projects: [
       {
         title: "H-cGQE: Conditional GQE",
-        desc: "A GNN, Transformer, and QD-GRPO pipeline for molecular quantum-circuit design, built for GIC 2026.",
-        fullDesc: "For the Mitsubishi Chemical Group and AIST track of the 2026 Global Industry Challenge, Ryoushi / Quantum Buddies developed H-cGQE for molecular quantum-circuit design. A chemical graph neural network and Transformer propose operator sequences, QD-GRPO supplies the learning signal, and L-BFGS-B optimises the continuous angles. The implementation uses CUDA-Q simulation with selected quantum-hardware checks.",
+        desc: "A Hamiltonian-conditioned Transformer that proposes quantum circuits for molecules, trained with quality-diversity RL for GIC 2026.",
+        fullDesc: "For the Mitsubishi Chemical Group and AIST track of the 2026 Global Industry Challenge, Ryoushi / Quantum Buddies developed H-cGQE for molecular quantum-circuit design. A Transformer reads the molecule's Hamiltonian and proposes operator sequences, reinforcement learning with a quality-diversity archive supplies the learning signal, and L-BFGS-B optimises the continuous angles. The implementation uses CUDA-Q simulation with selected quantum-hardware checks.",
         link: "https://github.com/Quantum-Buddies/Conditional_GQE",
         links: [
           { href: "https://github.com/Quantum-Buddies/Conditional_GQE", label: "Code" },
@@ -502,7 +502,7 @@ export const DATA = {
         featured: true,
         featuredOrder: 1,
         role: "Team member, Ryoushi / Quantum Buddies",
-        note: "The reported 0.63 mHa result is from a controlled 8-qubit methyl-iodide active-space comparison. The reference is CASCI/FCI within that active space; held-out molecule generalisation remains open.",
+        note: "The reported 0.63 mHa result is from a controlled 8-qubit methyl-iodide active-space comparison. The reference is CASCI/FCI within that active space, where the Hartree–Fock state alone is 1.04 mHa from exact; held-out molecule generalisation remains open.",
         figure: {
           kind: "image",
           src: "/assets/media/h-cgqe-gic2026.gif",
@@ -518,11 +518,11 @@ export const DATA = {
       {
         title: "QuantumForge",
         desc: "A Rust statevector simulator with a Qiskit bridge, benchmarked against NumPy and Qiskit Aer from 4 to 26 qubits.",
-        fullDesc: "QuantumForge is a quantum-circuit simulator I wrote in Rust, with ndarray holding the state and rayon applying gates in parallel, and a Python bridge so Qiskit circuits can run on it. On random circuits it was about 4,000 times faster than a naive NumPy simulator at 16 qubits, and faster than Qiskit Aer on CPU up to about 18 qubits. Beyond that Aer pulls ahead, by about four times at 26 qubits, the largest state (512 MB) I ran on a 48 GB machine. I also compared VQE with an evolutionary GQE on H₂. The Rust VQE finished within 1.1 × 10⁻⁶ hartree of the exact ground-state energy, and the GQE within 10⁻¹³.",
+        fullDesc: "QuantumForge is a quantum-circuit simulator I wrote in Rust, with ndarray holding the state and a Python bridge so Qiskit circuits can run on it. On my benchmark circuit it was about 4,000 times faster than a naive NumPy simulator at 16 qubits, and faster than Qiskit Aer on CPU up to about 18 qubits. Beyond that Aer pulls ahead, up to 26 qubits, the largest state (1 GiB) I ran on a 48 GB machine. I also compared VQE with an evolutionary GQE on H₂. The Rust VQE finished within 1.1 × 10⁻⁶ hartree of the exact ground-state energy, and the GQE within 10⁻¹³.",
         link: "https://github.com/Ryukijano/quantumforge",
         year: 2026,
         role: "Author, public repository",
-        note: "The benchmarks are one CPU machine and random circuits from my own harness. H₂ is the smallest molecular test, so the energy results show correctness, not scale.",
+        note: "The benchmarks are single runs on one CPU machine, of one circuit family from my own harness. H₂ is the smallest molecular test, so the energy results show correctness, not scale.",
         links: [
           { href: "https://github.com/Ryukijano/quantumforge", label: "Code" },
         ],

@@ -14,6 +14,7 @@
  */
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
+import { loadArticles } from './articles.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const DIST = join(ROOT, 'dist');
@@ -23,6 +24,16 @@ const { render, allRoutes, routeMeta, PLATE, ORIGIN, OG_IMAGE, OG_IMAGE_ALT } =
   await import(SSR);
 
 const shell = readFileSync(join(DIST, 'index.html'), 'utf8');
+const articles = loadArticles();
+
+/** The article a route carries, if it is a case study with one. */
+const articleFor = (path) => {
+  const slug = path.startsWith('/work/') ? path.slice('/work/'.length) : null;
+  return slug && articles[slug] ? { slug, article: articles[slug] } : null;
+};
+
+// JSON inside <script>: nothing may close the element early.
+const scriptSafe = (value) => JSON.stringify(value).replace(/</g, '\\u003c');
 
 const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -51,7 +62,7 @@ function preloadTag() {
 
 const PRELOAD = preloadTag();
 
-function headFor(meta) {
+function headFor(meta, found) {
   const url = meta.canonical ? `${ORIGIN}${meta.canonical === '/' ? '/' : meta.canonical}` : ORIGIN;
   const tags = [
     `<title>${esc(meta.title)}</title>`,
@@ -71,12 +82,15 @@ function headFor(meta) {
     `<meta name="twitter:title" content="${esc(meta.title)}">`,
     `<meta name="twitter:description" content="${esc(meta.description)}">`,
     `<meta name="twitter:image" content="${ORIGIN}${OG_IMAGE}">`,
+    // Where client-side navigation fetches this article from.
+    found ? `<link rel="alternate" type="application/json" href="/content/${found.slug}.json">` : null,
   ].filter(Boolean);
   return tags.map((t) => `    ${t}`).join('\n');
 }
 
 /** Replace the shell's placeholder head block and inject the rendered body. */
 function pageFor(path, { html, meta }, { withPreload }) {
+  const found = articleFor(path);
   let out = shell;
 
   const start = out.indexOf('<!--head-->');
@@ -84,13 +98,18 @@ function pageFor(path, { html, meta }, { withPreload }) {
   if (start === -1 || end === -1) {
     throw new Error('index.html is missing its <!--head--> ... <!--/head--> markers');
   }
-  out = out.slice(0, start) + headFor(meta) + out.slice(end + '<!--/head-->'.length);
+  out = out.slice(0, start) + headFor(meta, found) + out.slice(end + '<!--/head-->'.length);
 
   // The plate is above the fold on the home page only. Preloading it on a
   // text-only case study cost 286 KB of an image that page never shows.
   out = out.replace('<!--preload-->', withPreload ? PRELOAD : '');
 
-  return out.replace('<div id="root"></div>', `<div id="root">${html}</div>`);
+  // The article the client hydrates against, so it never has to fetch the
+  // page it already has.
+  const data = found
+    ? `<script type="application/json" id="article-${found.slug}">${scriptSafe(found.article)}</script>\n`
+    : '';
+  return out.replace('<div id="root"></div>', `<div id="root">${html}</div>\n${data}`);
 }
 
 function write(relPath, contents) {
@@ -101,9 +120,14 @@ function write(relPath, contents) {
 
 const routes = allRoutes();
 for (const path of routes) {
-  const rendered = render(path);
+  const rendered = render(path, { articles });
   const page = pageFor(path, rendered, { withPreload: path === '/' });
   write(path === '/' ? 'index.html' : `${path.slice(1)}.html`, page);
+}
+
+// Each article as JSON, for client-side navigation to fetch.
+for (const [slug, article] of Object.entries(articles)) {
+  write(`content/${slug}.json`, JSON.stringify(article));
 }
 
 // /work needs to resolve whether or not Pages prefers the file to the
@@ -112,7 +136,7 @@ write('work/index.html', readFileSync(join(DIST, 'work.html')));
 
 // 404.html is rendered from an unknown route, not copied from the home page,
 // so a genuinely missing URL no longer claims to be the home page.
-write('404.html', pageFor('/__not-found__', render('/__not-found__'), { withPreload: false }));
+write('404.html', pageFor('/__not-found__', render('/__not-found__', { articles }), { withPreload: false }));
 
 // Sitemap lists canonical URLs only, so the /persona/gyanateet alias does not
 // compete with /persona/yana for indexing.

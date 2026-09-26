@@ -45,6 +45,16 @@ scripts/
 media/         source images kept out of the deploy
 ```
 
+## Writing a long-form case study
+
+Write `src/content/<project-slug>.md` in plain Markdown and add the slug to
+`src/content/index.js`. A line `<!-- figure 2 -->` places the project's second
+figure at that point; figures you do not place follow the article. The build
+puts the article into the prerendered page and writes
+`dist/content/<slug>.json` for client-side navigation, so prose never enters
+the JS bundle. Same rules as everywhere: British English, first person, and
+every number traceable to a source, with its scope in the next sentence.
+
 ## Commands
 
 ```sh

@@ -24,7 +24,9 @@ const VIEWPORTS = [
   { w: 1440, h: 900, note: 'laptop' },
 ];
 
-const ROUTES = ['/', '/work', '/academic', '/persona/ryoushi', '/work/aims-surgical-phase-detection'];
+// The CUDA case study is a long-form article with an unbreakable PTX
+// mnemonic in it: the likeliest page to overflow a phone.
+const ROUTES = ['/', '/work', '/academic', '/persona/ryoushi', '/work/aims-surgical-phase-detection', '/work/cuda-blackwell-labs'];
 
 for (const { w, h, note } of VIEWPORTS) {
   test.describe(`${w}x${h} (${note})`, () => {
