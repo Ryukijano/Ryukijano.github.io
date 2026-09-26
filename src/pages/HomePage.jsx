@@ -3,7 +3,7 @@ import KanagawaPlate from '../components/KanagawaPlate';
 import SiteNav from '../components/SiteNav';
 import { PLATE } from '../data/plate';
 import { LANES } from '../data/portfolio';
-import { ACADEMIC_BIO, EDUCATION } from '../data/publications';
+import { HOME_BIO, EDUCATION } from '../data/publications';
 import Link from '../lib/Link';
 
 
@@ -84,7 +84,7 @@ export default function HomePage() {
 
           <figcaption className="folio__slip">
             <div className="folio__slip-head">
-              <h1 className="folio__name">{ACADEMIC_BIO.name}</h1>
+              <h1 className="folio__name">{HOME_BIO.name}</h1>
               <span className="seal" aria-hidden="true">
                 G
               </span>
@@ -111,11 +111,7 @@ export default function HomePage() {
                 </span>
               ))}
             </nav>
-            <p className="folio__names">
-              I build and publish as Ryukijano; Yana names the vision work, Ryoushi the quantum
-              collective I co-founded.
-            </p>
-            <p className="folio__bio">{ACADEMIC_BIO.statement}</p>
+            <p className="folio__bio">{HOME_BIO.statement}</p>
             <p className="folio__caption">
               <Marked text={PLATE.caption} highlight={PLATE.highlight} />
             </p>

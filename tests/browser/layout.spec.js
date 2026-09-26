@@ -192,7 +192,7 @@ test.describe('keyboard', () => {
     await page.locator('.folio__handles').getByRole('link', { name: 'Ryukijano', exact: true }).click();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Ryukijano');
     await page.goBack();
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Gyanateet Dutta');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Gyanateet “Yana” Dutta');
     expect(new URL(page.url()).pathname).toBe('/');
     await page.goForward();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Ryukijano');

@@ -154,3 +154,9 @@ export const ACADEMIC_BIO = {
   statement:
     'I finished an MSc and am a research technician at the University of Leeds, working on self-supervised computer vision for surgical video — first author of an ISBI 2026 paper. I also work on hybrid quantum–classical algorithms with Ryoushi / Quantum Buddies, most recently H-cGQE for the GIC 2026 advanced-materials track.',
 };
+
+export const HOME_BIO = {
+  name: 'Gyanateet “Yana” Dutta',
+  statement:
+    'I’m an AI researcher and systems engineer working across surgical computer vision, GPU computing, and quantum algorithms. The projects here include surgical-video models, CUDA experiments, and hybrid quantum–classical methods; each account states what its results rest on.',
+};
