@@ -118,28 +118,41 @@ test('project demos load as looping GIFs with a still poster', async ({ page }) 
     '/work/yquantum-2025-yale',
     '/work/nqcc-uk-quantum-hackathon',
     '/work/quantum-error-correction',
+    '/work/physics-informed-neural-networks',
+    '/work/iquhack-2026-nvidia-labs',
   ];
 
   for (const route of routes) {
     await page.goto(route);
-    const gif = page.locator('.plate__sheet img');
-    await expect(gif).toHaveCount(1);
-    await expect(gif).toHaveAttribute('src', /\/assets\/media\/.+\.gif$/);
-    await expect(page.locator('.plate__sheet--loop')).toHaveCount(1);
-    // Playwright runs with reduced-motion, which hides the GIF; still assert
-    // the file is there and is a GIF.
-    const src = await gif.getAttribute('src');
-    const response = await page.request.get(src);
-    expect(response.ok(), `${route} ${src}`).toBe(true);
-    expect(response.headers()['content-type'], `${route} ${src}`).toMatch(/gif/i);
+    // Deep RL carries two demos; every other route here carries one.
+    const gifs = page.locator('.plate__sheet--loop img');
+    const count = await gifs.count();
+    expect(count, route).toBeGreaterThan(0);
+    for (let i = 0; i < count; i += 1) {
+      const gif = gifs.nth(i);
+      await expect(gif).toHaveAttribute('src', /\/assets\/media\/.+\.gif$/);
+      // Playwright runs with reduced-motion, so the same <img> shows the
+      // poster and keeps its alt text rather than being hidden with it.
+      await gif.scrollIntoViewIfNeeded();
+      await expect(gif).toBeVisible();
+      await expect(gif).toHaveAttribute('alt', /\S/);
+      await expect.poll(() => gif.evaluate((img) => img.complete && img.currentSrc)).toMatch(/-poster\.(webp|avif)$/);
+      // The GIF itself is still deployed and served as a GIF.
+      const src = await gif.getAttribute('src');
+      const response = await page.request.get(src);
+      expect(response.ok(), `${route} ${src}`).toBe(true);
+      expect(response.headers()['content-type'], `${route} ${src}`).toMatch(/gif/i);
+    }
   }
 });
 
 test('the pothole case study shows the paper figures', async ({ page }) => {
   await page.goto('/work/pothole-detection-arxiv');
   const images = page.locator('.plate__sheet img');
-  await expect(images).toHaveCount(3);
+  await expect(images).toHaveCount(4);
   await expect(images.nth(0)).toHaveAttribute('src', /pothole-samples\.webp$/);
   await expect(images.nth(1)).toHaveAttribute('src', /pothole-pipeline\.webp$/);
   await expect(images.nth(2)).toHaveAttribute('src', /pothole-detect\.webp$/);
+  // The same Figure 4 frames, alternated in place.
+  await expect(images.nth(3)).toHaveAttribute('src', /pothole-blink\.gif$/);
 });

@@ -1279,9 +1279,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  /* A looping GIF is motion the same way a muted video is. */
-  .plate__sheet--loop video,
-  .plate__sheet--loop img {
+  /* A muted video is motion. A looping GIF is too, but its <picture> swaps
+     to the poster by itself, so only the video needs hiding here. */
+  .plate__sheet--loop video {
     display: none;
   }
 

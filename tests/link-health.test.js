@@ -226,7 +226,7 @@ describe('case-study figures', () => {
       .filter((project) => projectFigures(project).length)
       .map((project) => project.title);
 
-    expect(withFigures).toHaveLength(27);
+    expect(withFigures).toHaveLength(28);
     expect(withFigures).toEqual(
       expect.arrayContaining([
         'Dalton Mills VR Reconstruction',
@@ -249,6 +249,7 @@ describe('case-study figures', () => {
         'Deep RL & Hugging Face',
         'H-cGQE: Conditional GQE',
         'QuantumForge',
+        'iQuHACK 2026 NVIDIA LABS',
         'Bradford Quantum Hackathon 2025',
         'YQuantum 2025 (Yale)',
         'NQCC UK Quantum Hackathon',

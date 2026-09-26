@@ -160,10 +160,13 @@ by `tests/link-health.test.js`, along with dimensions (so nothing shifts), alt
 text, and a 700 kB cap per asset.
 
 The animated figures from the earlier field-note design remain part of the
-project record. They are delivered as looping GIFs with still posters;
-reduced-motion mode shows the poster. Most explain a method and are labelled
+project record. They are delivered as looping GIFs with still posters.
+Reduced-motion mode swaps each GIF for its poster inside the same `<picture>`,
+so the alt text survives and the GIF is never fetched. Most explain a method and are labelled
 as schematics. The surgical-phase figure is a model diagnostic from selected
-ESD frames.
+ESD frames. Four are computed for the page: the Hopfield tour, Burgers'
+equation, the LABS search and the surface-code decode. Each says so in its
+scope, and `media/README.md` records how it was made.
 
 `media/README.md` has the shape of the `figure:` field, the encode notes,
 and — usefully — a list of which images in `media/` are *not* real evidence.

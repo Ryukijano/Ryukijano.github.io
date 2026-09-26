@@ -84,6 +84,10 @@ function Figure({ figure, index }) {
           />
         ) : (
           <picture>
+            {/* First, so it wins: reduced motion swaps the loop for its still
+                inside the same <img>, which keeps the alt text in the
+                accessibility tree and never fetches the GIF. */}
+            {poster ? <source media="(prefers-reduced-motion: reduce)" srcSet={poster} /> : null}
             {sources.map((source) => (
               <source key={source.srcSet} type={source.type} srcSet={source.srcSet} sizes={source.sizes} />
             ))}
