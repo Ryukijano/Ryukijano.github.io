@@ -8,7 +8,7 @@ as a static GitHub Pages user site. Routing is hand-rolled
 
 | file | what it is |
 |---|---|
-| `DESIGN.md` | the decision log: palette, measured contrast, type, where the accent may appear, why there is no dark mode |
+| `DESIGN.md` | the decision log: two stocks, contrast, type, accent and theme behaviour |
 | `.opencode/skills/paper-ink/SKILL.md` | the working rules for building a page in this system |
 | `.opencode/skills/paper-ink/references/route-shapes.md` | markup and rules for the notes, workbench, collection and ledger shapes |
 | `src/index.css` | the entire design system, one file |
@@ -21,9 +21,10 @@ make a test pass.
 ## The short version
 
 The site is a print on washi paper. Reflected light, never emitted. Eight ink
-tokens, one accent, everything square, grain under the text rather than over
-it, no dark mode. Three families: Source Serif 4 for anything readable, IBM
-Plex Sans for interface chrome at weight 400 only, IBM Plex Mono for tracked
+tokens per stock, one accent, everything square, grain under the text rather
+than over it. The owner requested light washi and dark indigo stocks. Three
+families: Source Serif 4 for anything readable, IBM Plex Sans for interface
+chrome at weight 400 only, IBM Plex Mono for tracked
 uppercase labels and figures.
 
 Every claim carries its scope in the next sentence. Every project, note and
@@ -79,4 +80,5 @@ test asserts against `dist/`.
 - Prerendering is a correctness fix, not an optimisation: GitHub Pages has no
   rewrites, so deep links have to be real files or they return the wrong
   status to crawlers and unfurlers.
-- Do not add analytics, a cookie banner, a dark-mode toggle, or an icon set.
+- Do not add analytics, a cookie banner, or an icon set. Keep the existing
+  light/dark stock switch legible and keyboard accessible.

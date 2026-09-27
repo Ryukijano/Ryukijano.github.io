@@ -78,9 +78,9 @@
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Source Serif 4", "Source Serif Fallback", Palatino, "Times New Roman", serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  --color-washi: #e6e1d3;
-  --color-washi-deep: #d9d3c2;
-  --color-washi-lift: #ece8dc;
+  --color-washi: #f4f2ed;
+  --color-washi-deep: #e9e6df;
+  --color-washi-lift: #fffdf7;
   --color-ink: #1a237e;
   --color-ink-muted: #535896;
   --color-rule: rgba(26, 35, 126, 0.18);
@@ -117,13 +117,27 @@
   --page-measure: var(--measure);
 }
 
+html[data-theme='dark'] {
+  --color-washi: #101b2b;
+  --color-washi-lift: #1a2938;
+  --color-washi-deep: #192333;
+  --color-ink: #efe9dc;
+  --color-ink-muted: #b9c0d0;
+  --color-rule: rgba(239, 233, 220, 0.18);
+  --color-seal: #f28d76;
+  --color-seal-bright: #f28d76;
+}
+
 @layer base {
   html {
-    /* A woodblock print on washi has no dark variant. Declaring light keeps
-       scrollbars and <details> markers from rendering dark on cream. */
+    /* Each stock sets its own native controls alongside the paper and ink. */
     color-scheme: light;
     background: var(--color-washi);
     color: var(--color-ink);
+  }
+
+  html[data-theme='dark'] {
+    color-scheme: dark;
   }
 
   body {
@@ -258,6 +272,35 @@
   mix-blend-mode: soft-light;
 }
 
+.atmo__engraving,
+.folio::before {
+  position: fixed;
+  top: 5rem;
+  right: 0;
+  width: min(70vw, 52rem);
+  height: calc(100dvh - 5rem);
+  background: var(--color-ink);
+  -webkit-mask: url('/assets/wave-engraving.svg') center / contain no-repeat;
+  mask: url('/assets/wave-engraving.svg') center / contain no-repeat;
+  opacity: 0.075;
+  pointer-events: none;
+}
+
+.atmo__engraving {
+  width: min(29vw, 25rem);
+}
+
+@media (max-width: 899px) {
+  .atmo__engraving {
+    display: none;
+  }
+}
+
+html[data-theme='dark'] .atmo__engraving,
+html[data-theme='dark'] .folio::before {
+  opacity: 0.12;
+}
+
 /* --------------------------------------------------------- site nav */
 
 .site-nav {
@@ -327,6 +370,37 @@
   color: var(--color-seal);
 }
 
+.site-nav__theme {
+  margin-left: 0.15rem;
+  padding: 0.1rem 0.25rem;
+  background: transparent;
+  border: var(--hairline);
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  line-height: 1.25;
+  cursor: pointer;
+}
+
+.site-nav__theme:hover {
+  color: var(--color-seal);
+}
+
+@media (max-width: 420px) {
+  .site-nav:not(.site-nav--veil) .site-nav__bar {
+    height: auto;
+    min-height: 4.8rem;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.15rem;
+    padding: 0.4rem 1.5rem 0.45rem;
+  }
+
+  .site-nav:not(.site-nav--veil) .site-nav__links {
+    gap: 0.35rem;
+  }
+}
+
 /* --------------------------------------------------------- folio (home) */
 
 /*
@@ -371,7 +445,14 @@
   --page-measure: var(--folio-plate);
 }
 
+.folio::before {
+  content: '';
+  z-index: 0;
+}
+
 .folio__stage {
+  position: relative;
+  z-index: 1;
   box-sizing: border-box;
   min-height: 100dvh;
   padding-top: 3rem;

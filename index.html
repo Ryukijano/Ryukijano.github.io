@@ -1,10 +1,21 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/seal.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#e6e1d3" />
+    <meta name="theme-color" content="#f4f2ed" />
+    <script>
+      (() => {
+        let saved;
+        try { saved = localStorage.getItem('site-theme'); } catch { saved = null; }
+        const theme = saved === 'dark' || saved === 'light'
+          ? saved
+          : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#101b2b' : '#f4f2ed';
+      })();
+    </script>
 <!--head-->
     <title>Gyanateet Dutta</title>
 <!--/head-->

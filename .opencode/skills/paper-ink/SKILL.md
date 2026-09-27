@@ -5,8 +5,9 @@ description: The washi print system this site is built in — the eight ink toke
 
 # paper-ink
 
-The site is a print hung on washi paper. Light is reflected, never emitted:
-ink sits on paper, the paper has tooth, and the brightest mark on a sheet is
+The site is a print hung on near-white washi or dark indigo paper. Light is
+reflected, never emitted: ink sits on paper, the paper has tooth, and the
+brightest mark on a sheet is
 still ink. Before adding anything, ask whether a press could have produced
 it — if the answer needs a light source, it is out.
 
@@ -24,18 +25,17 @@ disagreement.
   `.is-active`, `::selection`). Nothing else. The test walks every rule that
   references it and fails on a third kind of selector.
 - **`--color-rule` is the ink at 0.18**, never a separate grey.
-- **Contrast floors**: ink on washi ≥ 7.0 (AAA), ink-muted and seal ≥ 4.5.
-  `--color-ink-muted` sits 0.52 above AA, so nudging the paper or the ink
-  breaks it invisibly.
-- **`--color-washi-deep` is a ground only.** ink-muted reaches 4.38 on it and
-  fails AA. Never set small text there.
+- **Contrast floors**: ink on washi ≥ 7.0 (AAA), ink-muted and seal ≥ 4.5
+  in both stocks. Near-white paper gives muted ink 5.86:1.
+- **`--color-washi-deep` is a ground only.** It is reserved for a loading plate,
+  not for running text.
 - **`--color-seal-bright` is decorative**, used by `.seal` alone, which is
-  `aria-hidden`. It is 3.95 on washi-lift. Real text in it is a failure.
+  `aria-hidden`. It is below AA on near-white washi. Real text in it is a failure.
 - **The type scale is 1.25 from `--step--1` up**, anchored on a 17px body.
   `--step--2` is deliberately off the scale at 0.72rem as a legibility floor
   for tracked uppercase mono.
-- **No dark mode.** `color-scheme: light`, permanently. A print has no dark
-  variant.
+- **Two stocks.** Light washi and dark indigo paper are separately inked,
+  never inverted. The owner explicitly requested both; see `DESIGN.md`.
 - **Grain is under the text layer**, not over it. Fibre first, ink on top.
 - **Nothing decorative is load-bearing.** Kill every texture and the site is
   still the print system it was.
@@ -73,9 +73,9 @@ and the seal are the only marks.
 
 ## The route shapes
 
-Twelve surfaces, all set by three knobs — stock, screen, gradation. On the
-shipped system every one of them is washi with grain; screens, gradations and
-the dark stocks are the proposed layer and render nowhere yet.
+Twelve surfaces, all set by three knobs — stock, screen, gradation. The
+shipped system now has light washi and dark indigo stocks with grain. Other
+screens and gradations are still proposed rather than shipped.
 
 | surface | what it is |
 |---|---|
@@ -110,5 +110,5 @@ rules for each. Their CSS is in the paper-ink route shapes block in
 
 Glow, bloom, blur, smooth gradients, wet reflections, chrome or bevelled type,
 elevation, shadows, a fourth keyblock, an icon, an emoji, a hero image above a
-title, a vanity metric, a dark mode, or a colour picked by eye rather than
-taken from a token.
+title, a vanity metric, an inverted image masquerading as dark mode, or a
+colour picked by eye rather than taken from a token.

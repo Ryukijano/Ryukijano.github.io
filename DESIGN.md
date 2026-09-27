@@ -12,16 +12,17 @@ the *kento* registration marks live in the paper margin — off the art, the way
 they do on a real block print. Interior pages are sheets from the same press,
 with the same marks in their own margins.
 
-This is why there is no dark mode (below), why nothing has a blurred shadow,
-and why the grain sits *under* the text rather than over it.
+The light stock stays washi. The dark stock answers the owner's request for a
+night setting: indigo-black paper, warm ink, and the same single vermilion seal.
+Neither uses a blurred shadow, and the grain stays *under* the text.
 
 ## Palette — eight tokens
 
 | token | value | role |
 |---|---|---|
-| `--color-washi` | `#e6e1d3` | the paper |
-| `--color-washi-lift` | `#ece8dc` | a raised slip on the paper |
-| `--color-washi-deep` | `#d9d3c2` | the sheet under a plate still loading |
+| `--color-washi` | `#f4f2ed` | near-white paper |
+| `--color-washi-lift` | `#fffdf7` | the title slip |
+| `--color-washi-deep` | `#e9e6df` | the sheet under a plate still loading |
 | `--color-ink` | `#1a237e` | the wave's Prussian indigo; all body text |
 | `--color-ink-muted` | `#535896` | metadata, captions, secondary text |
 | `--color-rule` | `ink` at 0.18 | every hairline |
@@ -32,21 +33,19 @@ Measured contrast, and the floors the tests hold:
 
 | pair | ratio | floor |
 |---|---|---|
-| ink on washi | **10.14** | ≥ 7.0 (AAA) |
-| ink on washi-lift | **10.81** | ≥ 7.0 |
-| ink-muted on washi | **5.02** | ≥ 4.5 (AA) |
-| ink-muted on washi-lift | **5.35** | ≥ 4.5 |
-| seal on washi | **5.18** | ≥ 4.5 |
-| seal on washi-lift | **5.52** | ≥ 4.5 |
+| ink on washi | **11.84** | ≥ 7.0 (AAA) |
+| ink on washi-lift | **13.02** | ≥ 7.0 |
+| ink-muted on washi | **5.86** | ≥ 4.5 (AA) |
+| ink-muted on washi-lift | **6.44** | ≥ 4.5 |
+| seal on washi | **6.05** | ≥ 4.5 |
+| seal on washi-lift | **6.65** | ≥ 4.5 |
 
-`--color-ink-muted` has only **0.52 of headroom above AA**. It is used for a
-lot of small text. Darkening the paper or lightening that ink by even a little
-breaks the floor, and nothing on screen would tell you — which is exactly why
-it is asserted in code.
+The lighter stock gives muted ink more headroom than the earlier cream paper.
+These values are still tested as floors, not as arbitrary targets.
 
-`--color-seal-bright` is the one sub-AA pairing (3.95 against washi-lift). It
-appears only on `.seal`, which is `aria-hidden` and decorative. If it ever
-carries real text, it fails.
+`--color-seal-bright` belongs only on `.seal`, which is `aria-hidden` and
+decorative. On near-white washi it clears 4.32:1, below AA; the actual text
+accent remains `--color-seal`.
 
 ### Where the accent is allowed
 
@@ -171,14 +170,26 @@ scope, and `media/README.md` records how it was made.
 `media/README.md` has the shape of the `figure:` field, the encode notes,
 and — usefully — a list of which images in `media/` are *not* real evidence.
 
-## No dark mode
+## Light and dark stocks
 
-`html { color-scheme: light }`, deliberately and permanently.
+The owner chose two stocks after seeing the print on washi: light washi and
+dark indigo-black. Dark is a separately inked surface, not `filter: invert()`
+or a cyan-on-black dashboard. The print and figure images retain their own
+colours. The same engraving sits outside the reading column on both stocks;
+it is decorative and is not downloaded from the reference images.
 
-A woodblock print on washi paper has no dark variant. Inverting it makes the
-ink glow and the paper become a void, and the result is not a print — it is a
-screen imitating one. The declaration also stops scrollbars and `<details>`
-markers rendering dark against a cream page on a machine in dark mode.
+The initial stock follows the operating-system preference. A labelled switch
+in the nav stores an explicit choice in local storage and carries it between
+routes and reloads. The stock is set before the page paints so prerendered
+content does not flash the wrong colour. Each stock sets its own
+`color-scheme`, including native scrollbars and disclosure markers. On the
+narrowest phones the interior nav splits into a wordmark line and a links
+line; the home nav has no wordmark and stays on one line.
+
+Dark stock: background `#101b2b`, raised sheet `#1a2938`, deep ground
+`#192333`, text `#efe9dc`, secondary text `#b9c0d0`, accent `#f28d76`.
+Text clears 12:1 against the raised sheet; secondary text clears 8:1.
+The raised sheet and the ink are tokens, never a CSS inversion of the image.
 
 ## Motion
 
@@ -258,7 +269,6 @@ and has no footprint of its own. `/persona/gyanateet` resolves to the same page
 as `/persona/yana`. Whether the vision lane should carry `Gyanateet` instead
 is the owner's call.
 
-**Not open:** `--color-seal-bright`. It is sub-AA against the paper, it is
-used by exactly one `aria-hidden` element, and the tests hold it there. Folding
-it into `--color-seal` so that "one accent" is literal would trade a tuned
-vermilion chip for a rule that already holds.
+**Not open:** `--color-seal-bright`. It is decorative on exactly one
+`aria-hidden` element; the tests hold it there. On the white stock it is below
+AA against the paper, so it must not carry real text.

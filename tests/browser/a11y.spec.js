@@ -64,6 +64,21 @@ for (const [name, path] of PAGES) {
 
     expect(violations, `\n${report(violations)}`).toEqual([]);
   });
+
+  test(`${name} passes contrast on dark stock`, async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await page.goto(path);
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+    await page.evaluate(() => document.fonts.ready);
+    await page.addStyleTag({ content: '.atmo, .folio__sheet-grain { display: none !important }' });
+
+    const { violations } = await new AxeBuilder({ page })
+      .withTags(['wcag2aa'])
+      .withRules(['color-contrast'])
+      .analyze();
+
+    expect(violations, `\n${report(violations)}`).toEqual([]);
+  });
 }
 
 test('every page has exactly one h1 and a reachable #main', async ({ page }) => {

@@ -152,11 +152,11 @@ export const ACADEMIC_BIO = {
   name: 'Gyanateet Dutta',
   role: 'Research technician · University of Leeds',
   statement:
-    'I finished an MSc and am a research technician at the University of Leeds, working on self-supervised computer vision for surgical video — first author of an ISBI 2026 paper. I also work on hybrid quantum–classical algorithms with Ryoushi / Quantum Buddies, most recently H-cGQE for the GIC 2026 advanced-materials track.',
+    'At Leeds I train self-supervised vision models for surgical video. I was first author on our ISBI 2026 paper on phase recognition, evaluated on patient and porcine test sets. I co-founded Quantum Buddies; our H-cGQE project for the GIC 2026 advanced-materials track is one part of that work.',
 };
 
 export const HOME_BIO = {
   name: 'Gyanateet “Yana” Dutta',
   statement:
-    'I’m an AI researcher and systems engineer working across surgical computer vision, GPU computing, and quantum algorithms. The projects here include surgical-video models, CUDA experiments, and hybrid quantum–classical methods; each account states what its results rest on.',
+    'At Leeds I train vision models on surgical video. I was first author on our ISBI 2026 paper; we tested phase recognition on patient and porcine footage. I also write CUDA code and build quantum circuits with Quantum Buddies, which I co-founded.',
 };

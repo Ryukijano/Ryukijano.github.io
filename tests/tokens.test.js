@@ -6,8 +6,8 @@
  * under active redesign, so a suite that goes red when a layout changes would
  * be abandoned within a fortnight. A contrast floor and a scale ratio survive
  * any amount of re-layout, and they catch the failures nothing on screen
- * would — ink-muted sits 0.52 above AA, so nudging it lighter breaks the floor
- * invisibly. DESIGN.md records why each number is what it is.
+ * would — palette changes still have to clear the contrast floors on both
+ * stocks. DESIGN.md records why each number is what it is.
  */
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
@@ -51,7 +51,7 @@ describe('palette', () => {
   });
 
   // Floors, not exact values, so the palette can be tuned but not broken.
-  // Measured today: 10.14 / 10.81 / 5.02 / 5.35 / 5.18 / 5.52.
+  // Light stock: 11.84 / 13.02 / 5.86 / 6.44 / 6.05 / 6.65.
   it.each([
     ['ink', 'washi', 7],
     ['ink', 'washi-lift', 7],
@@ -65,7 +65,7 @@ describe('palette', () => {
   });
 
   it('warns nobody: seal-bright is decorative only', () => {
-    // 3.95 against washi-lift, below AA. Fine on .seal, which is aria-hidden.
+    // 4.32 against near-white washi, below AA. Fine on .seal, which is aria-hidden.
     // Asserted so that using it for real text is a deliberate act.
     const uses = [...css.matchAll(/([.#][\w-]+)\s*\{[^}]*--color-seal-bright[^}]*\}/g)];
     expect(uses.map((m) => m[1])).toEqual(['.seal']);
@@ -183,8 +183,23 @@ describe('the sizes attribute describes the stylesheet', () => {
 });
 
 describe('non-negotiables', () => {
-  it('declares a light color-scheme: a print has no dark variant', () => {
+  it('sets native controls for both stocks', () => {
     expect(css).toMatch(/color-scheme:\s*light/);
+    expect(css).toMatch(/html\[data-theme='dark'\]\s*\{\s*color-scheme:\s*dark/);
+  });
+
+  it('keeps dark ink, secondary text and accent readable on both grounds', () => {
+    const dark = css.match(/html\[data-theme='dark'\]\s*\{([^}]+)\}/)?.[1];
+    expect(dark).toBeTruthy();
+    const token = (name) => dark.match(new RegExp(`--color-${name}:\\s*(#[0-9a-f]{6});`, 'i'))?.[1];
+    for (const ground of ['washi', 'washi-lift']) {
+      expect(contrast(token('ink'), token(ground))).toBeGreaterThanOrEqual(7);
+      expect(contrast(token('ink-muted'), token(ground))).toBeGreaterThanOrEqual(4.5);
+      expect(contrast(token('seal'), token(ground))).toBeGreaterThanOrEqual(4.5);
+    }
+    const [r, g, b, alpha] = dark.match(/--color-rule:\s*rgba\(([^)]+)\)/)[1].match(/[\d.]+/g).map(Number);
+    expect([r, g, b]).toEqual(srgb(token('ink')));
+    expect(alpha).toBe(0.18);
   });
 
   it('keeps the atmosphere under the text layer', () => {

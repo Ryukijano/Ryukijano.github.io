@@ -39,6 +39,6 @@ export const PLATE = {
   ],
   alt: 'Kanagawa plate in three states, left to right: the painted wave, its RGB encoding, a neon wireframe.',
   caption:
-    'The image moves from a painted scene to an RGB encoding and a wireframe reconstruction. It is a schematic of digital representation.',
+    'A schematic of one wave, from woodblock print through RGB pixels to wireframe.',
   highlight: 'schematic',
 };
