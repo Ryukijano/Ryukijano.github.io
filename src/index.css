@@ -697,6 +697,15 @@ html[data-theme='dark'] .folio::before {
   letter-spacing: -0.02em;
 }
 
+.folio__portrait {
+  align-self: center;
+  flex: none;
+  width: 3.25rem;
+  height: 3.25rem;
+  object-fit: cover;
+  border: var(--hairline);
+}
+
 .folio__degree {
   margin: 0;
   font-family: var(--font-mono);

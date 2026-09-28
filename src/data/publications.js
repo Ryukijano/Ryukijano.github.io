@@ -158,5 +158,5 @@ export const ACADEMIC_BIO = {
 export const HOME_BIO = {
   name: 'Gyanateet “Yana” Dutta',
   statement:
-    'Games and graphics got me into computers. I keep coming back to video: how a model recognises a surgical phase, and whether a world model gives a robot anything useful to plan with. I like the hands-on side too—CUDA, simulation and quantum circuits.',
+    'That’s me at the beige PC. Games and graphics got me into computers and I never got out. I keep coming back to video—whether a model can recognise the phase of an operation, or guess what comes next. The hands-on side stays: CUDA, simulation and quantum circuits.',
 };

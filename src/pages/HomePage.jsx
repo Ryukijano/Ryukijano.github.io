@@ -84,6 +84,14 @@ export default function HomePage() {
 
           <figcaption className="folio__slip">
             <div className="folio__slip-head">
+              <img
+                className="folio__portrait"
+                src="/assets/images/portrait.webp"
+                alt="Gyanateet as a child, at a beige desktop computer"
+                width={256}
+                height={256}
+                decoding="async"
+              />
               <h1 className="folio__name">{HOME_BIO.name}</h1>
               <span className="seal" aria-hidden="true">
                 G
