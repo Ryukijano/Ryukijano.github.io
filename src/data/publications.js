@@ -152,11 +152,11 @@ export const ACADEMIC_BIO = {
   name: 'Gyanateet Dutta',
   role: 'Research technician · University of Leeds',
   statement:
-    'At Leeds I train self-supervised vision models for surgical video. I was first author on our ISBI 2026 paper on phase recognition, evaluated on patient and porcine test sets. I co-founded Quantum Buddies; our H-cGQE project for the GIC 2026 advanced-materials track is one part of that work.',
+    'I’m interested in what models learn from surgical video when only some frames are labelled, and whether that helps with phase recognition or predicting what comes next. In quantum computing, I want to know whether learned models can design circuits worth running for molecular simulation.',
 };
 
 export const HOME_BIO = {
   name: 'Gyanateet “Yana” Dutta',
   statement:
-    'At Leeds I train vision models on surgical video. I was first author on our ISBI 2026 paper; we tested phase recognition on patient and porcine footage. I also write CUDA code and build quantum circuits with Quantum Buddies, which I co-founded.',
+    'Games and graphics got me into computers. I keep coming back to video: how a model recognises a surgical phase, and whether a world model gives a robot anything useful to plan with. I like the hands-on side too—CUDA, simulation and quantum circuits.',
 };
