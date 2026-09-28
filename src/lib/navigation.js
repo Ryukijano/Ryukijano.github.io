@@ -11,6 +11,7 @@ export function resolveRoute(pathname) {
   if (path === '/') return { kind: 'home' };
   if (path === '/academic') return { kind: 'academic' };
   if (path === '/work') return { kind: 'work' };
+  if (path === '/tools') return { kind: 'tools' };
   if (path.startsWith('/work/')) {
     const slug = path.split('/')[2] || '';
     return { kind: 'case-study', slug };

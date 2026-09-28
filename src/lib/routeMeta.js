@@ -44,6 +44,14 @@ export function routeMeta(pathname) {
         canonical: '/academic',
       };
 
+    case 'tools':
+      return {
+        title: `Tools · ${SITE_NAME}`,
+        description:
+          'Tools an agent on this site can clone and run, including fframes, Dmitriy Kovalenko’s Rust video framework.',
+        canonical: '/tools',
+      };
+
     case 'case-study': {
       const project = allProjects().find((p) => p.slug === route.slug);
       if (!project) return notFoundMeta(pathname);
@@ -99,6 +107,7 @@ export function allRoutes() {
   return [
     '/',
     '/work',
+    '/tools',
     '/academic',
     ...Object.keys(PERSONA_BY_SLUG).map((slug) => `/persona/${slug}`),
     ...allProjects().map((project) => `/work/${project.slug}`),

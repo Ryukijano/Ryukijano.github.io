@@ -7,6 +7,7 @@ import AcademicPage from './pages/AcademicPage';
 import CaseStudyPage from './pages/CaseStudyPage';
 import HomePage from './pages/HomePage';
 import PersonaPage from './pages/PersonaPage';
+import ToolsPage from './pages/ToolsPage';
 import WorkPage from './pages/WorkPage';
 import NotFoundPage from './pages/NotFoundPage';
 
@@ -16,6 +17,8 @@ function Page({ route }) {
       return <AcademicPage />;
     case 'work':
       return <WorkPage />;
+    case 'tools':
+      return <ToolsPage />;
     case 'case-study':
       return <CaseStudyPage project={findProject(route.slug)} />;
     case 'persona':
