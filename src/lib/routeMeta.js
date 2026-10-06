@@ -9,7 +9,7 @@ export const OG_IMAGE_ALT =
   'Kanagawa plate in three states, left to right: the painted wave, its RGB encoding, a neon wireframe.';
 
 const HOME_DESCRIPTION =
-  'Gyanateet Dutta finished an MSc at the University of Leeds and is a research technician there, working on computer vision for surgical video and hybrid quantum–classical algorithms.';
+  'Games and graphics got Gyanateet Dutta into computers. He keeps coming back to surgical video, CUDA, simulation, and quantum circuits.';
 
 /** Trim to a length social cards and search results will actually show. */
 function clamp(text, max = 200) {
@@ -40,7 +40,7 @@ export function routeMeta(pathname) {
     case 'academic':
       return {
         title: `Academic · ${SITE_NAME}`,
-        description: clamp(`${ACADEMIC_BIO.role}. ${ACADEMIC_BIO.statement}`),
+        description: clamp(ACADEMIC_BIO.statement),
         canonical: '/academic',
       };
 

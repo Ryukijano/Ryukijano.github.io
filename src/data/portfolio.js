@@ -4,8 +4,8 @@ export const DATA = {
     id: 'ryukijano',
     title: "Ryukijano",
     subtitle: "Graphics & systems",
-    desc: "Graphics and systems projects in Unreal Engine, CUDA C++, scientific computing, and reinforcement learning.",
-    fullDesc: "My graphics and systems work includes photogrammetry in Unreal Engine, CUDA C++, and physics-informed neural networks. From September to December 2024, I worked with the Science Museum Group and Leeds HELIX XR on the Dalton Mills reconstruction.",
+    desc: "Games, graphics, and the part where a picture has to be built: Unreal, CUDA, and a differential equation on the GPU.",
+    fullDesc: "Games and graphics got me into computers, and I still like the part where a picture has to be built. Photogrammetry in Unreal, CUDA, and a differential equation on the GPU are the same habit. From September to December 2024 that included the Dalton Mills reconstruction with the Science Museum Group and Leeds HELIX XR.",
     tags: ["CUDA", "C++", "Three.js", "Unreal Engine", "PyTorch"],
     socials: [
       { link: "https://www.twitch.tv/ryukijano13", label: "Twitch" },
@@ -43,8 +43,8 @@ export const DATA = {
       },
       { 
         title: "AWS AI/ML Scholar", 
-        desc: "AWS AI/ML Scholar, 2022–2023. I trained PPO agents in DeepRacer and finished in the top 15% of the scholarship league.", 
-        fullDesc: "I was an AWS AI/ML Scholar from July 2022 to June 2023 and placed in the top 15% of the DeepRacer scholarship league. I trained PPO agents in the AWS simulator. The picture is an ink track, not a capture of the simulator. Scope: Evaluated in the AWS DeepRacer scholarship-league simulator.",
+        desc: "PPO agents in DeepRacer, trained until they could hold a line. Top 15% of the 2022–2023 scholarship league.", 
+        fullDesc: "I like training a small agent until it can hold a line. From July 2022 to June 2023 I was an AWS AI/ML Scholar and finished in the top 15% of the DeepRacer scholarship league, with PPO agents in the AWS simulator. Scope: Evaluated in the AWS DeepRacer scholarship-league simulator.",
         link: "https://www.linkedin.com/in/gyanateet-dutta-386215192/", 
         year: 2023,
         figure: {
@@ -61,8 +61,8 @@ export const DATA = {
       },
       { 
         title: "Physics-Informed Neural Networks", 
-        desc: "CUDA notebooks for Navier–Stokes and Burgers-type equations, with physics-informed neural network experiments.", 
-        fullDesc: "This repository contains GPU implementations of PDE solvers and physics-informed neural networks for Navier–Stokes, Burgers, and related nonlinear equations, using CUDA C++ and PyTorch. The picture is the Burgers benchmark solved exactly, not output from these notebooks. Scope: Method-exploration notebooks; validation against CFD reference solvers is future work.",
+        desc: "A PDE on the GPU, with the equation sitting inside the loss. Navier–Stokes, Burgers, CUDA and PyTorch.", 
+        fullDesc: "I wanted a partial differential equation on the GPU, with the equation inside the loss. These notebooks are CUDA C++ and PyTorch experiments on Navier–Stokes, Burgers, and related nonlinear equations. Scope: Method-exploration notebooks; validation against CFD reference solvers is future work.",
         link: "https://github.com/Ryukijano/Physics-Based-DeepLearning",
         figure: {
           kind: 'image',
@@ -78,8 +78,8 @@ export const DATA = {
       },
       {
         title: "B3tt3r: 3D Reconstruction",
-        desc: "Stereo reconstruction from image pairs, combining Mast3r and Spann3r.",
-        fullDesc: "I combined Mast3r and Spann3r for stereo matching, depth estimation, and mesh reconstruction from image pairs. The picture is not a capture from that repository. Scope: A working integration of the two models; benchmarking against the source papers is future work.",
+        desc: "Two pictures, and a mesh that has to agree with both. Mast3r and Spann3r, wired together.",
+        fullDesc: "Stereo pairs are the kind of problem I come back to: two pictures, and a surface that has to agree with both. I combined Mast3r and Spann3r for matching, depth, and a mesh. Scope: A working integration of the two models; benchmarking against the source papers is future work.",
         link: "https://github.com/Ryukijano/B3tt3r",
         figure: {
           kind: 'image',
@@ -94,8 +94,8 @@ export const DATA = {
       },
       {
         title: "Agentic structure-from-motion",
-        desc: "An RL agent that calls geometric tools on hard structure-from-motion pairs. An implementation of Gabriele Berton's research idea, still in progress.",
-        fullDesc: "I am training a multimodal agent to call geometric tools (COLMAP, LoFTR, and retrieval) when a structure-from-motion pair is difficult. The research idea is Gabriele Berton's; this repository is my implementation, and it is still in progress. Scope: No public benchmark table yet. The figure is three match drawings saved during training, not a recording of the agent calling those tools.",
+        desc: "Hard photograph pairs, and an agent that chooses a tool for each one. Gabriele Berton's idea, my implementation, still in progress.",
+        fullDesc: "Hard pairs are the ones I care about: little overlap, a repeated window, two buildings that look alike. I am training a multimodal agent to choose a geometric tool for each pair. The research idea is Gabriele Berton's; this repository is my implementation, and it is still in progress. Scope: No public benchmark table yet.",
         link: "https://github.com/Ryukijano/agentic-sfm",
         year: 2026,
         links: [
@@ -154,8 +154,8 @@ export const DATA = {
       },
       {
         title: "CUDA Kernel Development",
-        desc: "A practice log of CUDA C++ kernels and CUDA-Q / cuQuantum exercises.",
-        fullDesc: "QuantumVice-M25-CUDAQuest is a practice log of CUDA C++ kernels and CUDA-Q and cuQuantum exercises. The picture is an ink grid, not a kernel trace. Scope: A practice log of individual kernel exercises.",
+        desc: "A practice log I keep: one CUDA kernel, one question, and the CUDA-Q exercises beside it.",
+        fullDesc: "I keep a practice log for the pleasure of making one kernel do one thing. QuantumVice-M25-CUDAQuest is CUDA C++ kernels, with CUDA-Q and cuQuantum exercises beside them. Scope: Individual kernel exercises, not a benchmark.",
         link: "https://github.com/Ryukijano/QuantumVice-M25-CUDAQuest",
         figure: {
           kind: 'image',
@@ -175,8 +175,8 @@ export const DATA = {
     id: 'ai',
     title: "Gyanateet",
     subtitle: "Computer vision",
-    desc: "Completed MSc Advanced Computer Science (Artificial Intelligence), University of Leeds. Research technician at Leeds. Surgical video and self-supervised transformers.",
-    fullDesc: "I completed the MSc Advanced Computer Science (Artificial Intelligence) at the University of Leeds. I am a research technician at Leeds. From March to November 2025 I worked with AIMS (AI in Medicine and Surgery) on DINOv2 models for ESD workflow recognition.",
+    desc: "Surgical video, and what a model can tell from a clip when only some of the frames are labelled.",
+    fullDesc: "I keep coming back to video. Whether a model can recognise the phase of an operation, or guess what comes next, when only some of the frames are labelled. From March to November 2025 that meant DINOv2 models for endoscopic submucosal dissection, with AIMS at Leeds.",
     tags: ["PyTorch", "JAX", "Computer Vision", "Hugging Face", "TensorFlow"],
     socials: [
       { link: "https://orcid.org/0009-0008-0480-9241", label: "ORCID" },
@@ -189,8 +189,8 @@ export const DATA = {
     projects: [
       { 
         title: "AIMS: Surgical Phase Detection", 
-        desc: "DINOv2 models for endoscopic surgical workflow at AIMS, later an ISBI 2026 paper.", 
-        fullDesc: "From March to November 2025 I was a computer-vision intern with AIMS (AI in Medicine and Surgery) at Leeds. I trained DINOv2 models for endoscopic submucosal dissection workflow, later published as the ISBI 2026 paper “Self-Supervised Vision Transformer for Surgical Phase Recognition in Endoscopic Submucosal Dissection” (DOI 10.1109/isbi61048.2026.11515812). That paper reports 89.5% accuracy on the patient set and 90.0% on porcine.",
+        desc: "Whether a model can name the phase of an endoscopic dissection. DINOv2, later an ISBI 2026 paper.", 
+        fullDesc: "I wanted a model that could name the phase of an endoscopic submucosal dissection from the video, with DINOv2, when the labels are sparse. The work with AIMS at Leeds, from March to November 2025, became the ISBI 2026 paper “Self-Supervised Vision Transformer for Surgical Phase Recognition in Endoscopic Submucosal Dissection” (DOI 10.1109/isbi61048.2026.11515812). The paper reports 89.5% accuracy on the patient set and 90.0% on the porcine set.",
         link: "https://github.com/Ryukijano/DINOEndo", 
         year: 2025,
         featured: true,
@@ -215,8 +215,8 @@ export const DATA = {
       },
       {
         title: "GOT-JEPA surgical tool tracking",
-        desc: "Public code for GOT-JEPA multi-object tracking of surgical tools on CholecTrack20, separate from the phase-recognition paper.",
-        fullDesc: "Gyanateet_tracking is my public code for GOT-JEPA surgical-tool tracking on CholecTrack20: a frozen DINOv2 encoder, a per-track predictor, DETR detection, and re-identification. It is a separate line from the ISBI phase-recognition paper.",
+        desc: "Keeping a surgical tool identified as the camera moves. GOT-JEPA on CholecTrack20, separate from the phase paper.",
+        fullDesc: "I wanted the tools in a surgical clip to stay identified as the camera moves. This is public code for GOT-JEPA tracking on CholecTrack20: a frozen DINOv2 encoder, a per-track predictor, DETR detection, and re-identification. It is a separate line from the ISBI phase-recognition paper.",
         link: "https://github.com/Ryukijano/Gyanateet_tracking",
         year: 2026,
         role: "Author, public repository",
@@ -250,8 +250,8 @@ export const DATA = {
       },
       {
         title: "Causal-JEPA reproduction",
-        desc: "An independent reproduction of Causal-JEPA, object-level latent masking. I did not write the paper.",
-        fullDesc: "I am tracing Causal-JEPA, “Learning World Models through Object-Level Latent Masking” (arXiv:2602.11389), through a public Hugging Face Space, blog assets, and a PushT planning checkpoint. The paper’s authors are Heejeong Nam, Quentin Le Lidec, Lucas Maes, Yann LeCun, and Randall Balestriero.",
+        desc: "What has to be masked before a model can plan. An independent trace of Causal-JEPA. I did not write the paper.",
+        fullDesc: "World models are the question I keep poking: what has to be masked before a model can plan. I am tracing Causal-JEPA, “Learning World Models through Object-Level Latent Masking” (arXiv:2602.11389), through a public Hugging Face Space, blog assets, and a PushT planning checkpoint. The paper’s authors are Heejeong Nam, Quentin Le Lidec, Lucas Maes, Yann LeCun, and Randall Balestriero.",
         link: "https://huggingface.co/spaces/Ryukijano/repro-causal-jepa-learning-world-models-through-object-level-latent-masking",
         year: 2026,
         role: "Independent reproduction",
@@ -275,8 +275,8 @@ export const DATA = {
       },
       { 
         title: "Gemma-Le: VLA Policy", 
-        desc: "A compact vision-language-action policy in a LeRobot fork, with checkpoints on the Hub.", 
-        fullDesc: "I implemented a compact vision-language-action policy in a LeRobot fork, using SigLIP for vision, Gemma 3 with LoRA for language, and ScaleDP for action generation. The checkpoints were trained on the robot_sim.PickNPlace simulation dataset in LeRobot format. Scope: Evaluated on simulated pick-and-place data.",
+        desc: "A small policy that can look, read, and move. Checkpoints from a simulated pick-and-place set are on the Hub.", 
+        fullDesc: "I wanted a small policy that could look, read, and move. This is a vision-language-action model in a LeRobot fork: SigLIP for vision, Gemma 3 with LoRA for language, and ScaleDP for the action. The checkpoints were trained on the robot_sim.PickNPlace simulation dataset in LeRobot format. Scope: Evaluated on simulated pick-and-place data.",
         link: "https://huggingface.co/Ryukijano/gemma-groot", 
         figure: {
           kind: 'image',
@@ -292,8 +292,8 @@ export const DATA = {
       },
       { 
         title: "MSc Thesis: Surgical Video Prediction", 
-        desc: "A VAE–Transformer for surgical video prediction: +2.36 dB PSNR over the chosen baselines, at 22 FPS.", 
-        fullDesc: "My MSc project developed a VAE–Transformer model for surgical video prediction. In my experiments, it improved PSNR by 2.36 dB over the selected baselines and ran at 22 FPS with FP16 mixed precision. The code is available on GitHub.",
+        desc: "What the next frames of a surgical clip look like. On the JIGSAWS test set, a VAE–Transformer gained 2.36 dB PSNR over the chosen baselines, at 22 FPS.", 
+        fullDesc: "Predicting the next frames of a surgical clip is the question this project sits on. The model is a VAE–Transformer. In my experiments it improved PSNR by 2.36 dB over the selected baselines and ran at 22 FPS with FP16 mixed precision. The code is on GitHub.",
         link: "https://github.com/Ryukijano/vae-surgical-prediction", 
         year: 2025,
         featured: true,
@@ -314,8 +314,8 @@ export const DATA = {
       },
       { 
         title: "JAX Diffusers Sprint", 
-        desc: "Eighth globally in the 2023 Hugging Face JAX Diffusers sprint, with a ControlNet trained on TPU v4.", 
-        fullDesc: "In the 2023 Hugging Face JAX Diffusers community sprint I finished eighth globally with a ControlNet for anime-realism, trained on TPU v4.",
+        desc: "A weekend sprint, and a ControlNet that had to be trained before it ended. Eighth on my record of the 2023 JAX Diffusers leaderboard.", 
+        fullDesc: "I like a sprint where the model has to be trained before the weekend ends. In the 2023 Hugging Face JAX Diffusers community sprint I finished eighth globally with a ControlNet for anime-realism, trained on TPU v4.",
         link: "https://github.com/Ryukijano/CatCon-Controlnet-WD-1-5-b2", 
         year: 2023,
         featured: true,
@@ -336,8 +336,8 @@ export const DATA = {
       },
       {
         title: "Multiview diffusion 3D",
-        desc: "A public Hugging Face Space for multiview diffusion. The figure is a generated illustration, not a capture of a run.",
-        fullDesc: "Multiview_diffusion_3d is a Gradio Space that turns a prompt into a four-view grid. The Space is paused, so this page has no screen capture of a run. Scope: Generated illustration. The loop is a clay statue turning on a plain table, made in Google Flow. It is not output from the Space.",
+        desc: "A prompt that becomes something you can walk around. The Space is paused; the loop here is a clay statue.",
+        fullDesc: "I wanted a prompt to become something you can walk around. This Gradio Space turns one into a four-view grid. The Space is paused. Scope: The loop is a clay statue made in Google Flow, shown in place of a run from the Space.",
         link: "https://huggingface.co/spaces/Ryukijano/Multiview_diffusion_3d",
         year: 2024,
         links: [
@@ -412,8 +412,8 @@ export const DATA = {
       },
       {
         title: "Hopfield Networks & TSP",
-        desc: "A 2022 sole-author arXiv note on Hopfield networks and simulated annealing for TSP.",
-        fullDesc: "I wrote “Solving The Travelling Salesmen Problem using HNN and HNN-SA algorithms” (arXiv:2202.13746) in February 2022. The study compares Hopfield neural networks and simulated annealing on TSP instances. The picture is not a figure from that note. Scope: Student experiments on selected TSP instances.",
+        desc: "An early note I still like: a Hopfield network, a little annealing, and a tour that has to get shorter.",
+        fullDesc: "I wrote this because I wanted to see whether a Hopfield network, with a little annealing, could shorten a tour. The note is “Solving The Travelling Salesmen Problem using HNN and HNN-SA algorithms” (arXiv:2202.13746), from February 2022. Scope: Student experiments on selected TSP instances. Unreviewed preprint.",
         link: "https://arxiv.org/abs/2202.13746",
         year: 2022,
         figure: {
@@ -430,8 +430,8 @@ export const DATA = {
       },
       {
         title: "LGM: 3D Model Generation",
-        desc: "A Hugging Face Space that wraps LGM for image-to-3D.",
-        fullDesc: "I built a Hugging Face Space for LGM (Large Gaussian Model) that generates a Gaussian-splat 3D representation from one image. The picture is not a capture of that Space. Scope: Interface and deployment work around the existing LGM model.",
+        desc: "One photograph, and a splat you can orbit. A Space around the existing LGM model.",
+        fullDesc: "I like the moment one photograph becomes something you can turn. This Hugging Face Space wraps LGM so a single image becomes a Gaussian-splat model. Scope: Interface and deployment around the existing LGM model.",
         link: "https://huggingface.co/spaces/Ryukijano/LGM",
         figure: {
           kind: 'image',
@@ -447,8 +447,8 @@ export const DATA = {
       },
       {
         title: "Deep RL & Hugging Face",
-        desc: "PPO, DQN, Doom, and PyBullet agents from the Hugging Face Deep RL course.",
-        fullDesc: "This repository contains PPO, DQN, and related implementations from the Hugging Face Deep RL course, including experiments in Doom and PyBullet. Scope: Course exercises using established algorithms.",
+        desc: "Doom, a walking ant, and whether the agent has actually learned anything. Course exercises in PPO and DQN.",
+        fullDesc: "Doom and a walking ant are how I like to see whether an agent has learned anything. These are PPO and DQN exercises from the Hugging Face Deep RL course, in ViZDoom and PyBullet. Scope: Course exercises using established algorithms.",
         link: "https://github.com/Ryukijano/Deep-Reinforcement-Learning-and-Hugging-Face",
         figures: [
           {
@@ -480,8 +480,8 @@ export const DATA = {
     id: 'ryoushi',
     title: "Ryoushi",
     subtitle: "Quantum algorithms",
-    desc: "Hybrid quantum–classical experiments and hackathon notes. I co-run Quantum Buddies with Sid Iliyasu and Dat Chi Le.",
-    fullDesc: "I work on hybrid quantum–classical algorithms in Qiskit, PennyLane, and cuQuantum. I co-founded Quantum Buddies with Sid Iliyasu and Dat Chi Le; our work includes shared repositories and hackathon projects.",
+    desc: "Circuits I want to know are worth running, written in Qiskit, PennyLane, and cuQuantum, with Quantum Buddies.",
+    fullDesc: "I want to know whether a learned model can design a circuit worth running, and I still like writing the circuit by hand. The work is in Qiskit, PennyLane, and cuQuantum. I co-founded Quantum Buddies with Sid Iliyasu and Dat Chi Le.",
     tags: ["Qiskit", "PennyLane", "Quantum ML", "Python", "CuQuantum"],
     socials: [
       { link: "https://quantum-buddies.github.io", label: "Quantum Buddies" },
@@ -563,8 +563,8 @@ export const DATA = {
       },
       {
         title: "Quantum Buddies",
-        desc: "A three-person collective I co-founded in 2025, for shared repositories and hackathon work.",
-        fullDesc: "I co-founded Quantum Buddies in 2025 with Sid Iliyasu and Dat Chi Le. We maintain shared repositories and collaborate on hackathon projects in quantum machine learning, error correction, genomics, and market simulation. Scope: Three-person independent collective.",
+        desc: "A home for the hackathon work, with Sid Iliyasu and Dat Chi Le.",
+        fullDesc: "I co-founded Quantum Buddies in 2025 with Sid Iliyasu and Dat Chi Le so the hackathon work would have a home. We keep shared repositories in quantum machine learning, error correction, genomics, and market simulation. Scope: Three of us, independent of any lab.",
         link: "https://quantum-buddies.github.io",
         isBanner: true,
         year: 2025,
@@ -572,8 +572,8 @@ export const DATA = {
       },
       { 
         title: "Bradford Quantum Hackathon 2025", 
-        desc: "At Bradford Quantum 2025, Quantum Buddies used lambeq and Quixer to tell promoters from non-promoters on GRCh38.", 
-        fullDesc: "At the Bradford Quantum Hackathon in November 2025, Quantum Buddies used lambeq and Quixer to classify promoter and non-promoter sequences from GRCh38. My teammates reported wins in the Grand Prix and healthcare/BYO track. The picture is an ink classification diagram, not a prize animation.",
+        desc: "Promoter or not, from a DNA sequence. lambeq and Quixer on GRCh38, at Bradford Quantum 2025.", 
+        fullDesc: "Promoter or not, from a sequence, was the question. At the Bradford Quantum Hackathon in November 2025, Quantum Buddies used lambeq and Quixer on promoter and non-promoter sequences from GRCh38. My teammates reported wins in the Grand Prix and healthcare/BYO track.",
         link: "https://quantumbradford2025.com/", 
         year: 2025,
         featured: true,
@@ -638,8 +638,8 @@ export const DATA = {
       },
       { 
         title: "City of London Quantum Hackathon", 
-        desc: "Finalist at the City of London quantum hackathon, with QCBM and quantum-walk MCMC for market simulation.", 
-        fullDesc: "Quantum Buddies reached the final of the City of London Lord Mayor’s Quantum Hackathon in October 2025. We developed differentiable QCBMs and quantum-walk MCMC methods for market simulation. The picture is an ink graph, not a capture of the prototype. Scope: Hackathon prototype evaluated as a simulation.",
+        desc: "A market path, and a quantum walk that has to imitate it. Finalist at the City of London hackathon.", 
+        fullDesc: "Market paths are a good excuse to watch a quantum walk. Quantum Buddies reached the final of the City of London Lord Mayor’s Quantum Hackathon in October 2025, with differentiable QCBMs and quantum-walk MCMC for the simulation. Scope: Hackathon prototype, evaluated as a simulation.",
         link: "https://news.cityoflondon.gov.uk/quantum-meets-finance-hackathon-sparks-next-generation-solutions-in-the-city/", 
         year: 2025,
         figure: {
@@ -656,8 +656,8 @@ export const DATA = {
       },
       {
         title: "Quantum Continuous Thought Machines",
-        desc: "A hybrid quantum–classical recurrent sketch under Quantum Buddies.",
-        fullDesc: "This repository explores a recurrent hybrid architecture that combines parameterised quantum circuits with a continuous-state loop. The picture is an ink loop of squares, not a recorded activation. Scope: Early-stage implementation; publication and benchmarking are future work.",
+        desc: "A circuit that keeps a state between steps, the way a recurrent net does.",
+        fullDesc: "I wanted a circuit that could keep a thought between steps, the way a recurrent net does. This is a parameterised quantum circuit inside a continuous-state loop. Scope: Early-stage implementation; publication and benchmarking are future work.",
         link: "https://github.com/Ryukijano/quantum-continuous-thought-machines",
         figure: {
           kind: 'image',
@@ -673,8 +673,8 @@ export const DATA = {
       },
       {
         title: "Quantum Error Correction",
-        desc: "Surface-code experiments in Stim.",
-        fullDesc: "These experiments use Stim to study stabiliser circuits, surface codes, and decoding. Scope: Simulator experiments with established codes.",
+        desc: "An error the decoder never sees, only the checks it lights. Surface codes in Stim.",
+        fullDesc: "I like an error that the decoder never sees, only the checks it lights. These experiments use Stim on stabiliser circuits, surface codes, and decoding. Scope: Simulator experiments with established codes.",
         link: "https://github.com/Ryukijano/quantum-error-correction",
         figure: {
           kind: 'image',
@@ -690,8 +690,8 @@ export const DATA = {
       },
       {
         title: "Qiskit on Qubit",
-        desc: "Qiskit notebooks on algorithms, variational circuits, and a little QML.",
-        fullDesc: "A collection of Qiskit notebooks covering quantum algorithms, variational circuits, and quantum machine learning. The picture is an ink circuit diagram, not a device capture. Scope: Personal study notes and tutorials.",
+        desc: "Notebooks I open when I want a circuit in front of me.",
+        fullDesc: "These are the notebooks I return to for a circuit on the page: algorithms, variational methods, and a little quantum machine learning, in Qiskit. Scope: Personal study notes and tutorials.",
         link: "https://github.com/Ryukijano/Qiskit_on_Qubit",
         figure: {
           kind: 'image',
