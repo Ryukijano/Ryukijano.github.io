@@ -68,6 +68,8 @@ export default function WorkPage() {
         ) : null}
 
         <nav className="print__foot" aria-label="Other pages">
+          <Link href="/tools">Tools</Link>
+          <span aria-hidden="true"> · </span>
           <Link href="/academic">Academic</Link>
           <span aria-hidden="true"> · </span>
           <Link href="/">Home</Link>
