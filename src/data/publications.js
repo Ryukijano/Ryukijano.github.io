@@ -80,7 +80,7 @@ export const RESEARCH_TIMELINE = [
     year: 2025,
     title: 'Research technician',
     org: 'University of Leeds',
-    desc: 'Research technician at the University of Leeds.',
+    desc: 'University of Leeds.',
   },
   {
     year: 2025,
@@ -125,7 +125,7 @@ export const EDUCATION = [
     years: '2023–2024',
     title: 'MSc Advanced Computer Science (Artificial Intelligence)',
     org: 'University of Leeds',
-    note: 'Completed. Self-reported dates. Research intern, AI in Medicine and Surgery (AIMS), 2025.',
+    note: 'Completed. Self-reported dates.',
   },
 ];
 

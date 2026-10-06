@@ -84,9 +84,6 @@ const HEADER_LINKS = [
 ].filter((item) => item.href);
 
 export default function AcademicPage() {
-  const degree = EDUCATION[0];
-
-
   return (
     <div className="print">
       <Atmosphere variant="quiet" />
@@ -94,13 +91,8 @@ export default function AcademicPage() {
 
       <main id="main" tabIndex={-1} className="route print__body print__body--narrow">
         <h1 className="print__name">{ACADEMIC_BIO.name}</h1>
-        <p className="print__role">{ACADEMIC_BIO.role}</p>
-        {degree ? (
-          <p className="print__role">
-            {degree.title}, {degree.org}, {degree.years}
-          </p>
-        ) : null}
         <p className="print__lede">{ACADEMIC_BIO.statement}</p>
+        <p className="print__role">{ACADEMIC_BIO.role}</p>
 
         <p className="print__links">
           {HEADER_LINKS.map((item, index) => {
