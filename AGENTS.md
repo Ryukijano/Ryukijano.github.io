@@ -56,6 +56,16 @@ puts the article into the prerendered page and writes
 the JS bundle. Same rules as everywhere: British English, first person, and
 every number traceable to a source, with its scope in the next sentence.
 
+## Writing a note
+
+A note is `/notes/<slug>`: the prose in `src/content/notes/<slug>.md`, the
+slug in `NOTE_ARTICLES` in `src/content/index.js`, and its title, standfirst,
+kicker, date, number and scope line in `src/data/notes.js`. The page is the
+note shape in `route-shapes.md`; the build writes `dist/notes/<slug>.html`
+and `dist/content/notes/<slug>.json`, and adds it to the sitemap. Notes take
+no figures. Internal links in the Markdown navigate in-app; external ones open
+with `rel="noopener noreferrer"`.
+
 ## Commands
 
 ```sh
