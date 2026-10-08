@@ -18,6 +18,18 @@ function laneClass(id, active) {
   return ['folio__lane', active === id ? 'is-on' : ''].filter(Boolean).join(' ');
 }
 
+function Linked({ text, link }) {
+  const at = link ? text.indexOf(link.text) : -1;
+  if (at < 0) return text;
+  return (
+    <>
+      {text.slice(0, at)}
+      <Link href={link.href}>{link.text}</Link>
+      {text.slice(at + link.text.length)}
+    </>
+  );
+}
+
 function Marked({ text, highlight }) {
   const at = highlight ? text.indexOf(highlight) : -1;
   if (at < 0) return text;
@@ -119,7 +131,9 @@ export default function HomePage() {
                 </span>
               ))}
             </nav>
-            <p className="folio__bio">{HOME_BIO.statement}</p>
+            <p className="folio__bio">
+              <Linked text={HOME_BIO.statement} link={HOME_BIO.story} />
+            </p>
             <p className="folio__caption">
               <Marked text={PLATE.caption} highlight={PLATE.highlight} />
             </p>

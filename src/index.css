@@ -756,6 +756,12 @@ html[data-theme='dark'] .folio::before {
   line-height: 1.5;
 }
 
+/* Preflight makes links inherit text-decoration; a link in running text
+   has to keep its underline or it is the same ink as the words around it. */
+.folio__bio a {
+  text-decoration-line: underline;
+}
+
 .folio__caption {
   margin: 0.25rem 0 0;
   max-width: 72ch;

@@ -159,4 +159,6 @@ export const HOME_BIO = {
   name: 'Gyanateet “Yana” Dutta',
   statement:
     'That’s me at the beige PC. Games and graphics got me into computers and I never got out. I keep coming back to video—whether a model can recognise the phase of an operation, or guess what comes next. The hands-on side stays: CUDA, simulation and quantum circuits.',
+  // The words in the statement that open the long version.
+  story: { text: 'That’s me at the beige PC', href: '/notes/beige-pc' },
 };
