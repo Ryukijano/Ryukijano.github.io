@@ -13,7 +13,7 @@ test('nothing is requested from a third-party origin', async ({ page }) => {
     const host = new URL(r.url()).host;
     if (!host.startsWith('127.0.0.1') && !host.startsWith('localhost')) external.push(r.url());
   });
-  for (const route of ['/', '/work', '/academic', '/work/aims-surgical-phase-detection']) {
+  for (const route of ['/', '/work', '/academic', '/work/aims-surgical-phase-detection', '/notes/beige-pc']) {
     await page.goto(route);
     await page.evaluate(() => document.fonts.ready);
   }

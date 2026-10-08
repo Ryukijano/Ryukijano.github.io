@@ -25,8 +25,17 @@ const VIEWPORTS = [
 ];
 
 // The CUDA case study is a long-form article with an unbreakable PTX
-// mnemonic in it: the likeliest page to overflow a phone.
-const ROUTES = ['/', '/work', '/academic', '/persona/ryoushi', '/work/aims-surgical-phase-detection', '/work/cuda-blackwell-labs'];
+// mnemonic in it: the likeliest page to overflow a phone. The note's kicker
+// is a single flex row that does not wrap.
+const ROUTES = [
+  '/',
+  '/work',
+  '/academic',
+  '/persona/ryoushi',
+  '/work/aims-surgical-phase-detection',
+  '/work/cuda-blackwell-labs',
+  '/notes/beige-pc',
+];
 
 for (const { w, h, note } of VIEWPORTS) {
   test.describe(`${w}x${h} (${note})`, () => {

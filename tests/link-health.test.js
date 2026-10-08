@@ -188,6 +188,21 @@ describe('the prerender manifest', () => {
     expect(sitemap).toContain('/persona/yana');
   });
 
+  it('lists every note in the sitemap, at its canonical URL', () => {
+    const sitemap = readFileSync(join(DIST, 'sitemap.xml'), 'utf8');
+    const notes = allRoutes().filter((r) => r.startsWith('/notes/'));
+    expect(notes.length).toBeGreaterThan(0);
+    for (const route of notes) {
+      expect(routeMeta(route).canonical).toBe(route);
+      expect(sitemap).toContain(`<loc>https://ryukijano.github.io${route}</loc>`);
+    }
+  });
+
+  it('links the home bio to the beige-PC note', () => {
+    const home = readFileSync(join(DIST, 'index.html'), 'utf8');
+    expect(home).toMatch(/class="folio__bio"><a href="\/notes\/beige-pc">That’s me at the beige PC<\/a>/);
+  });
+
   it('renders 404.html from a not-found route, not from the home page', () => {
     const notFound = readFileSync(join(DIST, '404.html'), 'utf8');
     expect(notFound).toContain('noindex');

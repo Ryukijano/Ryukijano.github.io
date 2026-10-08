@@ -1,5 +1,5 @@
 /**
- * axe-core on the five distinct page types.
+ * axe-core on each distinct page type.
  *
  * Types, not all 28 routes: the 21 case studies are one component rendering
  * one data shape, so auditing them all costs three times the runtime for no
@@ -17,6 +17,7 @@ const PAGES = [
   ['home', '/'],
   ['work catalogue', '/work'],
   ['case study', '/work/aims-surgical-phase-detection'],
+  ['note', '/notes/beige-pc'],
   ['academic', '/academic'],
   ['persona', '/persona/ryoushi'],
   ['not found', '/nope'],
