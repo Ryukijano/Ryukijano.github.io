@@ -1646,6 +1646,20 @@ html[data-theme='dark'] .folio::before {
 .note__body { max-width: var(--measure-read); }
 .note__body p + p { margin-top: var(--space-3); }
 
+/* The rule between standfirst and body. Preflight draws an <hr> in full ink
+   with no margin; on the sheet it is a hairline like every other rule. */
+.note hr {
+  max-width: var(--measure-read);
+  margin: var(--space-5) 0;
+  border-top: var(--hairline);
+}
+
+/* The scope line closes the sheet. */
+.note > .pi-label:last-child {
+  max-width: var(--measure-read);
+  margin-top: var(--space-6);
+}
+
 .note__pull {
   margin: var(--space-5) 0;
   padding-left: var(--space-4);

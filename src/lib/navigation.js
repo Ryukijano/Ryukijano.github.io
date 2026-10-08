@@ -15,6 +15,10 @@ export function resolveRoute(pathname) {
     const slug = path.split('/')[2] || '';
     return { kind: 'case-study', slug };
   }
+  if (path.startsWith('/notes/')) {
+    const slug = path.split('/')[2] || '';
+    return { kind: 'note', slug };
+  }
   if (path.startsWith('/persona/')) {
     const slug = path.split('/')[2] || '';
     return { kind: 'persona', slug, persona: PERSONA_BY_SLUG[slug] ?? null };

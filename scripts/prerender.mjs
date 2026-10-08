@@ -14,22 +14,27 @@
  */
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
-import { loadArticles } from './articles.mjs';
+import { loadArticles, loadNotes } from './articles.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const DIST = join(ROOT, 'dist');
 const SSR = join(ROOT, 'dist-ssr', 'entry-server.js');
 
-const { render, allRoutes, routeMeta, PLATE, ORIGIN, OG_IMAGE, OG_IMAGE_ALT } =
+const { render, allRoutes, routeMeta, LONG_FORM, PLATE, ORIGIN, OG_IMAGE, OG_IMAGE_ALT } =
   await import(SSR);
 
 const shell = readFileSync(join(DIST, 'index.html'), 'utf8');
 const articles = loadArticles();
+const notes = loadNotes();
+// Keyed by the route's first segment: /work/<slug> and /notes/<slug>.
+const texts = { work: articles, notes };
 
-/** The article a route carries, if it is a case study with one. */
+/** The long-form text a route carries: a case study's article, or a note. */
 const articleFor = (path) => {
-  const slug = path.startsWith('/work/') ? path.slice('/work/'.length) : null;
-  return slug && articles[slug] ? { slug, article: articles[slug] } : null;
+  const [, kind, slug] = path.split('/');
+  const article = texts[kind]?.[slug];
+  if (!article) return null;
+  return { article, id: LONG_FORM[kind].id(slug), json: LONG_FORM[kind].json(slug) };
 };
 
 // JSON inside <script>: nothing may close the element early.
@@ -83,7 +88,7 @@ function headFor(meta, found) {
     `<meta name="twitter:description" content="${esc(meta.description)}">`,
     `<meta name="twitter:image" content="${ORIGIN}${OG_IMAGE}">`,
     // Where client-side navigation fetches this article from.
-    found ? `<link rel="alternate" type="application/json" href="/content/${found.slug}.json">` : null,
+    found ? `<link rel="alternate" type="application/json" href="${found.json}">` : null,
   ].filter(Boolean);
   return tags.map((t) => `    ${t}`).join('\n');
 }
@@ -107,7 +112,7 @@ function pageFor(path, { html, meta }, { withPreload }) {
   // The article the client hydrates against, so it never has to fetch the
   // page it already has.
   const data = found
-    ? `<script type="application/json" id="article-${found.slug}">${scriptSafe(found.article)}</script>\n`
+    ? `<script type="application/json" id="${found.id}">${scriptSafe(found.article)}</script>\n`
     : '';
   return out.replace('<div id="root"></div>', `<div id="root">${html}</div>\n${data}`);
 }
@@ -120,14 +125,16 @@ function write(relPath, contents) {
 
 const routes = allRoutes();
 for (const path of routes) {
-  const rendered = render(path, { articles });
+  const rendered = render(path, { articles, notes });
   const page = pageFor(path, rendered, { withPreload: path === '/' });
   write(path === '/' ? 'index.html' : `${path.slice(1)}.html`, page);
 }
 
-// Each article as JSON, for client-side navigation to fetch.
-for (const [slug, article] of Object.entries(articles)) {
-  write(`content/${slug}.json`, JSON.stringify(article));
+// Each article and note as JSON, for client-side navigation to fetch.
+for (const [kind, compiled] of Object.entries(texts)) {
+  for (const [slug, article] of Object.entries(compiled)) {
+    write(LONG_FORM[kind].json(slug).slice(1), JSON.stringify(article));
+  }
 }
 
 // /work needs to resolve whether or not Pages prefers the file to the
@@ -136,7 +143,7 @@ write('work/index.html', readFileSync(join(DIST, 'work.html')));
 
 // 404.html is rendered from an unknown route, not copied from the home page,
 // so a genuinely missing URL no longer claims to be the home page.
-write('404.html', pageFor('/__not-found__', render('/__not-found__', { articles }), { withPreload: false }));
+write('404.html', pageFor('/__not-found__', render('/__not-found__', { articles, notes }), { withPreload: false }));
 
 // Sitemap lists canonical URLs only, so the /persona/gyanateet alias does not
 // compete with /persona/yana for indexing.

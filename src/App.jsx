@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { findNote } from './data/notes';
 import { DATA, findProject } from './data/portfolio';
 import { resolveRoute } from './lib/navigation';
 import { routeMeta } from './lib/routeMeta';
@@ -6,6 +7,7 @@ import { PathContext, usePath } from './lib/usePath';
 import AcademicPage from './pages/AcademicPage';
 import CaseStudyPage from './pages/CaseStudyPage';
 import HomePage from './pages/HomePage';
+import NotePage from './pages/NotePage';
 import PersonaPage from './pages/PersonaPage';
 import WorkPage from './pages/WorkPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -18,6 +20,8 @@ function Page({ route }) {
       return <WorkPage />;
     case 'case-study':
       return <CaseStudyPage project={findProject(route.slug)} />;
+    case 'note':
+      return <NotePage note={findNote(route.slug)} />;
     case 'persona':
       return DATA[route.persona] ? <PersonaPage data={DATA[route.persona]} /> : <NotFoundPage />;
     case 'home':

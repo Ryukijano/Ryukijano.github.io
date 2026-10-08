@@ -1,55 +1,70 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { ARTICLES } from '../content/index.js';
+import { ARTICLES, NOTE_ARTICLES } from '../content/index.js';
 
 /**
- * Long-form case studies (src/content/<slug>.md, compiled by
- * scripts/articles.mjs). The prose never enters the JS bundle:
+ * Long-form text: case studies (src/content/<slug>.md) and notes
+ * (src/content/notes/<slug>.md), compiled by scripts/articles.mjs. The prose
+ * never enters the JS bundle:
  *
- * - at build time the prerender passes every compiled article through this
- *   context, so each page's HTML carries its own article;
- * - on first load the client reads the same article from the JSON the
+ * - at build time the prerender passes every compiled text through this
+ *   context, so each page's HTML carries its own;
+ * - on first load the client reads the same text from the JSON the
  *   prerender embeds in the page, so hydration sees identical markup;
- * - on a client-side navigation it fetches /content/<slug>.json.
+ * - on a client-side navigation it fetches the JSON copy.
+ *
+ * The context value is { work: { [slug]: article }, notes: { [slug]: article } }.
  */
 export const ArticleContext = createContext(null);
 
+/** Which slugs have text, and where the prerender puts it. scripts/prerender.mjs reads this too. */
+export const LONG_FORM = {
+  work: { slugs: ARTICLES, id: (slug) => `article-${slug}`, json: (slug) => `/content/${slug}.json` },
+  notes: { slugs: NOTE_ARTICLES, id: (slug) => `note-${slug}`, json: (slug) => `/content/notes/${slug}.json` },
+};
+
 const cache = new Map();
 
-function fromPage(slug) {
+function fromPage(id, url) {
   if (typeof document === 'undefined') return undefined;
-  const el = document.getElementById(`article-${slug}`);
+  const el = document.getElementById(id);
   if (!el) return undefined;
   try {
     const article = JSON.parse(el.textContent);
-    cache.set(slug, article);
+    cache.set(url, article);
     return article;
   } catch {
     return undefined;
   }
 }
 
-/** The compiled article: an object, null (no article), or undefined (loading). */
-export function useArticle(slug) {
-  const built = useContext(ArticleContext);
-  const has = Boolean(slug) && ARTICLES.includes(slug);
+/** The compiled text: an object, null (none), or undefined (loading). */
+function useLongForm(kind, slug) {
+  const { slugs, id, json } = LONG_FORM[kind];
+  const built = useContext(ArticleContext)?.[kind];
+  const has = Boolean(slug) && slugs.includes(slug);
+  const url = has ? json(slug) : null;
   const [article, setArticle] = useState(() =>
-    has ? (built?.[slug] ?? cache.get(slug) ?? fromPage(slug)) : null,
+    has ? (built?.[slug] ?? cache.get(url) ?? fromPage(id(slug), url)) : null,
   );
 
   useEffect(() => {
     if (!has || article !== undefined) return undefined;
     let live = true;
-    fetch(`/content/${slug}.json`)
+    fetch(url)
       .then((r) => (r.ok ? r.json() : null))
       .catch(() => null)
       .then((loaded) => {
-        if (loaded) cache.set(slug, loaded);
+        if (loaded) cache.set(url, loaded);
         if (live) setArticle(loaded);
       });
     return () => {
       live = false;
     };
-  }, [has, slug, article]);
+  }, [has, url, article]);
 
   return article;
 }
+
+export const useArticle = (slug) => useLongForm('work', slug);
+
+export const useNote = (slug) => useLongForm('notes', slug);

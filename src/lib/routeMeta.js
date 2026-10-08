@@ -1,3 +1,4 @@
+import { NOTES, findNote } from '../data/notes';
 import { DATA, PERSONA_BY_SLUG, allProjects, projectLane, projectYear } from '../data/portfolio';
 import { ACADEMIC_BIO } from '../data/publications';
 import { resolveRoute } from './navigation';
@@ -57,6 +58,16 @@ export function routeMeta(pathname) {
       };
     }
 
+    case 'note': {
+      const note = findNote(route.slug);
+      if (!note) return notFoundMeta(pathname);
+      return {
+        title: `${note.title} · ${SITE_NAME}`,
+        description: clamp(note.standfirst),
+        canonical: `/notes/${note.slug}`,
+      };
+    }
+
     case 'persona': {
       const data = DATA[route.persona];
       if (!data) return notFoundMeta(pathname);
@@ -102,5 +113,6 @@ export function allRoutes() {
     '/academic',
     ...Object.keys(PERSONA_BY_SLUG).map((slug) => `/persona/${slug}`),
     ...allProjects().map((project) => `/work/${project.slug}`),
+    ...NOTES.map((note) => `/notes/${note.slug}`),
   ];
 }
