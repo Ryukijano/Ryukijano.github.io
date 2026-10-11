@@ -317,8 +317,20 @@ html[data-theme='dark'] .atmo__fibre {
   pointer-events: none;
 }
 
+/* Clipped out of the sheet with the fibre's polygon. The box is fixed to the
+   viewport, so the sheet's edges are measured from its right edge: 50vw is the
+   centre line, and --page-measure / 2 is half the sheet either side of it.
+   The folio wave (.folio::before) shares the box but has no sheet, so it is
+   not clipped. */
 .atmo__engraving {
+  --sheet-l: calc(100% - 50vw - var(--page-measure) / 2);
+  --sheet-r: calc(100% - 50vw + var(--page-measure) / 2);
   width: min(29vw, 25rem);
+  clip-path: polygon(
+    evenodd,
+    0 0, 100% 0, 100% 100%, 0 100%, 0 0,
+    var(--sheet-l) 0, var(--sheet-l) 100%, var(--sheet-r) 100%, var(--sheet-r) 0, var(--sheet-l) 0
+  );
 }
 
 /* One margin motif per lane, same box, same ink, same opacity. Ryukijano

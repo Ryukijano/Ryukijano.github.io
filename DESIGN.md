@@ -231,6 +231,22 @@ outward — for Ryoushi. Same technique as the wave throughout:
 white-on-transparent SVG as a mask over ink, square caps and joins, no new
 colour tokens. Hidden below 900px, where there is no margin to hang them in.
 
+The engraving is clipped out of the sheet by the fibre's polygon, so it never
+sits under the reading column or the lane labels. Before the clip, the
+engraving on Work (58rem) at 1440px overlapped the sheet by 144px and painted
+3,877 sheet pixels; the lane labels sat inside that overlap. Now it paints none
+of the sheet at 1440px or 1100px. The box is fixed to the viewport, so the clip
+is measured from its right edge rather than as a percentage of its own width.
+On a viewport narrower than the sheet it is clipped entirely, because there is
+no margin for it. At 920px that leaves 15 pixels on the box's left edge, each
+one 8-bit level off the hidden value: the box starts on a fractional pixel, so
+its anti-aliased edge shows through the clip. That is the expected outcome, not
+a visible engraving. The folio wave (`.folio::before`)
+shares the box but has no sheet, so it is not clipped. Opacity and ink are
+unchanged. Contrast cannot drop: the engraving is dark ink under dark text, so
+removing it from under the text only lightens the ground, and the floors in
+`tests/tokens.test.js` still hold on the accessibility pages.
+
 ## Motion
 
 A 240ms opacity fade on the page body only — not the nav, which is fixed

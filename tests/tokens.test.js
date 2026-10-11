@@ -262,6 +262,16 @@ describe('interior atmosphere', () => {
     expect(fibre).toMatch(/--sheet-r:\s*calc\(50% \+ var\(--page-measure\) \/ 2\)/);
   });
 
+  it('clips the engraving out of the sheet with the same polygon as the fibre', () => {
+    // The engraving is fixed to the viewport, so its polygon is measured from
+    // its own right edge; a percentage of its box would clip it to the wrong place.
+    const engraving = css.match(/^\.atmo__engraving\s*\{([^}]*)\}/m)?.[1];
+    expect(engraving, '.atmo__engraving has no base rule').toBeTruthy();
+    expect(engraving).toMatch(/clip-path:\s*polygon\(\s*evenodd/);
+    expect(engraving).toMatch(/--sheet-l:\s*calc\(100% - 50vw - var\(--page-measure\) \/ 2\)/);
+    expect(engraving).toMatch(/--sheet-r:\s*calc\(100% - 50vw \+ var\(--page-measure\) \/ 2\)/);
+  });
+
   it('prints fibre and motifs in the stock ink only, with no new colour', () => {
     const fibre = css.match(/\.atmo__fibre\s*\{([^}]*)\}/s)[1];
     expect(fibre).toMatch(/background:\s*var\(--color-ink\)/);

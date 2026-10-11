@@ -137,6 +137,22 @@ test.describe('the interior atmosphere', () => {
   });
 });
 
+test.describe('the engraving stays in the margin', () => {
+  test('the engraving paints no pixel inside the work sheet at 1440', async ({ page }) => {
+    // Pixel, not geometry: a clip-path leaves the bounding box where it was,
+    // so only the rendered sheet says whether the engraving still shows.
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/work');
+    await page.evaluate(() => document.fonts.ready);
+    const sheet = await page.locator('main.route').boundingBox();
+    const clip = { x: Math.round(sheet.x), y: 0, width: Math.round(sheet.width), height: 900 };
+    const shown = await page.screenshot({ clip, animations: 'disabled' });
+    await page.addStyleTag({ content: '.atmo__engraving { visibility: hidden !important; }' });
+    const hidden = await page.screenshot({ clip, animations: 'disabled' });
+    expect(Buffer.compare(shown, hidden), 'the engraving paints inside the work sheet').toBe(0);
+  });
+});
+
 test.describe('the home page fits one screen', () => {
   // The whole conceit is a single hung print. It is sized from a height budget
   // (--folio-plate), and that budget is a constant, so anything added to the
