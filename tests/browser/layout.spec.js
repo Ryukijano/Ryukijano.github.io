@@ -31,6 +31,7 @@ const VIEWPORTS = [
 const ROUTES = [
   '/',
   '/work',
+  '/tools',
   '/academic',
   '/persona/yana',
   '/persona/ryoushi',

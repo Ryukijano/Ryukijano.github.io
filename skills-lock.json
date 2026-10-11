@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "fframes-video": {
+      "source": "dmtrKovalenko/fframes",
+      "sourceType": "github",
+      "skillPath": "skills/fframes-video/SKILL.md",
+      "computedHash": "b33ed62d7e21e162b718c353853d84426b9a3fb6e100e28f5e90493116e1bee4"
+    }
+  }
+}

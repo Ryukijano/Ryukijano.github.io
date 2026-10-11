@@ -20,6 +20,7 @@ export default function SiteNav({ overlay = false, hideWordmark = false }) {
   const path = usePath();
   const [theme, setTheme] = useState('light');
   const workActive = path === '/work' || path.startsWith('/work/');
+  const toolsActive = path === '/tools';
   const academicActive = path === '/academic';
 
   useEffect(() => {
@@ -58,6 +59,10 @@ export default function SiteNav({ overlay = false, hideWordmark = false }) {
         <div className="site-nav__links">
           <Link href="/work" aria-current={workActive ? 'page' : undefined} className={workActive ? 'is-active' : ''}>
             Work
+          </Link>
+          <span aria-hidden="true">·</span>
+          <Link href="/tools" aria-current={toolsActive ? 'page' : undefined} className={toolsActive ? 'is-active' : ''}>
+            Tools
           </Link>
           <span aria-hidden="true">·</span>
           <Link
