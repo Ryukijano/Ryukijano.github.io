@@ -105,6 +105,28 @@ final frame, and a paper wipe back to the start.
 (with their posters) are the figures that Burgers and the surface code
 replaced. They are kept as sources, not shipped.
 
+## Pinned studies
+
+Three motifs for the `/figures` gallery, redrawn from pinned references —
+never traced, never copied. Each is a flat SVG: strokes only (plus square
+pads on the tree), square caps and joins, no blur. Ink and muted ink arrive
+as `ink`, `muted-stroke`, `ink-fill` and `muted-fill` classes that the page
+maps to its own tokens, so the files themselves name no colour and print on
+both stocks. The seal stays out: the one-accent rule is asserted, so the
+picked-out line in each study is muted ink.
+`scripts/make-studies.mjs` draws them; run it to regenerate.
+
+- **Spiral tunnel** (`study-spiral.svg`). Nine concentric rings with widening
+  gaps for the tunnel mouth, an ink spiral winding out over three and a
+  quarter turns, and a shorter muted thread offset half a turn. After the red
+  wireframe spiral pin.
+- **Wave lines** (`study-wave.svg`). Thirteen sine runs across the sheet, the
+  middle one in muted ink, amplitude swelling toward the centre. After the blue
+  wave-motion pin.
+- **Circuit tree** (`study-circuit-tree.svg`). A trunk rising from a muted root
+  pad through three bifurcating tiers of orthogonal traces to square ink
+  pads, one of them muted. After the wireframe-tree and circuit-board pins.
+
 ## What is NOT usable here
 
 Worth knowing before reaching for something:

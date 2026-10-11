@@ -316,6 +316,65 @@ is visible there, that the sheet's width is what the stacked rule says, and
 that the name sits above the fold under the print. A 320px viewport is in the
 list because that is where `Real world` has to wrap rather than overflow.
 
+## Pinned figures and the gallery
+
+Two directions from the pinned-figure prototypes, both built from the shipped
+tokens — no new colour, radius, easing or font. Case-study figures are pinned
+to the sheet rather than hung in it; `/figures` gathers them as overlapping
+pinned cards with three redrawn studies.
+
+### The pinned-figure treatment
+
+Each figure keeps its block, sheet, caption slip and scope line, and gains a
+fastener and a tilt:
+
+- **Alternating rotation**, odd figures −1.4deg, even figures +1.2deg. Within
+  ±1–2deg the caption baseline still reads straight.
+- **One fastener**, alternating with the tilt: a tape strip (5.5rem × 1.1rem
+  of `--color-washi-deep` with a hairline border) or a square pin (a 10px
+  square of `--color-ink`). It sits on the card's top edge only, so it can
+  never cover a caption or a scope line.
+- **A hard offset edge**, `6px 6px 0 var(--color-rule)` with zero blur.
+- **At 640px and below the rotation is off.** The tape and pin stay, smaller,
+  and the offset drops to 3px — a phone column has no room for a tilt, but
+  the card should still read as pinned rather than hung.
+
+The rule this bends is *everything square, hung straight, never a shadow*.
+The tilt is decorative and capped at 2deg, off where the column is narrowest;
+the offset is a zero-blur hard edge in the rule colour, a print mark rather
+than a light source — blur it by one pixel and it becomes the elevation the
+system refuses. The fasteners carry no text, so the contrast floors are
+untouched. `tests/browser/figures.spec.js` holds the tilt, the fastener, the
+offset and the 640px fence.
+
+### The gallery (`/figures`)
+
+Six case-study cards, staggered and overlapping, each reusing its case
+study's poster — the still, never a GIF mid-frame — and each keeping its
+caption and scope line word for word, with a link back to its case study.
+Overlap may touch card edges only: no caption or scope line sits under
+another card, which `tests/browser/figures.spec.js` asserts with bounding
+boxes rather than by eye. Below the narrow breakpoint the cards stack in one
+column with no overlap and no tilt.
+
+Three study cards join them: the red spiral tunnel, the blue wave lines and
+the circuit tree, redrawn as flat SVGs in the stock's ink and muted ink —
+square caps and joins, no blur, no copied pixels. The picked-out line in each
+is `--color-ink-muted`, not the seal: the one-accent rule is asserted in
+`tests/tokens.test.js`, and a third home for the seal would fail the suite
+rather than bend a guideline. Each study is captioned as a redrawn study
+after a pinned reference, and its scope line says it is not a result. The
+SVG sources live in `media/` and are inlined so they print in the stock's
+own tokens on both papers; `media/README.md` records how each was drawn.
+
+The rule this bends is *a figure sits after the prose that claims it, as
+evidence*. The gallery shows figures with no prose around them. It is allowed
+for the same reason a collection is: every card keeps the caption and scope
+it carries at home, and the card points back to the case study that earns
+them — a second path to the same figures, not a replacement. The studies
+could be mistaken for results at a glance, which is why their scope lines say
+plainly that they are not.
+
 ## Open
 
 Decisions not yet made, kept here so they are not mistaken for defects.
