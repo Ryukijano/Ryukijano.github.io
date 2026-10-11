@@ -15,7 +15,7 @@ test('a direct load shows the article and hydrates cleanly', async ({ page }) =>
   await expect(page.getByRole('heading', { level: 2, name: 'How it compares' })).toBeVisible();
   await expect(page.locator('.cartouche')).toContainText(/min read/i);
   // The figure the text places sits inside the article, before the scope.
-  await expect(page.locator('.plate')).toHaveCount(1);
+  await expect(page.locator('.plate')).toHaveCount(2);
   await page.waitForLoadState('networkidle');
   expect(errors).toEqual([]);
 });
@@ -26,7 +26,7 @@ test('a client-side navigation fetches the article', async ({ page }) => {
   await page.locator('.catalog__title', { hasText: 'CUDA Blackwell Labs' }).click();
   expect((await fetched).ok()).toBe(true);
   await expect(page.getByRole('heading', { level: 2, name: 'Memory before compute' })).toBeVisible();
-  await expect(page.locator('.plate')).toHaveCount(1);
+  await expect(page.locator('.plate')).toHaveCount(2);
 });
 
 test('a note loads directly and hydrates cleanly', async ({ page }) => {

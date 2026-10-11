@@ -32,6 +32,8 @@ At 16 qubits, QuantumForge was about 4,000 times faster than the NumPy simulator
 
 That crossover is the honest summary. For small circuits, where overhead dominates, a lean single-threaded Rust loop wins. For large ones, where the work is the state itself, it needs the parallelism and vectorisation that Aer already has.
 
+<!-- figure 2 -->
+
 The timings are single runs on one consumer machine with 48 GB of memory, from my own harness, so the curves say where the crossover is, not what it would be on other hardware.
 
 ## VQE and GQE on the smallest molecule

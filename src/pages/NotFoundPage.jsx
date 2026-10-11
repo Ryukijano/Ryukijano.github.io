@@ -1,5 +1,6 @@
 import Atmosphere from '../components/Atmosphere';
 import SiteNav from '../components/SiteNav';
+import { GLITCH_WAVE } from '../data/marks';
 import Link from '../lib/Link';
 
 /**
@@ -17,6 +18,34 @@ export default function NotFoundPage() {
         <h1 className="print__title" style={{ marginTop: '0.75rem' }}>
           This path isn&apos;t on the site.
         </h1>
+        <figure className="plate">
+          <div
+            className="plate__sheet plate__sheet--loop"
+            style={{
+              aspectRatio: `${GLITCH_WAVE.width} / ${GLITCH_WAVE.height}`,
+              '--plate-poster': `url(${GLITCH_WAVE.poster})`,
+            }}
+          >
+            <picture>
+              <source media="(prefers-reduced-motion: reduce)" srcSet={GLITCH_WAVE.poster} />
+              <img
+                src={GLITCH_WAVE.src}
+                alt={GLITCH_WAVE.alt}
+                width={GLITCH_WAVE.width}
+                height={GLITCH_WAVE.height}
+                decoding="async"
+              />
+            </picture>
+          </div>
+          <figcaption className="plate__slip">
+            <span className="plate__slug">Drawn</span>
+            <span>
+              {GLITCH_WAVE.caption}
+              <em className="plate__scope"> {GLITCH_WAVE.scope}</em>
+            </span>
+          </figcaption>
+          <span className="plate__kento" aria-hidden="true" />
+        </figure>
         <nav className="print__foot" aria-label="Other pages">
           <Link href="/">Home</Link>
           <span aria-hidden="true"> · </span>

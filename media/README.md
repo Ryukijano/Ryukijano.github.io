@@ -105,6 +105,29 @@ final frame, and a paper wipe back to the start.
 (with their posters) are the figures that Burgers and the surface code
 replaced. They are kept as sources, not shipped.
 
+## Stop-motion method loops
+
+Five loops are drawn plates, layered after the prose and the evidence
+figures. Reduced motion keeps each still poster and does not fetch the GIF.
+`scripts/make-stopmotion.mjs` copies four of them from the authored SVG
+frames once they verify as GIF89a with a NETSCAPE loop of 0, and draws the
+fifth.
+
+- **Blackwell cliff** (`blackwell-cliff.gif`), after “The 128 GB is not HBM”.
+  Ink bars from the write-up only. The seal line is the rated 273 GB/s
+  LPDDR5X peak. No HBM bar.
+- **QuantumForge spiral** (`quantumforge-spiral.gif`), after the Aer
+  crossover. Prussian helix. Seal only on the Aer line at 19 qubits.
+- **B3tt3r turntable** (`b3tt3r-turntable.gif`). Match, then depth, then mesh.
+  The generated still stays as the first figure.
+- **Quantum Buddies patch** (`quantum-buddies-patch.gif`). Three names, one
+  circuit line. A banner, not a result.
+- **Glitch wave** (`glitch-wave.gif`), on the 404 only. Decoration. No seal.
+
+The Hopfield tour’s first frame is still the eleven dots. Its hold was 830 ms
+and is now 120 ms, under the 300 ms cap. The recorded and computed figures
+named in the stop-motion plan are otherwise untouched.
+
 ## Pinned studies
 
 Three motifs for the `/figures` gallery, redrawn from pinned references —

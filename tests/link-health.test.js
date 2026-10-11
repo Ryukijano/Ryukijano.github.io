@@ -241,7 +241,7 @@ describe('case-study figures', () => {
       .filter((project) => projectFigures(project).length)
       .map((project) => project.title);
 
-    expect(withFigures).toHaveLength(28);
+    expect(withFigures).toHaveLength(29);
     expect(withFigures).toEqual(
       expect.arrayContaining([
         'Dalton Mills VR Reconstruction',
@@ -272,6 +272,7 @@ describe('case-study figures', () => {
         'Quantum Continuous Thought Machines',
         'Quantum Error Correction',
         'Qiskit on Qubit',
+        'Quantum Buddies',
       ]),
     );
   });

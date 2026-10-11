@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 460" width="720" height="460">
+<rect width="720" height="460" fill="#f4f2ed"/>
+<rect x="14" y="14" width="692" height="432" fill="none" stroke="#1a237e" stroke-opacity="0.18" stroke-width="1"/>
+<text x="32.0" y="42.0" fill="#535896" font-family="IBM Plex Mono" font-size="13" font-weight="400" text-anchor="start" letter-spacing="1.8">ONE PAIR</text>
+<text x="360.0" y="44.0" fill="#1a237e" font-family="IBM Plex Mono" font-size="16" font-weight="400" text-anchor="middle" letter-spacing="3.2">MESH</text>
+<rect x="616" y="30" width="10" height="10" fill="none" stroke="#535896" stroke-width="1"/>
+<rect x="634" y="30" width="10" height="10" fill="none" stroke="#535896" stroke-width="1"/>
+<rect x="652" y="30" width="10" height="10" fill="#1a237e"/>
+<line x1="96" y1="372" x2="328.0" y2="372" stroke="#1a237e" stroke-opacity="0.35" stroke-width="1"/>
+<text x="183.0" y="396.0" fill="#535896" font-family="IBM Plex Mono" font-size="12" font-weight="400" text-anchor="middle" letter-spacing="1.6">VIEW A</text>
+<line x1="392.0" y1="372" x2="624.0" y2="372" stroke="#1a237e" stroke-opacity="0.35" stroke-width="1"/>
+<text x="537.0" y="396.0" fill="#535896" font-family="IBM Plex Mono" font-size="12" font-weight="400" text-anchor="middle" letter-spacing="1.6">VIEW B</text>
+<clipPath id="front0"><polygon points="104.96,355.78 262.16,356.05 261.48,220.04 103.36,219.63"/></clipPath>
+<clipPath id="side0"><polygon points="262.16,356.05 319.42,326.62 319.04,190.94 261.48,220.04"/></clipPath>
+<clipPath id="roof0"><polygon points="103.36,219.63 183.99,158.01 242.00,127.44 319.04,190.94 261.48,220.04"/></clipPath>
+<polyline points="104.96,355.78 262.16,356.05 261.48,220.04 103.36,219.63 104.96,355.78" fill="none" stroke="#1a237e" stroke-width="1.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="262.16,356.05 319.42,326.62 319.04,190.94 261.48,220.04" fill="none" stroke="#1a237e" stroke-width="1.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="103.36,219.63 183.99,158.01 261.48,220.04 183.99,158.01 242.00,127.44 319.04,190.94" fill="none" stroke="#1a237e" stroke-width="1.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<polygon points="132.39,249.69 158.44,249.91 158.02,281.91 131.82,282.65" fill="#f4f2ed" stroke="#1a237e" stroke-width="1.2" stroke-linejoin="miter"/>
+<polygon points="170.13,250.10 195.35,250.52 195.92,281.34 170.29,281.70" fill="#f4f2ed" stroke="#1a237e" stroke-width="1.2" stroke-linejoin="miter"/>
+<polygon points="208.30,249.76 233.41,249.47 233.84,282.27 208.34,281.60" fill="#f4f2ed" stroke="#1a237e" stroke-width="1.2" stroke-linejoin="miter"/>
+<polygon points="167.79,307.41 197.41,307.79 198.73,356.36 168.46,356.08" fill="#f4f2ed" stroke="#1a237e" stroke-width="1.2" stroke-linejoin="miter"/>
+<polygon points="148.74,172.39 171.58,172.22 171.29,107.51 150.10,108.62" fill="#f4f2ed" stroke="#1a237e" stroke-width="1.4" stroke-linejoin="miter"/>
+<line x1="104.96" y1="355.78" x2="261.48" y2="220.04" stroke="#1a237e" stroke-width="1.15" stroke-linecap="square"/>
+<line x1="319.42" y1="326.62" x2="261.48" y2="220.04" stroke="#1a237e" stroke-width="1.15" stroke-linecap="square"/>
+<line x1="183.99" y1="158.01" x2="319.04" y2="190.94" stroke="#1a237e" stroke-width="1.15" stroke-linecap="square"/>
+<clipPath id="front1"><polygon points="456.87,355.52 615.51,357.14 615.36,218.92 457.00,219.01"/></clipPath>
+<clipPath id="side1"><polygon points="456.87,355.52 400.99,325.75 401.00,189.84 457.00,219.01"/></clipPath>
+<clipPath id="roof1"><polygon points="615.36,218.92 537.49,158.72 480.13,126.88 401.00,189.84 457.00,219.01"/></clipPath>
+<polyline points="456.87,355.52 615.51,357.14 615.36,218.92 457.00,219.01 456.87,355.52" fill="none" stroke="#1a237e" stroke-width="1.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="456.87,355.52 400.99,325.75 401.00,189.84 457.00,219.01" fill="none" stroke="#1a237e" stroke-width="1.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="615.36,218.92 537.49,158.72 457.00,219.01 537.49,158.72 480.13,126.88 401.00,189.84" fill="none" stroke="#1a237e" stroke-width="1.4" stroke-linecap="square" stroke-linejoin="miter"/>
+<polygon points="485.60,250.72 511.64,250.36 512.10,281.33 485.57,281.39" fill="#f4f2ed" stroke="#1a237e" stroke-width="1.2" stroke-linejoin="miter"/>
+<polygon points="524.03,250.36 550.05,250.63 549.38,281.42 523.68,282.56" fill="#f4f2ed" stroke="#1a237e" stroke-width="1.2" stroke-linejoin="miter"/>
+<polygon points="561.30,249.75 588.55,249.49 587.50,282.49 562.67,281.89" fill="#f4f2ed" stroke="#1a237e" stroke-width="1.2" stroke-linejoin="miter"/>
+<polygon points="521.41,307.79 552.73,308.36 552.46,356.08 522.11,355.73" fill="#f4f2ed" stroke="#1a237e" stroke-width="1.2" stroke-linejoin="miter"/>
+<polygon points="503.00,171.64 523.91,171.29 524.17,108.73 503.22,107.41" fill="#f4f2ed" stroke="#1a237e" stroke-width="1.4" stroke-linejoin="miter"/>
+<line x1="456.87" y1="355.52" x2="615.36" y2="218.92" stroke="#1a237e" stroke-width="1.15" stroke-linecap="square"/>
+<line x1="400.99" y1="325.75" x2="457.00" y2="219.01" stroke="#1a237e" stroke-width="1.15" stroke-linecap="square"/>
+<line x1="537.49" y1="158.72" x2="401.00" y2="189.84" stroke="#1a237e" stroke-width="1.15" stroke-linecap="square"/>
+</svg>
