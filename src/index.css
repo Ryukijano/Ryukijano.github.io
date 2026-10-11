@@ -460,6 +460,17 @@ html[data-theme='dark'] .atmo[data-motif='lattice'] .atmo__engraving {
 
   .site-nav:not(.site-nav--veil) .site-nav__links {
     gap: 0.35rem;
+    flex-wrap: wrap;
+  }
+
+  /* The veiled home bar stays one line, so with five links the separators
+     go and the gap closes rather than pushing the bar sideways. */
+  .site-nav--veil .site-nav__links {
+    gap: 0.35rem;
+  }
+
+  .site-nav--veil .site-nav__links span[aria-hidden='true'] {
+    display: none;
   }
 }
 
@@ -1868,6 +1879,126 @@ html[data-theme='dark'] .atmo[data-motif='lattice'] .atmo__engraving {
 }
 
 /* ======================================================== end paper-ink */
+
+/* --------------------------------------------------------- pinned figures */
+
+/*
+ * A figure pinned to the sheet rather than hung in it. The block, sheet,
+ * caption slip and scope line are unchanged; the card gains a tilt, one
+ * fastener on its top edge, and a hard offset edge. The tilt alternates
+ * (±1-2deg), and so does the fastener: tape on odd figures, a square pin on
+ * even ones. Captions stay in normal flow below the sheet and are never
+ * under a fastener or another card. At 640px and below the tilt is off --
+ * a phone column has no room for it -- but the fastener stays, smaller.
+ */
+.plate--pinned {
+  --pin-tilt: -1.4deg;
+  transform: rotate(var(--pin-tilt));
+  box-shadow: 6px 6px 0 var(--color-rule);
+}
+
+.plate--flip {
+  --pin-tilt: 1.2deg;
+}
+
+.plate__tape,
+.plate__pin {
+  position: absolute;
+  top: -0.7rem;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.plate__tape {
+  left: 50%;
+  width: 5.5rem;
+  height: 1.1rem;
+  transform: translateX(-50%);
+  background: var(--color-washi-deep);
+  border: var(--hairline);
+}
+
+.plate__pin {
+  left: calc(62% - 5px);
+  width: 10px;
+  height: 10px;
+  background: var(--color-ink);
+}
+
+/* The redrawn studies print in the stock's own ink, both papers. The
+   picked-out line is muted ink: the seal has exactly two homes, and a
+   drawing is not one of them. */
+.study-art svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.study-art .ink {
+  stroke: var(--color-ink);
+}
+
+.study-art .muted-stroke {
+  stroke: var(--color-ink-muted);
+}
+
+.study-art .ink-fill {
+  fill: var(--color-ink);
+}
+
+.study-art .muted-fill {
+  fill: var(--color-ink-muted);
+}
+
+/* --------------------------------------------------------- gallery */
+
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6) var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.gallery .plate {
+  margin-top: 0;
+  min-width: 0;
+}
+
+/* Staggered: even cards sit lower and tuck under their neighbour's edge.
+   The tuck is shallow enough that only card edges meet -- the caption
+   slip starts a full padding inside the card, clear of the overlap. */
+.gallery .plate:nth-child(even) {
+  margin-top: var(--space-5);
+  margin-left: calc(var(--space-4) * -0.75);
+}
+
+@media (max-width: 640px) {
+  .plate--pinned {
+    transform: none;
+    box-shadow: 3px 3px 0 var(--color-rule);
+  }
+
+  .plate__tape {
+    top: -0.55rem;
+    width: 4rem;
+    height: 0.9rem;
+  }
+
+  .plate__pin {
+    left: calc(62% - 4px);
+    width: 8px;
+    height: 8px;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery .plate:nth-child(even) {
+    margin-top: 0;
+    margin-left: 0;
+  }
+}
 
 /* --------------------------------------------------------- motion */
 

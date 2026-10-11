@@ -6,6 +6,7 @@ import { routeMeta } from './lib/routeMeta';
 import { PathContext, usePath } from './lib/usePath';
 import AcademicPage from './pages/AcademicPage';
 import CaseStudyPage from './pages/CaseStudyPage';
+import FiguresPage from './pages/FiguresPage';
 import HomePage from './pages/HomePage';
 import NotePage from './pages/NotePage';
 import PersonaPage from './pages/PersonaPage';
@@ -21,6 +22,8 @@ function Page({ route }) {
       return <WorkPage />;
     case 'tools':
       return <ToolsPage />;
+    case 'figures':
+      return <FiguresPage />;
     case 'case-study':
       return <CaseStudyPage project={findProject(route.slug)} />;
     case 'note':
