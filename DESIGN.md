@@ -191,6 +191,46 @@ Dark stock: background `#101b2b`, raised sheet `#1a2938`, deep ground
 Text clears 12:1 against the raised sheet; secondary text clears 8:1.
 The raised sheet and the ink are tokens, never a CSS inversion of the image.
 
+## Interior atmosphere
+
+Interior pages carry four layers inside `.atmo`, in this order: wash →
+fibre → engraving/motif → grain. `.atmo` stays z-index 0 under
+`.print__body` (z-index 1): grain is fibre in the sheet, ink prints on top.
+The home plate keeps its own wave (`.folio::before`); the motifs below change
+only the interior `.atmo__engraving`.
+
+Fibre is a kozo tile (`kozo-fibre.svg`) in two sizes (640px and 448px, the
+second offset 233px/151px) so the repeat never lines up down a long page.
+Absolute, like the grain, because it is the paper and scrolls with it.
+Printed in the stock's own ink (`background: var(--color-ink)` with the SVG
+as a mask) at 0.07 on light, 0.065 on dark. No new token, no blur, glow or
+shadow.
+
+The fibre is clipped out of the sheet — `clip-path: polygon(evenodd, …)` on
+`--page-measure`, the edge the kento marks declare — so it lives only in the
+margins. Without the clip, a fibre core under a glyph moved the worst-pixel
+contrast of muted ink from 5.02 to 4.55:1 on light and from 7.45 to 6.55:1 on
+dark. That is still above AA, but it is a change, and the brief says contrast
+must not change. With the clip, the page measures identical to the unfibred
+site: light 10.15 / 5.02, dark 11.23 / 7.45 (ink / muted, worst background
+pixel in the 640×840 column at 1440×900, text hidden). The clip follows
+`--page-measure`, so Work (58rem) clips wider. Below the measure there is no
+margin, so phones get no fibre; fibre is also `display: none` below 900px,
+with the motif.
+
+Motifs share one box (`min(29vw, 25rem)`, fixed, right, top 5rem, height
+`100dvh − 5rem`), one ink (`var(--color-ink)`) and one opacity (0.075 light,
+0.12 dark) — except the lattice, which sits at 0.10 on dark. Its hatched Z
+faces carry more ink per pixel than the line motifs, and matched their weight
+slightly lower. The wave stays the default for Academic, Work, case studies,
+notes and Ryukijano; `motif="film"` is a cut strip of five frames with the
+endoscope's circular field stop in each, for Gyanateet; `motif="lattice"` is
+a distance-5 rotated surface code — data qubits on the vertices, Z plaquettes
+hatched, X open, weight-2 boundary half-discs with the checkerboard continued
+outward — for Ryoushi. Same technique as the wave throughout:
+white-on-transparent SVG as a mask over ink, square caps and joins, no new
+colour tokens. Hidden below 900px, where there is no margin to hang them in.
+
 ## Motion
 
 A 240ms opacity fade on the page body only — not the nav, which is fixed
