@@ -17,6 +17,7 @@ const PAGES = [
   ['home', '/'],
   ['work catalogue', '/work'],
   ['case study', '/work/aims-surgical-phase-detection'],
+  ['gallery', '/figures'],
   ['note', '/notes/beige-pc'],
   ['academic', '/academic'],
   ['persona (film)', '/persona/yana'],

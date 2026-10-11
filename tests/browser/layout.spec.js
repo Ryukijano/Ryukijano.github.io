@@ -32,6 +32,7 @@ const ROUTES = [
   '/',
   '/work',
   '/tools',
+  '/figures',
   '/academic',
   '/persona/yana',
   '/persona/ryoushi',

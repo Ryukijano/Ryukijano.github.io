@@ -21,6 +21,7 @@ export default function SiteNav({ overlay = false, hideWordmark = false }) {
   const [theme, setTheme] = useState('light');
   const workActive = path === '/work' || path.startsWith('/work/');
   const toolsActive = path === '/tools';
+  const figuresActive = path === '/figures';
   const academicActive = path === '/academic';
 
   useEffect(() => {
@@ -71,6 +72,14 @@ export default function SiteNav({ overlay = false, hideWordmark = false }) {
             className={academicActive ? 'is-active' : ''}
           >
             Academic
+          </Link>
+          <span aria-hidden="true">·</span>
+          <Link
+            href="/figures"
+            aria-current={figuresActive ? 'page' : undefined}
+            className={figuresActive ? 'is-active' : ''}
+          >
+            Figures
           </Link>
           <span aria-hidden="true">·</span>
           <a href={CV_URL}>CV</a>

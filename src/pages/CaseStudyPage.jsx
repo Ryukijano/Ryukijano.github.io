@@ -1,4 +1,5 @@
 import Atmosphere from '../components/Atmosphere';
+import PinnedFigure from '../components/PinnedFigure';
 import SiteFooter from '../components/SiteFooter';
 import SiteNav from '../components/SiteNav';
 import { projectLane, projectYear, projectFigures, relatedProjects } from '../data/portfolio';
@@ -59,53 +60,7 @@ function paragraphs(text) {
 }
 
 function Figure({ figure, index }) {
-  const { kind, src, poster, sources = [], width, height, alt, caption, scope } = figure;
-
-  return (
-    <figure className="plate">
-      <div
-        className={poster ? 'plate__sheet plate__sheet--loop' : 'plate__sheet'}
-        style={{
-          aspectRatio: `${width} / ${height}`,
-          ...(poster ? { '--plate-poster': `url(${poster})` } : {}),
-        }}
-      >
-        {kind === 'video' ? (
-          <video
-            src={src}
-            poster={poster}
-            width={width}
-            height={height}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
-            aria-label={alt}
-          />
-        ) : (
-          <picture>
-            {/* First, so it wins: reduced motion swaps the loop for its still
-                inside the same <img>, which keeps the alt text in the
-                accessibility tree and never fetches the GIF. */}
-            {poster ? <source media="(prefers-reduced-motion: reduce)" srcSet={poster} /> : null}
-            {sources.map((source) => (
-              <source key={source.srcSet} type={source.type} srcSet={source.srcSet} sizes={source.sizes} />
-            ))}
-            <img src={src} alt={alt} width={width} height={height} decoding="async" loading="lazy" />
-          </picture>
-        )}
-      </div>
-      <figcaption className="plate__slip">
-        <span className="plate__slug">Fig. {index}</span>
-        <span>
-          {caption}
-          {scope ? <em className="plate__scope"> {scope}</em> : null}
-        </span>
-      </figcaption>
-      <span className="plate__kento" aria-hidden="true" />
-    </figure>
-  );
+  return <PinnedFigure figure={figure} index={index} />;
 }
 
 /**

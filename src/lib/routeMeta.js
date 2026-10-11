@@ -53,6 +53,14 @@ export function routeMeta(pathname) {
         canonical: '/tools',
       };
 
+    case 'figures':
+      return {
+        title: `Pinned figures · ${SITE_NAME}`,
+        description:
+          'Six case-study figures pinned to the sheet with their captions and scopes, plus three redrawn studies.',
+        canonical: '/figures',
+      };
+
     case 'case-study': {
       const project = allProjects().find((p) => p.slug === route.slug);
       if (!project) return notFoundMeta(pathname);
@@ -119,6 +127,7 @@ export function allRoutes() {
     '/',
     '/work',
     '/tools',
+    '/figures',
     '/academic',
     ...Object.keys(PERSONA_BY_SLUG).map((slug) => `/persona/${slug}`),
     ...allProjects().map((project) => `/work/${project.slug}`),
