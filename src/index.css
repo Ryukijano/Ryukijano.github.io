@@ -272,6 +272,37 @@ html[data-theme='dark'] {
   mix-blend-mode: soft-light;
 }
 
+/* Kozo fibre: long bast strands formed into the sheet. Absolute, like the
+   grain, because it is the paper and scrolls with it; printed in the stock's
+   own ink at low alpha so the dark stock needs no second file. Two tile sizes
+   so the repeat never lines up across a long page.
+   Clipped out of the sheet's measure -- the edge the kento marks declare --
+   because a fibre core under a glyph drops muted ink from 5.02 to 4.55:1 at
+   the worst pixel. Below the measure there is no margin, so no fibre. */
+.atmo__fibre {
+  --sheet-l: calc(50% - var(--page-measure) / 2);
+  --sheet-r: calc(50% + var(--page-measure) / 2);
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(
+    evenodd,
+    0 0, 100% 0, 100% 100%, 0 100%, 0 0,
+    var(--sheet-l) 0, var(--sheet-l) 100%, var(--sheet-r) 100%, var(--sheet-r) 0, var(--sheet-l) 0
+  );
+  background: var(--color-ink);
+  -webkit-mask:
+    url('/assets/kozo-fibre.svg') 0 0 / 640px 640px,
+    url('/assets/kozo-fibre.svg') 233px 151px / 448px 448px;
+  mask:
+    url('/assets/kozo-fibre.svg') 0 0 / 640px 640px,
+    url('/assets/kozo-fibre.svg') 233px 151px / 448px 448px;
+  opacity: 0.07;
+}
+
+html[data-theme='dark'] .atmo__fibre {
+  opacity: 0.065;
+}
+
 .atmo__engraving,
 .folio::before {
   position: fixed;
@@ -290,8 +321,21 @@ html[data-theme='dark'] {
   width: min(29vw, 25rem);
 }
 
+/* One margin motif per lane, same box, same ink, same opacity. Ryukijano
+   keeps the wave; vision is a cut film strip, quantum a surface-code patch. */
+.atmo[data-motif='film'] .atmo__engraving {
+  -webkit-mask-image: url('/assets/film-strip.svg');
+  mask-image: url('/assets/film-strip.svg');
+}
+
+.atmo[data-motif='lattice'] .atmo__engraving {
+  -webkit-mask-image: url('/assets/surface-code.svg');
+  mask-image: url('/assets/surface-code.svg');
+}
+
 @media (max-width: 899px) {
-  .atmo__engraving {
+  .atmo__engraving,
+  .atmo__fibre {
     display: none;
   }
 }
@@ -299,6 +343,12 @@ html[data-theme='dark'] {
 html[data-theme='dark'] .atmo__engraving,
 html[data-theme='dark'] .folio::before {
   opacity: 0.12;
+}
+
+/* The lattice carries hatched faces, so more ink per pixel than the line
+   motifs; it sits slightly lower on the dark stock to match their weight. */
+html[data-theme='dark'] .atmo[data-motif='lattice'] .atmo__engraving {
+  opacity: 0.1;
 }
 
 /* --------------------------------------------------------- site nav */

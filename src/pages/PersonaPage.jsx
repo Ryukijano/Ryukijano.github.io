@@ -20,15 +20,20 @@ function byYearDescWhenPresent(a, b) {
   return yearB - yearA;
 }
 
+// One margin motif per lane, same box, ink and opacity: Gyanateet keeps a
+// cut film strip, Ryoushi a surface-code patch, Ryukijano the default wave.
+const MOTIF = { ai: 'film', ryoushi: 'lattice' };
+
 export default function PersonaPage({ data }) {
   const projects = data.projects.slice().sort(byYearDescWhenPresent);
   const sound = SOUND[data.id];
   const handle = LANES.find((lane) => lane.id === data.id)?.handle;
   const kicker = handle && handle !== data.title ? `${handle} · ${data.subtitle}` : data.subtitle;
+  const motif = MOTIF[data.id];
 
   return (
     <div className="print">
-      <Atmosphere variant="quiet" />
+      <Atmosphere variant="quiet" motif={motif} />
       <SiteNav />
 
       <main id="main" tabIndex={-1} className="route print__body print__body--narrow">
