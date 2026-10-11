@@ -120,6 +120,10 @@ test('project demos load as looping GIFs with a still poster', async ({ page }) 
     '/work/quantum-error-correction',
     '/work/physics-informed-neural-networks',
     '/work/iquhack-2026-nvidia-labs',
+    '/work/cuda-blackwell-labs',
+    '/work/quantumforge',
+    '/work/b3tt3r-3d-reconstruction',
+    '/work/quantum-buddies',
   ];
 
   for (const route of routes) {

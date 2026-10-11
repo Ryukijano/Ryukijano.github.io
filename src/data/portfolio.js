@@ -81,15 +81,27 @@ export const DATA = {
         desc: "Two pictures, and a mesh that has to agree with both. Mast3r and Spann3r, wired together.",
         fullDesc: "Stereo pairs are the kind of problem I come back to: two pictures, and a surface that has to agree with both. I combined Mast3r and Spann3r for matching, depth, and a mesh. Scope: A working integration of the two models; benchmarking against the source papers is future work.",
         link: "https://github.com/Ryukijano/B3tt3r",
-        figure: {
-          kind: 'image',
-          src: '/assets/media/b3tt3r-illustration.webp',
-          width: 480,
-          height: 270,
-          alt: 'Two photographs of a brick mill beside a small grey paper model of a building on a white table.',
-          caption: 'Photographs and a paper model, standing in for a stereo reconstruction.',
-          scope: 'Generated illustration. Not a capture from the B3tt3r repository.',
-        },
+        figures: [
+          {
+            kind: 'image',
+            src: '/assets/media/b3tt3r-illustration.webp',
+            width: 480,
+            height: 270,
+            alt: 'Two photographs of a brick mill beside a small grey paper model of a building on a white table.',
+            caption: 'Photographs and a paper model, standing in for a stereo reconstruction.',
+            scope: 'Generated illustration. Not a capture from the B3tt3r repository.',
+          },
+          {
+            kind: 'image',
+            src: '/assets/media/b3tt3r-turntable.gif',
+            poster: '/assets/media/b3tt3r-turntable-poster.webp',
+            width: 720,
+            height: 460,
+            alt: 'Two ink drawings of the same mill, seen from opposite sides, cycling through matched corners, a hatched depth, and a mesh.',
+            caption: 'A drawn turntable of one stereo pair: the same mill in two views, first with matched corners, then hatched for depth, then tied into a mesh.',
+            scope: 'Drawn turntable of the method. Not a capture from the B3tt3r repository, and not a measured reconstruction.',
+          },
+        ],
         tags: ["3D Vision", "Stereo Matching", "Python", "Deep Learning"]
       },
       {
@@ -127,15 +139,27 @@ export const DATA = {
         links: [
           { href: "https://github.com/Ryukijano/cuda-blackwell-labs", label: "Code" },
         ],
-        figure: {
-          kind: 'image',
-          src: '/assets/media/cuda-blackwell-bandwidth.webp',
-          width: 1120,
-          height: 687,
-          alt: 'A line chart of effective bandwidth against working-set size, rising to about 980 GB/s at 4 MB, then falling to about 200 GB/s beyond the L2 cache, with a dashed line at the 273 GB/s peak.',
-          caption: 'Effective bandwidth by working-set size on the GB10, for sequential reads, writes and copies.',
-          scope: 'Chart from Project 02 of Ryukijano/cuda-blackwell-labs, one run on one machine. Points above the dashed peak are served from the L2 cache; the two zero points are sizes the run did not record.',
-        },
+        figures: [
+          {
+            kind: 'image',
+            src: '/assets/media/cuda-blackwell-bandwidth.webp',
+            width: 1120,
+            height: 687,
+            alt: 'A line chart of effective bandwidth against working-set size, rising to about 980 GB/s at 4 MB, then falling to about 200 GB/s beyond the L2 cache, with a dashed line at the 273 GB/s peak.',
+            caption: 'Effective bandwidth by working-set size on the GB10, for sequential reads, writes and copies.',
+            scope: 'Chart from Project 02 of Ryukijano/cuda-blackwell-labs, one run on one machine. Points above the dashed peak are served from the L2 cache; the two zero points are sizes the run did not record.',
+          },
+          {
+            kind: 'image',
+            src: '/assets/media/blackwell-cliff.gif',
+            poster: '/assets/media/blackwell-cliff-poster.webp',
+            width: 720,
+            height: 460,
+            alt: 'Ink bars of bandwidth against working-set size on a DGX Spark. 978.15 GB/s at 4 MB and 1,219.3 GB/s at 8 MB stand above a seal-red line at 273 GB/s; the bars then fall to 275.98, 211.56 and 201.70 GB/s.',
+            caption: 'Sequential reads on one DGX Spark, and the deeper run at 8 MB, drawn as ink bars from the figures already in the write-up.',
+            scope: 'Drawn illustration, not a capture, and not a new measurement. The bars are 978.15 GB/s at 4 MB, 1,219.3 GB/s at 8 MB, then 275.98 GB/s at 16 MB, 211.56 GB/s at 64 MB and 201.70 GB/s at 4 GB. The seal line is the rated 273 GB/s LPDDR5X peak. The 8 MB bar is the deeper run; the other four are sequential reads. The write-up gives no HBM rate, so none is drawn.',
+          },
+        ],
         tags: ["CUDA 13", "Blackwell", "PTX", "Tensor Cores"]
       },
       {
@@ -526,15 +550,27 @@ export const DATA = {
         links: [
           { href: "https://github.com/Ryukijano/quantumforge", label: "Code" },
         ],
-        figure: {
-          kind: 'image',
-          src: '/assets/media/quantumforge-stress.webp',
-          width: 1120,
-          height: 708,
-          alt: 'A log-scale chart of execution time against qubit count for NumPy, Qiskit Aer and the Rust simulator. The Rust line starts lowest and crosses above Aer at about 19 qubits.',
-          caption: 'Execution time from 4 to 26 qubits for a naive NumPy simulator, Qiskit Aer and QuantumForge’s Rust core. Lower is faster.',
-          scope: 'Chart from Ryukijano/quantumforge, one run of the stress test on a local CPU.',
-        },
+        figures: [
+          {
+            kind: 'image',
+            src: '/assets/media/quantumforge-stress.webp',
+            width: 1120,
+            height: 708,
+            alt: 'A log-scale chart of execution time against qubit count for NumPy, Qiskit Aer and the Rust simulator. The Rust line starts lowest and crosses above Aer at about 19 qubits.',
+            caption: 'Execution time from 4 to 26 qubits for a naive NumPy simulator, Qiskit Aer and QuantumForge’s Rust core. Lower is faster.',
+            scope: 'Chart from Ryukijano/quantumforge, one run of the stress test on a local CPU.',
+          },
+          {
+            kind: 'image',
+            src: '/assets/media/quantumforge-spiral.gif',
+            poster: '/assets/media/quantumforge-spiral-poster.webp',
+            width: 880,
+            height: 500,
+            alt: 'A Prussian-ink wireframe spiral on a qubit scale, crossing a vermilion line marked Aer at 19.',
+            caption: 'A Prussian-ink wireframe spiral unwinds as the qubit count rises and crosses a vermilion line.',
+            scope: 'Drawn illustration, not a capture. The line is at 19 qubits, where this stress test says the Rust simulator falls behind Qiskit Aer. The axis runs from 4 to 26 qubits, the same range as the chart above.',
+          },
+        ],
         tags: ["Rust", "rayon", "Qiskit", "VQE", "GQE"]
       },
       {
@@ -568,6 +604,16 @@ export const DATA = {
         link: "https://quantum-buddies.github.io",
         isBanner: true,
         year: 2025,
+        figure: {
+          kind: 'image',
+          src: '/assets/media/quantum-buddies-patch.gif',
+          poster: '/assets/media/quantum-buddies-patch-poster.webp',
+          width: 640,
+          height: 360,
+          alt: 'A square patch lettered Gyanateet Dutta, Sid Iliyasu and Dat Chi Le, joined by one circuit line.',
+          caption: 'Three names on one patch, joined by a single circuit line.',
+          scope: 'A banner for the three of us. Not a circuit that was run, and not a result.',
+        },
         tags: ["Quantum ML", "Research", "Open Source", "Collaboration"]
       },
       { 

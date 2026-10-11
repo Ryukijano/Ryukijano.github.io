@@ -72,6 +72,8 @@ The later projects put these pieces together: a TMA 2D tile copy (11), a tiny tr
 
 > The 128 GB is not HBM.
 
+<!-- figure 2 -->
+
 Plan every kernel around 273 GB/s, and treat the L2 as the real fast memory, even though it runs out before its nominal 24 MB. Do not trust `cudaMemGetInfo()` on its own. Expect profiler counters to be locked, and bring CUPTI. For the FP4 instructions, target `sm_121a`. And measure the access pattern before tuning occupancy, because on this machine it moved performance more.
 
 Every number here is my own microbenchmark, on one DGX Spark, with CUDA 13.0, and most are single runs. The GEMM and FP8/FP4 throughputs are cuBLAS and cuBLASLt; the only tensor-core kernel of mine with a throughput figure is the naive WMMA one at about 14 TFLOP/s.

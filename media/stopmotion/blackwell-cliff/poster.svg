@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 460" width="720" height="460">
+<rect width="720" height="460" fill="#f4f2ed"/>
+<rect x="14" y="14" width="692" height="432" fill="none" stroke="#1a237e" stroke-opacity="0.18" stroke-width="1"/>
+<text x="32.0" y="42.0" fill="#535896" font-family="IBM Plex Mono" font-size="13" font-weight="400" text-anchor="start" letter-spacing="1.8">WORKING SET</text>
+<text x="688.0" y="42.0" fill="#535896" font-family="IBM Plex Mono" font-size="13" font-weight="400" text-anchor="end" letter-spacing="1.6">ONE DGX SPARK</text>
+<text x="32.0" y="62.0" fill="#535896" font-family="IBM Plex Mono" font-size="12" font-weight="400" text-anchor="start">Sequential reads, and the deeper run at 8 MB</text>
+<line x1="86.0" y1="246.00" x2="688.0" y2="246.00" stroke="#1a237e" stroke-opacity="0.18" stroke-width="1"/>
+<text x="78.0" y="250.0" fill="#535896" font-family="IBM Plex Mono" font-size="12" font-weight="400" text-anchor="end">600</text>
+<line x1="86.0" y1="120.00" x2="688.0" y2="120.00" stroke="#1a237e" stroke-opacity="0.18" stroke-width="1"/>
+<text x="78.0" y="124.0" fill="#535896" font-family="IBM Plex Mono" font-size="12" font-weight="400" text-anchor="end">1,200</text>
+<text x="78.0" y="376.0" fill="#535896" font-family="IBM Plex Mono" font-size="12" font-weight="400" text-anchor="end">0</text>
+<text x="28.0" y="82.0" fill="#535896" font-family="IBM Plex Mono" font-size="12" font-weight="400" text-anchor="start">GB/s</text>
+<polygon points="118.20,372.00 174.20,372.00 174.20,166.59 118.20,166.59" fill="#1a237e" stroke="#1a237e" stroke-width="1" stroke-linejoin="miter"/>
+<polygon points="238.60,372.00 294.60,372.00 294.60,115.95 238.60,115.95" fill="#1a237e" stroke="#1a237e" stroke-width="1" stroke-linejoin="miter"/>
+<polygon points="359.00,372.00 415.00,372.00 415.00,314.04 359.00,314.04" fill="#1a237e" stroke="#1a237e" stroke-width="1" stroke-linejoin="miter"/>
+<polygon points="479.40,372.00 535.40,372.00 535.40,327.57 479.40,327.57" fill="#1a237e" stroke="#1a237e" stroke-width="1" stroke-linejoin="miter"/>
+<polygon points="599.80,372.00 655.80,372.00 655.80,329.64 599.80,329.64" fill="#1a237e" stroke="#1a237e" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="86.00,314.67 100.00,314.67 114.00,314.67 117.20,314.67" fill="none" stroke="#a8301b" stroke-width="1.75" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="175.20,314.67 189.20,314.67 203.20,314.67 217.20,314.67 231.20,314.67 237.60,314.67" fill="none" stroke="#a8301b" stroke-width="1.75" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="295.60,314.67 309.60,314.67 323.60,314.67 337.60,314.67 351.60,314.67 358.00,314.67" fill="none" stroke="#a8301b" stroke-width="1.75" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="416.00,314.67 430.00,314.67 444.00,314.67 458.00,314.67 472.00,314.67 486.00,314.67 500.00,314.67 514.00,314.67 528.00,314.67 542.00,314.67 556.00,314.67 570.00,314.67 584.00,314.67 598.00,314.67 612.00,314.67 626.00,314.67 640.00,314.67 654.00,314.67 668.00,314.67 682.00,314.67 688.00,314.67" fill="none" stroke="#a8301b" stroke-width="1.75" stroke-linecap="square" stroke-linejoin="miter"/>
+<line x1="326.80" y1="303.67" x2="326.80" y2="325.67" stroke="#a8301b" stroke-width="1.75" stroke-linecap="square"/>
+<text x="78.0" y="318.7" fill="#a8301b" font-family="IBM Plex Mono" font-size="12" font-weight="400" text-anchor="end">273</text>
+<text x="425.0" y="306.7" fill="#a8301b" font-family="IBM Plex Mono" font-size="12" font-weight="400" text-anchor="start" letter-spacing="0.6">273 GB/s  LPDDR5X</text>
+<text x="146.2" y="394.0" fill="#1a237e" font-family="IBM Plex Mono" font-size="13" font-weight="400" text-anchor="middle">4 MB</text>
+<text x="146.2" y="158.6" fill="#1a237e" font-family="IBM Plex Mono" font-size="12" font-weight="400" text-anchor="middle">978.15</text>
+<text x="266.6" y="394.0" fill="#1a237e" font-family="IBM Plex Mono" font-size="13" font-weight="400" text-anchor="middle">8 MB</text>
+<text x="266.6" y="410.0" fill="#535896" font-family="IBM Plex Mono" font-size="11" font-weight="400" text-anchor="middle" letter-spacing="0.8">deeper</text>
+<text x="266.6" y="107.9" fill="#1a237e" font-family="IBM Plex Mono" font-size="12" font-weight="400" text-anchor="middle">1,219.3</text>
+<text x="387.0" y="394.0" fill="#1a237e" font-family="IBM Plex Mono" font-size="13" font-weight="400" text-anchor="middle">16 MB</text>
+<text x="387.0" y="332.0" fill="#f4f2ed" font-family="IBM Plex Mono" font-size="11" font-weight="400" text-anchor="middle">275.98</text>
+<text x="507.4" y="394.0" fill="#1a237e" font-family="IBM Plex Mono" font-size="13" font-weight="400" text-anchor="middle">64 MB</text>
+<text x="507.4" y="345.6" fill="#f4f2ed" font-family="IBM Plex Mono" font-size="11" font-weight="400" text-anchor="middle">211.56</text>
+<text x="627.8" y="394.0" fill="#1a237e" font-family="IBM Plex Mono" font-size="13" font-weight="400" text-anchor="middle">4 GB</text>
+<text x="627.8" y="347.6" fill="#f4f2ed" font-family="IBM Plex Mono" font-size="11" font-weight="400" text-anchor="middle">201.70</text>
+<line x1="86.0" y1="372.0" x2="688.0" y2="372.0" stroke="#1a237e" stroke-width="1"/>
+<line x1="86.0" y1="78.0" x2="86.0" y2="372.0" stroke="#1a237e" stroke-width="1"/>
+</svg>
