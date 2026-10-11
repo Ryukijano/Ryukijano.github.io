@@ -1,0 +1,213 @@
+/*
+ * paper-ink — the five new route shapes.
+ *
+ * Written against the SHIPPED tokens in src/index.css (--color-*, --step-*,
+ * --space-*, --measure-*). No screens, no keyblocks, no dark stock: every rule
+ * below works on the system as it stands today. Where the proposed layer would
+ * change something, a comment says so.
+ *
+ * Paste into src/index.css after the catalogue block, inside @layer components
+ * if you add one. Nothing here introduces a token; if a value below is not a
+ * var(), that is a bug — report it rather than tuning it.
+ */
+
+/* ---------------------------------------------------------- shared idioms */
+
+/* The mono label: kickers, lane names, scope lines, table heads. Always
+   uppercase, always tracked. --step--2 is the legibility floor, held off the
+   1.25 scale on purpose — see DESIGN.md. */
+.pi-label {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+/* Tabular figures: years, measured values, seeds. */
+.pi-figure {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------ note sheet */
+
+.note { max-width: var(--measure); }
+
+.note__kicker {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+/* A hairline tick between kicker items, the same mark the lane cards use. */
+.note__kicker .tick {
+  width: 1px;
+  height: 9px;
+  background: currentColor;
+  align-self: center;
+}
+
+.note__standfirst {
+  font-size: var(--step-1);
+  line-height: 1.4;
+  max-width: var(--measure-read);
+  margin-top: var(--space-3);
+}
+
+.note__body { max-width: var(--measure-read); }
+.note__body p + p { margin-top: var(--space-3); }
+
+/* One per note, and only for a sentence the note is built around. The seal
+   here is the scope-and-evidence convention, not decoration — see the accent
+   rule in DESIGN.md before adding a second use. */
+.note__pull {
+  margin: var(--space-5) 0;
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--color-seal);
+  max-width: var(--measure-read);
+  font-size: var(--step-1);
+  line-height: 1.4;
+}
+
+/* --------------------------------------------------------- index entries */
+
+/* Two lines per entry: a title that is a claim, and the claim qualified.
+   Distinct from .catalog__r, which is one line. */
+.entry {
+  display: block;
+  padding: var(--space-3) 0;
+  border-bottom: var(--hairline);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.entry__top {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  font-size: var(--step--1);
+}
+
+.entry__top em {
+  margin-left: auto;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.entry__sub {
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  color: var(--color-ink-muted);
+  margin-top: 3px;
+  max-width: var(--measure-read);
+}
+
+.entry:hover .entry__top,
+.entry:focus-visible .entry__top {
+  color: var(--color-seal);
+  transform: translateX(2px);
+}
+
+/* ------------------------------------------------------------- workbench */
+
+/* The one surface where a name is set in mono, because these names are typed
+   at a prompt rather than read in a sentence. */
+.tool {
+  display: grid;
+  grid-template-columns: 13rem 1fr;
+  gap: 0 var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: var(--hairline);
+  align-items: baseline;
+}
+
+.tool__name {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.04em;
+  color: var(--color-ink);
+}
+
+.tool__what { font-size: var(--step--1); }
+
+/* The tools equivalent of a scope note: what it needs before it will run. */
+.tool__needs { grid-column: 2; margin-top: 4px; }
+.tool__needs b { font-weight: 400; color: var(--color-ink); }
+
+@media (max-width: 599px) {
+  .tool { grid-template-columns: 1fr; gap: var(--space-2) 0; }
+  .tool__needs { grid-column: 1; }
+}
+
+/* ------------------------------------------------------------ collection */
+
+.coll {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: var(--hairline);
+}
+
+/* A margin mark, not a lane colour. The lane is named in words on the right,
+   which is what carries the distinction on the shipped palette. When the
+   proposed lane keyblocks land, this becomes the keyblock and the words can
+   stay — they are the colour-blind-safe half of the pair either way. */
+.coll__tick {
+  width: 2px;
+  flex: none;
+  align-self: stretch;
+  background: var(--color-rule);
+}
+
+.coll__body { flex: 1; font-size: var(--step--1); }
+
+.coll__sub {
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  color: var(--color-ink-muted);
+  margin-top: 3px;
+}
+
+.coll__lane { white-space: nowrap; }
+
+/* ---------------------------------------------------------------- ledger */
+
+.ledger {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+}
+
+.ledger th {
+  text-align: left;
+  font-weight: 400;
+  padding: 0 var(--space-3) var(--space-2) 0;
+  border-bottom: var(--hairline);
+  vertical-align: bottom;
+}
+
+.ledger td {
+  padding: var(--space-3) var(--space-3) var(--space-3) 0;
+  border-bottom: var(--hairline);
+  vertical-align: top;
+  color: var(--color-ink);
+}
+
+.ledger td.yr {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+  width: 3.5rem;
+}
+
+/* The column that makes the table worth publishing. */
+.ledger td.rests {
+  font-family: var(--font-sans);
+  color: var(--color-ink-muted);
+}
