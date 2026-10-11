@@ -26,11 +26,13 @@ const VIEWPORTS = [
 
 // The CUDA case study is a long-form article with an unbreakable PTX
 // mnemonic in it: the likeliest page to overflow a phone. The note's kicker
-// is a single flex row that does not wrap.
+// is a single flex row that does not wrap. Both motif personas are here:
+// yana carries the film strip, ryoushi the surface-code lattice.
 const ROUTES = [
   '/',
   '/work',
   '/academic',
+  '/persona/yana',
   '/persona/ryoushi',
   '/work/aims-surgical-phase-detection',
   '/work/cuda-blackwell-labs',
@@ -81,6 +83,59 @@ for (const { w, h, note } of VIEWPORTS) {
     });
   });
 }
+
+test.describe('the interior atmosphere', () => {
+  test('each persona hangs its own motif in the same box', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    for (const [route, motif] of [
+      ['/persona/yana', 'film'],
+      ['/persona/ryoushi', 'lattice'],
+      ['/persona/ryukijano', null],
+      ['/academic', null],
+      ['/work', null],
+    ]) {
+      await page.goto(route);
+      await page.evaluate(() => document.fonts.ready);
+      const atmo = page.locator('.atmo');
+      if (motif) {
+        await expect(atmo).toHaveAttribute('data-motif', motif);
+      } else {
+        expect(await atmo.getAttribute('data-motif'), `${route} should keep the default wave`).toBeNull();
+      }
+      // The motif box never moves: same ink, same opacity, only the mask swaps.
+      const box = await page.locator('.atmo__engraving').boundingBox();
+      expect(box.width, `${route} motif width`).toBeGreaterThan(0);
+      expect(box.width, `${route} motif width`).toBeLessThanOrEqual(25 * 16 + 1);
+    }
+  });
+
+  test('fibre and motif hide below 900px and never scroll the page', async ({ page }) => {
+    for (const [w, h] of [[899, 800], [390, 844]]) {
+      await page.setViewportSize({ width: w, height: h });
+      for (const route of ['/academic', '/persona/yana', '/persona/ryoushi', '/work']) {
+        await page.goto(route);
+        await page.evaluate(() => document.fonts.ready);
+        await expect(page.locator('.atmo__fibre')).toBeHidden();
+        await expect(page.locator('.atmo__engraving')).toBeHidden();
+        const overflow = await page.evaluate(
+          () => document.documentElement.scrollWidth - window.innerWidth,
+        );
+        expect(overflow, `${route} at ${w}px overflows by ${overflow}px`).toBeLessThanOrEqual(1);
+      }
+    }
+  });
+
+  test('the fibre is clipped out of the sheet on both measures', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    for (const route of ['/academic', '/work']) {
+      await page.goto(route);
+      await page.evaluate(() => document.fonts.ready);
+      const clip = await page.locator('.atmo__fibre').evaluate((el) => getComputedStyle(el).clipPath);
+      expect(clip, `${route} fibre lost its clip`).not.toBe('none');
+      expect(clip, `${route} fibre clip`).toMatch(/polygon/);
+    }
+  });
+});
 
 test.describe('the home page fits one screen', () => {
   // The whole conceit is a single hung print. It is sized from a height budget

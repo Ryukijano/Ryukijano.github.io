@@ -19,7 +19,8 @@ const PAGES = [
   ['case study', '/work/aims-surgical-phase-detection'],
   ['note', '/notes/beige-pc'],
   ['academic', '/academic'],
-  ['persona', '/persona/ryoushi'],
+  ['persona (film)', '/persona/yana'],
+  ['persona (lattice)', '/persona/ryoushi'],
   ['not found', '/nope'],
 ];
 

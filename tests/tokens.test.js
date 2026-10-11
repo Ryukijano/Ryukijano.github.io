@@ -231,3 +231,69 @@ describe('non-negotiables', () => {
     expect(stray).toEqual([]);
   });
 });
+
+describe('interior atmosphere', () => {
+  it('lays wash, fibre, motif and grain in that order, under the text', async () => {
+    // Siblings without z-index paint in DOM order, so the component's order
+    // IS the z-order. Fibre sits under the motif and the grain; .atmo stays
+    // under .print__body (asserted above), so all four stay under the ink.
+    const { readFileSync } = await import('node:fs');
+    const jsx = readFileSync(new URL('../src/components/Atmosphere.jsx', import.meta.url), 'utf8');
+    const order = ['atmo__wash', 'atmo__fibre', 'atmo__engraving', 'atmo__grain'].map((c) =>
+      jsx.indexOf(c),
+    );
+    // The wash is conditional (variant !== 'film') but still first when drawn.
+    const drawn = order.filter((i) => i !== -1);
+    expect(drawn.length).toBeGreaterThanOrEqual(3); // fibre, engraving, grain always
+    expect([...drawn].sort((a, b) => a - b)).toEqual(drawn);
+    expect(jsx).toMatch(/aria-hidden="true"/); // decorative, never in the tree
+  });
+
+  it('keeps the fibre clipped out of the sheet, so contrast cannot regress', () => {
+    // A fibre core under a glyph moved muted ink from 5.02 to 4.55:1 at the
+    // worst pixel. The evenodd clip on --page-measure is what holds the
+    // guarantee; Work (58rem) clips wider through the same variable.
+    const fibre = css.match(/\.atmo__fibre\s*\{([^}]*)\}/s)?.[1];
+    expect(fibre, '.atmo__fibre is missing').toBeTruthy();
+    expect(fibre).toMatch(/clip-path:\s*polygon\(\s*evenodd/);
+    expect(fibre).toMatch(/var\(--sheet-l\)/);
+    expect(fibre).toMatch(/var\(--sheet-r\)/);
+    expect(fibre).toMatch(/--sheet-l:\s*calc\(50% - var\(--page-measure\) \/ 2\)/);
+    expect(fibre).toMatch(/--sheet-r:\s*calc\(50% \+ var\(--page-measure\) \/ 2\)/);
+  });
+
+  it('prints fibre and motifs in the stock ink only, with no new colour', () => {
+    const fibre = css.match(/\.atmo__fibre\s*\{([^}]*)\}/s)[1];
+    expect(fibre).toMatch(/background:\s*var\(--color-ink\)/);
+    expect(fibre).not.toMatch(/#[0-9a-f]{3,8}\b/i);
+    expect(fibre).not.toMatch(/--color-(?!ink\b)/);
+    for (const motif of ['film', 'lattice']) {
+      const rule = css.match(
+        new RegExp(`\\.atmo\\[data-motif='${motif}'\\][^{]*\\{([^}]*)\\}`, 's'),
+      )?.[1];
+      expect(rule, `the ${motif} motif rule is missing`).toBeTruthy();
+      // Mask swap only: the box, ink and opacity stay on .atmo__engraving.
+      expect(rule).toMatch(/mask-image:/);
+      expect(rule).not.toMatch(/background|opacity|width|height/i);
+    }
+  });
+
+  it('gives the lattice slightly less weight on the dark stock', () => {
+    // Hatched Z faces carry more ink per pixel than the line motifs.
+    const dark = css.match(
+      /html\[data-theme='dark'\] \.atmo\[data-motif='lattice'\][^{]*\{([^}]*)\}/s,
+    )?.[1];
+    expect(dark, 'the lattice dark-stock rule is missing').toBeTruthy();
+    const opacity = Number(dark.match(/opacity:\s*([\d.]+)/)?.[1]);
+    expect(opacity).toBeLessThan(0.12);
+    expect(opacity).toBeGreaterThan(0.07);
+  });
+
+  it('hides fibre and motif below 900px, where there is no margin', () => {
+    const query = css.match(/@media \(max-width: 899px\)\s*\{([\s\S]*?)\n\}/)?.[1];
+    expect(query, 'the 899px hide rule moved').toBeTruthy();
+    expect(query).toMatch(/\.atmo__engraving/);
+    expect(query).toMatch(/\.atmo__fibre/);
+    expect(query).toMatch(/display:\s*none/);
+  });
+});
