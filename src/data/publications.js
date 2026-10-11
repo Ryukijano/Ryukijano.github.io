@@ -90,7 +90,7 @@ export const RESEARCH_TIMELINE = [
   },
   {
     year: 2025,
-    title: 'Quantum Buddies; Bradford (teammate-reported prizes) and YQuantum Quantum Rings virtual track',
+    title: 'Bradford Quantum Hackathon (teammate-reported prizes) and YQuantum 2025, Quantum Rings virtual track',
     org: null,
     desc: 'Hackathon notes with Quantum Buddies. YQuantum was a virtual-track win, not the Yale Grand Prize.',
   },
@@ -158,7 +158,7 @@ export const ACADEMIC_BIO = {
 export const HOME_BIO = {
   name: 'Gyanateet “Yana” Dutta',
   statement:
-    'That’s me at the beige PC. Games and graphics got me into computers and I never got out. I keep coming back to video—whether a model can recognise the phase of an operation, or guess what comes next. The hands-on side stays: CUDA, simulation and quantum circuits.',
+    'That’s me at the beige PC. Games and graphics got me into computers, and I never got out. I keep coming back to video: whether a model can recognise the phase of an operation, or guess what comes next. The hands-on side stays: CUDA, simulation and quantum circuits.',
   // The words in the statement that open the long version.
   story: { text: 'That’s me at the beige PC', href: '/notes/beige-pc' },
 };

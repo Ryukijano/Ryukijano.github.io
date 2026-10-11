@@ -22,7 +22,7 @@ Then, from March to November 2025, I was a research intern with [AIMS](/work/aim
 
 That work became the ISBI 2026 paper [Self-Supervised Vision Transformer for Surgical Phase Recognition in Endoscopic Submucosal Dissection](https://doi.org/10.1109/isbi61048.2026.11515812), with Aya Hammad, Thomas Archer, Qi Dou, Noor Mohammed and Sharib Ali. It pairs a self-supervised DINOv2 backbone, adapted by pretraining first on unannotated porcine video and then on human endoscopic video, with lightweight temporal models. It reports 89.5% accuracy on the patient test set and 90.0% on the porcine test set. Both are accuracies on the paper's own test sets for one procedure, and neither says how the model would do in an operating theatre.
 
-The scores are not the part I find most interesting, though. Phase recognition is often treated as a classification problem, and I think it is more interesting as a question about representation learning:
+The scores matter less to me than the question behind them. Phase recognition is often treated as a classification problem, and I think it is more interesting as a question about representation learning:
 
 > Can a model learn how a procedure evolves over time without depending entirely on dense labels and supervised temporal decoders?
 

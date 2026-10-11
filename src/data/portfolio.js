@@ -292,7 +292,7 @@ export const DATA = {
       },
       { 
         title: "MSc Thesis: Surgical Video Prediction", 
-        desc: "What the next frames of a surgical clip look like. On the JIGSAWS test set, a VAE–Transformer gained 2.36 dB PSNR over the chosen baselines, at 22 FPS.", 
+        desc: "What the next frames of a surgical clip look like. On the JIGSAWS test set, a VAE–Transformer gained 2.36 dB PSNR over the chosen baselines and ran at 22 FPS.", 
         fullDesc: "Predicting the next frames of a surgical clip is the question this project sits on. The model is a VAE–Transformer. In my experiments it improved PSNR by 2.36 dB over the selected baselines and ran at 22 FPS with FP16 mixed precision. The code is on GitHub.",
         link: "https://github.com/Ryukijano/vae-surgical-prediction", 
         year: 2025,
@@ -314,7 +314,7 @@ export const DATA = {
       },
       { 
         title: "JAX Diffusers Sprint", 
-        desc: "A weekend sprint, and a ControlNet that had to be trained before it ended. Eighth on my record of the 2023 JAX Diffusers leaderboard.", 
+        desc: "A weekend sprint, and a ControlNet that had to be trained before it ended. Eighth on the 2023 JAX Diffusers leaderboard, by my own record.", 
         fullDesc: "I like a sprint where the model has to be trained before the weekend ends. In the 2023 Hugging Face JAX Diffusers community sprint I finished eighth globally with a ControlNet for anime-realism, trained on TPU v4.",
         link: "https://github.com/Ryukijano/CatCon-Controlnet-WD-1-5-b2", 
         year: 2023,
@@ -426,7 +426,7 @@ export const DATA = {
           caption: 'A tangled tour through eleven dots shortens, one swap at a time, into the shortest loop.',
           scope: 'The tour is computed by a 2-opt search over these eleven points, not by the paper’s Hopfield network. The final loop is the optimal tour for them.',
         },
-        tags: ["Hopfield Networks", "Optimization", "TSP", "Published"]
+        tags: ["Hopfield Networks", "Optimisation", "TSP", "Published"]
       },
       {
         title: "LGM: 3D Model Generation",
@@ -518,7 +518,7 @@ export const DATA = {
       {
         title: "QuantumForge",
         desc: "A Rust statevector simulator with a Qiskit bridge, benchmarked against NumPy and Qiskit Aer from 4 to 26 qubits.",
-        fullDesc: "QuantumForge is a quantum-circuit simulator I wrote in Rust, with ndarray holding the state and a Python bridge so Qiskit circuits can run on it. On my benchmark circuit it was about 4,000 times faster than a naive NumPy simulator at 16 qubits, and faster than Qiskit Aer on CPU up to about 18 qubits. Beyond that Aer pulls ahead, up to 26 qubits, the largest state (1 GiB) I ran on a 48 GB machine. I also compared VQE with an evolutionary GQE on H₂. The Rust VQE finished within 1.1 × 10⁻⁶ hartree of the exact ground-state energy, and the GQE within 10⁻¹³.",
+        fullDesc: "QuantumForge is a quantum-circuit simulator I wrote in Rust, with ndarray holding the state and a Python bridge so Qiskit circuits can run on it. On my benchmark circuit it was about 4,000 times faster than a naive NumPy simulator at 16 qubits, and faster than Qiskit Aer on CPU up to about 18 qubits. Beyond that, Aer pulls ahead. The largest state I ran, at 26 qubits, takes 1 GiB on a 48 GB machine. I also compared VQE with an evolutionary GQE on H₂. The Rust VQE finished within 1.1 × 10⁻⁶ hartree of the exact ground-state energy, and the GQE within 10⁻¹³.",
         link: "https://github.com/Ryukijano/quantumforge",
         year: 2026,
         role: "Author, public repository",
@@ -682,7 +682,7 @@ export const DATA = {
           poster: '/assets/media/surface-code-decode-poster.webp',
           width: 640,
           height: 360,
-          alt: 'A distance-5 surface code: three X errors light four checks, a matching joins them, and the errors and the correction together form a stabilizer.',
+          alt: 'A distance-5 surface code: three X errors light four checks, a matching joins them, and the errors and the correction together form a stabiliser.',
           caption: 'A decoder sees only the four lit checks, and its correction differs from the errors yet cancels them.',
           scope: 'An illustrative error pattern on a d = 5 rotated surface code. The matching is an exhaustive minimum-weight pairing computed for this figure, not Stim or PyMatching output.',
         },
