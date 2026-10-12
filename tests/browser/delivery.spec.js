@@ -170,6 +170,18 @@ test('reduced motion stills carry a play chip that starts the loop', async ({ pa
   expect(a.equals(b), 'loop should paint changing frames after play').toBe(false);
 });
 
+test('the 404 loop carries the same play chip', async ({ page }) => {
+  await page.goto('/no-such-route');
+  const sheet = page.locator('.plate__sheet--loop');
+  const gif = sheet.locator('img');
+  const play = sheet.locator('.plate__play');
+  await gif.scrollIntoViewIfNeeded();
+  await expect(play).toBeVisible();
+  await play.click();
+  await expect(play).toBeHidden();
+  await expect.poll(() => gif.evaluate((img) => img.complete && img.currentSrc)).toMatch(/glitch-wave\.gif$/);
+});
+
 test('the play chip stays hidden under normal motion', async ({ browser }) => {
   const ctx = await browser.newContext({ reducedMotion: 'no-preference' });
   const page = await ctx.newPage();

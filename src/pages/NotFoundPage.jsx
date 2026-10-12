@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Atmosphere from '../components/Atmosphere';
 import SiteNav from '../components/SiteNav';
 import { GLITCH_WAVE } from '../data/marks';
@@ -9,6 +10,7 @@ import Link from '../lib/Link';
  * is the same markup React hydrates.
  */
 export default function NotFoundPage() {
+  const [playing, setPlaying] = useState(false);
   return (
     <div className="print">
       <Atmosphere variant="quiet" />
@@ -27,7 +29,9 @@ export default function NotFoundPage() {
             }}
           >
             <picture>
-              <source media="(prefers-reduced-motion: reduce)" srcSet={GLITCH_WAVE.poster} />
+              {playing ? null : (
+                <source media="(prefers-reduced-motion: reduce)" srcSet={GLITCH_WAVE.poster} />
+              )}
               <img
                 src={GLITCH_WAVE.src}
                 alt={GLITCH_WAVE.alt}
@@ -36,6 +40,17 @@ export default function NotFoundPage() {
                 decoding="async"
               />
             </picture>
+            {/* The same play chip the figure loops carry: under reduced
+                motion the still is the default, not the only option. */}
+            <button
+              type="button"
+              className="plate__play"
+              hidden={playing}
+              aria-label="Play the loop"
+              onClick={() => setPlaying(true)}
+            >
+              Play
+            </button>
           </div>
           <figcaption className="plate__slip">
             <span className="plate__slug">Drawn</span>
