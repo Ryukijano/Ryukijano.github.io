@@ -161,7 +161,10 @@ text, and a 700 kB cap per asset.
 The animated figures from the earlier field-note design remain part of the
 project record. They are delivered as looping GIFs with still posters.
 Reduced-motion mode swaps each GIF for its poster inside the same `<picture>`,
-so the alt text survives and the GIF is never fetched. Most explain a method and are labelled
+so the alt text survives and the GIF is never fetched on its own — but the
+still carries a square play chip, visible only under reduced motion, that
+drops the poster source and starts the loop on demand. The still is the
+default there, not the only option. Most explain a method and are labelled
 as schematics. The surgical-phase figure is a model diagnostic from selected
 ESD frames. Four are computed for the page: the Hopfield tour, Burgers'
 equation, the LABS search and the surface-code decode. Each says so in its

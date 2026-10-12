@@ -1559,6 +1559,35 @@ html[data-theme='dark'] .atmo[data-motif='lattice'] .atmo__engraving {
   pointer-events: none;
 }
 
+/* Under reduced motion the loop's <picture> has already swapped to the
+   poster; the play chip sits over that still so the reader can still ask
+   for the loop. Once it is playing the [hidden] attribute keeps it gone
+   even inside the media query, where the base rule would not apply. */
+.plate__play {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0.55rem 1.1rem;
+  background: var(--color-washi-lift);
+  border: var(--hairline);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.plate__play:hover {
+  color: var(--color-seal);
+}
+
+.plate__play[hidden] {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   /* A muted video is motion. A looping GIF is too, but its <picture> swaps
      to the poster by itself, so only the video needs hiding here. */
@@ -1570,6 +1599,10 @@ html[data-theme='dark'] .atmo[data-motif='lattice'] .atmo__engraving {
     background-image: var(--plate-poster, none);
     background-size: cover;
     background-position: center;
+  }
+
+  .plate__play {
+    display: inline-flex;
   }
 }
 

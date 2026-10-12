@@ -150,6 +150,37 @@ test('project demos load as looping GIFs with a still poster', async ({ page }) 
   }
 });
 
+test('reduced motion stills carry a play chip that starts the loop', async ({ page }) => {
+  // One route for the expensive painted-frames check; the swap itself is
+  // the same mechanism on every loop.
+  await page.goto('/work/cuda-blackwell-labs');
+  const sheet = page.locator('.plate__sheet--loop').first();
+  const gif = sheet.locator('img');
+  const play = sheet.locator('.plate__play');
+  await gif.scrollIntoViewIfNeeded();
+  await expect(play).toBeVisible();
+  await play.click();
+  await expect(play).toBeHidden();
+  await expect.poll(() => gif.evaluate((img) => img.complete && img.currentSrc)).toMatch(/\.gif$/);
+  const box = await sheet.boundingBox();
+  const clip = { x: box.x, y: box.y, width: Math.min(box.width, 600), height: Math.min(box.height, 400) };
+  const a = await page.screenshot({ clip });
+  await page.waitForTimeout(1200);
+  const b = await page.screenshot({ clip });
+  expect(a.equals(b), 'loop should paint changing frames after play').toBe(false);
+});
+
+test('the play chip stays hidden under normal motion', async ({ browser }) => {
+  const ctx = await browser.newContext({ reducedMotion: 'no-preference' });
+  const page = await ctx.newPage();
+  await page.goto('/work/cuda-blackwell-labs');
+  const gif = page.locator('.plate__sheet--loop img').first();
+  await gif.scrollIntoViewIfNeeded();
+  await expect(page.locator('.plate__play').first()).toBeHidden();
+  await expect.poll(() => gif.evaluate((img) => img.complete && img.currentSrc)).toMatch(/\.gif$/);
+  await ctx.close();
+});
+
 test('the pothole case study shows the paper figures', async ({ page }) => {
   await page.goto('/work/pothole-detection-arxiv');
   const images = page.locator('.plate__sheet img');
