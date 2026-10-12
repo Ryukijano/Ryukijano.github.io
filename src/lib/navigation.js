@@ -2,7 +2,14 @@ import { PERSONA_BY_SLUG } from '../data/portfolio';
 
 export function normalizePath(pathname) {
   if (!pathname) return '/';
-  const trimmed = pathname.replace(/\/+$/, '');
+  // GitHub Pages serves each prerendered file at <path> and <path>.html
+  // alike. Both spellings must land on the same route — a slug that keeps
+  // the suffix resolves to nothing and hydration swaps the page for the
+  // 404, taking every figure with it.
+  const trimmed = pathname
+    .replace(/\/+$/, '')
+    .replace(/\.html$/, '')
+    .replace(/\/index$/, '');
   return trimmed === '' ? '/' : trimmed;
 }
 
