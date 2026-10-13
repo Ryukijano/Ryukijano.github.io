@@ -20,8 +20,7 @@ the result in `public/assets/media/`.
 unreferenced, which is what keeps this boundary honest.
 
 `media/kanagawa/` is the hung print that used to be the home page. It is not
-on the desk board, so it is not deployed. `media/desk-plate.svg` is the ink
-drawing on that board; the page inlines it.
+on the desk board, so it is not deployed. `media/desk-plate.svg` is the pixel drawing on that board; the page inlines it.
 
 ## Deployed demos
 

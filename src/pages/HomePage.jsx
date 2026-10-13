@@ -44,7 +44,7 @@ export default function HomePage() {
         </Link>
 
         <figure className="board__card board__print board__print--deck plate--pinned">
-          <span className="plate__pin" aria-hidden="true" />
+          <span className="plate__tape" aria-hidden="true" />
           <div
             className="study-art"
             style={{ '--deck-ratio': `${deck.width} / ${deck.height}` }}

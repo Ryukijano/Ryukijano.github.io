@@ -40,10 +40,10 @@ export const BOARD = {
   },
   deck: {
     art: deckArt,
-    width: 480,
-    height: 320,
+    width: 96,
+    height: 64,
     caption: 'the other deck',
-    scope: 'An ink drawing. Not a photograph, and not a result.',
+    scope: 'A pixel drawing. Not a photograph, and not a result.',
   },
   mind: {
     title: 'On my mind',

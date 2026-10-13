@@ -127,17 +127,23 @@ research interest, word for word, and the link is B3tt3r. "Robot learning"
 is not on the note: nothing in `src/data` calls the work that.
 
 "where it started" is the childhood portrait already on the site, and it
-opens `/notes/beige-pc`. "the other deck" is an ink drawing made for the
-page, in the stock's own ink, with a scope line that says it is not a
-photograph and not a result. The reference mock was not cropped into the
-page.
+opens `/notes/beige-pc`. "the other deck" is an original pixel drawing of a
+room and a figure at a desk, in `--color-ink` and `--color-ink-muted` on
+the paper. No new pigment: the picture uses the stock's ink, and the chrome
+around it stays the paper system. Its scope line says it is a pixel drawing,
+not a photograph and not a result. The reference mock was not cropped into
+the page.
 
 "open source ftw" is a square mono label, no radius, linking to the GitHub
 profile. It is not a seal and not a pill.
 
-Tape, pin, tilt and the hard offset are the pinned-figure treatment. Tilt
-turns off at 640px, with the gallery. The offset stays a zero-blur rule
-mark.
+On the hung sheet the cards overlap the way a board does: the deck tucks
+over the nameplate, and the note sits on the deck's right edge. Below the
+fence the overlap is off and the column stacks. Tape on this page is the
+pinned-figure strip with ink stripes mixed from the existing ink and
+washi-deep, still a square. Tilt and the hard offset are the pinned-figure
+treatment. Tilt turns off at 640px, with the gallery. The offset stays a
+zero-blur rule mark.
 
 Above 900px wide **and** 800px tall the board is one screen.
 `tests/browser/layout.spec.js` asserts that at ten desktop sizes, **1440×800
