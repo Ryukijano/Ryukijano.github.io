@@ -34,11 +34,11 @@ figure states what its result rests on. That restraint is the personality.
 
 ```
 src/
-  data/          portfolio.js, publications.js, plate.js — all the content
+  data/          portfolio.js, publications.js, board.js — all the content
   content/       long-form notes and case studies
   lib/           navigation, usePath, Link, routeMeta
   pages/         Home, Work, CaseStudy, Persona, Academic, Notes, Tools, …
-  components/    SiteNav, KanagawaPlate, Atmosphere
+  components/    SiteNav, Atmosphere
   index.css      the whole design system, one file
 scripts/
   prerender.mjs      renders every route to a real HTML file

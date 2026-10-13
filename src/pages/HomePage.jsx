@@ -1,22 +1,10 @@
-import { Fragment, useState } from 'react';
-import KanagawaPlate from '../components/KanagawaPlate';
+import { Fragment } from 'react';
+import Atmosphere from '../components/Atmosphere';
 import SiteNav from '../components/SiteNav';
+import { BOARD } from '../data/board';
 import { PLATE } from '../data/plate';
-import { LANES } from '../data/portfolio';
-import { HOME_BIO, EDUCATION } from '../data/publications';
+import { HOME_BIO } from '../data/publications';
 import Link from '../lib/Link';
-
-
-const ROOMS = LANES.map((lane) => ({
-  id: lane.id,
-  lane: lane.stage,
-  handle: lane.handle,
-  to: `/persona/${lane.slug}`,
-}));
-
-function laneClass(id, active) {
-  return ['folio__lane', active === id ? 'is-on' : ''].filter(Boolean).join(' ');
-}
 
 function Linked({ text, link }) {
   const at = link ? text.indexOf(link.text) : -1;
@@ -43,102 +31,102 @@ function Marked({ text, highlight }) {
 }
 
 export default function HomePage() {
-  const [lane, setLane] = useState(null);
-  const degree = EDUCATION[0];
-
+  const { started, deck, mind, mark } = BOARD;
 
   return (
-    <div className="folio">
+    <div className="board">
+      <Atmosphere variant="quiet" />
       <SiteNav overlay hideWordmark />
 
-      <main id="main" tabIndex={-1} className="route folio__stage">
-        <figure className="folio__print">
-          <KanagawaPlate
-            src={PLATE.src}
-            sources={PLATE.sources}
-            alt={PLATE.alt}
-            width={PLATE.width}
-            height={PLATE.height}
-          >
-            <div className="folio__thirds">
-              {ROOMS.map((room, index) => (
-                <Link
-                  key={room.id}
-                  href={room.to}
-                  className={laneClass(room.id, lane)}
-                  aria-label={`${room.lane}: ${room.handle}`}
-                  onMouseEnter={() => setLane(room.id)}
-                  onMouseLeave={() => setLane(null)}
-                  onFocus={() => setLane(room.id)}
-                  onBlur={() => setLane(null)}
-                >
-                  <span className={index > 0 ? 'folio__chip folio__chip--after' : 'folio__chip'}>
-                    {index > 0 ? <span className="folio__arrow" aria-hidden="true" /> : null}
-                    {room.lane}
-                    <span className="folio__chip-who">{room.handle}</span>
-                  </span>
-                </Link>
-              ))}
-            </div>
-
-            <nav className="folio__key" aria-label="Lanes">
-              {ROOMS.map((room, index) => (
-                <Fragment key={room.id}>
-                  {index > 0 ? <span className="folio__key-arrow" aria-hidden="true" /> : null}
-                  <Link href={room.to} className="folio__key-lane">
-                    <span className="folio__key-stage">{room.lane}</span>
-                    <span className="folio__key-who">{room.handle}</span>
-                  </Link>
+      <main id="main" tabIndex={-1} className="route board__stage">
+        <header className="board__card board__name plate--pinned">
+          <span className="plate__tape" aria-hidden="true" />
+          <h1>{BOARD.name}</h1>
+          <p className="board__byline">
+            <Link className="board__handle" href={BOARD.handle.href}>
+              {BOARD.handle.text}
+            </Link>
+            <span className="board__sep" aria-hidden="true" />
+            <span className="board__subjects">
+              {BOARD.subjects.map((subject, index) => (
+                <Fragment key={subject.href}>
+                  {index > 0 ? (index === BOARD.subjects.length - 1 ? ' & ' : ', ') : null}
+                  <Link href={subject.href}>{subject.text}</Link>
                 </Fragment>
               ))}
-            </nav>
-          </KanagawaPlate>
+            </span>
+          </p>
+        </header>
 
-          <figcaption className="folio__slip">
-            <div className="folio__slip-head">
+        <Link href={started.href} className="board__card board__print board__print--started plate--pinned plate--flip">
+          <span className="plate__tape" aria-hidden="true" />
+          <img
+            src={started.src}
+            alt={started.alt}
+            width={started.width}
+            height={started.height}
+            decoding="async"
+          />
+          <span className="board__caption">{started.caption}</span>
+        </Link>
+
+        <div className="board__pair">
+          <figure className="board__card board__print board__print--plate plate--pinned">
+            <span className="plate__tape" aria-hidden="true" />
+            <picture>
+              {PLATE.sources.map((source) => (
+                <source key={source.type} type={source.type} srcSet={source.srcSet} sizes={source.sizes} />
+              ))}
               <img
-                className="folio__portrait"
-                src="/assets/images/portrait.webp"
-                alt="Gyanateet as a child, at a beige desktop computer"
-                width={256}
-                height={256}
+                src={PLATE.src}
+                alt={PLATE.alt}
+                width={PLATE.width}
+                height={PLATE.height}
+                fetchPriority="high"
                 decoding="async"
               />
-              <h1 className="folio__name">{HOME_BIO.name}</h1>
-              <span className="seal" aria-hidden="true">
-                G
-              </span>
-            </div>
-            {degree ? <p className="folio__degree">{degree.title}</p> : null}
-            <nav className="folio__handles" aria-label="Profiles">
-              {ROOMS.map((room, index) => (
-                <span key={room.id}>
-                  {index > 0 ? (
-                    <span className="folio__handles-rule" aria-hidden="true">
-                      /
-                    </span>
-                  ) : null}
-                  <Link
-                    href={room.to}
-                    className={lane === room.id ? 'is-on' : undefined}
-                    onMouseEnter={() => setLane(room.id)}
-                    onMouseLeave={() => setLane(null)}
-                    onFocus={() => setLane(room.id)}
-                    onBlur={() => setLane(null)}
-                  >
-                    {room.handle}
-                  </Link>
-                </span>
-              ))}
-            </nav>
-            <p className="folio__bio">
-              <Linked text={HOME_BIO.statement} link={HOME_BIO.story} />
-            </p>
-            <p className="folio__caption">
+            </picture>
+            <figcaption className="board__caption">
               <Marked text={PLATE.caption} highlight={PLATE.highlight} />
-            </p>
-          </figcaption>
-        </figure>
+            </figcaption>
+          </figure>
+
+          <figure className="board__card board__print board__print--deck plate--pinned plate--flip">
+            <span className="plate__tape" aria-hidden="true" />
+            <div
+              className="study-art"
+              style={{ '--deck-ratio': `${deck.width} / ${deck.height}` }}
+              aria-hidden="true"
+              dangerouslySetInnerHTML={{ __html: deck.art }}
+            />
+            <figcaption>
+              <p className="board__caption">{deck.caption}</p>
+              <p className="board__scope">{deck.scope}</p>
+            </figcaption>
+          </figure>
+        </div>
+
+        <section className="board__card board__note plate--pinned plate--flip" aria-labelledby="board-mind">
+          <span className="plate__tape" aria-hidden="true" />
+          <h2 id="board-mind" className="board__note-title">
+            {mind.title}
+          </h2>
+          <ul role="list" className="board__mind">
+            {mind.items.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href}>{item.text}</Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <p className="board__bio">
+          <Linked text={HOME_BIO.statement} link={HOME_BIO.story} />
+        </p>
+
+        <a className="board__mark" href={mark.href} target="_blank" rel="noopener noreferrer">
+          {mark.text}
+        </a>
       </main>
     </div>
   );

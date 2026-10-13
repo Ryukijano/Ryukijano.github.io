@@ -4,7 +4,7 @@ What has stayed with me is the part where a picture has to be built. Photogramme
 
 ## Pictures as data
 
-The print on the home page is that habit in one image. Read left to right, it is the same wave three times: painted, then encoded as RGB pixels, then drawn as a wireframe. It is a schematic, and its caption says so. The three thirds carry my three handles: Ryukijano for the real world, Yana for the encoding and Ryoushi for the digital.
+The pinned plate on the home page is that habit in one image. Read left to right, it is the same wave three times: painted, then encoded as RGB pixels, then drawn as a wireframe. It is a schematic, and its caption says so. The pixel drawing beside it is a room I made for the page. It is not a photograph, and it is not a result. I file the work under three handles: Ryukijano for the real world, Yana for the encoding and Ryoushi for the digital.
 
 [Dalton Mills](/work/dalton-mills-vr-reconstruction) was a picture I had to build back from very little. The mill, in Keighley, was destroyed by fire in 2022. From September to December 2024 I worked on a VR reconstruction of it with the Science Museum Group's Congruence Engine and Leeds HELIX XR, alongside Alex Neish, Yuan Gao and Simon Popple. The [Leeds case study](https://digitaleducation.leeds.ac.uk/2025/01/08/reconstructing-dalton-mills-vr-and-ai-in-cultural-preservation/) records that we had ten photo stills to work from. No pre-fire laser scan exists to compare the model with, so its geometry can only be as faithful as those photographs.
 

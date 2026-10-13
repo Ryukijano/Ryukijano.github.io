@@ -19,6 +19,10 @@ the result in `public/assets/media/`.
 `scripts/check-budget.mjs` fails the build if anything in `dist/` is
 unreferenced, which is what keeps this boundary honest.
 
+`media/desk-plate.svg` is the pixel drawing pinned beside the Kanagawa plate
+on the home desk. The page inlines it. The plate's crops are deployed from
+`public/assets/images/`.
+
 ## Deployed demos
 
 Most case studies include a looping GIF. The pothole preprint uses the paper’s

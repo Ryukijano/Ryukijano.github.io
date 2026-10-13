@@ -44,8 +44,7 @@ test('all five faces load, and none of the dropped ones are requested', async ({
 });
 
 test('the display serif is preloaded, and only it', async ({ page }) => {
-  // Preloading all five would put 122 kB of font in front of the plate, which
-  // is the LCP element on the home page.
+  // Preloading all five would put 122 kB of font in front of the first paint.
   await page.goto('/');
   const preloaded = await page.$$eval('link[rel="preload"][as="font"]', (ls) =>
     ls.map((l) => l.getAttribute('href')),
@@ -53,31 +52,17 @@ test('the display serif is preloaded, and only it', async ({ page }) => {
   expect(preloaded).toEqual(['/fonts/source-serif-4-upright-var.woff2']);
 });
 
-test('the plate is fetched once, as AVIF, at a tier that fits', async ({ page }) => {
-  // A preload describing a different source than <picture> accepts downloads
-  // the plate twice; a `sizes` that overstates the layout downloads a tier too
-  // large. The old sizes claimed 1400px where the truth is 966px.
+test('the childhood portrait is fetched once', async ({ page }) => {
+  // A preload that names a different file than the <img> downloads it twice.
   const fetched = [];
   page.on('response', (r) => {
-    if (/kanagawa-plate/.test(r.url())) fetched.push(r.url().split('/').pop());
+    if (r.url().includes('/assets/images/portrait.webp')) fetched.push(r.status());
   });
   await page.goto('/');
-  await page.locator('.folio__sheet img').evaluate(
+  await page.locator('.board__print--started img').evaluate(
     (el) => el.complete || new Promise((r) => { el.onload = r; }),
   );
-  expect(fetched).toHaveLength(1);
-  expect(fetched[0]).toMatch(/\.avif$/);
-
-  const cssWidth = (await page.locator('.folio__sheet').boundingBox()).width;
-  const chosen = Number(fetched[0].match(/-(\d+)\.avif/)[1]);
-  const needed = cssWidth * (await page.evaluate(() => window.devicePixelRatio));
-
-  // The right assertion is "the narrowest tier that still covers the need",
-  // not a fixed ratio: 800w is the ladder's floor, so a viewport needing less
-  // than that correctly gets 800w rather than a tier that does not exist.
-  const TIERS = [800, 1000, 1200, 1800, 2000, 2600];
-  const expected = TIERS.find((t) => t >= needed) ?? TIERS.at(-1);
-  expect(chosen, `fetched ${chosen}w for ${Math.round(needed)}px of need`).toBe(expected);
+  expect(fetched).toEqual([200]);
 });
 
 test('layout does not shift while the fonts swap', async ({ page }) => {
@@ -98,13 +83,14 @@ test('layout does not shift while the fonts swap', async ({ page }) => {
   expect(cls, `cumulative layout shift was ${cls}`).toBeLessThan(0.02);
 });
 
-test('the plate reserves its box before the bytes land', async ({ page }) => {
+test('the portrait reserves its box before the bytes land', async ({ page }) => {
   // Aborted rather than hung: a request that never settles also never fires
   // `load`, so the navigation would time out instead of testing anything.
-  await page.route('**/kanagawa-plate-*', (r) => r.abort());
+  await page.route('**/portrait.webp', (r) => r.abort());
   await page.goto('/');
-  const box = await page.locator('.folio__sheet').boundingBox();
-  expect(box.width / box.height).toBeCloseTo(3923 / 2160, 1);
+  const box = await page.locator('.board__print--started img').boundingBox();
+  expect(box.width / box.height).toBeCloseTo(1, 1);
+  expect(box.width).toBeGreaterThan(40);
 });
 
 test('project demos load as looping GIFs with a still poster', async ({ page }) => {

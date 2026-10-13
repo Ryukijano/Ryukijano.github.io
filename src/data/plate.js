@@ -1,17 +1,10 @@
-// Keep these values aligned with the folio media queries in index.css.
-export const PLATE_HEIGHT_BUDGET_REM = 33;
-export const PLATE_MIN_WIDTH_PX = 900;
-export const PLATE_MIN_HEIGHT_PX = 800;
+// The pinned plate on the home desk. Crops are served from public/assets/images.
+// Sizes describe that card: about half the desk on a wide screen, and the
+// column on a phone. They are not the old full-bleed hung-print sizes.
 export const PLATE_ASPECT = [3923, 2160];
 
-const ASPECT = (PLATE_ASPECT[0] / PLATE_ASPECT[1]).toFixed(4);
-const HUNG = `(min-width: ${PLATE_MIN_WIDTH_PX}px) and (min-height: ${PLATE_MIN_HEIGHT_PX}px)`;
-
 const PLATE_SIZES =
-  `${HUNG} and (min-aspect-ratio: 4/3) ` +
-    `calc((100vh - ${PLATE_HEIGHT_BUDGET_REM}rem) * ${ASPECT}), ` +
-  `${HUNG} calc(100vw - 3rem), ` +
-  'calc(100vw - 4rem)';
+  '(min-width: 900px) and (min-height: 800px) 26rem, calc(100vw - 4rem)';
 
 export const PLATE = {
   src: '/assets/images/kanagawa-plate-1200.jpg',

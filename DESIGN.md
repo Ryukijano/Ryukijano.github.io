@@ -22,7 +22,7 @@ Neither uses a blurred shadow, and the grain stays *under* the text.
 |---|---|---|
 | `--color-washi` | `#f4f2ed` | near-white paper |
 | `--color-washi-lift` | `#fffdf7` | the title slip |
-| `--color-washi-deep` | `#e9e6df` | the sheet under a plate still loading |
+| `--color-washi-deep` | `#e9e6df` | the sheet under a plate still loading, and the home note |
 | `--color-ink` | `#1a237e` | the wave's Prussian indigo; all body text |
 | `--color-ink-muted` | `#535896` | metadata, captions, secondary text |
 | `--color-rule` | `ink` at 0.18 | every hairline |
@@ -73,7 +73,7 @@ upward, so a one-off size cannot quietly enter the scale.
 
 `--step--2` is deliberately **off** the scale. A true 1.25 step below
 `--step--1` is 0.68rem (10.88px), and that step carries tracked uppercase mono
-— `.cartouche`, `.scope__label`, `.catalog__lane`, `.folio__chip` — where
+— `.cartouche`, `.scope__label`, `.catalog__lane` — where
 10.88px is not readable. It is held at 0.72rem (11.52px) as a legibility
 floor, and the tests assert that too, so the exception stays an exception
 rather than becoming licence to add more.
@@ -99,50 +99,62 @@ Six tokens on a 1.6 ratio (`--space-1` 0.25rem … `--space-6` 3.2rem), which
 rhymes with the type scale. Before them there were twenty ad-hoc values and
 three different section separations on the same page.
 
-## The hung print, and the one constant
+## The desk board
 
-The home page is a single print sized to one screen: the plate's **width** is
-derived from the leftover viewport **height**, so the whole composition scales
-without ever cropping a lane or scrolling. `--folio-plate` spends `33rem` on
-everything that is not the plate — the stage's top padding, the title slip, the
-gutters — and gives the rest to the sheet.
+The home page is a desk on graph paper: a taped nameplate, pinned pictures,
+a note, and a square mark. The Kanagawa plate is pinned on that desk, beside
+the pixel room. The plate is the painted beat. The pixel drawing is the
+pixels beat. Its crops are served from `public/assets/images/`. The social
+card still uses `og-plate.jpg`.
 
-That `33rem` is the layout's one hard-coded number, and it is hard-coded because
-the constraint is circular: the plate's width comes from the leftover height,
-the title slip is exactly as wide as the plate (a *daisen* slip is the width of
-the print it labels), and the slip's own height depends on that width because
-the bio rewraps. CSS cannot solve it — sizing the plate from a grid row needs
-the row's height, which needs the slip's height, which needs the plate's width.
+The ground is washi, ruled with a 1px line of `--color-rule` on a 1.5rem
+cell. No new colour. The nameplate and the picture mounts are
+`--color-washi-lift`. The note is `--color-washi-deep`. That token had been
+reserved for a loading plate, never for prose, because it is a ground. The
+note is the exception, and it is a short list rather than a column of body
+copy: it is the only other paper in the palette, so the note can be a
+different sheet from the nameplate without a new yellow. Ink on it is what
+the home contrast check holds.
 
-Worse, below a certain size it does not merely fail to settle, it **diverges**:
-a shorter viewport gives a narrower plate, which gives a taller slip, which
-leaves less height, which narrows the plate again. The constant was `29rem`
-with the fence at 720px when the slip was four lines shorter; the names line
-and the fuller bio moved the divergence point up, and a budget sweep
-(29–34rem against 720–900px) found **33rem exact from 800px up** and no budget
-that converges below it.
+The nameplate reads Gyanateet Dutta, then Ryukijano in the italic serif, then
+"Vision, quantum & robotics". Vision links to that lane. Quantum links to
+Ryoushi, whose subtitle is already "Quantum algorithms". Robotics links to
+Gemma-Le, the project tagged Robotics. There is no robotics lane.
 
-So the stacked layout is not only the small-screen presentation, it is the fence
-around that band: `@media (max-width: 899px), (max-height: 799px)`. Above the
-fence the constant is exact; below it the print is stacked and scrolls, which is
-what it should do anyway when there is no room to hang anything. In practice
-the higher fence changes little: a 768px-tall laptop screen yields a ~680px
-browser viewport, which was already stacked.
+"On my mind" lists three lines the site already states. Self-supervised
+vision is the ISBI paper, and the link is the AIMS case study. Quantum
+algorithms is the Ryoushi subtitle. Image-based 3D reconstruction is a
+research interest, word for word, and the link is B3tt3r. "Robot learning"
+is not on the note: nothing in `src/data` calls the work that.
 
-Three things follow, and all three are asserted:
+"where it started" is the childhood portrait already on the site, and it
+opens `/notes/beige-pc`. The home bio is the same sentence the sheet used
+to carry, including that link. "the other deck" is an original pixel drawing
+of a room and a figure at a desk, in `--color-ink` and `--color-ink-muted`
+on the paper, pinned beside the wave plate. No new pigment. Its scope line
+says it is a pixel drawing, not a photograph and not a result. The reference
+mock was not cropped into the page. Fibre and the clipped wave engraving
+show in the margin on a wide screen, and hide below 900px. The graph ruling
+stays on the sheet.
 
-- `sizes` on the plate has to describe this same layout, breakpoints included,
-  or the browser picks a tier for a layout that does not exist. It mirrors the
-  query as `and`-only conditions with the stacked case as the trailing default,
-  because a media *condition* may not contain a comma and Level 4 `or` only
-  landed in Safari 16.4 — and one unparseable source-size drops the whole
-  attribute to `100vw`. `tests/tokens.test.js` holds all four numbers (budget,
-  both breakpoints, the plate ratio) against the stylesheet.
-- `tests/browser/layout.spec.js` asserts the page fits at ten desktop sizes,
-  **1440×800 among them** — the boundary, and therefore the first viewport that
-  fails when anything is added to the slip.
-- The same file asserts the fence engages just below it, because dropping the
-  height half of that query would silently return the diverging layout.
+"open source ftw" is a square mono label, no radius, linking to the GitHub
+profile. It is not a seal and not a pill.
+
+On the hung sheet the cards overlap the way a board does: the deck tucks
+over the nameplate, and the note sits on the deck's right edge. Below the
+fence the overlap is off and the column stacks. Tape on this page is the
+pinned-figure strip with ink stripes mixed from the existing ink and
+washi-deep, still a square. Tilt and the hard offset are the pinned-figure
+treatment. Tilt turns off at 640px, with the gallery. The offset stays a
+zero-blur rule mark.
+
+Above 900px wide **and** 800px tall the board is one screen.
+`tests/browser/layout.spec.js` asserts that at ten desktop sizes, **1440×800
+among them**. Below either fence the board stacks, in this order: nameplate,
+childhood picture, drawing, note, mark. The name stays on the first screen.
+The ruling stays at 390px. It is the ground, not the margin engraving, so it
+does not hide with the fibre. The home bar is the solid nav, overlaid, so
+the ruling never sits under the links.
 
 ## Figures
 
@@ -199,8 +211,9 @@ The raised sheet and the ink are tokens, never a CSS inversion of the image.
 Interior pages carry four layers inside `.atmo`, in this order: wash →
 fibre → engraving/motif → grain. `.atmo` stays z-index 0 under
 `.print__body` (z-index 1): grain is fibre in the sheet, ink prints on top.
-The home plate keeps its own wave (`.folio::before`); the motifs below change
-only the interior `.atmo__engraving`.
+The home board does not hang that wave. Its ground is the graph ruling, and a
+wave under the cards would sit in the type. The motifs below change only the
+interior `.atmo__engraving`.
 
 Fibre is a kozo tile (`kozo-fibre.svg`) in two sizes (640px and 448px, the
 second offset 233px/151px) so the repeat never lines up down a long page.
@@ -262,16 +275,12 @@ desynchronises focus from scroll position.
 
 The global ring is `2px solid var(--color-seal)` at a 3px offset.
 
-The three plate lanes are the exception, because they sit on a painting. A 1px
-washi line there cleared 3:1 on only **69.9%** of the plate's perimeter — 48%
-over the painted wave, where cream on cream disappears. No single palette
-colour works (seal 20.7%, ink 35.3%). A **washi + ink double rule clears 100%**,
-and at 4px it also satisfies WCAG 2.2 SC 2.4.11 on thickness. A seal rule in
-the bottom gutter carries the state where the ground is paper we control.
-
-`tests/focus-ring.test.js` re-measures this against the actual plate file, so
-recropping or replacing the image tells you if the ring stopped being visible
-instead of letting it go dark silently.
+The desk-board links sit on paper, so that ring is the indicator.
+`tests/focus-ring.test.js` holds the thickness and the seal, and checks the
+board does not set `outline: none` on its own links. The washi-and-ink double
+rule belonged to the three lanes that used to sit on the Kanagawa plate. Those
+lanes are gone with the print, and the measurement that justified the double
+rule went with them.
 
 ## Headings
 
@@ -280,44 +289,6 @@ instead of letting it go dark silently.
 on purpose. Each sheet carries one `h1` and the two never share a page, so
 there is no hierarchy to draw between them. The two class names say what the
 heading *is*; the size is one decision, made once.
-
-## The plate key
-
-Hung, the three overlay lanes stay clickable, but the gutter chips and
-pipeline arrows stay quiet until hover or focus. Three labelled fields on
-first paint read as a form; the slip already carries the names.
-
-Below 900px wide *or* 800px tall the print is stacked — most phones, and any
-desktop window with a dock or devtools open. The overlay lanes go, because a
-plate that narrow is not something to aim at. What replaces them is a **plate
-key** under the sheet: the same three ticks, stage words and handles as the
-gutter chips, the same hairline arrows, laid out as a legend in normal flow
-(`.folio__key`). Each lane is the tap target, 44px tall, so there is no
-separate list repeating the same three links underneath.
-
-The kento marks stay on the stacked print, in the block's bottom margin under
-the key. They are the difference between a print and a picture, and the
-stacked layout is the one most visitors see.
-
-Stacked, the order is print, key, slip — the figure before its caption, as on
-the hung layout. The slip used to come first, which put "the plate reads left
-to right" above a plate the reader had not scrolled to.
-
-The stacked print is still sized from height first. On a phone it is full
-bleed less the gutters. In a wide, short window — a laptop with a dock, a
-docked devtools pane — full bleed would be a 1376px plate with the name a
-whole screen down, so `--folio-stacked` caps the block at
-`(100dvh − 17rem) × 3923/2160`, floored at 20rem so the sheet is never a
-sliver. The trailing branch of `sizes` claims full bleed and therefore
-over-describes in that band; it cannot express the cap without a nested
-`min()`, and over-fetching is the safe direction.
-
-`tests/browser/layout.spec.js` asserts that exactly one of the overlay and the
-key is live at every viewport, that the key's lanes clear 44px, that the three
-stage words and two arrows are present in the fence band, that the kagi mark
-is visible there, that the sheet's width is what the stacked rule says, and
-that the name sits above the fold under the print. A 320px viewport is in the
-list because that is where `Real world` has to wrap rather than overflow.
 
 ## Pinned figures and the gallery
 
