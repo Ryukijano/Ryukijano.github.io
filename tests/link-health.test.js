@@ -210,7 +210,7 @@ describe('the prerender manifest', () => {
     expect(notFound).toMatch(/This path isn(&#x27;|')t on the site/);
   });
 
-  it('preloads the home portrait on the home page only', () => {
+  it('preloads the Kanagawa plate on the home page only', () => {
     // An image preload on a text page fetches bytes that page never shows.
     // The font preload is on every page by design, so this looks for the image.
     const withImage = pages
@@ -218,8 +218,10 @@ describe('the prerender manifest', () => {
       .map((p) => p.file);
     expect(withImage).toEqual(['index.html']);
     const home = pages.find((p) => p.file === 'index.html').html;
-    expect(home).toMatch(/rel="preload"[^>]*href="\/assets\/images\/portrait\.webp"/);
-    expect(home).not.toMatch(/kanagawa-plate/);
+    expect(home).toMatch(/rel="preload"[^>]*href="\/assets\/images\/kanagawa-plate-/);
+    expect(home).toMatch(/href="\/notes\/beige-pc"/);
+    expect(home).toMatch(/where it started/);
+    expect(home).toMatch(/That’s me at the beige PC/);
   });
 
   it('preloads the display serif on every page', () => {

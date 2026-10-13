@@ -306,7 +306,7 @@ html[data-theme='dark'] .atmo__fibre {
 /* Clipped out of the sheet with the fibre's polygon. The box is fixed to the
    viewport, so the sheet's edges are measured from its right edge: 50vw is the
    centre line, and --page-measure / 2 is half the sheet either side of it.
-   The home board does not hang this mask. */
+   The home board hangs the same mask, clipped to the margin. */
 .atmo__engraving {
   --sheet-l: calc(100% - 50vw - var(--page-measure) / 2);
   --sheet-r: calc(100% - 50vw + var(--page-measure) / 2);
@@ -507,11 +507,12 @@ html[data-theme='dark'] .atmo[data-motif='lattice'] .atmo__engraving {
   padding: 4.15rem var(--folio-gutter) 1.15rem;
   display: grid;
   grid-template-columns: minmax(0, 1.45fr) minmax(11rem, 0.7fr);
-  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto auto;
+  align-content: start;
   grid-template-areas:
     "name started"
-    "deck note"
-    "deck mark";
+    "pair note"
+    "bio mark";
   column-gap: var(--space-2);
   row-gap: var(--space-2);
   align-items: start;
@@ -601,21 +602,43 @@ html[data-theme='dark'] .atmo[data-motif='lattice'] .atmo__engraving {
   border: var(--hairline);
 }
 
-.board__print--deck {
-  grid-area: deck;
-  align-self: stretch;
+/* Painted plate beside the pixel room. The pair tucks up under the
+   nameplate and a little under the note, without growing the sheet. */
+.board__pair {
+  grid-area: pair;
+  position: relative;
   z-index: 3;
-  height: 100%;
-  min-height: 0;
-  /* Shift, rather than a negative margin, so the one-screen sheet does not grow. */
-  top: -1.15rem;
-  width: calc(100% + 1.7rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr);
+  gap: 0.55rem;
+  align-items: end;
+  min-width: 0;
+  top: -0.85rem;
+  width: calc(100% + 1.35rem);
+}
+
+.board__print--plate {
+  z-index: 1;
+  min-width: 0;
+}
+
+.board__print--plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3923 / 2160;
+}
+
+.board__print--deck {
+  z-index: 2;
+  min-width: 0;
+  margin-left: -0.7rem;
 }
 
 .board__print--deck .study-art {
   position: relative;
-  flex: 1 1 auto;
-  min-height: 0;
+  flex: none;
+  aspect-ratio: var(--deck-ratio);
   overflow: hidden;
   background: var(--color-washi-deep);
   border: var(--hairline);
@@ -643,8 +666,29 @@ html[data-theme='dark'] .atmo[data-motif='lattice'] .atmo__engraving {
 
 .board__name .plate__tape { left: 46%; }
 .board__print--started .plate__tape { left: 64%; }
-.board__print--deck .plate__tape { left: 28%; }
+.board__print--plate .plate__tape { left: 34%; }
+.board__print--deck .plate__tape { left: 58%; }
 .board__note .plate__tape { left: 40%; }
+
+.folio__mark {
+  color: var(--color-seal);
+}
+
+.board__bio {
+  grid-area: bio;
+  z-index: 2;
+  margin: 0;
+  max-width: 40rem;
+  padding: 0.4rem 0.65rem;
+  background: var(--color-washi-lift);
+  border: var(--hairline);
+  font-size: var(--step-0);
+  line-height: 1.4;
+}
+
+.board__bio a {
+  text-decoration-line: underline;
+}
 
 .board__caption {
   margin: 0;
@@ -738,11 +782,20 @@ html[data-theme='dark'] .atmo[data-motif='lattice'] .atmo__engraving {
 .board__subjects a:focus-visible,
 .board__mind a:hover,
 .board__mind a:focus-visible,
+.board__bio a:hover,
+.board__bio a:focus-visible,
 .board__mark:hover,
 .board__mark:focus-visible,
 .board__print:hover .board__caption,
 .board__print:focus-visible .board__caption {
   color: var(--color-seal);
+}
+
+/* Fibre and the clipped engraving in the margin. The wash and the grain
+   stay off this sheet so the graph ruling remains the ground. */
+.board .atmo__wash,
+.board .atmo__grain {
+  display: none;
 }
 
 @media (max-width: 899px), (max-height: 799px) {
@@ -768,15 +821,16 @@ html[data-theme='dark'] .atmo[data-motif='lattice'] .atmo__engraving {
     left: 0;
   }
 
-  .board__print--deck {
-    height: auto;
+  .board__pair {
+    display: flex;
+    flex-direction: column;
     top: 0;
     width: auto;
+    gap: var(--space-5);
   }
 
-  .board__print--deck .study-art {
-    flex: none;
-    aspect-ratio: var(--deck-ratio);
+  .board__print--deck {
+    margin-left: 0;
   }
 
   .board__mark {

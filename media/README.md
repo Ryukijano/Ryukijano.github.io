@@ -19,8 +19,9 @@ the result in `public/assets/media/`.
 `scripts/check-budget.mjs` fails the build if anything in `dist/` is
 unreferenced, which is what keeps this boundary honest.
 
-`media/kanagawa/` is the hung print that used to be the home page. It is not
-on the desk board, so it is not deployed. `media/desk-plate.svg` is the pixel drawing on that board; the page inlines it.
+`media/desk-plate.svg` is the pixel drawing pinned beside the Kanagawa plate
+on the home desk. The page inlines it. The plate's crops are deployed from
+`public/assets/images/`.
 
 ## Deployed demos
 

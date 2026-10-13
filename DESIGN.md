@@ -101,10 +101,11 @@ three different section separations on the same page.
 
 ## The desk board
 
-The home page is a desk on graph paper: a taped nameplate, two pinned
-pictures, a note, and a square mark. It replaced the hung Kanagawa print.
-The print's responsive crops live in `media/kanagawa/` and are not deployed.
-The social card still uses `og-plate.jpg`.
+The home page is a desk on graph paper: a taped nameplate, pinned pictures,
+a note, and a square mark. The Kanagawa plate is pinned on that desk, beside
+the pixel room. The plate is the painted beat. The pixel drawing is the
+pixels beat. Its crops are served from `public/assets/images/`. The social
+card still uses `og-plate.jpg`.
 
 The ground is washi, ruled with a 1px line of `--color-rule` on a 1.5rem
 cell. No new colour. The nameplate and the picture mounts are
@@ -127,12 +128,14 @@ research interest, word for word, and the link is B3tt3r. "Robot learning"
 is not on the note: nothing in `src/data` calls the work that.
 
 "where it started" is the childhood portrait already on the site, and it
-opens `/notes/beige-pc`. "the other deck" is an original pixel drawing of a
-room and a figure at a desk, in `--color-ink` and `--color-ink-muted` on
-the paper. No new pigment: the picture uses the stock's ink, and the chrome
-around it stays the paper system. Its scope line says it is a pixel drawing,
-not a photograph and not a result. The reference mock was not cropped into
-the page.
+opens `/notes/beige-pc`. The home bio is the same sentence the sheet used
+to carry, including that link. "the other deck" is an original pixel drawing
+of a room and a figure at a desk, in `--color-ink` and `--color-ink-muted`
+on the paper, pinned beside the wave plate. No new pigment. Its scope line
+says it is a pixel drawing, not a photograph and not a result. The reference
+mock was not cropped into the page. Fibre and the clipped wave engraving
+show in the margin on a wide screen, and hide below 900px. The graph ruling
+stays on the sheet.
 
 "open source ftw" is a square mono label, no radius, linking to the GitHub
 profile. It is not a seal and not a pill.

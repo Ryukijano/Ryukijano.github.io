@@ -20,7 +20,7 @@ const ROOT = resolve(import.meta.dirname, '..');
 const DIST = join(ROOT, 'dist');
 const SSR = join(ROOT, 'dist-ssr', 'entry-server.js');
 
-const { render, allRoutes, routeMeta, LONG_FORM, ORIGIN, OG_IMAGE, OG_IMAGE_ALT } =
+const { render, allRoutes, routeMeta, LONG_FORM, PLATE, ORIGIN, OG_IMAGE, OG_IMAGE_ALT } =
   await import(SSR);
 
 const shell = readFileSync(join(DIST, 'index.html'), 'utf8');
@@ -44,10 +44,21 @@ const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 /**
- * The childhood portrait is the home page's picture above the fold. Preloading
- * it only there keeps a text page from fetching an image it never shows.
+ * The Kanagawa plate is the large print above the fold. Preloading it only
+ * on the home page keeps a text page from fetching an image it never shows.
+ * The href is the first candidate, which is the one the browser will accept.
  */
-const PRELOAD = '<link rel="preload" as="image" href="/assets/images/portrait.webp" />';
+function preloadTag() {
+  const preferred = PLATE.sources[0];
+  const href = preferred.srcSet.split(',')[0].trim().split(/\s+/)[0];
+  return (
+    `<link rel="preload" as="image" type="${preferred.type}" href="${href}"\n` +
+    `      imagesrcset="${esc(preferred.srcSet)}"\n` +
+    `      imagesizes="${esc(preferred.sizes)}" />`
+  );
+}
+
+const PRELOAD = preloadTag();
 
 function headFor(meta, found) {
   const url = meta.canonical ? `${ORIGIN}${meta.canonical === '/' ? '/' : meta.canonical}` : ORIGIN;
