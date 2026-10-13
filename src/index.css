@@ -303,27 +303,23 @@ html[data-theme='dark'] .atmo__fibre {
   opacity: 0.065;
 }
 
+/* Clipped out of the sheet with the fibre's polygon. The box is fixed to the
+   viewport, so the sheet's edges are measured from its right edge: 50vw is the
+   centre line, and --page-measure / 2 is half the sheet either side of it.
+   The home board does not hang this mask. */
 .atmo__engraving {
+  --sheet-l: calc(100% - 50vw - var(--page-measure) / 2);
+  --sheet-r: calc(100% - 50vw + var(--page-measure) / 2);
   position: fixed;
   top: 5rem;
   right: 0;
-  width: min(70vw, 52rem);
+  width: min(29vw, 25rem);
   height: calc(100dvh - 5rem);
   background: var(--color-ink);
   -webkit-mask: url('/assets/wave-engraving.svg') center / contain no-repeat;
   mask: url('/assets/wave-engraving.svg') center / contain no-repeat;
   opacity: 0.075;
   pointer-events: none;
-}
-
-/* Clipped out of the sheet with the fibre's polygon. The box is fixed to the
-   viewport, so the sheet's edges are measured from its right edge: 50vw is the
-   centre line, and --page-measure / 2 is half the sheet either side of it.
-   The home board does not use this mask. */
-.atmo__engraving {
-  --sheet-l: calc(100% - 50vw - var(--page-measure) / 2);
-  --sheet-r: calc(100% - 50vw + var(--page-measure) / 2);
-  width: min(29vw, 25rem);
   clip-path: polygon(
     evenodd,
     0 0, 100% 0, 100% 100%, 0 100%, 0 0,
