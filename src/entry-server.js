@@ -2,7 +2,6 @@ import { createElement } from 'react';
 import { renderToString } from 'react-dom/server';
 import App from './App.jsx';
 import { ArticleContext, LONG_FORM } from './lib/article.js';
-import { PLATE } from './data/plate.js';
 import {
   allRoutes,
   routeMeta,
@@ -28,4 +27,4 @@ export function render(path, { articles = {}, notes = {} } = {}) {
   };
 }
 
-export { allRoutes, routeMeta, LONG_FORM, PLATE, ORIGIN, OG_IMAGE, OG_IMAGE_ALT, SITE_NAME };
+export { allRoutes, routeMeta, LONG_FORM, ORIGIN, OG_IMAGE, OG_IMAGE_ALT, SITE_NAME };

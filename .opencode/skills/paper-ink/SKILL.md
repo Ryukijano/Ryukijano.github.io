@@ -27,8 +27,9 @@ disagreement.
 - **`--color-rule` is the ink at 0.18**, never a separate grey.
 - **Contrast floors**: ink on washi ≥ 7.0 (AAA), ink-muted and seal ≥ 4.5
   in both stocks. Near-white paper gives muted ink 5.86:1.
-- **`--color-washi-deep` is a ground only.** It is reserved for a loading plate,
-  not for running text.
+- **`--color-washi-deep` is a ground.** It is the sheet under a loading plate.
+  The home note is the one place it carries type, and that type is a short
+  list, not a column of prose. `DESIGN.md` records why.
 - **`--color-seal-bright` is decorative**, used by `.seal` alone, which is
   `aria-hidden`. It is below AA on near-white washi. Real text in it is a failure.
 - **The type scale is 1.25 from `--step--1` up**, anchored on a 17px body.
@@ -79,7 +80,7 @@ screens and gradations are still proposed rather than shipped.
 
 | surface | what it is |
 |---|---|
-| Home | the hung print, sized to one screen |
+| Home | the desk board, one screen above the 900×800 fence |
 | Work catalogue | one line per project, year bands |
 | Case study | opener, prose, then figures as evidence |
 | Academic | publications, quiet, grain only |

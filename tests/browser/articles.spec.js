@@ -47,7 +47,7 @@ test('a note loads directly and hydrates cleanly', async ({ page }) => {
 test('the home bio opens the note, and a link in the note stays in the app', async ({ page }) => {
   await page.goto('/');
   const fetched = page.waitForResponse((r) => r.url().endsWith('/content/notes/beige-pc.json'));
-  await page.getByRole('link', { name: 'That’s me at the beige PC' }).click();
+  await page.getByRole('link', { name: /where it started/ }).click();
   expect((await fetched).ok()).toBe(true);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('A picture is something you build');
   expect(new URL(page.url()).pathname).toBe('/notes/beige-pc');

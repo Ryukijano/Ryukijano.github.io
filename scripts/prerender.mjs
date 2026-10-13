@@ -20,7 +20,7 @@ const ROOT = resolve(import.meta.dirname, '..');
 const DIST = join(ROOT, 'dist');
 const SSR = join(ROOT, 'dist-ssr', 'entry-server.js');
 
-const { render, allRoutes, routeMeta, LONG_FORM, PLATE, ORIGIN, OG_IMAGE, OG_IMAGE_ALT } =
+const { render, allRoutes, routeMeta, LONG_FORM, ORIGIN, OG_IMAGE, OG_IMAGE_ALT } =
   await import(SSR);
 
 const shell = readFileSync(join(DIST, 'index.html'), 'utf8');
@@ -44,28 +44,10 @@ const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 /**
- * The responsive preload, generated from the same PLATE the <picture> uses.
- *
- * It must describe the FIRST source, because that is the one the browser will
- * accept -- preload the WebP while <picture> picks the AVIF and the plate is
- * downloaded twice. `href` is present deliberately: it is optional when every
- * candidate carries a `w` descriptor, but WebKit's support for an href-less
- * responsive preload is patchy, and the plate lives inside the React tree, so
- * a preload that does not fire means the image cannot start loading until the
- * bundle has parsed and mounted.
+ * The childhood portrait is the home page's picture above the fold. Preloading
+ * it only there keeps a text page from fetching an image it never shows.
  */
-function preloadTag() {
-  const preferred = PLATE.sources[0];
-  if (!preferred) return '';
-  const href = preferred.srcSet.split(',')[0].trim().split(/\s+/)[0];
-  return (
-    `<link rel="preload" as="image" type="${preferred.type}" href="${href}"\n` +
-    `      imagesrcset="${esc(preferred.srcSet)}"\n` +
-    `      imagesizes="${esc(preferred.sizes)}" />`
-  );
-}
-
-const PRELOAD = preloadTag();
+const PRELOAD = '<link rel="preload" as="image" href="/assets/images/portrait.webp" />';
 
 function headFor(meta, found) {
   const url = meta.canonical ? `${ORIGIN}${meta.canonical === '/' ? '/' : meta.canonical}` : ORIGIN;
@@ -105,8 +87,7 @@ function pageFor(path, { html, meta }, { withPreload }) {
   }
   out = out.slice(0, start) + headFor(meta, found) + out.slice(end + '<!--/head-->'.length);
 
-  // The plate is above the fold on the home page only. Preloading it on a
-  // text-only case study cost 286 KB of an image that page never shows.
+  // The portrait is above the fold on the home page only.
   out = out.replace('<!--preload-->', withPreload ? PRELOAD : '');
 
   // The article the client hydrates against, so it never has to fetch the

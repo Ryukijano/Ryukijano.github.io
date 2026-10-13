@@ -303,8 +303,7 @@ html[data-theme='dark'] .atmo__fibre {
   opacity: 0.065;
 }
 
-.atmo__engraving,
-.folio::before {
+.atmo__engraving {
   position: fixed;
   top: 5rem;
   right: 0;
@@ -320,8 +319,7 @@ html[data-theme='dark'] .atmo__fibre {
 /* Clipped out of the sheet with the fibre's polygon. The box is fixed to the
    viewport, so the sheet's edges are measured from its right edge: 50vw is the
    centre line, and --page-measure / 2 is half the sheet either side of it.
-   The folio wave (.folio::before) shares the box but has no sheet, so it is
-   not clipped. */
+   The home board does not use this mask. */
 .atmo__engraving {
   --sheet-l: calc(100% - 50vw - var(--page-measure) / 2);
   --sheet-r: calc(100% - 50vw + var(--page-measure) / 2);
@@ -352,8 +350,7 @@ html[data-theme='dark'] .atmo__fibre {
   }
 }
 
-html[data-theme='dark'] .atmo__engraving,
-html[data-theme='dark'] .folio::before {
+html[data-theme='dark'] .atmo__engraving {
   opacity: 0.12;
 }
 
@@ -373,7 +370,8 @@ html[data-theme='dark'] .atmo[data-motif='lattice'] .atmo__engraving {
   border-bottom: var(--hairline);
 }
 
-/* Home only: a washi veil so the plate reads through the bar. No blur. */
+/* Home only: overlaid, so the board can be one viewport. The board paints
+   this bar solid; a translucent veil would put the ruling under the links. */
 .site-nav--veil {
   position: absolute;
   top: 0;
@@ -383,8 +381,7 @@ html[data-theme='dark'] .atmo[data-motif='lattice'] .atmo__engraving {
   isolation: isolate;
 }
 
-/* The block's width includes its paper margin, so inset the bar by the same
-   gutter: the last nav link then ends on the plate's edge, not 8px inside it. */
+/* Inset the bar by the sheet gutter so the last link ends on the board's edge. */
 .site-nav--veil .site-nav__bar {
   padding-inline: var(--folio-gutter);
 }
@@ -474,542 +471,311 @@ html[data-theme='dark'] .atmo[data-motif='lattice'] .atmo__engraving {
   }
 }
 
-/* --------------------------------------------------------- folio (home) */
+/* --------------------------------------------------------- desk board (home) */
 
 /*
- * Ukiyo-e registration. The plate sits on an untrimmed paper block; kagi
- * and hikitsuke live in that margin, not on the art. Bio is one slip under
- * the object. Left / centre / right of the plate read as a pipeline:
- * Real world → Encoding → Digital. Block width is min(viewport,
- * height-budget × 3923/2160 + gutters) so the sheet fills without
- * cropping a lane.
+ * A desk on graph paper: nameplate, two pinned pictures, a note, a square
+ * mark. The ruling is a 1px line of --color-rule. Cards reuse the pinned
+ * figure's fastener, tilt and hard offset. Above 900×800 the sheet is one
+ * screen; below either fence it stacks and scrolls. tests/browser/layout.spec.js
+ * holds both.
  */
-.folio {
+.board {
   position: relative;
   min-height: 100dvh;
-  --folio-gutter: 1rem;
-  /* 2.7rem, not 2.55rem: the chip's stage line + handle line measure 41.7px
-     and the old value gave 40.8px -- one pixel short of showing both. */
-  --folio-gutter-bottom: 2.7rem;
-  /* Capped so the print always keeps paper margin instead of going full-bleed
-     in a narrow window. */
-  /*
-   * 33rem is the measured height of everything that is not the plate: the
-   * stage's top padding, the slip (name, degree, handles, names line, bio,
-   * caption) and the block's own gutters. It was 29rem before the slip gained
-   * the names line and a fuller bio, which moved the whole constant up.
-   *
-   * The constraint is circular -- plate width derives from the height budget,
-   * the slip's width equals the plate's, and the slip's HEIGHT depends on its
-   * width because the bio rewraps -- and below a ~530px plate it diverges
-   * rather than settling. CSS cannot solve it: sizing the plate from a grid
-   * row needs the row height, which needs the slip height, which needs the
-   * plate width. So the constant stays, and the stacked breakpoint at 799px
-   * fences off the band where it stops holding. 33rem is then exact at every
-   * height from 800 up, which tests/browser/layout.spec.js asserts either side
-   * of the boundary -- adding a line to the slip fails loudly rather than
-   * quietly scrolling.
-   */
-  --folio-plate: min(
-    100% - 3rem,
-    76rem,
-    calc((100dvh - 33rem) * 3923 / 2160 + 2 * var(--folio-gutter))
-  );
-  --page-measure: var(--folio-plate);
+  /* The veil still reads this so the bar's edge meets the sheet's. */
+  --folio-gutter: 1.5rem;
+  --page-measure: min(72rem, calc(100% - 3rem));
+  background-color: var(--color-washi);
+  background-image:
+    linear-gradient(to right, var(--color-rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-rule) 1px, transparent 1px);
+  background-size: 1.5rem 1.5rem;
 }
 
-.folio::before {
-  content: '';
-  z-index: 0;
+/* The veil existed so a plate could read through the bar. Ruling under the
+   links would fail the contrast check, so the home bar is the same solid
+   stock as every other page, still overlaid so the sheet can be 100dvh. */
+.board .site-nav--veil {
+  background: var(--color-washi);
+  border-bottom: var(--hairline);
 }
 
-.folio__stage {
+.board__stage {
   position: relative;
   z-index: 1;
   box-sizing: border-box;
-  min-height: 100dvh;
-  padding-top: 3rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.folio__print {
-  flex: 1;
-  min-height: 0;
-  min-width: 0;
-  width: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* Optically centred: flex-end bottom-justified the print and left the empty
-     paper directly under the nav, which is where the eye lands. */
-  justify-content: safe center;
-}
-
-.folio__block {
-  position: relative;
-  box-sizing: border-box;
-  width: var(--folio-plate);
-  padding: var(--folio-gutter) var(--folio-gutter) var(--folio-gutter-bottom);
-  color: inherit;
-}
-
-.folio__sheet {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3923 / 2160;
-  background: var(--color-washi-deep);
-  box-shadow: 0 0 0 1px var(--color-rule);
-}
-
-/* The film belongs to the print, not to the page: grain over the plate,
-   never over the serif in the title slip below it. */
-.folio__sheet-grain {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
-  opacity: 0.055;
-  mix-blend-mode: soft-light;
-}
-
-.folio__sheet img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  max-width: none;
-}
-
-.folio__kento {
-  position: absolute;
-  pointer-events: none;
-  z-index: 2;
-  box-sizing: content-box;
-  background: currentColor;
-  opacity: 0.6;
-}
-
-.folio__kento--hikitsuke {
-  left: calc(var(--folio-gutter) + 0.4rem);
-  bottom: calc(var(--folio-gutter-bottom) - 4px);
-  width: 1.2rem;
-  height: 1px;
-}
-
-.folio__kento--kagi {
-  right: calc(var(--folio-gutter) - 12px);
-  bottom: calc(var(--folio-gutter-bottom) - 12px);
-  width: 10px;
-  height: 10px;
-  background: transparent;
-  border-right: 2px solid currentColor;
-  border-bottom: 2px solid currentColor;
-}
-
-.folio__thirds {
-  position: absolute;
-  top: var(--folio-gutter);
-  left: var(--folio-gutter);
-  right: var(--folio-gutter);
-  bottom: 0;
+  width: var(--page-measure);
+  height: 100dvh;
+  margin-inline: auto;
+  padding: 4.15rem var(--folio-gutter) 1.15rem;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: minmax(0, 1.45fr) minmax(11rem, 0.7fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "name started"
+    "deck note"
+    "deck mark";
+  column-gap: var(--space-4);
+  row-gap: var(--space-4);
+  align-items: start;
 }
 
-.folio__lane {
+.board__card {
   position: relative;
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  min-height: 0;
-  min-width: 0;
-}
-
-.folio__lane.is-on::after,
-.folio__lane:hover::after,
-.folio__lane:focus-visible::after {
-  content: '';
-  position: absolute;
-  inset: 0 0 var(--folio-gutter-bottom) 0;
-  box-shadow:
-    inset 0 0 0 2px var(--color-washi),
-    inset 0 0 0 4px var(--color-ink);
-  pointer-events: none;
-}
-
-.folio__lane:focus-visible {
-  outline: none;
-}
-
-/* A seal rule in the bottom gutter -- paper we control, so the state is
-   legible regardless of what the plate is doing behind the ring. */
-.folio__lane:focus-visible::before {
-  content: '';
-  position: absolute;
-  left: 0.15rem;
-  right: 0.15rem;
-  bottom: 0;
-  height: 2px;
-  background: var(--color-seal);
-  z-index: 3;
-}
-
-.folio__chip {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: var(--folio-gutter-bottom);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.12rem;
-  padding: 0.32rem 0.15rem 0;
-  overflow: visible;
-  white-space: nowrap;
-  font-family: var(--font-mono);
-  font-size: var(--step--2);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  line-height: 1.2;
-  /* Quiet at rest: three labelled fields on first paint reads as a form. */
-  opacity: 0;
-  transition: opacity 150ms ease, color 150ms ease;
-}
-
-.folio__chip::before {
-  content: '';
-  width: 1px;
-  height: 0.32rem;
-  background: currentColor;
-}
-
-.folio__chip-who {
-  letter-spacing: 0.02em;
-  text-transform: none;
-  color: var(--color-ink-muted);
-}
-
-.folio__lane:hover .folio__chip,
-.folio__lane.is-on .folio__chip,
-.folio__lane:focus-visible .folio__chip {
-  opacity: 1;
-  color: var(--color-seal);
-}
-
-/* Hairline pipeline arrows in the gutter between thirds. */
-.folio__arrow {
-  position: absolute;
-  left: -0.8rem;
-  top: 1.05rem;
-  width: 1.6rem;
-  height: 1px;
-  background: currentColor;
-  color: var(--color-ink-muted);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 150ms ease, color 150ms ease;
-}
-
-.folio__arrow::after {
-  content: '';
-  position: absolute;
-  right: -1px;
-  top: 50%;
-  width: 4px;
-  height: 4px;
-  border-top: 1px solid currentColor;
-  border-right: 1px solid currentColor;
-  transform: translateY(-50%) rotate(45deg);
-}
-
-.folio__lane:hover .folio__arrow,
-.folio__lane.is-on .folio__arrow,
-.folio__lane:focus-visible .folio__arrow,
-.folio__lane:hover + .folio__lane .folio__arrow,
-.folio__lane.is-on + .folio__lane .folio__arrow,
-.folio__lane:focus-visible + .folio__lane .folio__arrow {
-  color: var(--color-seal);
-  opacity: 0.85;
-}
-
-/* Daisen title slip under the plate. */
-.folio__slip {
-  position: relative;
-  width: var(--folio-plate);
   box-sizing: border-box;
-  margin: 0.25rem 0 1.5rem;
-  /* Inset by the plate's gutter, so the name registers on the sheet's edge. */
-  padding: 0.95rem var(--folio-gutter) 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+  min-width: 0;
   background: var(--color-washi-lift);
   border: var(--hairline);
 }
 
-.folio__slip-head {
-  display: flex;
-  align-items: baseline;
-  gap: 0.6rem;
+.board__name {
+  grid-area: name;
+  align-self: start;
+  padding: 0.85rem 1.05rem 0.95rem;
 }
 
-.folio__name {
+.board__name h1 {
   margin: 0;
   font-family: var(--font-serif);
-  font-size: var(--step-3);
+  font-size: var(--step-4);
   font-weight: 600;
-  line-height: 1.1;
+  line-height: 1.05;
   letter-spacing: -0.02em;
 }
 
-.folio__portrait {
+.board__byline {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.75rem;
+  margin: 0.45rem 0 0;
+}
+
+.board__handle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--step-1);
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.board__sep {
+  width: 1px;
+  height: 0.9rem;
   align-self: center;
-  flex: none;
-  width: 3.25rem;
-  height: 3.25rem;
+  background: var(--color-rule);
+}
+
+.board__subjects {
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.35;
+}
+
+.board__subjects a {
+  text-decoration: none;
+}
+
+.board__print {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.5rem 0.5rem 0.4rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.board__print--started {
+  grid-area: started;
+  justify-self: end;
+  width: min(100%, 12.5rem);
+}
+
+.board__print--started img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  height: auto;
   object-fit: cover;
+  background: var(--color-washi-deep);
   border: var(--hairline);
 }
 
-.folio__degree {
+.board__print--deck {
+  grid-area: deck;
+  align-self: stretch;
+  height: 100%;
+  min-height: 0;
+}
+
+.board__print--deck .study-art {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--color-washi-deep);
+  border: var(--hairline);
+}
+
+.board__print--deck .study-art svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  shape-rendering: crispEdges;
+}
+
+.board__caption {
   margin: 0;
-  font-family: var(--font-mono);
+  font-family: var(--font-serif);
+  font-style: italic;
   font-size: var(--step--1);
+  line-height: 1.3;
+}
+
+.board__scope {
+  margin: 0.1rem 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
   letter-spacing: 0.02em;
   line-height: 1.35;
   color: var(--color-ink-muted);
 }
 
-.folio__handles {
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: var(--step--2);
-  letter-spacing: 0.04em;
-  line-height: 1.4;
-  color: var(--color-ink-muted);
+.board__note {
+  grid-area: note;
+  align-self: start;
+  width: 100%;
+  padding: 0.8rem 0.9rem 0.9rem;
+  /* The one place washi-deep carries type: a short note, not body copy,
+     so it is a different paper from the title slip. See DESIGN.md. */
+  background: var(--color-washi-deep);
 }
 
-.folio__handles a {
+.board__note-title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--step-2);
+  line-height: 1.2;
+}
+
+.board__mind {
+  margin: 0.55rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+
+.board__mind li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.board__mind li::before {
+  content: '';
+  flex: none;
+  width: 0.55rem;
+  height: 0.55rem;
+  border: var(--hairline);
+  align-self: center;
+}
+
+.board__mind a {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--step-0);
+  line-height: 1.35;
+  min-width: 0;
+}
+
+.board__mark {
+  grid-area: mark;
+  justify-self: end;
+  align-self: end;
+  margin: 0;
+  padding: 0.35rem 0.65rem;
+  border: var(--hairline);
+  background: var(--color-washi-lift);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.04em;
+  line-height: 1.3;
   text-decoration: none;
 }
 
-.folio__handles-rule {
-  margin: 0 0.45em;
-  opacity: 0.45;
-}
-
-.folio__handles a:hover,
-.folio__handles a.is-on,
-.folio__handles a:focus-visible {
+.board__handle:hover,
+.board__handle:focus-visible,
+.board__subjects a:hover,
+.board__subjects a:focus-visible,
+.board__mind a:hover,
+.board__mind a:focus-visible,
+.board__mark:hover,
+.board__mark:focus-visible,
+.board__print:hover .board__caption,
+.board__print:focus-visible .board__caption {
   color: var(--color-seal);
 }
 
-.folio__names {
-  margin: 0.1rem 0 0;
-  max-width: var(--measure-read);
-  font-family: var(--font-mono);
-  font-size: var(--step--2);
-  letter-spacing: 0.02em;
-  line-height: 1.45;
-  color: var(--color-ink-muted);
-}
-
-.folio__bio {
-  margin: 0.15rem 0 0;
-  max-width: var(--measure-read);
-  font-size: var(--step-0);
-  line-height: 1.5;
-}
-
-/* Preflight makes links inherit text-decoration; a link in running text
-   has to keep its underline or it is the same ink as the words around it. */
-.folio__bio a {
-  text-decoration-line: underline;
-}
-
-.folio__caption {
-  margin: 0.25rem 0 0;
-  max-width: 72ch;
-  padding-top: 0.4rem;
-  border-top: 1px dashed var(--color-rule);
-  font-family: var(--font-mono);
-  font-size: var(--step--2);
-  letter-spacing: 0.02em;
-  line-height: 1.55;
-  color: var(--color-ink-muted);
-}
-
-.folio__mark {
-  color: var(--color-seal);
-}
-
-/* Hung: the ticks live in the overlay's gutter, so the key is not drawn. */
-.folio__key {
-  display: none;
-}
-
-/*
- * Stacked below either breakpoint. The height half matters as much as the
- * width half: the plate is sized from leftover HEIGHT, so a wide, short window
- * used to keep the hung layout and collapse the print to a sliver. 800px is
- * measured, not chosen -- see PLATE_MIN_HEIGHT_PX in src/data/plate.js for why
- * the constraint diverges below it. tests/tokens.test.js holds these two
- * numbers to the `sizes` attribute, which has to describe the same layout.
- */
 @media (max-width: 899px), (max-height: 799px) {
-  .folio__stage {
-    padding-top: 3.5rem;
+  .board {
+    --page-measure: calc(100% - 2rem);
+    --folio-gutter: 1rem;
   }
 
-  .folio__print {
-    flex: none;
-    padding: 0 1rem;
-  }
-
-  /*
-   * Stacked, the print is still sized from height first: full bleed on a
-   * phone, but in a wide, short window (a laptop with a dock, a docked
-   * devtools pane) full bleed would be a 1376px plate that puts the name a
-   * whole screen down. 17rem is the nav, the key, the block's margins and the
-   * first lines of the slip; 20rem is the floor at which the sheet is still a
-   * print and not a sliver. The slip shares the width, as a daisen slip does.
-   */
-  .folio {
-    --folio-stacked: clamp(
-      20rem,
-      calc((100dvh - 17rem) * 3923 / 2160 + 2 * var(--folio-gutter)),
-      100%
-    );
-    --page-measure: var(--folio-stacked);
-  }
-
-  /* The veil gets the print's 1rem side padding, so the 100% inside
-     --folio-stacked resolves against the same width in the bar as in the
-     block, and the links still end on the plate's edge. */
-  .site-nav--veil {
-    padding-inline: 1rem;
-  }
-
-  /* The bottom margin now holds only the kento marks; the key sits above it
-     in flow, so the block grows with the key rather than clipping it. */
-  .folio__block {
-    width: var(--folio-stacked);
-    padding-bottom: 1.4rem;
-    margin-bottom: 1.25rem;
-  }
-
-  /* The overlay goes; the plate is too narrow to aim at. The marks stay --
-     they are what says this is a print and not a picture. */
-  .folio__thirds {
-    display: none;
-  }
-
-  .folio__kento--hikitsuke {
-    bottom: 0.6rem;
-  }
-
-  .folio__kento--kagi {
-    bottom: 0.25rem;
-  }
-
-  /* Print, then key, then slip -- the figure before its caption, as on the
-     hung layout. The slip used to come first, which put "the plate reads left
-     to right" above a plate the reader had not reached. */
-  .folio__slip {
-    width: var(--folio-stacked);
-    margin: 0 0 2.5rem;
-    padding: 1.1rem var(--folio-gutter) 1.15rem;
-  }
-
-  /*
-   * The plate key. Same tick, stage word and handle as .folio__chip, same
-   * hairline arrows, but laid out under the sheet as a legend: three lanes
-   * with the arrows in their own columns so the sequence reads even when a
-   * stage word has to wrap. Each lane is the tap target -- there is no
-   * separate list to duplicate it.
-   */
-  .folio__key {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
-    align-items: start;
-    margin-top: 0.5rem;
-    font-family: var(--font-mono);
-    font-size: var(--step--2);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    line-height: 1.2;
-  }
-
-  .folio__key-lane {
+  .board__stage {
+    height: auto;
+    min-height: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.12rem;
-    min-height: 44px;
-    padding: 0.2rem 0.15rem 0.3rem;
-    text-align: center;
-    text-decoration: none;
-    text-wrap: balance;
+    align-items: stretch;
+    gap: var(--space-5);
+    padding-top: 4.5rem;
+    padding-bottom: 2.5rem;
   }
 
-  .folio__key-lane::before {
-    content: '';
-    width: 1px;
-    height: 0.32rem;
-    background: currentColor;
+  .board__print--started {
+    width: min(100%, 16rem);
+    align-self: flex-end;
   }
 
-  .folio__key-who {
-    letter-spacing: 0.02em;
-    text-transform: none;
-    color: var(--color-ink-muted);
+  .board__print--deck {
+    height: auto;
   }
 
-  .folio__key-lane:hover,
-  .folio__key-lane:focus-visible {
-    color: var(--color-seal);
+  .board__print--deck .study-art {
+    flex: none;
+    aspect-ratio: var(--deck-ratio);
   }
 
-  /* Sits on the stage word's centre line: lane padding + tick + gap + half a
-     line of --step--2 at 1.2 line-height. */
-  .folio__key-arrow {
-    position: relative;
-    width: 1.4rem;
-    height: 1px;
-    margin-top: 1.05rem;
-    background: currentColor;
-    color: var(--color-ink-muted);
-    opacity: 0.55;
-  }
-
-  .folio__key-arrow::after {
-    content: '';
-    position: absolute;
-    right: -1px;
-    top: 50%;
-    width: 4px;
-    height: 4px;
-    border-top: 1px solid currentColor;
-    border-right: 1px solid currentColor;
-    transform: translateY(-50%) rotate(45deg);
-  }
-
-  .folio__key-lane:hover + .folio__key-arrow,
-  .folio__key-lane:focus-visible + .folio__key-arrow,
-  .folio__key-arrow:has(+ .folio__key-lane:hover),
-  .folio__key-arrow:has(+ .folio__key-lane:focus-visible) {
-    color: var(--color-seal);
-    opacity: 0.85;
+  .board__mark {
+    align-self: flex-end;
   }
 }
+
+@media (max-width: 640px) {
+  .board__mind a,
+  .board__mark,
+  .board__handle,
+  .board__subjects a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .board__print--started {
+    align-self: stretch;
+    width: min(100%, 18rem);
+  }
+}
+
 
 /* --------------------------------------------------------- print pages */
 
@@ -1487,10 +1253,10 @@ html[data-theme='dark'] .atmo[data-motif='lattice'] .atmo__engraving {
 /* --------------------------------------------------------- case-study plate */
 
 /*
- * A figure treated as a hung print, the same way the home page's plate is: an
- * untrimmed block whose padding is the paper margin, one kento mark in that
- * margin, and a caption slip beneath. Sits after the first paragraph, never
- * above the title -- the title is still the page.
+ * A figure treated as a hung print: an untrimmed block whose padding is the
+ * paper margin, one kento mark in that margin, and a caption slip beneath.
+ * Sits after the first paragraph, never above the title -- the title is still
+ * the page.
  */
 .plate {
   position: relative;

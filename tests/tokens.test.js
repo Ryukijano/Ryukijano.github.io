@@ -75,7 +75,7 @@ describe('palette', () => {
 describe('type scale', () => {
   // --step--2 is deliberately OFF the scale: 1.25 below --step--1 would be
   // 0.68rem (10.88px), and this step carries tracked uppercase mono labels
-  // (.cartouche, .scope__label, .catalog__lane, .folio__chip) where that is
+  // (.cartouche, .scope__label, .catalog__lane) where that is
   // too small to read. It is held at 0.72rem as a legibility floor.
   const scaled = ['--step--1', '--step-0', '--step-1', '--step-2',
                   '--step-3', '--step-4', '--step-5'];
@@ -122,63 +122,31 @@ describe('measures', () => {
 });
 
 /*
- * `sizes` is a description of the layout, so every number in it is a claim
- * about the stylesheet. A claim that drifts does not throw -- it just makes
- * the browser pick a tier for a layout that does not exist, over-fetching or,
- * worse, under-fetching and shipping a soft plate. These four assertions are
- * the only thing keeping the two files honest.
+ * The home sheet is a desk. The ruling has to be the existing hairline, and
+ * the stack fence has to be the same two numbers the layout test walks,
+ * or a short window goes back to crushing the pictures.
  */
-describe('the sizes attribute describes the stylesheet', () => {
-  it('reserves the same height for everything that is not the plate', async () => {
-    const { PLATE_HEIGHT_BUDGET_REM } = await import('../src/data/plate.js');
-    const inCss = Number(css.match(/calc\(\(100dvh - (\d+(?:\.\d+)?)rem\)/)[1]);
-    expect(inCss).toBe(PLATE_HEIGHT_BUDGET_REM);
+describe('the desk board describes the stylesheet', () => {
+  it('rules the ground with the existing hairline, not a new colour', () => {
+    const board = css.match(/\.board\s*\{([^}]*)\}/s)?.[1];
+    expect(board, '.board is missing').toBeTruthy();
+    expect(board).toMatch(/linear-gradient\([^)]*var\(--color-rule\)/);
+    expect(board).not.toMatch(/#[0-9a-f]{3,8}/i);
   });
 
-  it('switches from hung to stacked at the same two breakpoints', async () => {
-    const { PLATE_MIN_WIDTH_PX, PLATE_MIN_HEIGHT_PX } = await import('../src/data/plate.js');
-    // The stacked query is a max-*, `sizes` a min-*, so they meet at n and n-1.
+  it('stacks below the same two fences', async () => {
+    const { BOARD_MIN_WIDTH_PX, BOARD_MIN_HEIGHT_PX } = await import('../src/data/board.js');
     const query = css.match(
       /@media \(max-width: (\d+)px\), \(max-height: (\d+)px\) \{/,
     );
     expect(query, 'the stacked breakpoint query moved or changed shape').toBeTruthy();
-    expect(Number(query[1])).toBe(PLATE_MIN_WIDTH_PX - 1);
-    expect(Number(query[2])).toBe(PLATE_MIN_HEIGHT_PX - 1);
+    expect(Number(query[1])).toBe(BOARD_MIN_WIDTH_PX - 1);
+    expect(Number(query[2])).toBe(BOARD_MIN_HEIGHT_PX - 1);
   });
 
-  it('derives its multiplier from the plate ratio the sheet is drawn at', async () => {
-    // A recrop changes .folio__sheet's aspect-ratio. If `sizes` kept a literal
-    // 1.8162 the height branch would quietly describe the old crop.
-    const { PLATE_ASPECT, PLATE } = await import('../src/data/plate.js');
-    const inCss = css.match(/\.folio__sheet\s*\{[^}]*aspect-ratio:\s*(\d+)\s*\/\s*(\d+)/);
-    expect(inCss, 'the sheet lost its aspect-ratio').toBeTruthy();
-    expect([Number(inCss[1]), Number(inCss[2])]).toEqual(PLATE_ASPECT);
-
-    const ratio = PLATE_ASPECT[0] / PLATE_ASPECT[1];
-    const claimed = Number(
-      PLATE.sources[0].sizes.match(/100vh - \d+rem\) \* (\d+\.\d+)/)[1],
-    );
-    expect(claimed).toBeCloseTo(ratio, 3);
-    // And the src fallback is a crop of the same plate, within rounding.
-    expect(PLATE.width / PLATE.height).toBeCloseTo(ratio, 2);
-  });
-
-  it('is parseable by the narrowest source-size parser', async () => {
-    // One bad source-size invalidates the whole attribute and the browser
-    // falls back to 100vw. A media condition may not contain a comma, `or` is
-    // Safari 16.4+, and a top-level min() is not a <source-size-value>.
-    const { PLATE } = await import('../src/data/plate.js');
-    for (const { sizes } of PLATE.sources) {
-      const branches = sizes.split(/,\s*/);
-      expect(branches.length).toBeGreaterThan(1);
-      for (const branch of branches) {
-        expect(branch, `\`or\` is not universally parseable: ${branch}`).not.toMatch(/\bor\b/);
-        expect(branch, `min() is not a source-size value: ${branch}`).not.toMatch(/^\s*min\(/);
-      }
-      // The last branch is the default, so it carries no media condition.
-      expect(branches.at(-1)).not.toMatch(/[()]\s*calc/);
-      expect(branches.at(-1).trim()).toMatch(/^calc\(/);
-    }
+  it('keeps the hung sheet to one viewport', () => {
+    const stage = css.match(/\.board__stage\s*\{([^}]*)\}/s)?.[1];
+    expect(stage).toMatch(/height:\s*100dvh/);
   });
 });
 

@@ -1,12 +1,11 @@
 /**
  * Layout assertions at the viewports where this design actually breaks.
  *
- * Two checks per viewport, and both are needed. The 899px breakpoint governs
- * whether the plate overlay or the plate key under the sheet renders, but the *plate*
- * is sized from viewport height -- so a wide, short window (900x400) used to
- * collapse it to ~36px while leaving three invisible navigation targets live.
- * That failure produces no horizontal overflow at all, so an overflow-only
- * check would have missed the worst layout bug on the site.
+ * Two checks per viewport, and both are needed. The 899×799 fence governs
+ * whether the desk is one screen or a column. A wide, short window used to
+ * crush the hung print to a sliver while leaving its links live. Overflow
+ * alone would not have caught that, so the board test checks which side of
+ * the fence the pictures actually landed on.
  */
 import { expect, test } from '@playwright/test';
 
@@ -55,32 +54,21 @@ for (const { w, h, note } of VIEWPORTS) {
       });
     }
 
-    test('the plate is either laid out properly or stacked, never a sliver', async ({ page }) => {
+    test('the board is either one screen or a column, never a sliver', async ({ page }) => {
       await page.setViewportSize({ width: w, height: h });
       await page.goto('/');
       await page.evaluate(() => document.fonts.ready);
 
-      const sheet = await page.locator('.folio__sheet').boundingBox();
-      expect(sheet.width, 'the plate collapsed').toBeGreaterThanOrEqual(280);
+      const name = await page.locator('.board__name').boundingBox();
+      expect(name.width, 'the nameplate collapsed').toBeGreaterThanOrEqual(200);
 
-      // Exactly one of the two navigations is live: the overlay on the hung
-      // print, the key under a stacked one. Never both, never neither.
-      const overlay = await page.locator('.folio__lane').first().isVisible().catch(() => false);
-      const key = await page.locator('.folio__key-lane').first().isVisible().catch(() => false);
-      expect([overlay, key], 'overlay and key must be mutually exclusive').toContain(true);
-      expect(overlay && key, 'both the overlay and the key are showing').toBe(false);
-
-      // Whichever is live must be big enough to aim at.
-      if (overlay) {
-        const box = await page.locator('.folio__lane').first().boundingBox();
-        expect(box.width, 'overlay lanes are live but too small to hit').toBeGreaterThanOrEqual(60);
-      }
-      if (key) {
-        for (const lane of await page.locator('.folio__key-lane').all()) {
-          const box = await lane.boundingBox();
-          expect(box.height, 'a key lane is under the 44px touch target').toBeGreaterThanOrEqual(44);
-          expect(box.width, 'a key lane is too narrow to hit').toBeGreaterThanOrEqual(60);
-        }
+      const deck = await page.locator('.board__print--deck').boundingBox();
+      const note = await page.locator('.board__note').boundingBox();
+      const hung = w >= 900 && h >= 800;
+      if (hung) {
+        expect(note.x, 'the note should sit beside the drawing').toBeGreaterThan(deck.x + deck.width * 0.5);
+      } else {
+        expect(note.y, 'the note should sit under the drawing').toBeGreaterThan(deck.y + 8);
       }
     });
   });
@@ -156,18 +144,12 @@ test.describe('the engraving stays in the margin', () => {
 });
 
 test.describe('the home page fits one screen', () => {
-  // The whole conceit is a single hung print. It is sized from a height budget
-  // (--folio-plate), and that budget is a constant, so anything added to the
-  // title slip eats into it -- adding one line of copy put the page 91px past
-  // the fold at every common desktop size. This is the assertion that makes
-  // that loud.
+  // Above the fence the desk is one sheet. Adding a line that forces the
+  // nameplate or the note to grow past the viewport fails here, loudly.
   //
-  // 1440x800 is the boundary and belongs in this list permanently: the budget
-  // is exact there and has zero slack, so it is the first viewport that fails
-  // when the slip grows. The 950-1150 widths are here because the first
-  // version of this list was five viewports that all happened to wrap the bio
-  // identically, which made a constant tuned at one wrap point look verified
-  // at five.
+  // 1440x800 is the short laptop and belongs in this list permanently. The
+  // 950-1150 widths are here because a wrap that only happens in that band
+  // used to look verified at five wider sizes.
   for (const [w, h] of [
     [1440, 800], [950, 840], [1024, 820], [1100, 800], [1150, 840],
     [1440, 900], [1366, 810], [1280, 820], [1600, 1000], [1920, 1080],
@@ -186,50 +168,34 @@ test.describe('the home page fits one screen', () => {
 
 test.describe('the stacked breakpoint fences off the band it has to', () => {
   /*
-   * Below 800px tall the height budget stops holding: the plate narrows, the
-   * bio rewraps, the slip grows, the plate narrows again. The stacked layout
-   * is the fence. If its height half is ever dropped back to a width-only
-   * query, the hung print returns at these sizes and the page silently scrolls
-   * by 40-100px at EVERY width -- which is how it shipped before.
+   * Below 800px tall the one-screen grid stops being a desk and becomes a
+   * crush. The column is the fence. If its height half is dropped, a wide
+   * short window keeps the side-by-side sheet and the pictures collide.
    */
   for (const [w, h] of [[1440, 790], [1280, 760], [960, 740], [1920, 799]]) {
-    test(`at ${w}x${h} the print is stacked, not hung`, async ({ page }) => {
+    test(`at ${w}x${h} the board is a column, not one screen`, async ({ page }) => {
       await page.setViewportSize({ width: w, height: h });
       await page.goto('/');
       await page.evaluate(() => document.fonts.ready);
 
-      await expect(page.locator('.folio__thirds')).toBeHidden();
-      await expect(page.locator('.folio__key')).toBeVisible();
-      // The idea travels with the print: stacked still reads as a pipeline,
-      // with the kento marks saying it is a print and not a picture.
-      await expect(page.locator('.folio__key-stage')).toHaveText(['Real world', 'Encoding', 'Digital']);
-      await expect(page.locator('.folio__key-arrow')).toHaveCount(2);
-      await expect(page.locator('.folio__kento--kagi')).toBeVisible();
+      const deck = await page.locator('.board__print--deck').boundingBox();
+      const note = await page.locator('.board__note').boundingBox();
+      expect(note.y, 'the note is still beside the drawing').toBeGreaterThan(deck.y + deck.height * 0.5);
 
-      // Stacked means the print is sized by the stacked rule, not the hung
-      // one: full bleed less the gutters on a phone, capped by height in a
-      // wide short window so the name is not a screen down, floored at 20rem
-      // so it is never a sliver. This is the number the stylesheet's
-      // --folio-stacked clamp produces; the trailing `sizes` branch claims
-      // full bleed, which over-describes here -- the safe direction.
-      const rem = 16;
-      const block = Math.min(w - 4 * rem, Math.max(20 * rem, (h - 17 * rem) * (3923 / 2160) + 2 * rem));
-      const expected = block - 2 * rem;
-      const sheet = await page.locator('.folio__sheet').boundingBox();
-      expect(Math.abs(sheet.width - expected), `sheet is ${sheet.width}px, stacked rule says ${expected}px`).toBeLessThanOrEqual(2);
+      await expect(page.getByRole('link', { name: 'Ryukijano', exact: true })).toBeVisible();
+      await expect(page.getByRole('link', { name: 'Vision', exact: true })).toBeVisible();
+      await expect(page.getByRole('link', { name: 'quantum', exact: true })).toBeVisible();
 
-      // And the whole first screen carries the idea: the name is reachable
-      // without scrolling, under the print and its key.
-      const name = await page.locator('.folio__name').boundingBox();
+      const name = await page.locator('h1').boundingBox();
       expect(name.y + name.height, 'the name is below the fold in the stacked band').toBeLessThanOrEqual(h);
     });
   }
 });
 
-test.describe('the plate itself', () => {
+test.describe('the childhood picture', () => {
   test('loads, and is not stretched', async ({ page }) => {
     await page.goto('/');
-    const img = page.locator('.folio__sheet img');
+    const img = page.locator('.board__print--started img');
     await expect(img).toHaveJSProperty('complete', true);
     const { natural, box } = await img.evaluate((el) => ({
       natural: el.naturalWidth / el.naturalHeight,
@@ -237,6 +203,36 @@ test.describe('the plate itself', () => {
     }));
     expect(box).toBeCloseTo(natural, 1);
   });
+});
+
+test.describe('the desk board reads in both stocks', () => {
+  for (const scheme of ['light', 'dark']) {
+    for (const [w, h] of [[1440, 900], [390, 844]]) {
+      test(`${scheme} at ${w}x${h}`, async ({ page }) => {
+        await page.emulateMedia({ colorScheme: scheme });
+        await page.setViewportSize({ width: w, height: h });
+        await page.goto('/');
+        await page.evaluate(() => document.fonts.ready);
+        if (scheme === 'dark') {
+          await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+        }
+        await expect(page.getByRole('heading', { level: 1 })).toHaveText('Gyanateet Dutta');
+        await expect(page.getByText('where it started', { exact: true })).toBeVisible();
+        await expect(page.getByText('the other deck', { exact: true })).toBeVisible();
+        await expect(page.getByRole('heading', { name: 'On my mind' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'open source ftw' })).toBeVisible();
+        for (const item of ['Self-supervised vision', 'Quantum algorithms', 'Image-based 3D reconstruction']) {
+          await expect(page.getByRole('link', { name: item })).toBeVisible();
+        }
+        const overflow = await page.evaluate(
+          () => document.documentElement.scrollWidth - window.innerWidth,
+        );
+        expect(overflow, `overflows by ${overflow}px`).toBeLessThanOrEqual(1);
+        const image = await page.locator('.board').evaluate((el) => getComputedStyle(el).backgroundImage);
+        expect(image).toContain('linear-gradient');
+      });
+    }
+  }
 });
 
 test.describe('keyboard', () => {
@@ -271,23 +267,23 @@ test.describe('keyboard', () => {
 
   test('history back and forward keep the URL and the heading in agreement', async ({ page }) => {
     await page.goto('/');
-    // The slip's handle link: the only link named exactly "Ryukijano" in
-    // either layout (the plate lanes and key lanes carry the stage word too).
-    await page.locator('.folio__handles').getByRole('link', { name: 'Ryukijano', exact: true }).click();
+    await page.getByRole('link', { name: 'Ryukijano', exact: true }).click();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Ryukijano');
     await page.goBack();
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Gyanateet “Yana” Dutta');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Gyanateet Dutta');
     expect(new URL(page.url()).pathname).toBe('/');
     await page.goForward();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Ryukijano');
     expect(new URL(page.url()).pathname).toBe('/persona/ryukijano');
   });
 
-  test('focus is visible on the plate lanes', async ({ page }) => {
-    test.skip(page.viewportSize().width < 900, '.folio__thirds is display:none below 899px');
+  test('focus is visible on the nameplate handle', async ({ page }) => {
     await page.goto('/');
-    await page.locator('.folio__lane').first().focus();
-    await expect(page.locator('.folio__lane').first()).toHaveClass(/is-on/);
+    const handle = page.getByRole('link', { name: 'Ryukijano', exact: true });
+    await handle.focus();
+    await expect(handle).toBeFocused();
+    const outline = await handle.evaluate((el) => getComputedStyle(el).outlineStyle);
+    expect(outline).toBe('solid');
   });
 });
 

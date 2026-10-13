@@ -198,9 +198,9 @@ describe('the prerender manifest', () => {
     }
   });
 
-  it('links the home bio to the beige-PC note', () => {
+  it('links the childhood picture to the beige-PC note', () => {
     const home = readFileSync(join(DIST, 'index.html'), 'utf8');
-    expect(home).toMatch(/class="folio__bio"><a href="\/notes\/beige-pc">That’s me at the beige PC<\/a>/);
+    expect(home).toMatch(/href="\/notes\/beige-pc"[^>]*>[\s\S]*where it started/);
   });
 
   it('renders 404.html from a not-found route, not from the home page', () => {
@@ -210,14 +210,16 @@ describe('the prerender manifest', () => {
     expect(notFound).toMatch(/This path isn(&#x27;|')t on the site/);
   });
 
-  it('preloads the plate on the home page only', () => {
-    // It was preloaded everywhere, costing each text-only case study 286 KB
-    // of an image that page never displays. The FONT preload is on every page
-    // by design, so this looks for the image one specifically.
-    const withPlate = pages
+  it('preloads the home portrait on the home page only', () => {
+    // An image preload on a text page fetches bytes that page never shows.
+    // The font preload is on every page by design, so this looks for the image.
+    const withImage = pages
       .filter((p) => /rel="preload"[^>]*as="image"/.test(p.html))
       .map((p) => p.file);
-    expect(withPlate).toEqual(['index.html']);
+    expect(withImage).toEqual(['index.html']);
+    const home = pages.find((p) => p.file === 'index.html').html;
+    expect(home).toMatch(/rel="preload"[^>]*href="\/assets\/images\/portrait\.webp"/);
+    expect(home).not.toMatch(/kanagawa-plate/);
   });
 
   it('preloads the display serif on every page', () => {
