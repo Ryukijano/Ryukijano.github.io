@@ -11,6 +11,7 @@ as a static GitHub Pages user site. Routing is hand-rolled
 | `DESIGN.md` | the decision log: two stocks, contrast, type, accent and theme behaviour |
 | `.opencode/skills/paper-ink/SKILL.md` | the working rules for building a page in this system |
 | `.opencode/skills/paper-ink/references/route-shapes.md` | markup and rules for the notes, workbench, collection and ledger shapes |
+| `.opencode/skills/desk-board/SKILL.md` | the home desk board — composition, pinning, pixel plate, stocks — and the site's writing voice |
 | `src/index.css` | the entire design system, one file |
 
 `DESIGN.md` records **why** each number is what it is, and
