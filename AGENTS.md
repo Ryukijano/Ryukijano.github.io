@@ -71,6 +71,7 @@ with `rel="noopener noreferrer"`.
 ```sh
 npm install
 npm run dev          # localhost:5173
+npm run video        # Remotion Studio, from video/ (npm install there first)
 npm test             # design tokens, focus ring, link health, asset budget
 npm run build        # client build, SSR build, prerender, budget check
 npm run lint
@@ -79,6 +80,11 @@ npx playwright test  # layout and accessibility across ten viewports
 
 `npm run build` must come before `npm test` in CI, because the link-health
 test asserts against `dist/`.
+
+`video/` is a separate Remotion 4.0.539 project (the blank template). It is
+not imported by the site, so it never enters the GitHub Pages bundle. Install
+its dependencies with `npm install --prefix video` before `npm run video`.
+Remotion agent skills live in `.agents/skills/`.
 
 ## House rules for agents
 
