@@ -29,6 +29,13 @@ jobs:
 
       - run: npm run lint
 
+      # Separate project. Its lockfile is video/package-lock.json, so this
+      # install does not share the site cache above.
+      - name: Remotion
+        run: |
+          npm ci --prefix video
+          npm run lint --prefix video
+
       # Design tokens, the focus-ring measurement, and the content invariants
       # that do not need a browser. `npm run build` has to come first because
       # link-health asserts against dist/.
